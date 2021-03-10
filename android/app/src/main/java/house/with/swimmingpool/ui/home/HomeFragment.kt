@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import house.with.swimmingpool.R
 import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.News
@@ -55,6 +56,9 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = StoriesAdapter(listOf("", "", "", ""))
         }
+
+        view.findViewById<ViewPager2>(R.id.mainHousesContainer).adapter =
+                HeaderAdapter(listOf(House(), House(), House()))
 
     }
 
