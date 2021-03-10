@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="104dp"
+    android:layout_height="130dp"
+    android:layout_margin="6dp">
+
+    <androidx.cardview.widget.CardView
+        android:elevation="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="6dp">
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/placeholder" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_margin="10dp"
+        android:elevation="16dp"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/textView18"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Подбор кредита до 5 000 руб." />
+
+</RelativeLayout>
