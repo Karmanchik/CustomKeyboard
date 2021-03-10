@@ -1,26 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/header_placeholder" />
 
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:text="Домсбассейном.рф"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/lato_bold"
+        android:text="КП “Севастьянова”"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/textView23" />
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="12dp"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/textView17"
-        app:layout_constraintTop_toTopOf="@id/textView17"
-        app:srcCompat="@drawable/ic_home_black_24dp" />
+        android:text="от 10 500 000 руб."
+        app:layout_constraintBottom_toBottomOf="@id/textView23" />
+
+    <View
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/textView21"
+        android:id="@+id/divider4"
+        android:layout_width="2dp"
+        android:layout_height="2dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/textView22"
+        app:layout_constraintTop_toTopOf="@id/textView22" />
+
+    <TextView
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/divider4"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Сочи, Мамайка"
+        app:layout_constraintBottom_toBottomOf="@id/textView23" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="90dp"
+        android:background="@drawable/more_background"
+        android:fontFamily="@font/lato_regular"
+        android:gravity="center"
+        android:paddingStart="21dp"
+        android:paddingEnd="21dp"
+        android:text="Подробнее"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

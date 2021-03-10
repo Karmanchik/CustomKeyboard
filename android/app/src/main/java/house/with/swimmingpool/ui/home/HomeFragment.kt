@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import house.with.swimmingpool.R
 import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.News
@@ -57,8 +58,12 @@ class HomeFragment : Fragment() {
             adapter = StoriesAdapter(listOf("", "", "", ""))
         }
 
-        view.findViewById<ViewPager2>(R.id.mainHousesContainer).adapter =
+        val vp = view.findViewById<ViewPager2>(R.id.mainHousesContainer)
+
+        vp.adapter =
                 HeaderAdapter(listOf(House(), House(), House()))
+
+        view.findViewById<DotsIndicator>(R.id.dots_indicator).setViewPager2(vp)
 
     }
 

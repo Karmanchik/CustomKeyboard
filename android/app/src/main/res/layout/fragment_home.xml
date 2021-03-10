@@ -15,12 +15,52 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="375dp">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/mainHousesContainer"
                 android:layout_width="match_parent"
-                android:layout_height="300dp" />
+                android:layout_height="375dp" />
+
+            <ImageView
+                android:layout_marginTop="60dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_logo" />
+
+            <ImageView
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="12dp"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/is_search_white" />
+
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+
+
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="50dp"
+                android:id="@+id/dots_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:dotsColor="#575d61"
+                app:dotsCornerRadius="2dp"
+                app:dotsSize="4dp"
+                app:dotsSpacing="4dp"
+                app:dotsWidthFactor="2.5"
+                app:selectedDotColor="@color/white"
+                app:progressMode="true" />
+
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/header_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
         </RelativeLayout>
 
         <com.google.android.material.tabs.TabLayout
