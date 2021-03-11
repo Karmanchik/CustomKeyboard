@@ -15,12 +15,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="375dp">
+            android:layout_height="460dp">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/mainHousesContainer"
                 android:layout_width="match_parent"
-                android:layout_height="375dp" />
+                android:layout_height="460dp" />
 
             <ImageView
                 android:layout_marginTop="60dp"
@@ -31,64 +31,67 @@
                 android:src="@drawable/ic_logo" />
 
             <ImageView
-                android:layout_marginTop="60dp"
-                android:layout_marginEnd="12dp"
-                android:layout_alignParentEnd="true"
-                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/is_search_white" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/is_search_white"
+                android:textColor="@color/white" />
+
+            <!--            <TextView-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:background="@drawable/header_bottom"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="10dp" />-->
 
             <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-
-
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="50dp"
                 android:id="@+id/dots_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="92dp"
                 app:dotsColor="#575d61"
                 app:dotsCornerRadius="2dp"
                 app:dotsSize="4dp"
-                app:dotsSpacing="4dp"
+                app:dotsSpacing="10dp"
                 app:dotsWidthFactor="2.5"
-                app:selectedDotColor="@color/white"
-                app:progressMode="true" />
+                app:progressMode="true"
+                app:selectedDotColor="@color/white" />
 
-            <TextView
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/header_bottom"
+            <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                android:layout_height="62dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="0dp"
+                android:background="@drawable/header_bottom"
+                android:paddingTop="22dp"
+                android:paddingBottom="9dp"
+                app:tabIndicatorColor="@color/main_blue"
+                app:tabTextColor="#808080">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ГЛАВНАЯ" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="КАТАЛОГ" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ВИДЕО" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="НОВОСТИ" />
+            </com.google.android.material.tabs.TabLayout>
         </RelativeLayout>
-
-        <com.google.android.material.tabs.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/main_blue"
-            app:tabTextColor="@color/main_blue">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ГЛАВНАЯ" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="КАТАЛОГ" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ВИДЕО" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="НОВОСТИ" />
-        </com.google.android.material.tabs.TabLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
