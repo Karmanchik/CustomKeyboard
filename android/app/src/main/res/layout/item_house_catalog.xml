@@ -52,23 +52,23 @@
             android:orientation="horizontal">
 
             <TextView
-                android:textColor="@color/white"
+                android:textColor="#4D4D4D"
                 android:paddingBottom="4dp"
                 android:paddingTop="4dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:background="@drawable/bk"
+                android:background="@drawable/area_box_blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="258 м²" />
 
             <TextView
-                android:textColor="@color/white"
+                android:textColor="#4D4D4D"
                 android:paddingBottom="4dp"
                 android:paddingTop="4dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:background="@drawable/bk"
+                android:background="@drawable/area_box_green"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -81,9 +81,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
+            android:fontFamily="@font/lato_black"
             android:text="10 500 000 руб."
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -100,11 +101,11 @@
                 android:paddingTop="4dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:background="@drawable/bk"
+                android:background="@drawable/green_button"
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="258 м²" />
+                android:text="Ипотека" />
 
             <TextView
                 android:textColor="@color/white"
@@ -112,12 +113,12 @@
                 android:paddingTop="4dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:background="@drawable/bk"
+                android:background="@drawable/red_button"
                 android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="5.5 соток" />
+                android:text="Акция" />
         </LinearLayout>
     </LinearLayout>
 

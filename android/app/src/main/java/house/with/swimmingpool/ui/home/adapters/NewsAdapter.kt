@@ -1,15 +1,25 @@
 package house.with.swimmingpool.ui.home.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.R
 import house.with.swimmingpool.models.News
 
 class NewsAdapter(
-        var items: List<News>
+        var items: List<News>,
+        var ctx: Context
 ): RecyclerView.Adapter<NewsAdapter.Holder>() {
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        recyclerView.layoutManager = GridLayoutManager(
+            ctx, 2, GridLayoutManager.VERTICAL, false
+        )
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layoutInflater = LayoutInflater.from(parent.context)

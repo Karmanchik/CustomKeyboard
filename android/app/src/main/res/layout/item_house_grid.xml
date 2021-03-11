@@ -21,46 +21,55 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:textSize="13sp"
-        android:textColor="@color/black"
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Дом 258 м² на участке 5.5 сот." />
+        android:singleLine="false"
+        android:text="Дом 258 м² на участке 5.5 сот."
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:lineHeight="28dp" />
 
     <TextView
-        android:textSize="12sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
         android:id="@+id/textView12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="10 500 000 руб." />
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="10 500 000 руб."
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:textSize="12sp"
-        android:textColor="@color/black"
-        android:alpha="0.4"
         android:id="@+id/textView13"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Сочи, Мамайка" />
+        android:alpha="0.4"
+        android:text="Сочи, Мамайка"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="9dp"
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/area_box_blue"
             android:text="258 м²" />
 
         <TextView
             android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5.5 соток" />
+            android:layout_marginStart="5dp"
+            android:text="5.5 соток"
+            android:background="@drawable/area_box_green"/>
     </LinearLayout>
 </LinearLayout>
