@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -55,6 +56,9 @@ class HomeFragment : Fragment() {
             vp.adapter = HeaderAdapter(listOf(House(), House(), House()))
 
             dotsIndicator.setViewPager2(vp)
+
+            segmentedControl.setSelectedSegment(0)
         }
+
     }
 }

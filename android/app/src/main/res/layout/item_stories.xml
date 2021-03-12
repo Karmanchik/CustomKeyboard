@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="104dp"
-    android:layout_height="130dp"
-    android:layout_margin="6dp">
+    android:layout_width="118dp"
+    android:layout_height="144dp"
+    android:layout_marginStart="6dp"
+    android:layout_marginTop="14dp"
+    android:layout_marginEnd="6dp"
+    android:layout_marginBottom="6dp">
 
     <androidx.cardview.widget.CardView
-        android:elevation="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="15dp"
         app:cardCornerRadius="6dp">
 
         <ImageView
@@ -21,13 +24,19 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:layout_margin="10dp"
-        android:elevation="16dp"
-        android:textColor="@color/white"
-        android:layout_alignParentBottom="true"
         android:id="@+id/textView18"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Подбор кредита до 5 000 руб." />
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="16dp"
+        android:fontFamily="@font/lato_italic"
+        android:text="Подбор кредита до 5 000 руб."
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        app:lineHeight="18dp" />
 
 </RelativeLayout>

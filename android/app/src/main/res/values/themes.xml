@@ -3,7 +3,7 @@
     <style name="Theme.ДомСБассейном" parent="Theme.AppCompat.DayNight.NoActionBar">
 
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFullscreen">false</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -15,6 +15,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
     </style>
 
     <style name="main_button">
@@ -28,7 +29,7 @@
         <item name="android:layout_marginEnd">12dp</item>
         <item name="android:layout_marginStart">12dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">56dp</item>
     </style>
 
     <style name="main_title">
