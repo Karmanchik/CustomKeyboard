@@ -15,6 +15,7 @@ import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.News
 import house.with.swimmingpool.models.Video
+import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
 
 class HomeFragment : Fragment() {
@@ -72,7 +73,10 @@ class HomeFragment : Fragment() {
             segmentedControl.setSelectedSegment(0)
 
             shortFilterView.setOnClickListener {
-                findNavController().navigate(R.id.action_navigation_home_to_shortFilterFragment)
+                val onClick = { findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel) }
+                ShortFilterFragment(onClick).newInstance(onClick).show(
+                        parentFragmentManager, "shortFilter"
+                )
             }
             fullFilterView.setOnClickListener {
                 findNavController().navigate(R.id.action_navigation_home_to_fullFilterFragment)
