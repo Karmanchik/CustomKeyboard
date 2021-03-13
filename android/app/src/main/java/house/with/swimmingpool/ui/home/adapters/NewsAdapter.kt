@@ -11,7 +11,8 @@ import house.with.swimmingpool.models.News
 
 class NewsAdapter(
         var items: List<News>,
-        var ctx: Context
+        var ctx: Context,
+        var onItemSelected: (News) -> Unit
 ): RecyclerView.Adapter<NewsAdapter.Holder>() {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -34,6 +35,7 @@ class NewsAdapter(
     inner class Holder(private val view: View): RecyclerView.ViewHolder(view) {
 
         fun bind(position: Int) {
+            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
         }
 
     }

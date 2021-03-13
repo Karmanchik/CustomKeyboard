@@ -93,7 +93,7 @@
     </fragment>
     <fragment
         android:id="@+id/catalogViewModel"
-        android:name="house.with.swimmingpool.ui.catalog.CatalogViewModel"
+        android:name="house.with.swimmingpool.ui.catalog.CatalogFragment"
         android:label="CatalogViewModel" >
         <action
             android:id="@+id/action_catalogViewModel_to_houseFragment"

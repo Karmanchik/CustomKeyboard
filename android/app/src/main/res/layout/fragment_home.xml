@@ -144,6 +144,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/shortFilterView"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
@@ -178,6 +179,7 @@
                 android:background="?android:attr/listDivider" />
 
             <LinearLayout
+                android:id="@+id/fullFilterView"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
@@ -288,7 +290,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <TextView
-            android:id="@+id/button"
+            android:id="@+id/showCatalogButton"
             style="@style/main_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -332,7 +334,7 @@
             tools:listitem="@layout/item_video" />
 
         <TextView
-            android:id="@+id/button2"
+            android:id="@+id/showVideosButton"
             style="@style/main_button"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
@@ -377,7 +379,7 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <TextView
-            android:id="@+id/button3"
+            android:id="@+id/showNewsButton"
             android:layout_marginTop="16dp"
             style="@style/main_button"
             android:layout_width="match_parent"

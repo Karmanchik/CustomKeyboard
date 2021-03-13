@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.News
@@ -37,15 +39,23 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            videosRV.adapter = VideosAdapter(listOf(Video(), Video()))
-            newsRV.adapter = NewsAdapter(listOf(News(), News()), requireContext())
+            videosRV.adapter = VideosAdapter(listOf(Video(), Video())) {
+                findNavController().navigate(R.id.action_navigation_home_to_videoFragment)
+            }
+            newsRV.adapter = NewsAdapter(listOf(News(), News()), requireContext()) {
+                findNavController().navigate(R.id.action_navigation_home_to_newsSingleFragment)
+            }
 
             lastSeenRV.apply {
                 layoutManager = GridLayoutManager(context, 2)
-                adapter = SeenHousesAdapter(listOf(House(), House(), House()))
+                adapter = SeenHousesAdapter(listOf(House(), House(), House())) {
+                    findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+                }
             }
 
-            shortCatalogRV.adapter = CatalogAdapter(listOf(House(), House()))
+            shortCatalogRV.adapter = CatalogAdapter(listOf(House(), House())) {
+                findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+            }
 
             storiesRV.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -53,11 +63,30 @@ class HomeFragment : Fragment() {
             }
 
             val vp = mainHousesContainer
-            vp.adapter = HeaderAdapter(listOf(House(), House(), House()))
+            vp.adapter = HeaderAdapter(listOf(House(), House(), House())) {
+                findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+            }
 
             dotsIndicator.setViewPager2(vp)
 
             segmentedControl.setSelectedSegment(0)
+
+            shortFilterView.setOnClickListener {
+                findNavController().navigate(R.id.action_navigation_home_to_shortFilterFragment)
+            }
+            fullFilterView.setOnClickListener {
+                findNavController().navigate(R.id.action_navigation_home_to_fullFilterFragment)
+            }
+
+            showCatalogButton.setOnClickListener {
+                findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
+            }
+            showVideosButton.setOnClickListener {
+                findNavController().navigate(R.id.action_navigation_home_to_videosListFragment)
+            }
+            showNewsButton.setOnClickListener {
+                findNavController().navigate(R.id.action_navigation_home_to_newsListFragment)
+            }
         }
 
     }

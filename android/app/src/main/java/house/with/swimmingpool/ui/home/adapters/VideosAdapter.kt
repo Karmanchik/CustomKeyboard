@@ -8,7 +8,8 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.models.Video
 
 class VideosAdapter(
-        var items: List<Video>
+        var items: List<Video>,
+        var onItemSelected: (Video) -> Unit
 ): RecyclerView.Adapter<VideosAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -24,6 +25,7 @@ class VideosAdapter(
     inner class Holder(private val view: View): RecyclerView.ViewHolder(view) {
 
         fun bind(position: Int) {
+            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
         }
 
     }

@@ -9,7 +9,8 @@ import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
 import house.with.swimmingpool.models.House
 
 class CatalogAdapter(
-        var items: List<House>
+        var items: List<House>,
+        var onItemSelected: (House) -> Unit
 ): RecyclerView.Adapter<CatalogAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -29,6 +30,8 @@ class CatalogAdapter(
             vp.adapter = CatalogImageAdapter(listOf(House(), House(), House()))
 
             view.dotsIndicator.setViewPager2(vp)
+
+            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
         }
 
     }

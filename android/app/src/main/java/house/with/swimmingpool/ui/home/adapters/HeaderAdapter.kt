@@ -8,7 +8,8 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.models.House
 
 class HeaderAdapter(
-        var items: List<House>
+        var items: List<House>,
+        var onItemSelected: (House) -> Unit
 ): RecyclerView.Adapter<HeaderAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -24,6 +25,7 @@ class HeaderAdapter(
     inner class Holder(private val view: View): RecyclerView.ViewHolder(view) {
 
         fun bind(position: Int) {
+            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
         }
 
     }
