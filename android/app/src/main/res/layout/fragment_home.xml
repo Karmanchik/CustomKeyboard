@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,7 +29,8 @@
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_logo" />
+                android:src="@drawable/ic_logo"
+                />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -62,21 +64,22 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="52dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="0dp"
                 android:background="@drawable/header_bottom"
                 android:clipToPadding="true"
-                android:paddingTop="31dp"
+                android:paddingTop="22dp"
                 app:tabIndicatorAnimationMode="linear"
                 app:tabIndicatorColor="@color/main_blue"
                 app:tabIndicatorGravity="bottom"
                 app:tabPaddingBottom="10dp"
                 app:tabSelectedTextColor="@color/main_blue"
                 app:tabTextAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:tabTextColor="#808080">
+                app:tabTextColor="#808080"
+                app:tabRippleColor="#FFFFFF">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -111,7 +114,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/main_gradient"
-            android:padding="6dp" />
+            android:paddingTop="6dp"
+            android:paddingEnd="6dp"
+            android:paddingStart="6dp"/>
+
 
         <segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl
             android:id="@+id/segmented_control"
@@ -125,11 +131,11 @@
             app:selectedBackgroundColor="@color/main_blue"
             app:textSize="14sp"
             app:textVerticalPadding="6dp"
-            app:unSelectedTextColor="@color/main_blue" />
+            app:unSelectedTextColor="#808080" />
 
         <LinearLayout
             android:layout_marginTop="20dp"
-            android:elevation="30dp"
+            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -149,14 +155,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/lato_regular"
+                    android:lineSpacingMultiplier="1.6"
                     android:text="Стоимость от - до"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <ImageView
-                    android:layout_marginEnd="12dp"
                     android:id="@+id/imageView6"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_marginEnd="12dp"
                     android:src="@drawable/ic_costs" />
             </LinearLayout>
 
@@ -180,14 +189,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/lato_regular"
+                    android:lineSpacingMultiplier="1.6"
                     android:text="Дополнительные параметры"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <ImageView
-                    android:layout_marginEnd="12dp"
                     android:id="@+id/imageView7"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_marginEnd="12dp"
                     android:src="@drawable/ic_filters" />
             </LinearLayout>
         </LinearLayout>
@@ -197,12 +209,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="26dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="15dp"
             android:text="Вы смотрели"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:fontFamily="@font/lato_semibold"
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lastSeenRV"
@@ -254,17 +267,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="29dp"
-            android:fontFamily="@font/lato"
             android:text="Каталог недвижимости"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            />
 
         <TextView
             android:id="@+id/textView2"
             style="@style/main_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="12dp"
             android:text="690 предложений" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -279,8 +292,8 @@
             style="@style/main_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Весь каталог" />
+            android:layout_marginTop="5dp"
+            android:text="Весь каталог"/>
 
         <View
             android:id="@+id/divider"
@@ -295,8 +308,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Новые видео на канале"
-            android:textSize="20sp" />
+            android:text="Новые видео на канале"/>
 
         <TextView
             android:id="@+id/textView4"
@@ -304,7 +316,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Видеообзоры недвижимости" />
+            android:text="Видеообзоры недвижимости"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="12sp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/videosRV"
@@ -338,8 +352,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:text="Новости недвижимости"
-            android:textSize="20dp"/>
+            android:text="Новости недвижимости" />
 
         <TextView
             android:id="@+id/textView6"
@@ -376,19 +389,9 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:layout_marginTop="25dp"
+            android:layout_marginBottom="110dp"
             app:srcCompat="@drawable/coins_banner" />
 
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/call"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginEnd="28dp"
-            android:layout_marginBottom="40dp"
-            android:backgroundTint="@color/main_blue"
-            android:src="@drawable/vector_call"
-            tools:ignore="ContentDescription" />
 
     </LinearLayout>
 </ScrollView>

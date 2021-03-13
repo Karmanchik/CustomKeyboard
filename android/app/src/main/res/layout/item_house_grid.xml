@@ -35,22 +35,25 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/lato_regular"
+        android:lineSpacingMultiplier="1.6"
         android:singleLine="false"
         android:text="Дом 258 м² на участке 5.5 сот."
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="13sp"
         app:lineHeight="28dp" />
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="10 500 000 руб."
         android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textSize="13sp"
+        android:fontFamily="@font/lato_bold" />
 
     <TextView
         android:id="@+id/textView13"
@@ -59,7 +62,8 @@
         android:alpha="0.4"
         android:text="Сочи, Мамайка"
         android:textColor="@color/black"
-        android:textSize="12sp" />
+        android:fontFamily="@font/lato_regular"
+        android:textSize="10sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -70,16 +74,20 @@
 
         <TextView
             android:id="@+id/textView14"
+            android:textColor="#B34D4D4D"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/area_box_blue"
+            android:fontFamily="@font/lato"
             android:text="258 м²" />
 
         <TextView
             android:id="@+id/textView15"
+            android:textColor="#B34D4D4D"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:fontFamily="@font/lato"
             android:text="5.5 соток"
             android:background="@drawable/area_box_green"/>
     </LinearLayout>

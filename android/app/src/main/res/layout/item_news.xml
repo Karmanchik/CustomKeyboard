@@ -27,5 +27,6 @@
         android:layout_marginTop="12dp"
         android:text="Ваша дача в Сочи. Бассейн, лес, 4.3 сотки, предчистовая. Чудесный домик!"
         android:textColor="@color/black"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:fontFamily="@font/lato_regular"/>
 </LinearLayout>

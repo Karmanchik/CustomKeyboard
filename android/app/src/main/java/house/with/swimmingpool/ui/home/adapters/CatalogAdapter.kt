@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.R
+import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
 import house.with.swimmingpool.models.House
 
 class CatalogAdapter(
@@ -13,7 +14,7 @@ class CatalogAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return Holder(layoutInflater.inflate(R.layout.item_house_catalog, parent, false))
+        return Holder(ItemHouseCatalogBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
@@ -21,9 +22,13 @@ class CatalogAdapter(
 
     override fun getItemCount() = items.size
 
-    inner class Holder(private val view: View): RecyclerView.ViewHolder(view) {
-
+    inner class Holder(private val view: ItemHouseCatalogBinding): RecyclerView.ViewHolder(view.root) {
         fun bind(position: Int) {
+
+            val vp = view.housesImageContainer
+            vp.adapter = CatalogImageAdapter(listOf(House(), House(), House()))
+
+            view.dotsIndicator.setViewPager2(vp)
         }
 
     }
