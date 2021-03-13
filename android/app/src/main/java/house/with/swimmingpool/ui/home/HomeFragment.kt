@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.House
