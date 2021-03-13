@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentFilterFullBinding
+import house.with.swimmingpool.ui.filter.variants.VariantsFragment
 import house.with.swimmingpool.ui.onRightDrawableClicked
 import house.with.swimmingpool.ui.removeRightIcon
 import house.with.swimmingpool.ui.setRightIcon
@@ -86,6 +87,10 @@ class FullFilterFragment : Fragment() {
             style.initEditText()
             sea.initEditText()
             houseType.initEditText()
+
+            moneyType.setOnClickListener {
+                VariantsFragment().newInstance().show(parentFragmentManager, "VariantsFragment")
+            }
         }
     }
 
