@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import house.with.swimmingpool.api.config.controllers.StoriesServiceImpl
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,5 +26,6 @@ class MainActivity : AppCompatActivity() {
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        StoriesServiceImpl().getStories()
     }
 }
