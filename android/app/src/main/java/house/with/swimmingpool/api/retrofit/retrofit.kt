@@ -1,11 +1,13 @@
 package house.with.swimmingpool.api.retrofit
 
+import com.google.gson.GsonBuilder
 import house.with.swimmingpool.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+
 
 fun getRetrofit(): Retrofit {
         val baseUrl = "https://domsbasseinom.ru/app/"
@@ -21,9 +23,13 @@ fun getRetrofit(): Retrofit {
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build()
 
+        val gson = GsonBuilder()
+                .setLenient()
+                .create()
+
         return Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build()
 }
