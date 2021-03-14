@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 fun getRetrofit(): Retrofit {
-        val baseUrl = "https://private-99684c-housewithpool2.apiary-mock.com/"
+        val baseUrl = "https://domsbasseinom.ru/app/"
         val interceptor = HttpLoggingInterceptor()
         interceptor.level =
                 if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY

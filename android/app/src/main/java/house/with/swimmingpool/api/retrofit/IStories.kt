@@ -6,9 +6,7 @@ import retrofit2.http.*
 
 interface IStories {
 
-    @GET("/stories")
+    @GET("stories")
     fun getStories(): Call<Stories>
 
-    @GET("/house/id")
-    fun getHouse(): Call<Stories>
 }

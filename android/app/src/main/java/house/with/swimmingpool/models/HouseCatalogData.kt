@@ -1,0 +1,25 @@
+package house.with.swimmingpool.models
+
+data class HouseCatalogData(
+    val description: String?,
+    val discount: Int?,
+    val editedon: String?,
+    val geolocation: Geolocation?,
+    val hits: Int?,
+    val icon: String?,
+    val id: Int?,
+    val isFavourite: Boolean?,
+    val location: String?,
+    val mainTags: List<String>?,
+    val note: String?,
+    val photos: List<String>?,
+    val price: String?,
+    val price_of_one_meter: String?,
+    val promo: String?,
+    val square: Int?,
+    val square_area: Int?,
+    val statuses: List<String>?,
+    val title: String?,
+    val type: String?,
+    val video: List<Any>?
+)
