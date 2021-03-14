@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -27,7 +26,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
     ): View {
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
@@ -92,7 +91,35 @@ class HomeFragment : Fragment() {
             showNewsButton.setOnClickListener {
                 findNavController().navigate(R.id.action_navigation_home_to_newsListFragment)
             }
-        }
 
+            tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when(tab!!.position){
+                        0->{nestedScrollView.smoothScrollTo(0, textView16.top)}
+                        1 -> {nestedScrollView.smoothScrollTo(0, textView.top)}
+                        2 -> {nestedScrollView.smoothScrollTo(0, textView3.top)}
+                        3 -> {nestedScrollView.smoothScrollTo(0, textView5.top)}
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    when(tab!!.position){
+                        0->{nestedScrollView.smoothScrollTo(0, textView16.top)}
+                        1 -> {nestedScrollView.smoothScrollTo(0, textView.top)}
+                        2 -> {nestedScrollView.smoothScrollTo(0, textView3.top)}
+                        3 -> {nestedScrollView.smoothScrollTo(0, textView5.top)}
+                    }
+                }
+
+            })
+
+//            tabCatalog.setOnClickListener {nestedScrollView.smoothScrollTo(0, 0)  }
+
+//            testButton.setOnClickListener { nestedScrollView.smoothScrollTo(0, 0) }
+
+        }
     }
 }
