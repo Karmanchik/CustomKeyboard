@@ -3,12 +3,14 @@ package house.with.swimmingpool
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import androidx.annotation.RequiresPermission
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.api.config.controllers.StoriesServiceImpl
 
 class MainActivity : AppCompatActivity() {
@@ -26,5 +28,6 @@ class MainActivity : AppCompatActivity() {
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        RealtyServiceImpl().getHouseCatalog()
     }
 }
