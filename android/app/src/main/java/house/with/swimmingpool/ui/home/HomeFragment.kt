@@ -95,10 +95,10 @@ class HomeFragment : Fragment() {
             tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when(tab!!.position){
-                        0->{nestedScrollView.smoothScrollTo(0, textView16.top)}
-                        1 -> {nestedScrollView.smoothScrollTo(0, textView.top)}
-                        2 -> {nestedScrollView.smoothScrollTo(0, textView3.top)}
-                        3 -> {nestedScrollView.smoothScrollTo(0, textView5.top)}
+                        0->{nestedScrollView.smoothScrollTo(0, fullFilterView.bottom)}
+                        1 -> {nestedScrollView.smoothScrollTo(0, adsLinear.bottom)}
+                        2 -> {nestedScrollView.smoothScrollTo(0, divider.bottom)}
+                        3 -> {nestedScrollView.smoothScrollTo(0, divider2.bottom)}
                     }
                 }
 
