@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.R
+import house.with.swimmingpool.api.config.controllers.NewsServiceImpl
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.api.config.controllers.StoriesServiceImpl
+import house.with.swimmingpool.api.config.controllers.VideosServiceImpl
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.News
-import house.with.swimmingpool.models.Video
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
 
@@ -43,11 +44,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            videosRV.adapter = VideosAdapter(listOf(Video(), Video())) {
-                findNavController().navigate(R.id.action_navigation_home_to_videoFragment)
+
+            VideosServiceImpl().getVideos { data, e ->
+                if(e == null && data != null)
+                videosRV.adapter = VideosAdapter(requireContext(), data) {
+                    findNavController().navigate(R.id.action_navigation_home_to_videoFragment)
+                }
             }
-            newsRV.adapter = NewsAdapter(listOf(News(), News()), requireContext()) {
-                findNavController().navigate(R.id.action_navigation_home_to_newsSingleFragment)
+
+            NewsServiceImpl().getNews { data, e ->
+                if(e == null && data != null) {
+                    newsRV.adapter = NewsAdapter(data, requireContext())
+                    {
+                        findNavController().navigate(R.id.action_navigation_home_to_newsSingleFragment)
+                    }
+                }
             }
 
             lastSeenRV.apply {
@@ -57,13 +68,14 @@ class HomeFragment : Fragment() {
                 }
             }
 
-//            shortCatalogRV.adapter = CatalogAdapter(requireContext(), listOf(House(), House(false))) {
-//                findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
-//            }
-
-            storiesRV.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                adapter = StoriesAdapter(listOf("", "", "", ""))
+            StoriesServiceImpl().getStories { data, e ->
+                storiesRV.apply {
+                    layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    if(e == null && data != null) {
+                        adapter = StoriesAdapter(requireContext(), data)
+                    }
+                }
             }
 
             val vp = mainHousesContainer
@@ -73,6 +85,15 @@ class HomeFragment : Fragment() {
             }
 
             dotsIndicator.setViewPager2(vp)
+
+            RealtyServiceImpl().getHouseCatalog { data, e ->
+                if(e == null && data != null) {
+                    view.findViewById<RecyclerView>(R.id.shortCatalogRV).adapter =
+                        CatalogAdapter(data, requireContext()){
+                            findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
+                        }
+                }
+            }
 
             segmentedControl.setSelectedSegment(0)
 
@@ -96,11 +117,7 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.action_navigation_home_to_newsListFragment)
             }
 
-        RealtyServiceImpl().getHouseCatalog { data, e ->
-            if(e == null && data != null)
-            view.findViewById<RecyclerView>(R.id.shortCatalogRV).adapter =
-                CatalogAdapter(requireContext(), data)
-        }
+
 
             tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
                 override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -114,12 +131,10 @@ class HomeFragment : Fragment() {
                     moveOnTabSelected(tab!!.position)
                 }
             })
-//            tabCatalog.setOnClickListener {nestedScrollView.smoothScrollTo(0, 0)  }
-
-//            testButton.setOnClickListener { nestedScrollView.smoothScrollTo(0, 0) }
 
         }
     }
+
     private fun moveOnTabSelected(position: Int) {
         binding.apply {
             when (position) {

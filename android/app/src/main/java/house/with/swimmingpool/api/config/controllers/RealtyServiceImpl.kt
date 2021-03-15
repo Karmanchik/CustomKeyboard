@@ -23,7 +23,6 @@ class RealtyServiceImpl: IRealtyService
                 }
 
                 override fun onFailure(call: Call<HouseCatalog>, t: Throwable) {
-                    Log.e("Done", "Error", t)
                     onLoaded.invoke(null, t)
                 }
             })

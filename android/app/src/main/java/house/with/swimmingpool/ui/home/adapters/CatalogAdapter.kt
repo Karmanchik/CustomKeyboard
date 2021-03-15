@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
 import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.HouseCatalogData
 
 class CatalogAdapter(
-        var ctx: Context,
         var items: List<HouseCatalogData>,
-//        var onItemSelected: (House) -> Unit
+        var ctx: Context,
+        var onItemSelected: (HouseCatalogData) -> Unit
 
 ): RecyclerView.Adapter<CatalogAdapter.Holder>() {
 
@@ -24,16 +26,35 @@ class CatalogAdapter(
     override fun onBindViewHolder(holder: Holder, position: Int) =
             holder.bind(position)
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = if(items.size > 2) 2 else items.size
 
     inner class Holder(private val view: ItemHouseCatalogBinding): RecyclerView.ViewHolder(view.root) {
         fun bind(position: Int) {
 
-            val vp = view.housesImageContainer
-            vp.adapter = CatalogImageAdapter(listOf(House(), House(), House()), ctx)
+            view.apply {
+                val vp = housesImageContainer
+                when {
+                    items[position].photos != null -> {
+                        vp.adapter = CatalogImageAdapter(items[position].photos!!, ctx)
+                    }
+                    items[position].icon != null -> {
+                        vp.adapter = CatalogImageAdapter(listOf(items[position].icon!!), ctx)
+                    }
+                    else -> {
+                        listOf(R.drawable.placeholder)
+                    }
+                }
 
-            view.dotsIndicator.setViewPager2(vp)
+                dotsIndicator.setViewPager2(vp)
 
+                items[position].apply {
+                    textViewTitle.text = title
+                    textViewDescription.text = description
+                    textViewPrice.text = price
+                    textViewSquare.text = square.toString()          //fix me!!!
+                    textViewSquareArea.text = square_area.toString() //fix me!!!
+                }
+            }
 //            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
 
 //            if(!items[position].isMortgage){

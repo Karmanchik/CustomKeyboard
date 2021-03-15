@@ -22,7 +22,7 @@ class NewsSingleFragment : Fragment(R.layout.fragment_news_single) {
 
         view.findViewById<RecyclerView>(R.id.analogsRV).apply {
             layoutManager = GridLayoutManager(context, 2)
-            adapter = NewsAdapter(listOf(News(), News()), context) {}
+//            adapter = NewsAdapter(listOf(News(), News()), context) {}
         }
     }
 

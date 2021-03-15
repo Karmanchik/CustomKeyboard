@@ -16,9 +16,9 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<RecyclerView>(R.id.newsRV).apply {
             layoutManager = GridLayoutManager(context, 2)
-            adapter = NewsAdapter(listOf(News(), News(), News(), News()), requireContext()) {
-                findNavController().navigate(R.id.action_newsListFragment_to_newsSingleFragment)
-            }
+//            adapter = NewsAdapter(listOf(News(), News(), News(), News()), requireContext()) {
+//                findNavController().navigate(R.id.action_newsListFragment_to_newsSingleFragment)
+//            }
         }
     }
 
