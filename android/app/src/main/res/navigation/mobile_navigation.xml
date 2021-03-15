@@ -8,18 +8,99 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="house.with.swimmingpool.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="@string/title_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_videosListFragment"
+            app:destination="@id/videosListFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_videoFragment"
+            app:destination="@id/videoFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_newsSingleFragment"
+            app:destination="@id/newsSingleFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_newsListFragment"
+            app:destination="@id/newsListFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_fullFilterFragment"
+            app:destination="@id/fullFilterFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_shortFilterFragment"
+            app:destination="@id/shortFilterFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_catalogViewModel"
+            app:destination="@id/catalogViewModel" />
+        <action
+            android:id="@+id/action_navigation_home_to_houseFragment"
+            app:destination="@id/houseFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="house.with.swimmingpool.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:label="@string/title_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="house.with.swimmingpool.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:label="@string/title_notifications" />
+    <fragment
+        android:id="@+id/fullFilterFragment"
+        android:name="house.with.swimmingpool.ui.filter.full.FullFilterFragment"
+        android:label="FullFilterFragment" >
+        <action
+            android:id="@+id/action_fullFilterFragment_to_shortFilterFragment"
+            app:destination="@id/shortFilterFragment" />
+        <action
+            android:id="@+id/action_fullFilterFragment_to_catalogViewModel"
+            app:destination="@id/catalogViewModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/shortFilterFragment"
+        android:name="house.with.swimmingpool.ui.filter.short.ShortFilterFragment"
+        android:label="ShortFilterFragment" >
+        <action
+            android:id="@+id/action_shortFilterFragment_to_catalogViewModel"
+            app:destination="@id/catalogViewModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsSingleFragment"
+        android:name="house.with.swimmingpool.ui.news.singlenews.NewsSingleFragment"
+        android:label="NewsSingleFragment" />
+    <fragment
+        android:id="@+id/newsListFragment"
+        android:name="house.with.swimmingpool.ui.news.listnews.NewsListFragment"
+        android:label="NewsListFragment" >
+        <action
+            android:id="@+id/action_newsListFragment_to_newsSingleFragment"
+            app:destination="@id/newsSingleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="house.with.swimmingpool.ui.videos.singlevideo.VideoFragment"
+        android:label="VideoFragment" >
+        <action
+            android:id="@+id/action_videoFragment_to_houseFragment"
+            app:destination="@id/houseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/videosListFragment"
+        android:name="house.with.swimmingpool.ui.videos.listvideos.VideosListFragment"
+        android:label="VideosListFragment" >
+        <action
+            android:id="@+id/action_videosListFragment_to_videoFragment"
+            app:destination="@id/videoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/catalogViewModel"
+        android:name="house.with.swimmingpool.ui.catalog.CatalogFragment"
+        android:label="CatalogViewModel" >
+        <action
+            android:id="@+id/action_catalogViewModel_to_houseFragment"
+            app:destination="@id/houseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/houseFragment"
+        android:name="house.with.swimmingpool.ui.house.HouseFragment"
+        android:label="HouseFragment" />
 </navigation>
