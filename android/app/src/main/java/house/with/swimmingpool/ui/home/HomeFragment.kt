@@ -94,32 +94,30 @@ class HomeFragment : Fragment() {
 
             tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
                 override fun onTabSelected(tab: TabLayout.Tab?) {
-                    when(tab!!.position){
-                        0->{nestedScrollView.smoothScrollTo(0, fullFilterView.bottom)}
-                        1 -> {nestedScrollView.smoothScrollTo(0, adsLinear.bottom)}
-                        2 -> {nestedScrollView.smoothScrollTo(0, divider.bottom)}
-                        3 -> {nestedScrollView.smoothScrollTo(0, divider2.bottom)}
-                    }
+                    moveOnTabSelected(tab!!.position)
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
-                    when(tab!!.position){
-                        0->{nestedScrollView.smoothScrollTo(0, textView16.top)}
-                        1 -> {nestedScrollView.smoothScrollTo(0, textView.top)}
-                        2 -> {nestedScrollView.smoothScrollTo(0, textView3.top)}
-                        3 -> {nestedScrollView.smoothScrollTo(0, textView5.top)}
-                    }
+                    moveOnTabSelected(tab!!.position)
                 }
-
             })
-
 //            tabCatalog.setOnClickListener {nestedScrollView.smoothScrollTo(0, 0)  }
 
 //            testButton.setOnClickListener { nestedScrollView.smoothScrollTo(0, 0) }
 
+        }
+    }
+    private fun moveOnTabSelected(position: Int) {
+        binding.apply {
+            when (position) {
+                0->{nestedScrollView.smoothScrollTo(0, fullFilterView.bottom, 1500)}
+                1 -> {nestedScrollView.smoothScrollTo(0, adsLinear.bottom, 1500)}
+                2 -> {nestedScrollView.smoothScrollTo(0, divider.bottom, 1500)}
+                3 -> {nestedScrollView.smoothScrollTo(0, divider2.bottom, 1500)}
+            }
         }
     }
 }
