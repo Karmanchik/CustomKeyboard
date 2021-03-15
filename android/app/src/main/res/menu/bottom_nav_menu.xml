@@ -7,17 +7,17 @@
         android:title="Поиск" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/favouritesFragment"
         android:icon="@drawable/vector_heart"
         android:title="Избранное" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/catalogViewModel"
         android:icon="@drawable/ic_catalogue"
         android:title="Каталог" />
 
     <item
-        android:id="@+id/navigation_follows"
+        android:id="@+id/cabinetFragment"
         android:icon="@drawable/ic_lk"
         android:title="ЛК" />
 

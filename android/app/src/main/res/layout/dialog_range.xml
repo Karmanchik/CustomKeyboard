@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#575050"
+    android:fitsSystemWindows="false"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@drawable/header_bottom" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="238dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lato_medium"
+                    android:lineSpacingMultiplier="1.6"
+                    android:text="Цена, руб."
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:id="@+id/closeIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_red_cancel" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="12dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView47"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="Цена от, руб."
+                        android:textColor="#A1A1A1"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                    <EditText
+                        android:id="@+id/editTextTextPersonName4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:text="550 000" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView48"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="Цена до, руб."
+                        android:textColor="#A1A1A1"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                    <EditText
+                        android:id="@+id/editTextTextPersonName5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:text="50 000 000" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.appyvet.materialrangebar.RangeBar
+                android:id="@+id/rangebar"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                app:mrb_leftThumbColor="@color/white"
+                app:mrb_rightThumbColor="@color/white"
+                app:mrb_thumbBoundaryColor="@color/main_blue"
+                app:mrb_thumbBoundarySize="2dp"
+                app:trackHeight="1dp"
+                app:thumbColor="@drawable/switch_custom_thumb"
+                app:trackColor="#E6E6E6"
+                app:mrb_rangeBar="true"
+                app:mrb_thumbSize="12dp"
+                app:mrb_tickHeight="0dp"
+                app:mrb_connectingLineColor="@color/main_blue"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#DB5249"
+                    android:textSize="17sp"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/lato_medium"
+                    android:text="Сбросить" />
+
+                <TextView
+                    android:id="@+id/textView50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:fontFamily="@font/lato_medium"
+                    android:textColor="@color/main_blue"
+                    android:textSize="17sp"
+                    android:layout_marginEnd="12dp"
+                    android:text="Применить" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
