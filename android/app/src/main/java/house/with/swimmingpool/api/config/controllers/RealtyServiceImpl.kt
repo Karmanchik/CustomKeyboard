@@ -31,7 +31,7 @@ class RealtyServiceImpl: IRealtyService {
             .getHousesExample()
             .enqueue(object : Callback<HouseExample> {
                 override fun onResponse(call: Call<HouseExample>, response: Response<HouseExample>) {
-                    Log.e("Done", "response.body()!!.apiVersion")
+                    Log.e("Done", response.body()!!.data!!.formattedRegistration().toString())
                 }
 
                 override fun onFailure(call: Call<HouseExample>, t: Throwable) {

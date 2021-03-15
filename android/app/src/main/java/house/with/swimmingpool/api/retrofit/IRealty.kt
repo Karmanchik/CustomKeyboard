@@ -12,6 +12,6 @@ interface IRealty {
     @GET("objects")
     fun getHouses(): Call<HouseCatalog>
 
-    @GET("/objects/921")
+    @GET("objects/921")
     fun getHousesExample(): Call<HouseExample>
 }
