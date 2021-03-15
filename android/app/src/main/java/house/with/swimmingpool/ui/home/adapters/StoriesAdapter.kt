@@ -1,10 +1,12 @@
 package house.with.swimmingpool.ui.home.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.R
+import house.with.swimmingpool.ui.story.StoryActivity
 
 class StoriesAdapter(
         var items: List<String>
@@ -23,6 +25,9 @@ class StoriesAdapter(
     inner class Holder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(position: Int) {
+            itemView.setOnClickListener {
+                itemView.context.startActivity(Intent(itemView.context, StoryActivity::class.java))
+            }
         }
 
     }
