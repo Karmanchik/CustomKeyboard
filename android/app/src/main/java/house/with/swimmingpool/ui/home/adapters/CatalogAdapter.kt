@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
 import house.with.swimmingpool.models.House
 
@@ -32,6 +31,11 @@ class CatalogAdapter(
             view.dotsIndicator.setViewPager2(vp)
 
             itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
+
+            if(!items[position].isMortgage){
+                view.textViewMortgage.visibility = View.GONE
+                view.textViewData.visibility = View.VISIBLE
+            }
         }
 
     }

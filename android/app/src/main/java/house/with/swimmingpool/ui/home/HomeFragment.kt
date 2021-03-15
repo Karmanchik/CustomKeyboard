@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            shortCatalogRV.adapter = CatalogAdapter(listOf(House(), House())) {
+            shortCatalogRV.adapter = CatalogAdapter(listOf(House(), House(false))) {
                 findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
             }
 

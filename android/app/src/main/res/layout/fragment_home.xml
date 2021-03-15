@@ -24,6 +24,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="460dp" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="17dp"
+                android:layout_height="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="64dp"
+                app:srcCompat="@drawable/custom_top_menu"/>
+
             <ImageView
                 android:layout_marginTop="60dp"
                 android:layout_centerHorizontal="true"
@@ -55,7 +62,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="92dp"
-                app:dotsColor="#575d61"
+                app:dotsColor="@color/white"
                 app:dotsCornerRadius="2dp"
                 app:dotsSize="4dp"
                 app:dotsSpacing="10dp"
@@ -133,6 +140,8 @@
             app:selectedBackgroundColor="@color/main_blue"
             app:textSize="14sp"
             app:textVerticalPadding="6dp"
+            app:unSelectedStrokeColor="#E6E6E6"
+            app:strokeWidth="1dp"
             app:unSelectedTextColor="#808080" />
 
         <LinearLayout
@@ -394,7 +403,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:layout_marginTop="25dp"
-            android:layout_marginBottom="110dp"
+            android:layout_marginBottom="10dp"
             app:srcCompat="@drawable/coins_banner" />
 
     </LinearLayout>

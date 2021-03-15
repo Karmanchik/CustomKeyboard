@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.R
+import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
+import house.with.swimmingpool.databinding.ItemHouseCotalogImageBinding
 import house.with.swimmingpool.models.House
 
 class CatalogImageAdapter(
@@ -14,17 +16,22 @@ class CatalogImageAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogImageHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return CatalogImageHolder(layoutInflater.inflate(R.layout.item_house_cotalog_image, parent, false))
+        return CatalogImageHolder(ItemHouseCotalogImageBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: CatalogImageHolder, position: Int) =
             holder.bind(position)
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = items.size+1
 
-    inner class CatalogImageHolder(private val view: View): RecyclerView.ViewHolder(view) {
+    inner class CatalogImageHolder(private val view: ItemHouseCotalogImageBinding): RecyclerView.ViewHolder(view.root) {
 
         fun bind(position: Int) {
+            if(position != items.size){
+
+            }else{
+//                view.imageView2.setImageDrawable()
+            }
         }
 
     }

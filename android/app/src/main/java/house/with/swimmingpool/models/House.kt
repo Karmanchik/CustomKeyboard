@@ -1,4 +1,6 @@
 package house.with.swimmingpool.models
 
-class House {
+class House (
+    var isMortgage: Boolean = true
+){
 }

@@ -36,8 +36,8 @@
         android:layout_marginTop="8dp"
         android:text="от 10 500 000 руб."
         android:fontFamily="@font/lato_regular"
-        android:textColor="#CCFFFFFF"
-        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
@@ -57,9 +57,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Сочи, Мамайка"
-        android:textColor="#CCFFFFFF"
+        android:textColor="@color/white"
         android:fontFamily="@font/lato_regular"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView21"
         app:layout_constraintStart_toEndOf="@id/divider4" />
 

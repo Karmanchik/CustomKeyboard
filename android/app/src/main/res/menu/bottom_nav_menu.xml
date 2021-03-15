@@ -18,12 +18,7 @@
 
     <item
         android:id="@+id/navigation_follows"
-        android:icon="@drawable/ic_calendar"
-        android:title="Подписки" />
-
-    <item
-        android:id="@+id/navigation_menu"
-        android:icon="@drawable/ic_menu"
-        android:title="Меню" />
+        android:icon="@drawable/ic_lk"
+        android:title="ЛК" />
 
 </menu>
