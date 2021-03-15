@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            shortCatalogRV.adapter = CatalogAdapter(listOf(House(), House(false))) {
+            shortCatalogRV.adapter = CatalogAdapter(requireContext(), listOf(House(), House(false))) {
                 findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
             }
 
@@ -65,6 +65,7 @@ class HomeFragment : Fragment() {
 
             val vp = mainHousesContainer
             vp.adapter = HeaderAdapter(listOf(House(), House(), House())) {
+
                 findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
             }
 

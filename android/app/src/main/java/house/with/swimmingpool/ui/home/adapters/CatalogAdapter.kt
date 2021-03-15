@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.home.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,10 @@ import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
 import house.with.swimmingpool.models.House
 
 class CatalogAdapter(
+        var ctx: Context,
         var items: List<House>,
         var onItemSelected: (House) -> Unit
+
 ): RecyclerView.Adapter<CatalogAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -26,7 +29,7 @@ class CatalogAdapter(
         fun bind(position: Int) {
 
             val vp = view.housesImageContainer
-            vp.adapter = CatalogImageAdapter(listOf(House(), House(), House()))
+            vp.adapter = CatalogImageAdapter(listOf(House(), House(), House()), ctx)
 
             view.dotsIndicator.setViewPager2(vp)
 
