@@ -9,8 +9,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.R
+import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
+import house.with.swimmingpool.api.config.controllers.StoriesServiceImpl
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.News
@@ -54,9 +57,9 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            shortCatalogRV.adapter = CatalogAdapter(requireContext(), listOf(House(), House(false))) {
-                findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
-            }
+//            shortCatalogRV.adapter = CatalogAdapter(requireContext(), listOf(House(), House(false))) {
+//                findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+//            }
 
             storiesRV.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -92,6 +95,12 @@ class HomeFragment : Fragment() {
             showNewsButton.setOnClickListener {
                 findNavController().navigate(R.id.action_navigation_home_to_newsListFragment)
             }
+
+        RealtyServiceImpl().getHouseCatalog { data, e ->
+            if(e == null && data != null)
+            view.findViewById<RecyclerView>(R.id.shortCatalogRV).adapter =
+                CatalogAdapter(requireContext(), data)
+        }
 
             tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
                 override fun onTabSelected(tab: TabLayout.Tab?) {

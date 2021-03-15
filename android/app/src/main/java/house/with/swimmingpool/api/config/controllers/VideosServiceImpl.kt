@@ -2,10 +2,8 @@ package house.with.swimmingpool.api.config.controllers
 
 import android.util.Log
 import house.with.swimmingpool.api.config.interfaces.IVideosService
-import house.with.swimmingpool.api.retrofit.IRealty
 import house.with.swimmingpool.api.retrofit.IVideos
 import house.with.swimmingpool.api.retrofit.getRetrofit
-import house.with.swimmingpool.models.HouseExample
 import house.with.swimmingpool.models.Videos
 import retrofit2.Call
 import retrofit2.Callback

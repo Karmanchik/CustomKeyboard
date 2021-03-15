@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
 import house.with.swimmingpool.models.House
+import house.with.swimmingpool.models.HouseCatalogData
 
 class CatalogAdapter(
         var ctx: Context,
-        var items: List<House>,
-        var onItemSelected: (House) -> Unit
+        var items: List<HouseCatalogData>,
+//        var onItemSelected: (House) -> Unit
 
 ): RecyclerView.Adapter<CatalogAdapter.Holder>() {
 
@@ -33,12 +34,12 @@ class CatalogAdapter(
 
             view.dotsIndicator.setViewPager2(vp)
 
-            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
+//            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
 
-            if(!items[position].isMortgage){
-                view.textViewMortgage.visibility = View.GONE
-                view.textViewData.visibility = View.VISIBLE
-            }
+//            if(!items[position].isMortgage){
+//                view.textViewMortgage.visibility = View.GONE
+//                view.textViewData.visibility = View.VISIBLE
+//            }
         }
 
     }

@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import house.with.swimmingpool.api.config.controllers.NewsServiceImpl
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.api.config.controllers.StoriesServiceImpl
 import house.with.swimmingpool.api.config.controllers.VideosServiceImpl
@@ -28,7 +29,5 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        VideosServiceImpl().getVideos()
     }
 }
