@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.api.config.controllers.StoriesServiceImpl
+import house.with.swimmingpool.api.config.controllers.VideosServiceImpl
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +29,6 @@ class MainActivity : AppCompatActivity() {
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        RealtyServiceImpl().getHouseExample()
+        VideosServiceImpl().getVideos()
     }
 }
