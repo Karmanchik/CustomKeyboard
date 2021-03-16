@@ -36,15 +36,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="house.with.swimmingpool.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="house.with.swimmingpool.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications" />
-    <fragment
         android:id="@+id/fullFilterFragment"
         android:name="house.with.swimmingpool.ui.filter.full.FullFilterFragment"
         android:label="FullFilterFragment" >
@@ -103,4 +94,35 @@
         android:id="@+id/houseFragment"
         android:name="house.with.swimmingpool.ui.house.HouseFragment"
         android:label="HouseFragment" />
+    <fragment
+        android:id="@+id/cabinetFragment"
+        android:name="house.with.swimmingpool.ui.cabinet.CabinetFragment"
+        android:label="CabinetFragment" >
+        <action
+            android:id="@+id/action_cabinetFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="house.with.swimmingpool.ui.favourites.FavouritesFragment"
+        android:label="FavouritesFragment" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="house.with.swimmingpool.ui.register.RegisterFragment"
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_cabinetFragment"
+            app:destination="@id/cabinetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="house.with.swimmingpool.ui.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_cabinetFragment"
+            app:destination="@id/cabinetFragment" />
+    </fragment>
 </navigation>

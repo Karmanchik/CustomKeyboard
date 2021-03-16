@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -10,8 +11,9 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.SwitchCompat
-            android:fontFamily="@font/lato_regular"
-            android:textColor="@color/black"
+            android:thumb="@drawable/switch_custom_thumb"
+            app:track="@drawable/switch_custom_track"
+            style="@style/setting_switch"
             android:id="@+id/switch1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

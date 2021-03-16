@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.home.adapters
 
+import android.content.Intent
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import house.with.swimmingpool.R
+import house.with.swimmingpool.ui.story.StoryActivity
 import house.with.swimmingpool.databinding.ItemStoriesBinding
 import house.with.swimmingpool.models.StoriesData
 
@@ -36,7 +38,11 @@ class StoriesAdapter(
                     .into(view.imageViewStories)
             }
             view.textViewTitle.text = items[position].title
+            itemView.setOnClickListener {
+                itemView.context.startActivity(Intent(itemView.context, StoryActivity::class.java))
+            }
         }
+
     }
 
 }

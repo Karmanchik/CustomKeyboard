@@ -131,328 +131,6 @@
                     android:layout_height="wrap_content"
                     android:hint="Отделка" />
 
-                <com.google.android.material.chip.ChipGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginEnd="12dp"
-                    app:chipSpacingHorizontal="10dp"
-                    app:chipSpacingVertical="10dp">
-
-                    <TextView
-                        android:id="@+id/chip1"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Консьерж" />
-
-                    <TextView
-                        android:id="@+id/chip2"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Лифт" />
-
-                    <TextView
-                        android:id="@+id/chip3"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Детская площадка" />
-
-                    <TextView
-                        android:id="@+id/chip4"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Ландшафтный дизайн" />
-
-                    <TextView
-                        android:id="@+id/chip5"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Спортивная площадка" />
-
-                    <TextView
-                        android:id="@+id/chip6"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Спа салон" />
-
-                    <TextView
-                        android:id="@+id/chip7"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Фитнесс зал" />
-
-                    <TextView
-                        android:id="@+id/chip8"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Бассейн" />
-
-                    <TextView
-                        android:id="@+id/chip9"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Детский сад" />
-
-                    <TextView
-                        android:id="@+id/chip10"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Теннисный корт" />
-
-                    <TextView
-                        android:id="@+id/chip11"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Зона отдыха" />
-
-                    <TextView
-                        android:id="@+id/chip12"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Фонтан" />
-
-                    <TextView
-                        android:id="@+id/chip13"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Сад" />
-
-                    <TextView
-                        android:id="@+id/chip14"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Сауна" />
-
-                    <TextView
-                        android:id="@+id/chip15"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Ресторан" />
-
-                    <TextView
-                        android:id="@+id/chip16"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Бильярд" />
-
-                    <TextView
-                        android:id="@+id/chip17"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="КПП" />
-
-                    <TextView
-                        android:id="@+id/chip18"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Вертолетная площадка" />
-
-                    <TextView
-                        android:id="@+id/chip19"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Коммерческая недвижимость" />
-
-                    <TextView
-                        android:id="@+id/chip20"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Видеонаблюдение" />
-
-                    <TextView
-                        android:id="@+id/chip21"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Остановка общественного транспорта" />
-
-                    <TextView
-                        android:id="@+id/chip22"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Школа" />
-
-                    <TextView
-                        android:id="@+id/chip23"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Умный дом" />
-
-                    <TextView
-                        android:id="@+id/chip24"
-                        style="@style/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/unselected_chip"
-                        android:paddingStart="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="4dp"
-                        android:tag="1"
-                        android:text="Магазины, аптеки" />
-
-                </com.google.android.material.chip.ChipGroup>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -492,6 +170,330 @@
                 android:text="Дополнительно:"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
+
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="12dp"
+                app:chipSpacingHorizontal="10dp"
+                app:chipSpacingVertical="10dp">
+
+                <TextView
+                    android:id="@+id/chip1"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Консьерж" />
+
+                <TextView
+                    android:id="@+id/chip2"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Лифт" />
+
+                <TextView
+                    android:id="@+id/chip3"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Детская площадка" />
+
+                <TextView
+                    android:id="@+id/chip4"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Ландшафтный дизайн" />
+
+                <TextView
+                    android:id="@+id/chip5"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Спортивная площадка" />
+
+                <TextView
+                    android:id="@+id/chip6"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Спа салон" />
+
+                <TextView
+                    android:id="@+id/chip7"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Фитнесс зал" />
+
+                <TextView
+                    android:id="@+id/chip8"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Бассейн" />
+
+                <TextView
+                    android:id="@+id/chip9"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Детский сад" />
+
+                <TextView
+                    android:id="@+id/chip10"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Теннисный корт" />
+
+                <TextView
+                    android:id="@+id/chip11"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Зона отдыха" />
+
+                <TextView
+                    android:id="@+id/chip12"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Фонтан" />
+
+                <TextView
+                    android:id="@+id/chip13"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Сад" />
+
+                <TextView
+                    android:id="@+id/chip14"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Сауна" />
+
+                <TextView
+                    android:id="@+id/chip15"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Ресторан" />
+
+                <TextView
+                    android:id="@+id/chip16"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Бильярд" />
+
+                <TextView
+                    android:id="@+id/chip17"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="КПП" />
+
+                <TextView
+                    android:id="@+id/chip18"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Вертолетная площадка" />
+
+                <TextView
+                    android:id="@+id/chip19"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Коммерческая недвижимость" />
+
+                <TextView
+                    android:id="@+id/chip20"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Видеонаблюдение" />
+
+                <TextView
+                    android:id="@+id/chip21"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Остановка общественного транспорта" />
+
+                <TextView
+                    android:id="@+id/chip22"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Школа" />
+
+                <TextView
+                    android:id="@+id/chip23"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Умный дом" />
+
+                <TextView
+                    android:id="@+id/chip24"
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/unselected_chip"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:tag="1"
+                    android:text="Магазины, аптеки" />
+
+            </com.google.android.material.chip.ChipGroup>
 
         </LinearLayout>
     </ScrollView>

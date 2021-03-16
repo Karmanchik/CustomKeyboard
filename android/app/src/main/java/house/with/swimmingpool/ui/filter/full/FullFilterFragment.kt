@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentFilterFullBinding
+import house.with.swimmingpool.ui.filter.range.RangeDialogFragment
 import house.with.swimmingpool.ui.filter.variants.VariantsFragment
 import house.with.swimmingpool.ui.onRightDrawableClicked
 import house.with.swimmingpool.ui.removeRightIcon
@@ -90,6 +91,9 @@ class FullFilterFragment : Fragment() {
 
             moneyType.setOnClickListener {
                 VariantsFragment().newInstance().show(parentFragmentManager, "VariantsFragment")
+            }
+            area.setOnClickListener {
+                RangeDialogFragment().newInstance().show(parentFragmentManager, "range")
             }
         }
     }
