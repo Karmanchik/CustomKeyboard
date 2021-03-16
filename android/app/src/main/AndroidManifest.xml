@@ -3,18 +3,6 @@
     package="house.with.swimmingpool">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-
-
-    <!--  общая телефония -->
-    <uses-feature android:name="android.hardware.telephony"/>
-
-    <!--  CDMA-телефония -->
-    <uses-feature android:name="android.hardware.telephony.cdma"/>
-
-    <!--  GSM-телефония -->
-    <uses-feature android:name="android.hardware.telephony.gsm"/>
 
     <uses-permission android:name="android.permission.INTERNET" />
 
