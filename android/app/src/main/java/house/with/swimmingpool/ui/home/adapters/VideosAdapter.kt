@@ -29,7 +29,7 @@ class VideosAdapter(
     inner class Holder(private val view: ItemVideoBinding): RecyclerView.ViewHolder(view.root) {
 
         fun bind(position: Int) {
-//            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
+            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
             Glide.with(ctx)
                 .load(items[position].icon)
                 .error(R.drawable.placeholder)

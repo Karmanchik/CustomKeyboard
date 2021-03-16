@@ -1,14 +1,12 @@
 package house.with.swimmingpool.ui.home.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
-import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.HouseCatalogData
 
 class CatalogAdapter(
@@ -20,17 +18,18 @@ class CatalogAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layoutInflater = LayoutInflater.from(parent.context)
+        Log.e("taf", "onCreateViewHolder")
         return Holder(ItemHouseCatalogBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
             holder.bind(position)
 
-    override fun getItemCount() = if(items.size > 2) 2 else items.size
+    override fun getItemCount() = items.size
 
     inner class Holder(private val view: ItemHouseCatalogBinding): RecyclerView.ViewHolder(view.root) {
         fun bind(position: Int) {
-
+Log.e("taf", "class Holder")
             view.apply {
                 val vp = housesImageContainer
                 when {

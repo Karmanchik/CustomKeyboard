@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.NewsServiceImpl
@@ -18,13 +17,12 @@ import house.with.swimmingpool.api.config.controllers.StoriesServiceImpl
 import house.with.swimmingpool.api.config.controllers.VideosServiceImpl
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.House
-import house.with.swimmingpool.models.News
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
 
 class HomeFragment : Fragment() {
 
-    lateinit var binding : FragmentHomeBinding
+    lateinit var houmeBinding : FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
@@ -33,17 +31,17 @@ class HomeFragment : Fragment() {
             savedInstanceState: Bundle?,
     ): View {
 
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        houmeBinding = FragmentHomeBinding.inflate(layoutInflater)
         homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        return binding.root
+        return houmeBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply {
+        houmeBinding.apply {
 
             VideosServiceImpl().getVideos { data, e ->
                 if(e == null && data != null)
@@ -88,10 +86,15 @@ class HomeFragment : Fragment() {
 
             RealtyServiceImpl().getHouseCatalog { data, e ->
                 if(e == null && data != null) {
-                    view.findViewById<RecyclerView>(R.id.shortCatalogRV).adapter =
-                        CatalogAdapter(data, requireContext()){
-                            findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
-                        }
+                   shortCatalogRV.adapter = if(data.size > 2) {
+                       CatalogAdapter(listOf(data[0], data[1]), requireContext()) {
+                           findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
+                       }
+                   }else {
+                       CatalogAdapter(data, requireContext()) {
+                           findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
+                       }
+                   }
                 }
             }
 
@@ -136,7 +139,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun moveOnTabSelected(position: Int) {
-        binding.apply {
+        houmeBinding.apply {
             when (position) {
                 0->{nestedScrollView.smoothScrollTo(0, fullFilterView.bottom, 1500)}
                 1 -> {nestedScrollView.smoothScrollTo(0, adsLinear.bottom, 1500)}
