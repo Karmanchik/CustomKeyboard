@@ -52,14 +52,12 @@ Log.e("taf", "class Holder")
                     textViewPrice.text = price
                     textViewSquare.text = square.toString()          //fix me!!!
                     textViewSquareArea.text = square_area.toString() //fix me!!!
+
+                    if (mainTags != null) {
+                        hashTagRV.adapter = TagAdapter(ctx, mainTags)
+                    }
                 }
             }
-//            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
-
-//            if(!items[position].isMortgage){
-//                view.textViewMortgage.visibility = View.GONE
-//                view.textViewData.visibility = View.VISIBLE
-//            }
         }
 
     }

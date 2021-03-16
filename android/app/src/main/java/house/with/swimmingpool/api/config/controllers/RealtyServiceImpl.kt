@@ -19,11 +19,15 @@ class RealtyServiceImpl: IRealtyService
             .getHouses()
             .enqueue(object : Callback<HouseCatalog> {
                 override fun onResponse(call: Call<HouseCatalog>, response: Response<HouseCatalog>) {
-                    onLoaded.invoke(response.body()?.houseCatalogData, null)
+                    try {
+                        onLoaded.invoke(response.body()?.houseCatalogData, null)
+                    }catch (e:Exception){}
                 }
 
                 override fun onFailure(call: Call<HouseCatalog>, t: Throwable) {
+                    try {
                     onLoaded.invoke(null, t)
+                    }catch (e:Exception){}
                 }
             })
     }

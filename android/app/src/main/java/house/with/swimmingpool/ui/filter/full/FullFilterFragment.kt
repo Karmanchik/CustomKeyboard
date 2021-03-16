@@ -1,6 +1,7 @@
 package house.with.swimmingpool.ui.filter.full
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class FullFilterFragment : Fragment() {
 
     lateinit var binding : FragmentFilterFullBinding
     private lateinit var viewModel: FullFilterViewModel
+    private var isOptionSelected = 0
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -111,11 +113,15 @@ class FullFilterFragment : Fragment() {
             it.setBackgroundResource(R.drawable.selected_chip)
             (it as TextView).setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             it.tag = "2"
+            isOptionSelected++
         } else {
             it.setBackgroundResource(R.drawable.unselected_chip)
             (it as TextView).setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
             it.tag = "1"
+            isOptionSelected--
         }
+        Log.e("options", isOptionSelected.toString())
+        binding.showCatalogButton.isEnabled = isOptionSelected == 0
     }
 
 }

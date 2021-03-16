@@ -78,7 +78,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="0dp"
-                android:background="@drawable/header_bottom"
+                android:background="@drawable/tab_header_bottom"
                 android:clipToPadding="true"
                 android:paddingTop="22dp"
                 android:id="@+id/tabs"

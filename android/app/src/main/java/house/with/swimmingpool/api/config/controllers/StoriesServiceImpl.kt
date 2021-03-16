@@ -17,11 +17,15 @@ class StoriesServiceImpl : IStoriesService {
             .getStories()
             .enqueue(object : Callback<Stories> {
                 override fun onResponse(call: Call<Stories>, response: Response<Stories>) {
+                    try{
                     onLoaded.invoke(response.body()?.data, null)
+                    }catch (e:Exception){}
                 }
 
                 override fun onFailure(call: Call<Stories>, t: Throwable) {
+                    try{
                     onLoaded.invoke(null, t)
+                    }catch (e:Exception){}
                 }
             })
     }

@@ -16,11 +16,15 @@ class VideosServiceImpl: IVideosService {
             .getVideos()
             .enqueue(object : Callback<Videos> {
                 override fun onResponse(call: Call<Videos>, response: Response<Videos>) {
+                    try{
                     onLoaded.invoke(response.body()?.data, null)
+                    }catch (e:Exception){}
                 }
 
                 override fun onFailure(call: Call<Videos>, t: Throwable) {
+                    try{
                     onLoaded.invoke(null, t)
+                    }catch (e:Exception){}
                 }
             })
     }

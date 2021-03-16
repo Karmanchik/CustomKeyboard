@@ -504,7 +504,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:enabled="false"
         android:text="Показать 423 предложений"
         app:layout_constraintBottom_toBottomOf="parent" />
 

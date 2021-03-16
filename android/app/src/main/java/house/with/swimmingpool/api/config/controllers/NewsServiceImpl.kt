@@ -18,11 +18,15 @@ class NewsServiceImpl: INewsService {
             .getNews()
             .enqueue(object : Callback<NewsX> {
                 override fun onResponse(call: Call<NewsX>, response: Response<NewsX>) {
+                    try {
                     onLoaded.invoke(response.body()?.data, null)
+                    }catch (e:Exception){}
                 }
 
                 override fun onFailure(call: Call<NewsX>, t: Throwable) {
+                    try{
                     onLoaded.invoke(null, t)
+                    }catch (e:Exception){}
                 }
             })
     }
