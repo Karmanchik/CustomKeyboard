@@ -22,10 +22,16 @@ class CabinetFragment : Fragment(R.layout.fragment_cabinet) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<View>(R.id.toLoginButton).setOnClickListener {
-            findNavController().navigate(R.id.action_cabinetFragment_to_loginFragment)
-        }
+//        view.findViewById<View>(R.id.toLoginButton).setOnClickListener {
+//            findNavController().navigate(R.id.action_cabinetFragment_to_loginFragment)
+//        }
         val avatar = view.findViewById<ImageView>(R.id.avatar)
+
+        Glide.with(this)
+            .load(R.drawable.placeholder)
+            .circleCrop()
+            .into(avatar)
+
         avatar.setOnClickListener {
             val pickPhoto = Intent(
                     Intent.ACTION_PICK,
