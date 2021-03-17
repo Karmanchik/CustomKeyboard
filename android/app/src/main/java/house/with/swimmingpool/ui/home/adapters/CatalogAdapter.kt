@@ -19,7 +19,6 @@ class CatalogAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        Log.e("taf", "onCreateViewHolder")
         return Holder(ItemHouseCatalogBinding.inflate(layoutInflater, parent, false))
     }
 
@@ -31,7 +30,6 @@ class CatalogAdapter(
     inner class Holder(private val view: ItemHouseCatalogBinding): RecyclerView.ViewHolder(view.root) {
         @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
-Log.e("taf", "class Holder")
             view.apply {
                 val vp = housesImageContainer
                 when {
@@ -52,8 +50,8 @@ Log.e("taf", "class Holder")
                     textViewTitle.text = title
                     textViewDescription.text = location
                     textViewPrice.text = "$price руб."
-                    textViewSquare.text = square.toString() + " м²."      //fix me!!!
-                    textViewSquareArea.text = square_area.toString() + " сот." //fix me!!!
+                    textViewSquare.text = square.toString() + " м²"      //fix me!!!
+                    textViewSquareArea.text = square_area.toString() + " соток" //fix me!!!
 
                     if (mainTags != null) {
                         hashTagRV.adapter = TagAdapter(ctx, mainTags)
