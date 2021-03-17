@@ -26,6 +26,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val exit = view.findViewById<View>(R.id.textView38)
         exit.setOnClickListener {
             App.setting.token = null
+            requireActivity().recreate()
         }
 
         val avatar = view.findViewById<ImageView>(R.id.avatar)
