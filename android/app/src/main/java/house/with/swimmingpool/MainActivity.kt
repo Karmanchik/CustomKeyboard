@@ -1,6 +1,8 @@
 package house.with.swimmingpool
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.annotation.RequiresPermission
@@ -22,7 +24,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
+        val fab = findViewById<View>(R.id.call)
         val navController = findNavController(R.id.nav_host_fragment)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.label.toString() == "Home") {
+                fab.visibility = View.VISIBLE
+            } else {
+                fab.visibility = View.GONE
+            }
+        }
         navView.setOnNavigationItemSelectedListener {
             navController.navigate(it.itemId)
             true
