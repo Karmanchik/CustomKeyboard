@@ -14,7 +14,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/placeholder" />
+        app:srcCompat="@drawable/story_placeholder" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:srcCompat="@drawable/black_gradient" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/timersRV"
@@ -46,7 +53,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="7dp"
-        android:fontFamily="@font/lato"
+        android:textSize="18sp"
+        android:fontFamily="@font/gilroy_bold"
+        android:lineSpacingMultiplier="1.6"
         android:text="10 лучших вилл на Сочи"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/textView51"
@@ -60,7 +69,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="30dp"
-        android:fontFamily="@font/lato"
+        android:fontFamily="@font/gilroy_regular"
+        android:lineSpacingMultiplier="1.6"
         android:text="Сочи — это теплое море, впечатляющая природа
 и возможность своими глазами увидеть грозные вулканы, самым знаменитым из которых является, конечно, Этна. Если вы запланировали путешествие большой компанией, стоит рассмотреть вариант
 аренды отдельного дома. "

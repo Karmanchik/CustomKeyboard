@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.bumptech.glide.Glide
 import house.with.swimmingpool.R
 import house.with.swimmingpool.ui.story.StoryActivity
@@ -39,7 +40,9 @@ class StoriesAdapter(
             }
             view.textViewTitle.text = items[position].title
             itemView.setOnClickListener {
-                itemView.context.startActivity(Intent(itemView.context, StoryActivity::class.java))
+                itemView.context.startActivity(Intent(itemView.context, StoryActivity::class.java).apply {
+                    putExtra("item", Gson().toJson())
+                })
             }
         }
 
