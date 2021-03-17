@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.transaction
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
+import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentCabinetBinding
 import house.with.swimmingpool.ui.cabinet.password.PasswordFragment
@@ -32,6 +34,10 @@ class CabinetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (!App.setting.isAuth) {
+            findNavController().navigate(R.id.action_cabinetFragment_to_loginFragment)
+        }
 
         binding?.tabs?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {

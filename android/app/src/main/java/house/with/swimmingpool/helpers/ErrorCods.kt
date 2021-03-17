@@ -1,4 +1,4 @@
-package house.with.swimmingpool.errorcods
+package house.with.swimmingpool.helpers
 
 object ErrorCods {
 
