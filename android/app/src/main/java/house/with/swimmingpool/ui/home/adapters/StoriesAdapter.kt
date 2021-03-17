@@ -1,21 +1,18 @@
 package house.with.swimmingpool.ui.home.adapters
 
-import android.content.Intent
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import house.with.swimmingpool.R
-import house.with.swimmingpool.ui.story.StoryActivity
 import house.with.swimmingpool.databinding.ItemStoriesBinding
 import house.with.swimmingpool.models.StoriesData
+import house.with.swimmingpool.ui.startActivity
+import house.with.swimmingpool.ui.story.StoryActivity
 
 class StoriesAdapter(
-        var ctx : Context,
-        var items: List<StoriesData>
+    var items: List<StoriesData>
 ) : RecyclerView.Adapter<StoriesAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -24,25 +21,24 @@ class StoriesAdapter(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
-            holder.bind(position)
+        holder.bind(items[position])
 
     override fun getItemCount() = items.size
 
     inner class Holder(private val view: ItemStoriesBinding) : RecyclerView.ViewHolder(view.root) {
 
-        fun bind(position: Int) {
-            if(items[position].icon != null){
-                Glide.with(ctx)
-                    .load(items[position].icon)
-                    .error(R.drawable.placeholder)
-                    .placeholder(R.drawable.placeholder)
-                    .into(view.imageViewStories)
-            }
-            view.textViewTitle.text = items[position].title
+        fun bind(item: StoriesData) {
+            Glide.with(itemView.context)
+                .load(item.icon)
+                .error(R.drawable.placeholder)
+                .placeholder(R.drawable.placeholder)
+                .into(view.imageViewStories)
+
+            view.textViewTitle.text = item.title
             itemView.setOnClickListener {
-                itemView.context.startActivity(Intent(itemView.context, StoryActivity::class.java).apply {
-                    putExtra("item", Gson().toJson())
-                })
+                it.context.startActivity<StoryActivity> {
+                    putExtra("item", Gson().toJson(item))
+                }
             }
         }
 

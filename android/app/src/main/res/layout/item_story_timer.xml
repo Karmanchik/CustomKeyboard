@@ -4,7 +4,8 @@
     style="?android:attr/progressBarStyleHorizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:max="1000"
-    android:progress="456"
+    android:max="50"
+    android:progress="0"
+    android:layout_margin="2dp"
     android:progressBackgroundTint="#80FFFFFF"
     android:progressTint="@color/white" />

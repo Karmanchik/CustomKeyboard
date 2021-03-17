@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/closeIcon"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="22dp"
@@ -47,7 +47,7 @@
         app:srcCompat="@drawable/ic_story_exit" />
 
     <TextView
-        android:id="@+id/textView46"
+        android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -58,12 +58,12 @@
         android:lineSpacingMultiplier="1.6"
         android:text="10 лучших вилл на Сочи"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/textView51"
+        app:layout_constraintBottom_toTopOf="@id/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView51"
+        android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -76,12 +76,12 @@
 аренды отдельного дома. "
         android:textColor="@color/white"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@id/textView52"
+        app:layout_constraintBottom_toTopOf="@id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView52"
+        android:id="@+id/button"
         style="@style/main_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

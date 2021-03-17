@@ -5,6 +5,6 @@ import java.io.Serializable
 data class StoriesItem(
     val message: String?,
     val poster: String?,
-    val title: String?,
+    var title: String?,
     val url: String?
 ): Serializable
