@@ -33,7 +33,7 @@ class NewsAdapter(
     override fun onBindViewHolder(holder: Holder, position: Int) =
             holder.bind(position)
 
-    override fun getItemCount() = if(items.size < 4) {items.size} else { 4 }
+    override fun getItemCount() = if(items.size < 2) {items.size} else { 2 }
 
     inner class Holder(private val view: ItemNewsBinding): RecyclerView.ViewHolder(view.root) {
 

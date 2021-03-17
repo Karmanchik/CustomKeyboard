@@ -4,17 +4,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import house.with.swimmingpool.R
+import house.with.swimmingpool.databinding.ItemHeaderHouseBinding
 import house.with.swimmingpool.models.House
+import house.with.swimmingpool.models.MainBannersData
 
 class HeaderAdapter(
-        var items: List<House>,
-        var onItemSelected: (House) -> Unit
+        var items: List<MainBannersData>,
+        var onItemSelected: () -> Unit
 ): RecyclerView.Adapter<HeaderAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return Holder(layoutInflater.inflate(R.layout.item_header_house, parent, false))
+        return Holder(ItemHeaderHouseBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
@@ -22,10 +25,23 @@ class HeaderAdapter(
 
     override fun getItemCount() = items.size
 
-    inner class Holder(private val view: View): RecyclerView.ViewHolder(view) {
+    inner class Holder(private val view: ItemHeaderHouseBinding): RecyclerView.ViewHolder(view.root) {
 
         fun bind(position: Int) {
-            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
+            view.apply {
+                items[position].apply {
+                    if (banner != null) {
+                        Glide.with(itemView.context)
+                                .load(items[position].banner)
+                                .error(R.drawable.placeholder)
+                                .placeholder(R.drawable.placeholder)
+                                .into(imageView3)
+                    }
+                    textView17.text = name
+                    textView21.text = description
+                }
+            }
+            itemView.setOnClickListener { onItemSelected.invoke() }
         }
 
     }

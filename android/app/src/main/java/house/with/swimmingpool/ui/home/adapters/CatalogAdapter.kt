@@ -50,10 +50,10 @@ Log.e("taf", "class Holder")
 
                 items[position].apply {
                     textViewTitle.text = title
-                    textViewDescription.text = description
-                    textViewPrice.text = "$price руб"
-                    textViewSquare.text = square.toString() + " м²"      //fix me!!!
-                    textViewSquareArea.text = square_area.toString() + " сот" //fix me!!!
+                    textViewDescription.text = location
+                    textViewPrice.text = "$price руб."
+                    textViewSquare.text = square.toString() + " м²."      //fix me!!!
+                    textViewSquareArea.text = square_area.toString() + " сот." //fix me!!!
 
                     if (mainTags != null) {
                         hashTagRV.adapter = TagAdapter(ctx, mainTags)
