@@ -8,4 +8,12 @@ data class NewsData(
     val introtext: String?,
     val tags: List<String>?,
     val title: String?
-)
+) {
+
+    companion object {
+        fun createEmpty(): NewsData = NewsData(
+                "", 0, null, 0, "wefw", null, null
+        )
+    }
+
+}

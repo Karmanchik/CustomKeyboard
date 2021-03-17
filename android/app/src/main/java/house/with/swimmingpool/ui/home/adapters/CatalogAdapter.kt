@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.home.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ class CatalogAdapter(
     override fun getItemCount() = items.size
 
     inner class Holder(private val view: ItemHouseCatalogBinding): RecyclerView.ViewHolder(view.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
 Log.e("taf", "class Holder")
             view.apply {
@@ -49,9 +51,9 @@ Log.e("taf", "class Holder")
                 items[position].apply {
                     textViewTitle.text = title
                     textViewDescription.text = description
-                    textViewPrice.text = price
-                    textViewSquare.text = square.toString()          //fix me!!!
-                    textViewSquareArea.text = square_area.toString() //fix me!!!
+                    textViewPrice.text = "$price руб"
+                    textViewSquare.text = square.toString() + " м²"      //fix me!!!
+                    textViewSquareArea.text = square_area.toString() + " сот" //fix me!!!
 
                     if (mainTags != null) {
                         hashTagRV.adapter = TagAdapter(ctx, mainTags)

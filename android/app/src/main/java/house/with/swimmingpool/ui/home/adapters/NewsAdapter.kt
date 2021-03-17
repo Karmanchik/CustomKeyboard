@@ -38,8 +38,8 @@ class NewsAdapter(
     inner class Holder(private val view: ItemNewsBinding): RecyclerView.ViewHolder(view.root) {
 
         fun bind(position: Int) {
-//            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
-            Glide.with(ctx)
+            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
+            Glide.with(itemView.context)
                 .load(items[position].icon)
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)

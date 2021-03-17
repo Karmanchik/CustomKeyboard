@@ -3,11 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="13dp"
-    android:layout_marginEnd="13dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    app:cardCornerRadius="6dp">
+    app:cardCornerRadius="6dp"
+    app:cardElevation="15dp">
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="18dp"
+        android:layout_weight="0"
+        android:layout_gravity="end"
+        app:srcCompat="@drawable/vector_more" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,37 +29,40 @@
             android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Купиь"
-            android:fontFamily="@font/lato"
-            android:textSize="17dp"
-            android:layout_marginTop="12dp"
-            android:textColor="@color/black"/>
+            android:text="Подборка для:"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="12sp"
+            android:layout_marginTop="17dp"
+            android:textColor="#66000000"/>
 
         <TextView
             android:id="@+id/textView18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Цена, руб."
-            android:fontFamily="@font/lato"
-            android:textSize="10dp"
-            android:textColor="#80000000"
-            android:layout_marginTop="10dp"/>
+            android:text="Токарев Владимир"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:layout_marginTop="9dp"/>
 
         <TextView
             android:id="@+id/textView44"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="от 9 000 000 до 30 000 000 руб."
-            android:fontFamily="@font/lato_regular"
-            android:textSize="14dp"
+            android:layout_marginTop="5dp"
+            android:text="14 оъектов"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="15sp"
             android:textColor="#000000"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/TagRV"
+            android:id="@+id/photoRV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingEnd="6dp"
-            android:paddingBottom="13dp"/>
+            android:paddingBottom="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
