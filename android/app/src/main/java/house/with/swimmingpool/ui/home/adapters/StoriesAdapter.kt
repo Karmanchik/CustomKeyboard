@@ -33,8 +33,8 @@ class StoriesAdapter(
             if(items[position].icon != null){
                 Glide.with(ctx)
                     .load(items[position].icon)
-                    .error(R.drawable.placeholder)
-                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error_placeholder_big)
+                    .placeholder(R.drawable.gradient_placeholder_midle)
                     .into(view.imageViewStories)
             }
             view.textViewTitle.text = items[position].title

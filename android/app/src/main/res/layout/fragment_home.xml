@@ -237,17 +237,24 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp" />
 
-        <ImageView
-            android:id="@+id/bigAdBanner"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="1dp"
+            app:cardCornerRadius="10dp"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/placeholder"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            >
+            <ImageView
+                android:id="@+id/bigAdBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/placeholder"
+                tools:src="@tools:sample/backgrounds/scenic" />
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:id="@+id/adsLinear"
@@ -256,25 +263,40 @@
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/firstAdBanner"
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:elevation="1dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
+                app:cardCornerRadius="6dp"
+                >
+            <ImageView
+                android:id="@+id/firstAdBanner"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:adjustViewBounds="true"
                 app:srcCompat="@drawable/placeholder" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="1dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="6dp"
+                >
 
             <ImageView
                 android:id="@+id/secondAdBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="12dp"
-                android:layout_weight="1"
                 android:adjustViewBounds="true"
                 app:srcCompat="@drawable/placeholder" />
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
@@ -295,7 +317,7 @@
             android:layout_marginTop="7dp"
             android:fontFamily="@font/lato_regular"
             android:textSize="12dp"
-            android:text="690 предложений" />
+            android:text="" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/shortCatalogRV"
@@ -389,6 +411,7 @@
             android:layout_marginEnd="12dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"
+
             tools:listitem="@layout/item_news">
 
         </androidx.recyclerview.widget.RecyclerView>

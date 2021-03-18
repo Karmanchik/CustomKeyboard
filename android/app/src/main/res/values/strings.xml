@@ -6,5 +6,6 @@
     <string-array name="main_segment_control_variants">
         <item>Дома</item>
         <item>Квартиры</item>
+        <item>Новостройки</item>
     </string-array>
 </resources>

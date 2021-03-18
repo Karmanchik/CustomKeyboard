@@ -32,12 +32,7 @@ android {
     viewBinding{
         enabled = true
 
-
-        
     }
-
-
-    
 }
 
 dependencies {
@@ -71,5 +66,7 @@ dependencies {
     implementation 'com.appyvet:materialrangebar:1.4.8'
 
     implementation 'com.google.android:flexbox:2.0.1'
+
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
 }
