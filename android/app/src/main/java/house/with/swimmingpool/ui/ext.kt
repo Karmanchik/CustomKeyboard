@@ -1,8 +1,10 @@
 package house.with.swimmingpool.ui
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
@@ -100,4 +102,12 @@ fun String.reformatDate(inputPattern: String, outputPattern: String): String? {
 
 fun TextView.setColorText(@ColorRes id: Int) {
     setTextColor(ContextCompat.getColor(context, id))
+}
+
+inline fun <reified A : Activity> Context.startActivity(configIntent: Intent.() -> Unit = {}) {
+    startActivity(Intent(this, A::class.java).apply(configIntent))
+}
+
+inline fun <reified A : Activity> Fragment.startActivity(configIntent: Intent.() -> Unit = {}) {
+    startActivity(Intent(requireContext(), A::class.java).apply(configIntent))
 }

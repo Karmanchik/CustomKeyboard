@@ -1,61 +1,61 @@
 package house.with.swimmingpool.ui.cabinet
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.transaction
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
+import com.google.android.material.tabs.TabLayout
+import house.with.swimmingpool.App
 import house.with.swimmingpool.R
+import house.with.swimmingpool.databinding.FragmentCabinetBinding
+import house.with.swimmingpool.ui.cabinet.password.PasswordFragment
+import house.with.swimmingpool.ui.cabinet.profile.ProfileFragment
 
-class CabinetFragment : Fragment(R.layout.fragment_cabinet) {
+class CabinetFragment : Fragment() {
 
-    companion object {
-        private const val GALLERY_REQUEST = 1
+    private var binding: FragmentCabinetBinding? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        binding = FragmentCabinetBinding.inflate(layoutInflater)
+        return binding?.root
+    }
+
+    override fun onDestroy() {
+        binding = null
+        super.onDestroy()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<View>(R.id.toLoginButton).setOnClickListener {
+        if (!App.setting.isAuth) {
             findNavController().navigate(R.id.action_cabinetFragment_to_loginFragment)
         }
-        val avatar = view.findViewById<ImageView>(R.id.avatar)
-        avatar.setOnClickListener {
-            val pickPhoto = Intent(
-                    Intent.ACTION_PICK,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            )
-            startActivityForResult(pickPhoto, GALLERY_REQUEST)
-        }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == GALLERY_REQUEST && resultCode == Activity.RESULT_OK) {
-            CropImage.activity(data?.data)
-                    .setAspectRatio(1, 1)
-                    .setCropShape(CropImageView.CropShape.OVAL)
-                    .start(requireContext(), this)
-        }
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-            if (resultCode == Activity.RESULT_OK) {
-
-                view?.findViewById<ImageView>(R.id.avatar)?.let {
-                    Glide.with(this)
-                            .load(result.uri)
-                            .circleCrop()
-                            .into(it)
+        binding?.tabs?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                val fragment = when (tab.position) {
+                    0 -> ProfileFragment()
+                    else -> PasswordFragment()
+                }
+                childFragmentManager.transaction {
+                    replace(R.id.frame, fragment)
                 }
             }
-        }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+
+            override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+
+        })
+
     }
 
 }

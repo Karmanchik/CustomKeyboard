@@ -22,37 +22,42 @@ import house.with.swimmingpool.ui.home.adapters.*
 
 class HomeFragment : Fragment() {
 
-    lateinit var homeBinding : FragmentHomeBinding
+    private var homeBinding: FragmentHomeBinding? = null
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?,
-    ): View {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
 
         homeBinding = FragmentHomeBinding.inflate(layoutInflater)
         homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        return homeBinding.root
+        return homeBinding?.root
+    }
+
+    override fun onDestroy() {
+        homeBinding = null
+        super.onDestroy()
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeBinding.apply {
+        homeBinding?.apply {
 
             VideosServiceImpl().getVideos { data, e ->
-                if(e == null && data != null)
-                videosRV.adapter = VideosAdapter(requireContext(), data) {
-                    findNavController().navigate(R.id.action_navigation_home_to_videoFragment)
-                }
+                if (e == null && data != null)
+                    videosRV.adapter = VideosAdapter(requireContext(), data) {
+                        findNavController().navigate(R.id.action_navigation_home_to_videoFragment)
+                    }
             }
 
             NewsServiceImpl().getNews { data, e ->
-                if(e == null && data != null) {
+                if (e == null && data != null) {
                     newsRV.adapter = NewsAdapter(data, requireContext()) {
                         findNavController().navigate(R.id.action_navigation_home_to_newsSingleFragment)
                     }
@@ -70,14 +75,14 @@ class HomeFragment : Fragment() {
                 storiesRV.apply {
                     layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    if(e == null && data != null) {
-                        adapter = StoriesAdapter(requireContext(), data)
+                    data?.let {
+                        adapter = StoriesAdapter(it)
                     }
                 }
             }
 
             BannersServiceImpl().getMainBanners { data, e ->
-                if(e == null && data != null) {
+                if (e == null && data != null) {
                     val vp = mainHousesContainer
                     vp.adapter = HeaderAdapter(data) {
                         val bundle = Bundle().apply {
@@ -91,20 +96,20 @@ class HomeFragment : Fragment() {
 
             BannersServiceImpl().getBanners { data, e ->
                 Glide.with(this@HomeFragment)
-                        .load(data?.get(0)?.bigBanner)
-                        .error(R.drawable.placeholder)
-                        .placeholder(R.drawable.placeholder)
-                        .into(bigAdBanner)
+                    .load(data?.get(0)?.bigBanner)
+                    .error(R.drawable.placeholder)
+                    .placeholder(R.drawable.placeholder)
+                    .into(bigAdBanner)
                 Glide.with(this@HomeFragment)
-                        .load(data?.get(1)?.smallBanner)
-                        .error(R.drawable.placeholder)
-                        .placeholder(R.drawable.placeholder)
-                        .into(firstAdBanner)
+                    .load(data?.get(1)?.smallBanner)
+                    .error(R.drawable.placeholder)
+                    .placeholder(R.drawable.placeholder)
+                    .into(firstAdBanner)
                 Glide.with(this@HomeFragment)
-                        .load(data?.get(2)?.smallBanner)
-                        .error(R.drawable.placeholder)
-                        .placeholder(R.drawable.placeholder)
-                        .into(secondAdBanner)
+                    .load(data?.get(2)?.smallBanner)
+                    .error(R.drawable.placeholder)
+                    .placeholder(R.drawable.placeholder)
+                    .into(secondAdBanner)
             }
 
             segmentedControl.addOnSegmentClickListener { svh ->
@@ -133,9 +138,10 @@ class HomeFragment : Fragment() {
 
 
             shortFilterView.setOnClickListener {
-                val onClick = { findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel) }
+                val onClick =
+                    { findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel) }
                 ShortFilterFragment(onClick).newInstance(onClick).show(
-                        parentFragmentManager, "shortFilter"
+                    parentFragmentManager, "shortFilter"
                 )
             }
             fullFilterView.setOnClickListener {
@@ -154,7 +160,7 @@ class HomeFragment : Fragment() {
 
 
 
-            tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     moveOnTabSelected(tab!!.position)
                 }
@@ -171,8 +177,8 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setShortCatalog(data: List<HouseCatalogData>){
-        homeBinding.apply {
+    private fun setShortCatalog(data: List<HouseCatalogData>) {
+        homeBinding?.apply {
             textViewVideosCount.text = "${data.size}  предложений"
             shortCatalogRV.adapter = if (data.size > 2) {
                 CatalogAdapter(listOf(data[0], data[1]), requireContext()) {
@@ -190,12 +196,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun moveOnTabSelected(position: Int) {
-        homeBinding.apply {
+        homeBinding?.apply {
             when (position) {
-                0->{nestedScrollView.smoothScrollTo(0, fullFilterView.bottom, 1500)}
-                1 -> {nestedScrollView.smoothScrollTo(0, adsLinear.bottom, 1500)}
-                2 -> {nestedScrollView.smoothScrollTo(0, divider.bottom, 1500)}
-                3 -> {nestedScrollView.smoothScrollTo(0, divider2.bottom, 1500)}
+                0 -> {
+                    nestedScrollView.smoothScrollTo(0, fullFilterView.bottom, 1500)
+                }
+                1 -> {
+                    nestedScrollView.smoothScrollTo(0, adsLinear.bottom, 1500)
+                }
+                2 -> {
+                    nestedScrollView.smoothScrollTo(0, divider.bottom, 1500)
+                }
+                3 -> {
+                    nestedScrollView.smoothScrollTo(0, divider2.bottom, 1500)
+                }
             }
         }
     }

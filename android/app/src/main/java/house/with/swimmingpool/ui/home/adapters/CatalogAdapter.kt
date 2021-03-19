@@ -31,23 +31,26 @@ class CatalogAdapter(
     inner class Holder(private val view: ItemHouseCatalogBinding): RecyclerView.ViewHolder(view.root) {
         @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
+
             itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
             view.apply {
                 items[position].apply {
-
                     val vp = housesImageContainer
-                    when {
-                        items[position].photos != null -> {
-                            vp.adapter = CatalogImageAdapter(photos!!, video , ctx)
+                    Log.e("photos", photos?.size.toString())
+                    vp.adapter = when {
+                        photos != null && photos.isNotEmpty() -> {
+                            Log.e("photos", photos.size.toString())
+                             CatalogImageAdapter(photos, listOf("-cYOlHknhBU") , ctx)
                         }
-                        items[position].icon != null -> {
-                            vp.adapter = CatalogImageAdapter(listOf(icon!!), video , ctx)
+                        icon != null ->{
+                            Log.e("photos", icon.toString())
+                            CatalogImageAdapter(listOf(icon), listOf("-cYOlHknhBU") , ctx)
                         }
                         else -> {
-                            listOf(R.drawable.placeholder)
+                            CatalogImageAdapter(listOf(""), listOf("-cYOlHknhBU") , ctx)
                         }
                     }
-                    dotsIndicator.setViewPager2(vp)
+                    dotsIndicatorCatalogItem.setViewPager2(vp)
                 }
 
                 items[position].apply {

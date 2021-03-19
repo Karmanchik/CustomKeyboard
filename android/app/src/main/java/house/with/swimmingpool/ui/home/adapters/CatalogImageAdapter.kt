@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseCatalogLastImageCallHolderBinding
 import house.with.swimmingpool.databinding.ItemHouseCatalogListVideoBinding
@@ -17,7 +19,7 @@ import house.with.swimmingpool.databinding.ItemHouseCotalogImageBinding
 
 
 class CatalogImageAdapter(
-    var items: List<String>,
+    var items: List<String?>,
     var videos: List<String>?,
     val ctx: Context
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -65,8 +67,6 @@ class CatalogImageAdapter(
         }
     }
 
-
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
             is CatalogImageHolder -> {
@@ -84,13 +84,12 @@ class CatalogImageAdapter(
 
     override fun getItemCount() = (videos?.size ?: 0)  + items.size + 1
 
-    inner class CatalogImageHolder(private val view: ItemHouseCotalogImageBinding): RecyclerView.ViewHolder(
-        view.root
-    ) {
+    inner class CatalogImageHolder(private val view: ItemHouseCotalogImageBinding):
+        RecyclerView.ViewHolder(view.root) {
         fun bind(position: Int) {
             Glide.with(ctx)
                 .load(items[position])
-                .error(R.drawable.placeholder)
+                .error(R.drawable.error_placeholder_midle)
                 .placeholder(R.drawable.placeholder)
                 .into(view.imageView2)
         }
@@ -109,15 +108,40 @@ class CatalogImageAdapter(
 
     inner class CatalogListVideoHolder(private val view: ItemHouseCatalogListVideoBinding):
         RecyclerView.ViewHolder(view.root) {
-            fun  bind(position: Int){
-                view.youTubePlayerView.addYouTubePlayerListener(object :
-                    AbstractYouTubePlayerListener() {
-                    override fun onReady(youTubePlayer: YouTubePlayer) {
-                        val videoId = "-cYOlHknhBU"//videos?.get(position) ?: ""
-                        youTubePlayer.loadVideo(videoId, 0f)
-                    }
-                })
-            }
+        fun bind(position: Int) {
+            Glide.with(ctx)
+                    .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
+//                    .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
+                    .error(R.drawable.error_placeholder_midle)
+                    .placeholder(R.drawable.placeholder)
+                    .into(view.imageViewVideoPreloader)
 
+            view.youTubePlayerView.addYouTubePlayerListener(object :
+                    AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    val videoId = videos?.get(position) ?: ""
+                    youTubePlayer.loadVideo(videoId, 0f)
+                    youTubePlayer.pause()
+
+                    view.imageViewVideoPreloader.setOnClickListener {
+                        it.visibility = View.GONE
+                        view.relativeLayout.visibility = View.GONE
+                        view.youTubePlayerView.visibility = View.VISIBLE
+                        youTubePlayer.play()
+                    }
+                }
+            })
+        }
+        fun closeYouTube(){
+            view.youTubePlayerView.release()
+        }
     }
+
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        if(holder is CatalogListVideoHolder){
+            holder.closeYouTube()
+        }
+    }
+
 }

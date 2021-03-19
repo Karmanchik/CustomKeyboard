@@ -39,7 +39,7 @@
                 android:layout_height="match_parent" />
 
             <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                android:id="@+id/dots_indicator"
+                android:id="@+id/dots_indicator_catalog_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
