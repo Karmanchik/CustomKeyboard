@@ -35,7 +35,6 @@ class LikedFragment : Fragment(R.layout.fragment_favourites_container_liked){
         binding.apply{
             RealtyServiceImpl().getHouseCatalog { data, e ->
                 if (e == null && data != null) {
-                    Log.e("taf", data.size.toString())
                     likedRV.adapter =
                             CatalogAdapter(data, requireContext()) {
                                 findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
