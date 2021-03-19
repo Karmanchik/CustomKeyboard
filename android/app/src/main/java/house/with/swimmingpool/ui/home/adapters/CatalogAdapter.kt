@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.R
@@ -30,28 +31,39 @@ class CatalogAdapter(
     inner class Holder(private val view: ItemHouseCatalogBinding): RecyclerView.ViewHolder(view.root) {
         @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
+            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
             view.apply {
-                val vp = housesImageContainer
-                when {
-                    items[position].photos != null -> {
-                        vp.adapter = CatalogImageAdapter(items[position].photos!!, ctx)
-                    }
-                    items[position].icon != null -> {
-                        vp.adapter = CatalogImageAdapter(listOf(items[position].icon!!), ctx)
-                    }
-                    else -> {
-                        listOf(R.drawable.placeholder)
-                    }
-                }
+                items[position].apply {
 
-                dotsIndicator.setViewPager2(vp)
+                    val vp = housesImageContainer
+                    when {
+                        items[position].photos != null -> {
+                            vp.adapter = CatalogImageAdapter(photos!!, video , ctx)
+                        }
+                        items[position].icon != null -> {
+                            vp.adapter = CatalogImageAdapter(listOf(icon!!), video , ctx)
+                        }
+                        else -> {
+                            listOf(R.drawable.placeholder)
+                        }
+                    }
+                    dotsIndicator.setViewPager2(vp)
+                }
 
                 items[position].apply {
                     textViewTitle.text = title
                     textViewDescription.text = location
-                    textViewPrice.text = "$price руб."
-                    textViewSquare.text = square.toString() + " м²"      //fix me!!!
-                    textViewSquareArea.text = square_area.toString() + " соток" //fix me!!!
+                    textViewPrice.text = price
+                    if(square != null) {
+                        textViewSquare.text = "$square м²"      //fix me!!!
+                    }else{
+                        textViewSquare.visibility = View.GONE
+                    }
+                    if(square_area != null) {
+                        textViewSquareArea.text = "$square_area соток" //fix me!!!
+                    }else{
+                        textViewSquareArea.visibility = View.GONE
+                    }
 
                     if (mainTags != null) {
                         hashTagRV.adapter = TagAdapter(ctx, mainTags)

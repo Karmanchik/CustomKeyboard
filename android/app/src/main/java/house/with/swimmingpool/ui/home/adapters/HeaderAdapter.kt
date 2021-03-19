@@ -1,13 +1,11 @@
 package house.with.swimmingpool.ui.home.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHeaderHouseBinding
-import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.MainBannersData
 
 class HeaderAdapter(
@@ -33,8 +31,8 @@ class HeaderAdapter(
                     if (banner != null) {
                         Glide.with(itemView.context)
                                 .load(items[position].banner)
-                                .error(R.drawable.placeholder)
-                                .placeholder(R.drawable.placeholder)
+                                .error(R.drawable.error_placeholder_big)
+                                .placeholder(R.drawable.gradient_placeholder_big)
                                 .into(imageView3)
                     }
                     textView17.text = name

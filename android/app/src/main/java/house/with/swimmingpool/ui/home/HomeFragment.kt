@@ -111,16 +111,22 @@ class HomeFragment : Fragment() {
 
             segmentedControl.addOnSegmentClickListener { svh ->
                 RealtyServiceImpl().getHouseCatalog { data, e ->
-
                     if (e == null && data != null) {
                         setShortCatalog(
-                            data.filter {
-                                it.type == if (svh.absolutePosition == 0) {
-                                    "house"
-                                } else {
-                                    "village"
-                                }
-                            }
+
+                                     when (svh.absolutePosition) {
+                                         0 -> {
+                                             data.filter { it.type == "house" || it.type == "village" }
+                                         }
+
+                                         1 -> {
+                                                 data.filter { it.type == "flat" }
+                                             }
+
+                                         else -> {
+                                                 data.filter { it.type == "complex" }
+                                             }
+                                     }
                         )
                     }
                 }
@@ -173,11 +179,11 @@ class HomeFragment : Fragment() {
             textViewVideosCount.text = "${data.size}  предложений"
             shortCatalogRV.adapter = if (data.size > 2) {
                 CatalogAdapter(listOf(data[0], data[1]), requireContext()) {
-                    findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
+                    findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
                 }
             } else {
                 CatalogAdapter(data, requireContext()) {
-                    findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
+                    findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
                 }
             }
         }

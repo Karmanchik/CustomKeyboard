@@ -16,10 +16,10 @@ data class HouseCatalogData(
     val price: String?,
     val price_of_one_meter: String?,
     val promo: String?,
-    val square: Any?,
+    val square: String?,
     val square_area: Any?,
     val statuses: List<String>?,
     val title: String?,
     val type: String?,
-    val video: List<Any>?
+    val video: List<String>?
 )

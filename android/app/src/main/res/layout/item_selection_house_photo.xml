@@ -14,6 +14,6 @@
         android:layout_height="54dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/placeholder"
+        app:srcCompat="@drawable/gradient_placeholder_small"
         />
 </androidx.cardview.widget.CardView>

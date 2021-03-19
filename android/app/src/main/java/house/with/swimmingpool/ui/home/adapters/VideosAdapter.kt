@@ -32,8 +32,8 @@ class VideosAdapter(
             itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
             Glide.with(ctx)
                 .load(items[position].icon)
-                .error(R.drawable.placeholder)
-                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error_placeholder_midle)
+                .placeholder(R.drawable.gradient_placeholder_small)
                 .into(view.imageViewVideo)
 
             view.textViewTitle.text = items[position].title
