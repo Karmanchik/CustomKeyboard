@@ -12,7 +12,6 @@ import house.with.swimmingpool.ui.startActivity
 import house.with.swimmingpool.ui.story.StoryActivity
 
 class StoriesAdapter(
-        var ctx : Context,
         var items: List<StoriesData>
 ) : RecyclerView.Adapter<StoriesAdapter.Holder>() {
 
