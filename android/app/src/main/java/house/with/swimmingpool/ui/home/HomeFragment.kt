@@ -59,6 +59,9 @@ class HomeFragment : Fragment() {
             NewsServiceImpl().getNews { data, e ->
                 if (e == null && data != null) {
                     newsRV.adapter = NewsAdapter(data, requireContext()) {
+                        val bundle = Bundle().apply {
+                            putSerializable("house", it)
+                        }
                         findNavController().navigate(R.id.action_navigation_home_to_newsSingleFragment)
                     }
                 }
