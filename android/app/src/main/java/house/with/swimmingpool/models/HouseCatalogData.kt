@@ -1,5 +1,7 @@
 package house.with.swimmingpool.models
 
+import java.io.Serializable
+
 data class HouseCatalogData(
     val description: String?,
     val discount: Int?,
@@ -22,4 +24,4 @@ data class HouseCatalogData(
     val title: String?,
     val type: String?,
     val video: List<String>?
-)
+): Serializable
