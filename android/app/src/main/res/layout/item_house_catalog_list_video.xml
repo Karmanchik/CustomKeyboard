@@ -4,19 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="245dp"
+    android:minHeight="260dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:id="@+id/you_tube_player_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:showFullScreenButton="true"
-        android:visibility="gone">
+        app:showFullScreenButton="false"
+        android:visibility="visible"
+        app:showYouTubeButton="false"
+        app:showSeekBar="false"
+        app:showVideoCurrentTime="false"
+        app:showVideoDuration="false"
+
+        android:layout_gravity="center"
+        >
 
     </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
 
@@ -25,12 +32,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/error_placeholder_midle"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"

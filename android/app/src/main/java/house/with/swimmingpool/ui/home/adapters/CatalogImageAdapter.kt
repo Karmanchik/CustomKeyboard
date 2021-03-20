@@ -3,12 +3,14 @@ package house.with.swimmingpool.ui.home.adapters
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
@@ -16,6 +18,7 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseCatalogLastImageCallHolderBinding
 import house.with.swimmingpool.databinding.ItemHouseCatalogListVideoBinding
 import house.with.swimmingpool.databinding.ItemHouseCotalogImageBinding
+import house.with.swimmingpool.databinding.TestVideoBinding
 
 
 class CatalogImageAdapter(
@@ -61,8 +64,8 @@ class CatalogImageAdapter(
 
     override fun getItemViewType(position: Int) : Int{
         return when {
-            position < itemsCount - (videos?.size ?: 0) - 1 -> { 0 }
-            position != itemsCount - 1 -> { 1 }
+            position < (itemsCount - (videos?.size ?: 0) - 1) -> { 0 }
+            position != (itemsCount - 1) -> { 1 }
             else -> {2}
         }
     }
@@ -116,10 +119,9 @@ class CatalogImageAdapter(
                     .placeholder(R.drawable.placeholder)
                     .into(view.imageViewVideoPreloader)
 
-            view.youTubePlayerView.addYouTubePlayerListener(object :
-                    AbstractYouTubePlayerListener() {
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    val videoId = videos?.get(position) ?: ""
+            view.youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback{
+                override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                    val videoId = "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
                     youTubePlayer.loadVideo(videoId, 0f)
                     youTubePlayer.pause()
 
@@ -128,20 +130,65 @@ class CatalogImageAdapter(
                         view.relativeLayout.visibility = View.GONE
                         view.youTubePlayerView.visibility = View.VISIBLE
                         youTubePlayer.play()
+                        view.youTubePlayerView.enterFullScreen()
+                        view.youTubePlayerView.exitFullScreen()
                     }
                 }
             })
+
+//            view.youTubePlayerView.addYouTubePlayerListener(object :
+//                    AbstractYouTubePlayerListener() {
+//                override fun onReady(youTubePlayer: YouTubePlayer) {
+//                    val videoId = videos?.get(position) ?: ""
+//                    youTubePlayer.loadVideo(videoId, 0f)
+//                    youTubePlayer.pause()
+//
+//                    view.imageViewVideoPreloader.setOnClickListener {
+//                        it.visibility = View.GONE
+//                        view.relativeLayout.visibility = View.GONE
+//                        view.youTubePlayerView.visibility = View.VISIBLE
+//                        youTubePlayer.play()
+//                    }
+//                }
+//            })
+//            view.youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayer(){})
         }
+
+        fun openYouTube() {
+            Log.e("youTube", "startOpen")
+            view.youTubePlayerView.enterFullScreen()
+            view.youTubePlayerView.addYouTubePlayerListener(object :
+                    AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    val videoId = "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
+                    youTubePlayer.loadVideo(videoId, 0f)
+                    youTubePlayer.pause()
+                    Log.e("youTube", "open ${videoId.toString()} ${adapterPosition - items.size}")
+                }
+
+                override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
+                    Log.e("youTube", error.name.toString())
+                }
+            })
+        }
+
         fun closeYouTube(){
             view.youTubePlayerView.release()
         }
     }
 
-    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-        if(holder is CatalogListVideoHolder){
-            holder.closeYouTube()
-        }
-    }
-
+//    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+//        if(holder is CatalogListVideoHolder){
+//            holder.closeYouTube()
+//            Log.e("youTube", "close")
+//        }
+//    }
+//
+//
+//
+//    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+//        if(holder is CatalogListVideoHolder){
+//            holder.openYouTube()
+//        }
+//    }
 }
