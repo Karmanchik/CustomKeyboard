@@ -71,6 +71,12 @@ class FullFilterFragment : Fragment() {
             chip23.setOnClickListener { onChipClicked(it) }
             chip24.setOnClickListener { onChipClicked(it) }
 
+            variableEt.title = "мой заголовок"
+            variableEt.value = "Тестовые данные"
+            variableEt.addOnClickListener {
+                VariantsFragment().newInstance().show(parentFragmentManager, "VariantsFragment")
+            }
+
             resetButton.setOnClickListener {
                 area.text?.clear()
                 price.text?.clear()
