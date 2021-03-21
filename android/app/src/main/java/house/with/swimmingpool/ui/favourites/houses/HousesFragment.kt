@@ -7,11 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentFavouritesContainerHousesBinding
-import house.with.swimmingpool.databinding.FragmentFavouritesContainerSearchesBinding
-import house.with.swimmingpool.models.HouseOptions
-import house.with.swimmingpool.ui.favourites.searches.searchesBinding
-import house.with.swimmingpool.ui.home.adapters.FavoritesContainerSearchesAdapter
-import house.with.swimmingpool.ui.home.adapters.SelectionHouseAdapter
+import house.with.swimmingpool.ui.favourites.adapters.SelectionHouseAdapter
 
 lateinit var housesBinding: FragmentFavouritesContainerHousesBinding
 

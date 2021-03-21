@@ -1,18 +1,11 @@
-package house.with.swimmingpool.ui.home.adapters
+package house.with.swimmingpool.ui.favourites.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import house.with.swimmingpool.R
-import house.with.swimmingpool.databinding.FragmentFavouritesContainerHousesBinding
 import house.with.swimmingpool.databinding.ItemSelectionHousesBinding
-import house.with.swimmingpool.databinding.ItemStoriesBinding
-import house.with.swimmingpool.models.StoriesData
-import house.with.swimmingpool.ui.story.StoryActivity
 
 class SelectionHouseAdapter(
         var ctx : Context,
