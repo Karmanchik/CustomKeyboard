@@ -31,27 +31,39 @@ class StoryTimersAdapter(
         return true
     }
 
+    fun previous() {
+        if (currentPosition != 0)
+            currentPosition--
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: CatalogImageHolder, position: Int) =
         holder.bind(items[position])
 
     override fun getItemCount() = items.size
 
-    inner class CatalogImageHolder(private val view: View): RecyclerView.ViewHolder(view) {
+    inner class CatalogImageHolder(view: View): RecyclerView.ViewHolder(view) {
         private val progressBar = view as ProgressBar
 
 
         fun bind(item: StoriesItem) {
             progressBar.max = 100
-            progressBar.progress = 0
+
+            progressBar.progress = if (adapterPosition >= currentPosition) {
+                0
+            } else {
+                100
+            }
+
             if (adapterPosition == currentPosition) {
                 onStoryOpen.invoke(item)
 
-                val job = GlobalScope.launch {
+                GlobalScope.launch {
                     (0 until 100).forEach {
                         delay(50)
                         launch(Dispatchers.Main) {
-                            if (currentPosition == adapterPosition) {
-                                progressBar.progress++
+                            if (currentPosition == adapterPosition && progressBar.progress == it) {
+                                progressBar.progress = it + 1
                                 if (progressBar.progress == progressBar.max) {
                                     if (currentPosition == items.lastIndex) {
                                         close.invoke()
