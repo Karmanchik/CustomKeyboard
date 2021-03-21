@@ -18,7 +18,6 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseCatalogLastImageCallHolderBinding
 import house.with.swimmingpool.databinding.ItemHouseCatalogListVideoBinding
 import house.with.swimmingpool.databinding.ItemHouseCotalogImageBinding
-import house.with.swimmingpool.databinding.TestVideoBinding
 
 
 class CatalogImageAdapter(
@@ -119,7 +118,7 @@ class CatalogImageAdapter(
                     .placeholder(R.drawable.placeholder)
                     .into(view.imageViewVideoPreloader)
 
-            view.youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback{
+            view.youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                 override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
                     val videoId = "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
                     youTubePlayer.loadVideo(videoId, 0f)
