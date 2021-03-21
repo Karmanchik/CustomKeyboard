@@ -10,10 +10,11 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentRegisterLoginBinding
 
 @SuppressLint("StaticFieldLeak")
-private var loginBinding: FragmentRegisterLoginBinding? = null
 
-class LoginFragment(): Fragment(R.layout.fragment_register_login) {
 
+class RegisterLoginFragment(): Fragment(R.layout.fragment_register_login) {
+
+    private var loginBinding: FragmentRegisterLoginBinding? = null
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
