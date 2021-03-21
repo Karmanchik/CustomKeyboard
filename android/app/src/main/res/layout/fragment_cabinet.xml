@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E5E5E5"
     android:orientation="vertical"
     android:paddingTop="44dp">
 
@@ -23,13 +22,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:background="#E5E5E5"
         app:tabIndicatorAnimationMode="linear"
         app:tabIndicatorColor="@color/main_blue"
         app:tabIndicatorGravity="bottom"
         app:tabRippleColor="#FFFFFF"
         app:tabSelectedTextColor="@color/main_blue"
-        app:tabTextAppearance="@style/TextAppearance.AppCompat.Body1"
         app:tabTextColor="#808080">
 
         <com.google.android.material.tabs.TabItem
