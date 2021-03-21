@@ -7,11 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.transaction
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentLoginBinding
+import house.with.swimmingpool.ui.favourites.houses.HousesFragment
+import house.with.swimmingpool.ui.favourites.liked.LikedFragment
+import house.with.swimmingpool.ui.favourites.searches.SearchesFragment
 import house.with.swimmingpool.ui.register.RegisterFragment
 import house.with.swimmingpool.ui.register.RegisterLoginFragment
+import house.with.swimmingpool.ui.register.RegisterRegistrationFragment
 import kotlin.math.log
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -33,9 +38,30 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 //            App.setting.token = "adfs"
 //            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
 //        }
-        childFragmentManager.transaction {
-            replace(R.id.registrationFrame, RegisterFragment())
+
+        loginBinding?.apply {
+
+            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    val fragment = when (tab.position) {
+                        0 -> RegisterLoginFragment()
+                        else -> RegisterRegistrationFragment()
+                    }
+                    childFragmentManager.transaction {
+                        replace(R.id.frame, fragment)
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+
+                override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+
+            })
         }
+
+//        childFragmentManager.transaction {
+//            replace(R.id.registrationFrame, RegisterFragment())
+//        }
 
     }
 
