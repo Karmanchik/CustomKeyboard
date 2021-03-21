@@ -70,16 +70,21 @@
         </com.google.android.material.tabs.TabLayout>
 
 
-        <fragment
-            android:id="@+id/registrationFrame"
-            android:name="house.with.swimmingpool.ui.register.RegisterLoginFragment"
+        <FrameLayout
+            android:id="@+id/frameLogin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabs"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tabs">
+            android:elevation="2dp"
+            app:layout_constraintStart_toStartOf="parent">
 
-        </fragment>
+            <fragment
+                android:id="@+id/fragment2"
+                android:name="house.with.swimmingpool.ui.register.RegisterLoginFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

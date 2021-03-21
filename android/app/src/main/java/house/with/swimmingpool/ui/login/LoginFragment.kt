@@ -1,23 +1,16 @@
 package house.with.swimmingpool.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.transaction
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
-import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentLoginBinding
-import house.with.swimmingpool.ui.favourites.houses.HousesFragment
-import house.with.swimmingpool.ui.favourites.liked.LikedFragment
-import house.with.swimmingpool.ui.favourites.searches.SearchesFragment
-import house.with.swimmingpool.ui.register.RegisterFragment
 import house.with.swimmingpool.ui.register.RegisterLoginFragment
 import house.with.swimmingpool.ui.register.RegisterRegistrationFragment
-import kotlin.math.log
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -43,12 +36,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
             tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
-                    val fragment = when (tab.position) {
-                        0 -> RegisterLoginFragment()
-                        else -> RegisterRegistrationFragment()
-                    }
-                    childFragmentManager.transaction {
-                        replace(R.id.frame, fragment)
+                    try {
+                        val fragment = when (tab.position) {
+                            0 -> RegisterLoginFragment()
+                            else -> RegisterRegistrationFragment()
+                        }
+                        Log.e("tab", tab.position.toString())
+                        val result = childFragmentManager.beginTransaction()
+                            .replace(loginBinding?.frameLogin?.id ?: 0, fragment)
+                            .commit()
+                        Log.e("tab result", result.toString())
+                    } catch (e: Exception) {
+                        Log.e("tab", "try", e)
                     }
                 }
 
