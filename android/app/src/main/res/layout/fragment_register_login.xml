@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/formEnter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="-95dp"
+        android:elevation="2dp"
+        android:visibility="visible"
+        android:orientation="vertical"
+        >
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/tab_header_bottom"
+            android:clipToPadding="true"
+            android:paddingBottom="0dp"
+            app:tabIndicatorAnimationMode="linear"
+            app:tabIndicatorColor="@color/main_blue"
+            app:tabIndicatorGravity="bottom"
+            app:tabRippleColor="#FFFFFF"
+            app:tabSelectedTextColor="@color/main_blue"
+            app:tabTextAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:tabTextColor="#808080">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ВХОД" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="РЕГИСТРАЦИЯ" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <EditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="33dp"
+                android:ems="10"
+                android:hint="От"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="От"
+                android:inputType="phone" />
+
+            <TextView
+                android:id="@+id/enterButton"
+                style="@style/main_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="41dp"
+                android:layout_weight="0"
+                android:elevation="0dp"
+                android:enabled="false"
+                android:fontFamily="@font/lato"
+                android:text="Войти" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="29dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lato"
+                    android:text="Забыли пароль?"
+                    android:textColor="#00A8FF"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="29dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lato"
+                    android:gravity="end"
+                    android:text="Войти позже"
+                    android:textColor="#00A8FF"
+                    android:textSize="17sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="29dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="29dp"
+                android:layout_marginBottom="32dp"
+                android:layout_weight="0"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:text="Подписываясь, вы принимаете условия пользовательского соглашения и политики конфедициальности"
+                android:textSize="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
