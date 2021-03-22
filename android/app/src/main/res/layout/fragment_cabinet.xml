@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="65dp"
         android:fontFamily="@font/lato_medium"
         android:gravity="center"
         android:text="Личный кабинет"

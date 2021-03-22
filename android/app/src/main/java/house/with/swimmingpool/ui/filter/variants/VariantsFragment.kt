@@ -9,7 +9,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentVariantsBinding
 
-class VariantsFragment() : BottomSheetDialogFragment() {
+class VariantsFragment(
+        val items: List<Pair<String, Boolean>>
+) : BottomSheetDialogFragment() {
 
     lateinit var binding : FragmentVariantsBinding
 
@@ -32,17 +34,14 @@ class VariantsFragment() : BottomSheetDialogFragment() {
 
         binding.apply {
             closeIcon.setOnClickListener { dismiss() }
-            variantsRV.adapter = VariantsAdapter(listOf(
-                    Pair("", false),
-                    Pair("", false),
-                    Pair("", false),
-                    Pair("", false)
-            ), requireContext())
+            variantsRV.adapter = VariantsAdapter(items, requireContext())
         }
     }
 
-    fun newInstance(): VariantsFragment {
-        return VariantsFragment()
+    companion object {
+        fun newInstance(items: List<Pair<String, Boolean>>, ): VariantsFragment {
+            return VariantsFragment(items)
+        }
     }
 
 }

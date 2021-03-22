@@ -74,7 +74,7 @@ class FullFilterFragment : Fragment() {
             variableEt.title = "мой заголовок"
             variableEt.value = "Тестовые данные"
             variableEt.addOnClickListener {
-                VariantsFragment().newInstance().show(parentFragmentManager, "VariantsFragment")
+                VariantsFragment.newInstance(listOf()0).show(parentFragmentManager, "VariantsFragment")
             }
 
             resetButton.setOnClickListener {
@@ -98,7 +98,8 @@ class FullFilterFragment : Fragment() {
             houseType.initEditText()
 
             moneyType.setOnClickListener {
-                VariantsFragment().newInstance().show(parentFragmentManager, "VariantsFragment")
+                val list = listOf<Pair<String, Boolean>>()
+                VariantsFragment.newInstance(list).show(parentFragmentManager, "VariantsFragment")
             }
             area.setOnClickListener {
                 RangeDialogFragment().newInstance().show(parentFragmentManager, "range")

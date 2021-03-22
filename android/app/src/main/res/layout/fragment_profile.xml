@@ -31,101 +31,55 @@
             app:srcCompat="@drawable/edit_avatar" />
     </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/description_to_profile_fields"
-            android:layout_marginTop="21dp"
-            android:text="Имя"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldName"
+    <house.with.swimmingpool.views.CustomEditField
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="21dp"
+        app:title="Имя"
+        android:paddingBottom="0dp"
+        app:buttonMode="true"
+        app:passwordMode="false"
+        android:id="@+id/variable_et"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hintTextColor="#0000A8FF"
-        android:hint="Введите Имя"
-        app:boxStrokeWidth="1dp"
-        app:boxStrokeWidthFocused="1dp"
-        app:boxStrokeColor="#A1A1A1"
-        app:boxStrokeErrorColor="#DB5249"
-        >
+        android:layout_height="wrap_content" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTextPersonName6"
-            style="@style/profile_fields_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textSize="14dp"
-            />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldSurname"
+    <house.with.swimmingpool.views.CustomEditField
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="5dp"
+        app:title="Фамилия"
+        android:paddingBottom="0dp"
+        app:buttonMode="true"
+        app:passwordMode="false"
+        android:id="@+id/variable_et2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hintTextColor="#0000A8FF"
-        android:hint="Введите фамилию"
-        app:boxStrokeWidth="1dp"
-        app:boxStrokeWidthFocused="1dp"
-        app:boxStrokeColor="#A1A1A1"
-        app:boxStrokeErrorColor="#DB5249"
-        >
+        android:layout_height="wrap_content" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTextPersonNameSurname"
-            style="@style/profile_fields_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldEmail"
+    <house.with.swimmingpool.views.CustomEditField
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="5dp"
+        app:title="E-mail"
+        android:paddingBottom="0dp"
+        app:buttonMode="true"
+        app:passwordMode="false"
+        android:id="@+id/variable_et3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hintTextColor="#0000A8FF"
-        android:hint="Введите Email"
-        app:boxStrokeWidth="1dp"
-        app:boxStrokeWidthFocused="1dp"
-        app:boxStrokeColor="#A1A1A1"
-        app:boxStrokeErrorColor="#DB5249"
-        >
+        android:layout_height="wrap_content" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTextPersonEmail"
-            style="@style/profile_fields_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldPhone"
+    <house.with.swimmingpool.views.CustomEditField
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="5dp"
+        app:title="Телефон"
+        android:paddingBottom="0dp"
+        app:buttonMode="true"
+        app:passwordMode="false"
+        android:id="@+id/variable_et4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hintTextColor="#0000A8FF"
-        android:hint="Введите телефон"
-        app:boxStrokeWidth="1dp"
-        app:boxStrokeWidthFocused="1dp"
-        app:boxStrokeColor="#A1A1A1"
-        app:boxStrokeErrorColor="#DB5249"
-        >
+        android:layout_height="wrap_content" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTextPersonPhone"
-            style="@style/profile_fields_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/textView38"
