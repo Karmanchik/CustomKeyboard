@@ -43,8 +43,8 @@ class RegisterLoginFragment(): Fragment(R.layout.fragment_register_login) {
 //                }, 3000)
 //            }
 
-            passwordInput.setOnFocusChangeListener { v, hasFocus ->
-                Log.e("tag", hasFocus.toString())
+            passwordInput.setOnClickListener {
+                passwordInput.inputType
             }
         }
 
