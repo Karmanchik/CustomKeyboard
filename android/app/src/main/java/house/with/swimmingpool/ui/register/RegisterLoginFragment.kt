@@ -2,6 +2,7 @@ package house.with.swimmingpool.ui.register
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,13 +25,13 @@ class RegisterLoginFragment(): Fragment(R.layout.fragment_register_login) {
         loginBinding = FragmentRegisterLoginBinding.inflate(layoutInflater)
 
         loginBinding?.apply {
-            editTextPassword.setOnFocusChangeListener { v, hasFocus ->
-                enterButton.isEnabled = isFieldAreFilled()
-            }
-
-            editTextPhone.setOnFocusChangeListener { v, hasFocus ->
-                enterButton.isEnabled = isFieldAreFilled()
-            }
+//            editTextPassword.setOnFocusChangeListener { v, hasFocus ->
+//                enterButton.isEnabled = isFieldAreFilled()
+//            }
+//
+//            editTextPhone.setOnFocusChangeListener { v, hasFocus ->
+//                enterButton.isEnabled = isFieldAreFilled()
+//            }
 
 //            enterButton.setOnClickListener {
 //                formEnter.visibility = View.GONE
@@ -41,6 +42,10 @@ class RegisterLoginFragment(): Fragment(R.layout.fragment_register_login) {
 //                    welcomeLayout.visibility = View.GONE
 //                }, 3000)
 //            }
+
+            passwordInput.setOnFocusChangeListener { v, hasFocus ->
+                Log.e("tag", hasFocus.toString())
+            }
         }
 
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -53,7 +58,7 @@ class RegisterLoginFragment(): Fragment(R.layout.fragment_register_login) {
 
     private fun isFieldAreFilled(): Boolean {
         loginBinding?.apply {
-            return editTextPhone.text.toString() != "" && editTextPassword.text.toString() != ""
+//            return editTextPhone.text.toString() != "" && editTextPassword.text.toString() != ""
         }
         return false
     }

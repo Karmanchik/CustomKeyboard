@@ -25,11 +25,14 @@
             <br.com.sapereaude.maskedEditText.MaskedEditText
                 android:id="@+id/phone_input"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="38dp"
+                android:layout_marginBottom="9dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="33dp"
                 android:hint="0000000000"
                 android:inputType="phone"
+                android:textSize="24sp"
+                android:fontFamily="@font/lato"
                 android:background="@color/white"
                 android:backgroundTint="@color/white"
                 android:typeface="monospace"
@@ -37,31 +40,46 @@
                 app:keep_hint="true"
                 app:mask="+7(###)###-##-##" />
 
-            <EditText
-                android:id="@+id/editTextPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="33dp"
-                android:ems="10"
-                android:hint="От"
-                android:inputType="phone" />
+            <View
+                android:id="@+id/divider8"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginEnd="41dp"
+                android:layout_marginStart="18dp"
+                android:background="?android:attr/listDivider" />
 
-            <EditText
-                android:id="@+id/editTextPassword"
+            <br.com.sapereaude.maskedEditText.MaskedEditText
+                android:id="@+id/password_input"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="8dp"
                 android:layout_gravity="center"
-                android:ems="10"
-                android:hint="От"
-                android:inputType="phone" />
+                android:hint="Введите пароль"
+                android:inputType="none"
+                android:textSize="24sp"
+                android:fontFamily="@font/lato"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:typeface="monospace"
+                app:keep_hint="false"
+                app:mask="##############" />
+
+
+            <View
+                android:id="@+id/divider9"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginEnd="41dp"
+                android:layout_marginStart="18dp"
+                android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/enterButton"
                 style="@style/main_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="88dp"
                 android:layout_marginBottom="41dp"
                 android:layout_weight="0"
                 android:elevation="0dp"
