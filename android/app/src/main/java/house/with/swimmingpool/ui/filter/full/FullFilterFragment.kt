@@ -74,7 +74,7 @@ class FullFilterFragment : Fragment() {
             variableEt.title = "мой заголовок"
             variableEt.value = "Тестовые данные"
             variableEt.addOnClickListener {
-                VariantsFragment.newInstance(listOf()0).show(parentFragmentManager, "VariantsFragment")
+                VariantsFragment.newInstance(listOf()).show(parentFragmentManager, "VariantsFragment")
             }
 
             resetButton.setOnClickListener {

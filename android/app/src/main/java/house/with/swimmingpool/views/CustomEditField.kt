@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.text.InputType
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
@@ -49,7 +50,7 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
 
         fieldView?.onFocusChangeListener = OnFocusChangeListener { _, isFocused ->
             if (isFocused) {
-                dividerView?.setBackgroundColor(Color.BLUE)
+                dividerView?.setBackgroundColor(Color.parseColor("#A1A1A1"))
             } else {
                 dividerView?.setBackgroundColor(Color.parseColor("#E6E6E6"))
             }
@@ -103,7 +104,7 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
     }
 
     fun setError() {
-        dividerView?.setBackgroundColor(Color.RED)
+        dividerView?.setBackgroundColor(Color.parseColor("#DB5249"))
     }
 
     var isPasswordMode

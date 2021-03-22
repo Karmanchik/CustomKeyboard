@@ -9,27 +9,35 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentFavouritesContainerHousesBinding
 import house.with.swimmingpool.ui.favourites.adapters.SelectionHouseAdapter
 
-lateinit var housesBinding: FragmentFavouritesContainerHousesBinding
+
 
 class HousesFragment : Fragment(R.layout.fragment_favourites_container_houses){
+
+    private var housesBinding: FragmentFavouritesContainerHousesBinding? = null
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?,
-    ): View {
+    ): View? {
 
         housesBinding = FragmentFavouritesContainerHousesBinding.inflate(layoutInflater)
 
-        return housesBinding.root
+        return housesBinding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        housesBinding.apply {
+        housesBinding?.apply {
             housesRV.adapter = SelectionHouseAdapter(requireContext(), listOf("", "", ""))
         }
 
+    }
+
+    override fun onDestroy() {
+        housesBinding = null
+        super.onDestroy()
     }
 
 }
