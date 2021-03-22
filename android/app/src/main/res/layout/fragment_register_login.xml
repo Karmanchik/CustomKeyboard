@@ -22,6 +22,21 @@
             android:orientation="vertical"
             android:background="@color/white">
 
+            <br.com.sapereaude.maskedEditText.MaskedEditText
+                android:id="@+id/phone_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="33dp"
+                android:hint="0000000000"
+                android:inputType="phone"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:typeface="monospace"
+                app:allowed_chars="1234567890"
+                app:keep_hint="true"
+                app:mask="+7(###)###-##-##" />
+
             <EditText
                 android:id="@+id/editTextPhone"
                 android:layout_width="wrap_content"
