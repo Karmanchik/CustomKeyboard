@@ -15,7 +15,7 @@ import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 
 class SeenHousesAdapter(
         val ctx: Context,
-        var items: List<HouseCatalogData>,
+        var items: List<HouseCatalogData?>,
         var onItemSelected: (
 //                House
         ) -> Unit
@@ -29,7 +29,7 @@ class SeenHousesAdapter(
     override fun onBindViewHolder(holder: Holder, position: Int) =
             holder.bind(position)
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = if(items.size > 4) 4 else items.size
 
     inner class Holder(private val view: ItemHouseGridBinding): RecyclerView.ViewHolder(view.root) {
 
@@ -39,44 +39,39 @@ class SeenHousesAdapter(
             ) }
 
             view.apply {
-                items[position].apply {
 
+                if(items[position] != null) {
                     Glide.with(ctx)
                             .load(
-                                when {
-                                    icon.isNullOrEmpty() ->{
-                                        icon
+                                    when {
+                                         items[position]?.icon != "" -> {
+                                            items[position]?.icon
+                                        }
+                                        items[position]?.photos?.get(0) != "" -> {
+                                            items[position]?.photos?.get(0)
+                                        }
+                                        else -> {
+                                            ""
+                                        }
                                     }
-                                    photos.isNullOrEmpty() -> {
-                                        photos?.get(0)
-                                    }
-                                    else -> {
-                                        ""
-                                    }
-                                }
                             )
                             .error(R.drawable.error_placeholder_midle)
                             .placeholder(R.drawable.placeholder)
                             .into(imageViewSeen)
                 }
-
-                items[position].apply {
+                items[position]?.apply {
                     textViewTitle.text = title
-                    textViewDescription.text = location
+                    textViewLocation.text = location
                     textViewPrice.text = price
-                    if(square != null) {
+                    if(this?.square != null) {
                         textViewSquare.text = "$square м²"      //fix me!!!
                     }else{
                         textViewSquare.visibility = View.GONE
                     }
-                    if(square_area != null) {
+                    if(this?.square_area != null) {
                         textViewSquareArea.text = "$square_area соток" //fix me!!!
                     }else{
                         textViewSquareArea.visibility = View.GONE
-                    }
-
-                    if (mainTags != null) {
-                        hashTagRV.adapter = TagAdapter(ctx, mainTags)
                     }
                 }
             }

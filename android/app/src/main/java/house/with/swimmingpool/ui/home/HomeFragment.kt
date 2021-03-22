@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
             RealtyServiceImpl().getHouseCatalog { data, e ->
                 lastSeenRV.apply {
                     layoutManager = GridLayoutManager(context, 2)
-                    adapter = SeenHousesAdapter(listOf(data[0], data[1], data[3])) {
+                    adapter = SeenHousesAdapter(requireContext(), data ?: listOf(null)) {
                         findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
                     }
                 }
