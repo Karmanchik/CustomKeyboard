@@ -31,10 +31,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         val avatar = view.findViewById<ImageView>(R.id.avatar)
 
-        Glide.with(this)
-            .load(R.drawable.placeholder)
-            .circleCrop()
-            .into(avatar)
+//        Glide.with(this)
+//            .load(R.drawable.placeholder)
+//            .circleCrop()
+//            .into(avatar)
 
         avatar.setOnClickListener {
             val pickPhoto = Intent(

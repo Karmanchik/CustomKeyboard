@@ -18,7 +18,6 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
 
     private var fieldView: EditText? = null
     private var titleView: TextView? = null
-    private var hintView: TextView? = null
     private var clearIcon: ImageView? = null
     private var dividerView: View? = null
 
@@ -32,7 +31,6 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
 
         fieldView = findViewById(R.id.field)
         titleView = findViewById(R.id.title)
-        hintView = findViewById(R.id.hint)
         clearIcon = findViewById(R.id.imageView12)
         dividerView = findViewById(R.id.divider)
         clearIcon?.visibility = View.GONE
@@ -58,12 +56,8 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
 
         fieldView?.doOnTextChanged { text, _, _, _ ->
             if (text.isNullOrEmpty()) {
-                titleView?.hide()
-                hintView?.show()
                 clearIcon?.hide()
             } else {
-                titleView?.show()
-                hintView?.hide()
 
                 if (isNeedShowClearButton) {
                     clearIcon?.show()
@@ -84,7 +78,6 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
         fieldView?.setText("")
 
         titleView?.text = typedArray.getString(R.styleable.CustomEditField_title)
-        hintView?.text = typedArray.getString(R.styleable.CustomEditField_title)
 
     }
 
@@ -96,7 +89,6 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
         get() = titleView?.text?.toString()
         set(value) {
             titleView?.text = value
-            hintView?.text = value
         }
 
     fun clearError() {
