@@ -1,15 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/noObjectLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Добавляйте объекты в избранное"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="@font/lato"
+            android:textSize="17dp"
+            android:lineHeight="27dp"/>
+
+        <TextView
+            android:layout_width="255dp"
+            android:layout_marginTop="7dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:lineHeight="20dp"
+            android:fontFamily="@font/lato"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:text="Отмечайте интересные объекты и следите за именением цены"/>
+
+        <TextView
+            android:id="@+id/showCatalogButton"
+            style="@style/main_button"
+            android:elevation="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="Каталог объектов"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/likedRV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:layout_marginTop="30dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

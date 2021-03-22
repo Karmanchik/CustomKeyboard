@@ -1,9 +1,13 @@
 package house.with.swimmingpool.ui.story
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +30,6 @@ class StoryActivity : AppCompatActivity() {
 
         binding = ActivityStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         val decorView: View = window.decorView
         val uiOptions: Int = View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -52,6 +55,7 @@ class StoryActivity : AppCompatActivity() {
         binding.closeIcon.setOnClickListener { finish() }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setInfo(item: StoriesItem) {
         binding.apply {
             button.setOnClickListener {
@@ -65,11 +69,22 @@ class StoryActivity : AppCompatActivity() {
                 .load(item.poster)
                 .centerCrop()
                 .into(container)
-            container.setOnClickListener {
-                val isNotNeedClose = (timersRV.adapter as? StoryTimersAdapter)?.next() ?: true
-                if (!isNotNeedClose) {
-                    finish()
+
+            container.setOnTouchListener { view, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    val isBackClick = view.width / 2 > event.x
+                    val adapter = timersRV.adapter as? StoryTimersAdapter
+
+                    if (!isBackClick) {
+                        val isNotNeedClose = adapter?.next() ?: true
+                        if (!isNotNeedClose) {
+                            finish()
+                        }
+                    } else {
+                        adapter?.previous()
+                    }
                 }
+                true
             }
         }
     }

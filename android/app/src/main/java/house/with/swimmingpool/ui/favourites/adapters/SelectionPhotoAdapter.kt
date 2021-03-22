@@ -1,14 +1,9 @@
-package house.with.swimmingpool.ui.home.adapters
+package house.with.swimmingpool.ui.favourites.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexWrap
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 import house.with.swimmingpool.databinding.ItemSelectionHousePhotoBinding
 
 class SelectionPhotoAdapter (

@@ -1,4 +1,4 @@
-package house.with.swimmingpool.ui.home.adapters
+package house.with.swimmingpool.ui.favourites.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

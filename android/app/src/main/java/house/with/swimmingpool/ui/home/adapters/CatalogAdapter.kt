@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 
 class CatalogAdapter(
         var items: List<HouseCatalogData>,
