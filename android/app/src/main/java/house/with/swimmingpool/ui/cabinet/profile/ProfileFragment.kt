@@ -7,6 +7,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
