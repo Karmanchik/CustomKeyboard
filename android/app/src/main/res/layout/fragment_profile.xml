@@ -105,7 +105,7 @@
         android:layout_marginStart="12dp"
         android:paddingTop="4dp"
         android:layout_marginEnd="12dp"
-        android:hint="1234567890"
+        android:hint="0000000000"
         android:textSize="18dp"
         android:fontFamily="@font/lato"
         android:inputType="phone"
