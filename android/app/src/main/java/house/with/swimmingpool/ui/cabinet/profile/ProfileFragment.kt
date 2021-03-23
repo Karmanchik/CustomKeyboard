@@ -7,6 +7,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
@@ -31,10 +32,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         val avatar = view.findViewById<ImageView>(R.id.avatar)
 
-        Glide.with(this)
-            .load(R.drawable.placeholder)
-            .circleCrop()
-            .into(avatar)
+//        Glide.with(this)
+//            .load(R.drawable.placeholder)
+//            .circleCrop()
+//            .into(avatar)
 
         avatar.setOnClickListener {
             val pickPhoto = Intent(

@@ -1,20 +1,19 @@
-package house.with.swimmingpool.ui.home.adapters
+package house.with.swimmingpool.ui.favourites.adapters
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.flexbox.*
-import house.with.swimmingpool.databinding.ItemTegCatalogBinding
-import house.with.swimmingpool.models.MainTags
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
+import house.with.swimmingpool.databinding.ItemSearchTagBinding
 
-
-class TagAdapter(
-        var ctx: Context,
-        var items: List<MainTags>,
-) : RecyclerView.Adapter<TagAdapter.Holder>() {
+class SearchTagAdapter(
+    var ctx: Context,
+    var items: List<String>,
+) : RecyclerView.Adapter<SearchTagAdapter.Holder>() {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
@@ -28,20 +27,19 @@ class TagAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return Holder(ItemTegCatalogBinding.inflate(layoutInflater, parent, false))
+        return Holder(ItemSearchTagBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
-            holder.bind(position)
+        holder.bind(position)
 
     override fun getItemCount() = items.size
 
-    inner class Holder(private val view: ItemTegCatalogBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class Holder(private val view: ItemSearchTagBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun bind(position: Int) {
             view.apply {
-                textViewTag.text = items[position].text
-                textViewTag.setBackgroundColor(Color.parseColor(items[position].color))
+                textViewTag.text = items[position]
             }
         }
     }

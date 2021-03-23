@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CustomEditField">
+        <attr name="buttonMode" format="boolean" />
+        <attr name="passwordMode" format="boolean" />
+        <attr name="need_show_clear_button" format="boolean" />
+        <attr name="title" format="string" />
+    </declare-styleable>
+
+</resources>

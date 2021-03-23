@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentFavouritesContainerSearchesBinding
 import house.with.swimmingpool.models.HouseOptions
-import house.with.swimmingpool.ui.home.adapters.FavoritesContainerSearchesAdapter
+import house.with.swimmingpool.ui.favourites.adapters.FavoritesContainerSearchesAdapter
 
 
 lateinit var searchesBinding: FragmentFavouritesContainerSearchesBinding
@@ -30,10 +30,16 @@ class SearchesFragment : Fragment(R.layout.fragment_favourites_container_searche
         super.onViewCreated(view, savedInstanceState)
 
         searchesBinding.apply {
-            searchedElementRV.adapter = FavoritesContainerSearchesAdapter(requireContext(), listOf(
-                HouseOptions("Купить", listOf("Ипотека","Рассрочка")),
-                HouseOptions("Купить", listOf("Ипотека","Рассрочка","Сад","Спа салон","Фитнесс зал"))
-            ))
+            showCatalogButton.setOnClickListener {
+
+                noObjectLayout.visibility = View.GONE
+                objectsLayout.visibility = View.VISIBLE
+
+                searchedElementRV.adapter = FavoritesContainerSearchesAdapter(requireContext(), listOf(
+                    HouseOptions("Купить", listOf("Ипотека","Рассрочка")),
+                    HouseOptions("Купить", listOf("Ипотека","Рассрочка","Сад","Спа салон","Фитнесс зал"))
+                ))
+            }
         }
 
     }

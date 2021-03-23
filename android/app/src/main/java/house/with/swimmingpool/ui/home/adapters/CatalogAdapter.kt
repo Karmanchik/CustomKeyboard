@@ -2,6 +2,7 @@ package house.with.swimmingpool.ui.home.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 
 class CatalogAdapter(
         var items: List<HouseCatalogData>,
@@ -34,6 +36,9 @@ class CatalogAdapter(
 
             itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
             view.apply {
+
+                likeView.setImageResource(R.drawable.like_enabled)
+
                 items[position].apply {
                     val vp = housesImageContainer
                     Log.e("photos", photos?.size.toString())

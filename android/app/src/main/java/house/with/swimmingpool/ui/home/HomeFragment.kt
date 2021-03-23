@@ -67,10 +67,12 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            lastSeenRV.apply {
-                layoutManager = GridLayoutManager(context, 2)
-                adapter = SeenHousesAdapter(listOf(House(), House(), House())) {
-                    findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+            RealtyServiceImpl().getHouseCatalog { data, e ->
+                lastSeenRV.apply {
+                    layoutManager = GridLayoutManager(context, 2)
+                    adapter = SeenHousesAdapter(requireContext(), data ?: listOf(null)) {
+                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+                    }
                 }
             }
 
