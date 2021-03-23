@@ -15,12 +15,14 @@ import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.tabs.TabLayout
+import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.*
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
+import kotlin.math.abs
 
 
 class HomeFragment : Fragment() {
@@ -46,41 +48,14 @@ class HomeFragment : Fragment() {
         super.onDestroy()
     }
 
-    private enum class State {
-        EXPANDED, COLLAPSED, IDLE
-    }
-
-    private fun initViews() {
-        val TAG = "test"
-        val mAppBarLayout: AppBarLayout = homeBinding!!.appbar
-        mAppBarLayout.addOnOffsetChangedListener(object : OnOffsetChangedListener {
-            private var state: State? = null
-            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                state = if (verticalOffset == 0) {
-                    if (state !== State.EXPANDED) {
-                        Log.d(TAG, "Expanded")
-                    }
-                    State.EXPANDED
-                } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
-                    if (state !== State.COLLAPSED) {
-                        Log.d(TAG, "Collapsed")
-                    }
-                    State.COLLAPSED
-                } else {
-                    if (state !== State.IDLE) {
-                        Log.d(TAG, "Idle")
-                    }
-                    State.IDLE
-                }
-            }
-        })
-    }
-
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViews()
+        homeBinding?.appbar?.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
+            val percentage = (abs(i) / appBarLayout.totalScrollRange).toFloat()
+            homeBinding?.test?.alpha = 1 - percentage
+        })
 
         homeBinding?.apply {
 
