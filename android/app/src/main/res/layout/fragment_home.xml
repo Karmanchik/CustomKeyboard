@@ -1,90 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    android:id="@+id/nestedScrollView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_background"
-    tools:context=".ui.home.HomeFragment"
-    tools:ignore="HardcodedText">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="460dp">
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="exitUntilCollapsed">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/mainHousesContainer"
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:layout_scrollFlags="enterAlways"
                 android:layout_width="match_parent"
-                android:layout_height="460dp" />
+                android:layout_height="100dp"
+                android:background="#953B3B"
+                android:paddingTop="44dp">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="27dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="64dp"
-                app:srcCompat="@drawable/ic_menu"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_clear_field" />
 
-            <ImageView
-                android:layout_marginTop="60dp"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_logo"
-                />
+            </androidx.appcompat.widget.Toolbar>
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="60dp"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_seach_white_custom"
-                android:textColor="@color/white" />
+            <RelativeLayout
+                app:layout_scrollFlags="enterAlwaysCollapsed"
+                app:layout_collapseMode="pin"
+                android:layout_width="match_parent"
+                android:layout_height="460dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/mainHousesContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="460dp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="27dp"
+                    android:layout_height="19dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="64dp"
+                    app:srcCompat="@drawable/ic_menu" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="60dp"
+                    android:src="@drawable/ic_logo"
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_seach_white_custom"
+                    android:textColor="@color/white" />
 
 
-            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                android:id="@+id/dots_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="82dp"
-                app:dotsColor="@color/white"
-                app:dotsCornerRadius="2dp"
-                app:dotsSize="4dp"
-                app:dotsSpacing="10dp"
-                app:dotsWidthFactor="2.5"
-                app:progressMode="true"
-                app:selectedDotColor="@color/white"
-                />
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dots_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="82dp"
+                    app:dotsColor="@color/white"
+                    app:dotsCornerRadius="2dp"
+                    app:dotsSize="4dp"
+                    app:dotsSpacing="10dp"
+                    app:dotsWidthFactor="2.5"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/white" />
+
+            </RelativeLayout>
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_background"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        tools:context=".ui.home.HomeFragment"
+        tools:ignore="HardcodedText">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
 
             <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="0dp"
                 android:background="@drawable/tab_header_bottom"
                 android:clipToPadding="true"
                 android:paddingTop="22dp"
-                android:id="@+id/tabs"
                 app:tabIndicatorAnimationMode="linear"
                 app:tabIndicatorColor="@color/main_blue"
                 app:tabIndicatorGravity="bottom"
                 app:tabPaddingBottom="10dp"
+                app:tabRippleColor="#FFFFFF"
                 app:tabSelectedTextColor="@color/main_blue"
                 app:tabTextAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:tabTextColor="#808080"
-                app:tabRippleColor="#FFFFFF">
+                app:tabTextColor="#808080">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -106,326 +143,324 @@
                     android:layout_height="wrap_content"
                     android:text="НОВОСТИ" />
             </com.google.android.material.tabs.TabLayout>
-        </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/storiesRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/main_gradient"
+                android:paddingStart="6dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="6dp" />
 
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/storiesRV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/main_gradient"
-            android:paddingTop="6dp"
-            android:paddingEnd="6dp"
-            android:paddingStart="6dp"/>
-
-
-        <segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl
-            android:id="@+id/segmented_control"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            app:columnCount="3"
-            app:distributeEvenly="true"
-            app:radius="6dp"
-            app:segments="@array/main_segment_control_variants"
-            app:selectedBackgroundColor="@color/main_blue"
-            app:textSize="14sp"
-            app:textVerticalPadding="6dp"
-            app:unSelectedStrokeColor="#E6E6E6"
-            app:selectedStrokeColor="@color/main_blue"
-            app:strokeWidth="1dp"
-            app:unSelectedTextColor="#808080" />
-
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:elevation="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/white_10corner_background"
-            android:orientation="vertical">
+            <segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl
+                android:id="@+id/segmented_control"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="8dp"
+                app:columnCount="3"
+                app:distributeEvenly="true"
+                app:radius="6dp"
+                app:segments="@array/main_segment_control_variants"
+                app:selectedBackgroundColor="@color/main_blue"
+                app:selectedStrokeColor="@color/main_blue"
+                app:strokeWidth="1dp"
+                app:textSize="14sp"
+                app:textVerticalPadding="6dp"
+                app:unSelectedStrokeColor="#E6E6E6"
+                app:unSelectedTextColor="#808080" />
 
             <LinearLayout
-                android:id="@+id/shortFilterView"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/white_10corner_background"
+                android:elevation="10dp"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:id="@+id/shortFilterView"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView19"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lato_regular"
+                        android:lineSpacingMultiplier="1.6"
+                        android:text="Стоимость от - до"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_costs" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lato_regular"
-                    android:lineSpacingMultiplier="1.6"
-                    android:text="Стоимость от - до"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:layout_marginEnd="12dp"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:id="@+id/fullFilterView"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lato_regular"
+                        android:lineSpacingMultiplier="1.6"
+                        android:text="Подбор по параметрам"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_filters" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/lato_semibold"
+                android:text="Вы смотрели"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lastSeenRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="12dp"
+                android:elevation="1dp"
+                app:cardCornerRadius="10dp">
 
                 <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:id="@+id/bigAdBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/placeholder"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/adsLinear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:elevation="1dp"
+                    app:cardCornerRadius="6dp">
+
+                    <ImageView
+                        android:id="@+id/firstAdBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/placeholder" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
                     android:layout_marginEnd="12dp"
-                    android:src="@drawable/ic_costs" />
+                    android:layout_weight="1"
+                    android:elevation="1dp"
+                    app:cardCornerRadius="6dp">
+
+                    <ImageView
+                        android:id="@+id/secondAdBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/placeholder" />
+                </androidx.cardview.widget.CardView>
+
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/main_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="29dp"
+                android:text="Каталог недвижимости" />
+
+            <TextView
+                android:id="@+id/textViewVideosCount"
+                style="@style/main_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:fontFamily="@font/lato_regular"
+                android:text=""
+                android:textSize="12dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/shortCatalogRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <TextView
+                android:id="@+id/showCatalogButton"
+                style="@style/main_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Весь каталог" />
 
             <View
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:id="@+id/divider3"
+                android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="30dp"
                 android:background="?android:attr/listDivider" />
 
-            <LinearLayout
-                android:id="@+id/fullFilterView"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView20"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lato_regular"
-                    android:lineSpacingMultiplier="1.6"
-                    android:text="Подбор по параметрам"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="12dp"
-                    android:src="@drawable/ic_filters" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="26dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="15dp"
-            android:text="Вы смотрели"
-            android:textColor="@color/black"
-            android:fontFamily="@font/lato_semibold"
-            android:textSize="18sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lastSeenRV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="1dp"
-            app:cardCornerRadius="10dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            >
-            <ImageView
-                android:id="@+id/bigAdBanner"
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/main_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                app:srcCompat="@drawable/placeholder"
-                tools:src="@tools:sample/backgrounds/scenic" />
-        </androidx.cardview.widget.CardView>
+                android:layout_marginTop="30dp"
+                android:text="Новые видео на канале" />
 
-        <LinearLayout
-            android:id="@+id/adsLinear"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/main_description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="1dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_regular"
+                android:text="Видеообзоры недвижимости"
+                android:textSize="12sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/videosRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginEnd="6dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="6dp"
-                >
-            <ImageView
-                android:id="@+id/firstAdBanner"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:adjustViewBounds="true"
-                app:srcCompat="@drawable/placeholder" />
-            </androidx.cardview.widget.CardView>
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_video" />
 
-            <androidx.cardview.widget.CardView
+            <TextView
+                android:id="@+id/showVideosButton"
+                style="@style/main_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Все видеообзоры" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="30dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/main_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="Новости недвижимости" />
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/main_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:elevation="1dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="12dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="6dp"
-                >
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_light"
+                android:text="Он-лайн журнал"
+                android:textColor="#66000000" />
 
-            <ImageView
-                android:id="@+id/secondAdBanner"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newsRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+
+                tools:listitem="@layout/item_news">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/showNewsButton"
+                style="@style/main_button"
+                android:layout_width="match_parent"
+                android:layout_marginTop="16dp"
+                android:text="Все новости" />
+
+            <ImageView
+                android:id="@+id/bigAdCoinsBanner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="10dp"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/placeholder" />
-            </androidx.cardview.widget.CardView>
+                app:srcCompat="@drawable/coins_banner" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView"
-            style="@style/main_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="29dp"
-            android:text="Каталог недвижимости"
-            />
+    </androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:id="@+id/textViewVideosCount"
-            style="@style/main_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="12dp"
-            android:text="" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/shortCatalogRV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        <TextView
-            android:id="@+id/showCatalogButton"
-            style="@style/main_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Весь каталог"/>
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="30dp"
-            android:background="?android:attr/listDivider" />
-
-        <TextView
-            android:id="@+id/textView3"
-            style="@style/main_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Новые видео на канале"/>
-
-        <TextView
-            android:id="@+id/textView4"
-            style="@style/main_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Видеообзоры недвижимости"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="12sp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/videosRV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="12dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="2"
-            tools:listitem="@layout/item_video" />
-
-        <TextView
-            android:id="@+id/showVideosButton"
-            style="@style/main_button"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Все видеообзоры" />
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="30dp"
-            android:background="?android:attr/listDivider" />
-
-        <TextView
-            android:id="@+id/textView5"
-            style="@style/main_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:text="Новости недвижимости" />
-
-        <TextView
-            android:id="@+id/textView6"
-            style="@style/main_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/lato_light"
-            android:text="Он-лайн журнал"
-            android:textColor="#66000000" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/newsRV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="12dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="2"
-
-            tools:listitem="@layout/item_news">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <TextView
-            android:id="@+id/showNewsButton"
-            android:layout_marginTop="16dp"
-            style="@style/main_button"
-            android:layout_width="match_parent"
-            android:text="Все новости" />
-
-        <ImageView
-            android:id="@+id/bigAdCoinsBanner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/coins_banner" />
-
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

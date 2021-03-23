@@ -19,6 +19,7 @@ import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
+import house.with.swimmingpool.ui.startActivity
 
 class HomeFragment : Fragment() {
 
@@ -46,6 +47,8 @@ class HomeFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        startActivity<ScrollingActivity> {  }
 
         homeBinding?.apply {
 
