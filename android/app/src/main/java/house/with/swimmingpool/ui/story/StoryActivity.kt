@@ -19,6 +19,10 @@ import house.with.swimmingpool.databinding.ActivityStoryBinding
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.StoriesData
 import house.with.swimmingpool.models.StoriesItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class StoryActivity : AppCompatActivity() {
@@ -78,25 +82,37 @@ class StoryActivity : AppCompatActivity() {
                 .centerCrop()
                 .into(container)
 
+            var isLongClick = false
             container.setOnTouchListener { view, event ->
                 val adapter = timersRV.adapter as? StoryTimersAdapter
 
                 if (event.action == MotionEvent.ACTION_UP) {
                     adapter?.isStop = false
-                    val isBackClick = view.width / 2 > event.x
 
-                    if (!isBackClick) {
-                        val isNotNeedClose = adapter?.next() ?: true
-                        if (!isNotNeedClose) {
-                            finish()
-                        }
+                    if (isLongClick) {
+                        isLongClick = false
                     } else {
-                        adapter?.previous()
+                        val isBackClick = view.width / 2 > event.x
+
+                        if (!isBackClick) {
+                            val isNotNeedClose = adapter?.next() ?: true
+                            if (!isNotNeedClose) {
+                                finish()
+                            }
+                        } else {
+                            adapter?.previous()
+                        }
                     }
                 } else if (event.action == MotionEvent.ACTION_DOWN) {
                     adapter?.isStop = true
-                } else {
-                    adapter?.isStop = false
+                    GlobalScope.launch {
+                        delay(1000)
+                        launch(Dispatchers.Main) {
+                            if (adapter?.isStop == true) {
+                                isLongClick = true
+                            }
+                        }
+                    }
                 }
                 true
             }

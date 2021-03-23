@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.story
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,19 +63,24 @@ class StoryTimersAdapter(
                 GlobalScope.launch {
                     (0 until 10000).forEach {
                         delay(50)
-                        if (!isStop)
-                        launch(Dispatchers.Main) {
-                            if (currentPosition == adapterPosition && progressBar.progress == it) {
-                                progressBar.progress = it + 1
-                                if (progressBar.progress == progressBar.max) {
-                                    if (currentPosition == items.lastIndex) {
-                                        close.invoke()
-                                    } else {
-                                        currentPosition = adapterPosition + 1
-                                        notifyDataSetChanged()
+                        if (!isStop) {
+                            launch(Dispatchers.Main) {
+                                if (currentPosition == adapterPosition && progressBar.progress in (it-1..it+1)) {
+                                    progressBar.progress = it + 1
+                                    if (progressBar.progress == progressBar.max) {
+                                        if (currentPosition == items.lastIndex) {
+                                            close.invoke()
+                                        } else {
+                                            currentPosition = adapterPosition + 1
+                                            notifyDataSetChanged()
+                                        }
                                     }
-                                    return@launch
                                 }
+                            }
+                        } else {
+                            while (isStop) {
+                                Log.e("test isstop", isStop.toString())
+                                delay(100)
                             }
                         }
                     }
