@@ -5,13 +5,283 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="объект"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="460dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="60dp"
+                    android:elevation="2dp"
+                    android:src="@drawable/ic_back_arrou_white"/>
+
+                <ImageView
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_marginTop="52dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_alignParentEnd="true"
+                    android:elevation="2dp"
+                    android:src="@drawable/ic_more_white_blue"/>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/mainHousesContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="460dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="104dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_alignParentBottom="true"
+                    android:text="Котеджный поселок 1000 м²"
+                    android:fontFamily="@font/lato_bold"
+                    android:textSize="18sp"
+
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginBottom="84dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:text="Адлер, Молдовка, ул. Тимашевская" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_open_eye"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginBottom="86dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="915"
+                    android:fontFamily="@font/lato"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="84dp"
+                    android:layout_marginEnd="12dp"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dots_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="50dp"
+                    app:dotsColor="@color/white"
+                    app:dotsCornerRadius="2dp"
+                    app:dotsSize="4dp"
+                    app:dotsSpacing="10dp"
+                    app:dotsWidthFactor="2.5"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/white"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/header_bottom"
+                    />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500 000 - 100 000 000 руб."
+                    android:fontFamily="@font/lato_bold"
+                    android:textSize="19sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+10%"
+                    android:fontFamily="@font/lato_bold"
+                    android:textSize="19sp"
+                    android:textColor="#00A8FF"
+                    android:layout_weight="0"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="12dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lato_regular"
+                    android:text="96 780 руб/м²"
+                    android:textColor="#A1A1A1"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:layout_weight="0"
+                    android:fontFamily="@font/lato_regular"
+                    android:text="За месяц"
+                    android:textColor="#A1A1A1"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="9dp"
+                android:paddingBottom="11dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_shear_blue"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="Поделиться"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:background="?android:attr/listDivider" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_notes_blue"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Заметка"
+                    android:layout_marginEnd="25dp"
+                    android:fontFamily="@font/lato"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="20dp"
+                    android:background="?android:attr/listDivider" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_like_blue"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Избранное"
+                    android:fontFamily="@font/lato"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"/>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider10"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="?android:attr/listDivider" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hashTagRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="15dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="6dp"
+                android:layout_marginBottom="15dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/circule_corners10"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="Показания Кита Патрика Гилла в Комитете палаты представителей США по финансовым услугам Благодарю
+Вас, председатель Уолтерс,
+высокопоставленный член
+МакГенри, члены Комитета. "/>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
