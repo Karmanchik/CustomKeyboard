@@ -11,6 +11,7 @@ import kotlinx.coroutines.*
 
 class StoryTimersAdapter(
     var items: List<StoriesItem>,
+    var isStop: Boolean,
     val close: () -> Unit,
     val onStoryOpen: (StoriesItem) -> Unit
 ): RecyclerView.Adapter<StoryTimersAdapter.CatalogImageHolder>() {
@@ -59,8 +60,9 @@ class StoryTimersAdapter(
                 onStoryOpen.invoke(item)
 
                 GlobalScope.launch {
-                    (0 until 100).forEach {
+                    (0 until 10000).forEach {
                         delay(50)
+                        if (!isStop)
                         launch(Dispatchers.Main) {
                             if (currentPosition == adapterPosition && progressBar.progress == it) {
                                 progressBar.progress = it + 1
@@ -71,6 +73,7 @@ class StoryTimersAdapter(
                                         currentPosition = adapterPosition + 1
                                         notifyDataSetChanged()
                                     }
+                                    return@launch
                                 }
                             }
                         }

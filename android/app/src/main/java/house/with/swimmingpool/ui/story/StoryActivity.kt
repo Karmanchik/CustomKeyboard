@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ActivityStoryBinding
@@ -38,6 +39,12 @@ class StoryActivity : AppCompatActivity() {
         actionBar?.hide()
 
         story = Gson().fromJson(intent.getStringExtra("item"), StoriesData::class.java)
+        story?.items?.forEach {
+            Glide.with(this)
+                .load(it.poster)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .submit()
+        }
     }
 
     override fun onStart() {
@@ -48,6 +55,7 @@ class StoryActivity : AppCompatActivity() {
             layoutManager = GridLayoutManager(context, items.size)
             adapter = StoryTimersAdapter(
                 items,
+                false,
                 close = { finish() },
                 onStoryOpen = { setInfo(it) }
             )
@@ -71,9 +79,11 @@ class StoryActivity : AppCompatActivity() {
                 .into(container)
 
             container.setOnTouchListener { view, event ->
+                val adapter = timersRV.adapter as? StoryTimersAdapter
+
                 if (event.action == MotionEvent.ACTION_UP) {
+                    adapter?.isStop = false
                     val isBackClick = view.width / 2 > event.x
-                    val adapter = timersRV.adapter as? StoryTimersAdapter
 
                     if (!isBackClick) {
                         val isNotNeedClose = adapter?.next() ?: true
@@ -83,6 +93,10 @@ class StoryActivity : AppCompatActivity() {
                     } else {
                         adapter?.previous()
                     }
+                } else if (event.action == MotionEvent.ACTION_DOWN) {
+                    adapter?.isStop = true
+                } else {
+                    adapter?.isStop = false
                 }
                 true
             }
