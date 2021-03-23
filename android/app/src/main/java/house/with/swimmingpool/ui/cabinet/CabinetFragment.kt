@@ -13,6 +13,8 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentCabinetBinding
 import house.with.swimmingpool.ui.cabinet.password.PasswordFragment
 import house.with.swimmingpool.ui.cabinet.profile.ProfileFragment
+import house.with.swimmingpool.ui.login.LoginActivity
+import house.with.swimmingpool.ui.startActivity
 
 class CabinetFragment : Fragment() {
 
@@ -36,7 +38,7 @@ class CabinetFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (!App.setting.isAuth) {
-            findNavController().navigate(R.id.action_cabinetFragment_to_loginFragment)
+            requireActivity().startActivity<LoginActivity> {  }
         }
 
         binding?.tabs?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

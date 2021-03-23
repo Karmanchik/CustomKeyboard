@@ -2,6 +2,7 @@ package house.with.swimmingpool.ui.register
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentRegisterLoginBinding
+import house.with.swimmingpool.ui.favourites.liked.binding
 
-@SuppressLint("StaticFieldLeak")
-
-
-class RegisterLoginFragment(): Fragment(R.layout.fragment_register_login) {
+class RegisterLoginFragment: Fragment() {
 
     private var loginBinding: FragmentRegisterLoginBinding? = null
     override fun onCreateView(
@@ -43,12 +42,17 @@ class RegisterLoginFragment(): Fragment(R.layout.fragment_register_login) {
 //                }, 3000)
 //            }
 
-            passwordInput.setOnClickListener {
-                passwordInput.inputType
-            }
+
+//                    .setOnFocusChangeListener { v, hasFocus ->
+//                Log.e("tag", hasFocus.toString())
+//            }
+//            setOnClickListener {
+//                Log.e("tag", "tag")
+//                passwordInput.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+//            }
         }
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return loginBinding?.root
     }
 
     override fun onDestroy() {

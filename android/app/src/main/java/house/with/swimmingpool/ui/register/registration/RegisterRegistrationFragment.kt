@@ -1,4 +1,4 @@
-package house.with.swimmingpool.ui.register
+package house.with.swimmingpool.ui.register.registration
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentRegisterRegistrationBinding
+import house.with.swimmingpool.ui.cabinet.CabinetFragment
+import house.with.swimmingpool.ui.login.LoginFragment
 
-class RegisterRegistrationFragment(): Fragment(R.layout.fragment_register_registration) {
+class RegisterRegistrationFragment: Fragment() {
     private var registerBinding: FragmentRegisterRegistrationBinding? = null
 
     override fun onCreateView(
@@ -18,6 +20,11 @@ class RegisterRegistrationFragment(): Fragment(R.layout.fragment_register_regist
     ): View? {
         registerBinding = FragmentRegisterRegistrationBinding.inflate(layoutInflater)
         return registerBinding?.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        //LoginFragment.fragment.postValue(CabinetFragment())
     }
 
     override fun onDestroy() {
