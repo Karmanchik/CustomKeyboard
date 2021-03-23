@@ -12,6 +12,7 @@ import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.models.MainTags
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 import house.with.swimmingpool.ui.house.adapters.HouseHeaderAdapter
+import house.with.swimmingpool.ui.house.adapters.WhiteButtonAdapter
 
 class HouseFragment : Fragment() {
 
@@ -43,6 +44,8 @@ class HouseFragment : Fragment() {
                 MainTags("#4890FB", "Ипотека"),
                 MainTags("#4890FB", "Ипотека"))
             )
+
+            whiteButtonRV.adapter = WhiteButtonAdapter(requireContext(), listOf("Общие", "Коммуникации", "Оформление", "Оплата"))
         }
     }
 
