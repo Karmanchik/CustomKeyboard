@@ -10,37 +10,39 @@
         android:id="@+id/noObjectLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        android:visibility="visible">
+
         <TextView
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Добавляйте объекты в поиск"
             android:layout_gravity="center"
-            android:gravity="center"
             android:fontFamily="@font/lato"
-            android:textSize="17dp"
-            android:lineHeight="27dp"/>
+            android:gravity="center"
+            android:lineHeight="27dp"
+            android:text="Добавляйте объекты в поиск"
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="255dp"
-            android:layout_marginTop="7dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:lineHeight="20dp"
+            android:layout_marginTop="7dp"
             android:fontFamily="@font/lato"
-            android:textSize="12dp"
             android:gravity="center"
-            android:text="Отмечайте интересные объекты и следите за именением цены"/>
+            android:lineHeight="20dp"
+            android:text="Отмечайте интересные объекты и следите за именением цены"
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/showCatalogButton"
             style="@style/main_button"
-            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="25dp"
+            android:elevation="5dp"
             android:text="Каталог объектов"
             app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -53,16 +55,16 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchedElementRV"
-        android:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0"
-        android:paddingStart="12dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="12dp"
-        tools:listitem="@layout/item_searched"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchedElementRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:paddingStart="12dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="12dp"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_searched" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
