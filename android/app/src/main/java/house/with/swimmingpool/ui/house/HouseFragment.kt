@@ -46,6 +46,8 @@ class HouseFragment : Fragment() {
             )
 
             whiteButtonRV.adapter = WhiteButtonAdapter(requireContext(), listOf("Общие", "Коммуникации", "Оформление", "Оплата"))
+
+            whiteButtonFilterRV.adapter = WhiteButtonAdapter(requireContext(), listOf("Главная галерея", "Декабрь 2020", "Февраль 2020"))
         }
     }
 

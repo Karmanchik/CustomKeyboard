@@ -16,8 +16,8 @@
         android:fontFamily="@font/lato"
         android:textSize="14sp"
         android:paddingStart="10dp"
-        android:paddingTop="8dp"
+        android:paddingTop="10dp"
         android:paddingEnd="10dp"
-        android:paddingBottom="8dp"/>
+        android:paddingBottom="10dp"/>
 
 </RelativeLayout>
