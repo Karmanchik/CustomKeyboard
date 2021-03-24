@@ -1,7 +1,10 @@
 package house.with.swimmingpool.ui.home
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.*
@@ -19,6 +24,8 @@ import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
+import kotlin.math.abs
+
 
 class HomeFragment : Fragment() {
 
@@ -47,7 +54,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        homeBinding?.appbar?.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
+            val percentage = (abs(i).toFloat() / appBarLayout.totalScrollRange)
+
+            Log.e("test percentage", percentage.toString())
+            homeBinding?.zatemnitel?.alpha = percentage / 2
+            homeBinding?.test?.elevation = 1 - percentage
+            homeBinding?.toolbar?.elevation = percentage
+        })
+
         homeBinding?.apply {
+
+            toolbar.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             VideosServiceImpl().getVideos { data, e ->
                 if (e == null && data != null)
@@ -116,19 +134,19 @@ class HomeFragment : Fragment() {
                     if (e == null && data != null) {
                         setShortCatalog(
 
-                                     when (svh.absolutePosition) {
-                                         0 -> {
-                                             data.filter { it.type == "house" || it.type == "village" }
-                                         }
+                            when (svh.absolutePosition) {
+                                0 -> {
+                                    data.filter { it.type == "house" || it.type == "village" }
+                                }
 
-                                         1 -> {
-                                                 data.filter { it.type == "flat" }
-                                             }
+                                1 -> {
+                                    data.filter { it.type == "flat" }
+                                }
 
-                                         else -> {
-                                                 data.filter { it.type == "complex" }
-                                             }
-                                     }
+                                else -> {
+                                    data.filter { it.type == "complex" }
+                                }
+                            }
                         )
                     }
                 }
