@@ -12,12 +12,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ActivityStoryBinding
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.StoriesData
 import house.with.swimmingpool.models.StoriesItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class StoryActivity : AppCompatActivity() {
@@ -38,6 +43,12 @@ class StoryActivity : AppCompatActivity() {
         actionBar?.hide()
 
         story = Gson().fromJson(intent.getStringExtra("item"), StoriesData::class.java)
+        story?.items?.forEach {
+            Glide.with(this)
+                .load(it.poster)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .submit()
+        }
     }
 
     override fun onStart() {
@@ -48,6 +59,7 @@ class StoryActivity : AppCompatActivity() {
             layoutManager = GridLayoutManager(context, items.size)
             adapter = StoryTimersAdapter(
                 items,
+                false,
                 close = { finish() },
                 onStoryOpen = { setInfo(it) }
             )
@@ -70,18 +82,36 @@ class StoryActivity : AppCompatActivity() {
                 .centerCrop()
                 .into(container)
 
+            var isLongClick = false
             container.setOnTouchListener { view, event ->
-                if (event.action == MotionEvent.ACTION_UP) {
-                    val isBackClick = view.width / 2 > event.x
-                    val adapter = timersRV.adapter as? StoryTimersAdapter
+                val adapter = timersRV.adapter as? StoryTimersAdapter
 
-                    if (!isBackClick) {
-                        val isNotNeedClose = adapter?.next() ?: true
-                        if (!isNotNeedClose) {
-                            finish()
-                        }
+                if (event.action == MotionEvent.ACTION_UP) {
+                    adapter?.isStop = false
+
+                    if (isLongClick) {
+                        isLongClick = false
                     } else {
-                        adapter?.previous()
+                        val isBackClick = view.width / 2 > event.x
+
+                        if (!isBackClick) {
+                            val isNotNeedClose = adapter?.next() ?: true
+                            if (!isNotNeedClose) {
+                                finish()
+                            }
+                        } else {
+                            adapter?.previous()
+                        }
+                    }
+                } else if (event.action == MotionEvent.ACTION_DOWN) {
+                    adapter?.isStop = true
+                    GlobalScope.launch {
+                        delay(1000)
+                        launch(Dispatchers.Main) {
+                            if (adapter?.isStop == true) {
+                                isLongClick = true
+                            }
+                        }
                     }
                 }
                 true

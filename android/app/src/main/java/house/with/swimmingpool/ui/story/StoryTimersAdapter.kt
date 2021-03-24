@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.story
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import kotlinx.coroutines.*
 
 class StoryTimersAdapter(
     var items: List<StoriesItem>,
+    var isStop: Boolean,
     val close: () -> Unit,
     val onStoryOpen: (StoriesItem) -> Unit
 ): RecyclerView.Adapter<StoryTimersAdapter.CatalogImageHolder>() {
@@ -59,19 +61,26 @@ class StoryTimersAdapter(
                 onStoryOpen.invoke(item)
 
                 GlobalScope.launch {
-                    (0 until 100).forEach {
+                    (0 until 10000).forEach {
                         delay(50)
-                        launch(Dispatchers.Main) {
-                            if (currentPosition == adapterPosition && progressBar.progress == it) {
-                                progressBar.progress = it + 1
-                                if (progressBar.progress == progressBar.max) {
-                                    if (currentPosition == items.lastIndex) {
-                                        close.invoke()
-                                    } else {
-                                        currentPosition = adapterPosition + 1
-                                        notifyDataSetChanged()
+                        if (!isStop) {
+                            launch(Dispatchers.Main) {
+                                if (currentPosition == adapterPosition && progressBar.progress in (it-1..it+1)) {
+                                    progressBar.progress = it + 1
+                                    if (progressBar.progress == progressBar.max) {
+                                        if (currentPosition == items.lastIndex) {
+                                            close.invoke()
+                                        } else {
+                                            currentPosition = adapterPosition + 1
+                                            notifyDataSetChanged()
+                                        }
                                     }
                                 }
+                            }
+                        } else {
+                            while (isStop) {
+                                Log.e("test isstop", isStop.toString())
+                                delay(100)
                             }
                         }
                     }
