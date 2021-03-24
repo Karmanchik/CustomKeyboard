@@ -1,6 +1,8 @@
 package house.with.swimmingpool.ui.home
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -53,11 +55,17 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         homeBinding?.appbar?.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
-            val percentage = (abs(i) / appBarLayout.totalScrollRange).toFloat()
-            homeBinding?.test?.alpha = 1 - percentage
+            val percentage = (abs(i).toFloat() / appBarLayout.totalScrollRange)
+
+            Log.e("test percentage", percentage.toString())
+            homeBinding?.zatemnitel?.alpha = percentage / 2
+            homeBinding?.test?.elevation = 1 - percentage
+            homeBinding?.toolbar?.elevation = percentage
         })
 
         homeBinding?.apply {
+
+            toolbar.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             VideosServiceImpl().getVideos { data, e ->
                 if (e == null && data != null)
