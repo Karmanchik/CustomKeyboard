@@ -31,20 +31,20 @@ class LikedFragment : Fragment(R.layout.fragment_favourites_container_liked){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply{
-                showCatalogButton.setOnClickListener {
-                    noObjectLayout.visibility = View.GONE
-                    likedRV.visibility = View.VISIBLE
-                    RealtyServiceImpl().getHouseCatalog { data, e ->
-                        if (e == null && data != null) {
-                            likedRV.adapter =
-                                CatalogAdapter(data, requireContext()) {
-                                    findNavController().navigate(R.id.action_favouritesFragment_to_houseFragment)
-                                }
-                        } else {
-                            Log.e("taf", e.toString())
-                        }
+            showCatalogButton.setOnClickListener {
+                noObjectLayout.visibility = View.GONE
+                likedRV.visibility = View.VISIBLE
+                RealtyServiceImpl().getHouseCatalog { data, e ->
+                    if (e == null && data != null) {
+                        likedRV.adapter =
+                            CatalogAdapter(data, requireContext()) {
+                                findNavController().navigate(R.id.action_favouritesFragment_to_houseFragment)
+                            }
+                    } else {
+                        Log.e("taf", e.toString())
                     }
                 }
+            }
         }
     }
 }
