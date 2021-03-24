@@ -77,6 +77,9 @@ class HomeFragment : Fragment() {
             NewsServiceImpl().getNews { data, e ->
                 if (e == null && data != null) {
                     newsRV.adapter = NewsAdapter(data, requireContext()) {
+                        val bundle = Bundle().apply {
+                            putSerializable("house", it)
+                        }
                         findNavController().navigate(R.id.action_navigation_home_to_newsSingleFragment)
                     }
                 }
@@ -105,7 +108,10 @@ class HomeFragment : Fragment() {
                 if (e == null && data != null) {
                     val vp = mainHousesContainer
                     vp.adapter = HeaderAdapter(data) {
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+                        val bundle = Bundle().apply {
+                            putString("id", "dsfsdfsd")
+                        }
+                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
                     dotsIndicator.setViewPager2(vp)
                 }
@@ -199,6 +205,9 @@ class HomeFragment : Fragment() {
             textViewVideosCount.text = "${data.size}  предложений"
             shortCatalogRV.adapter = if (data.size > 2) {
                 CatalogAdapter(listOf(data[0], data[1]), requireContext()) {
+                    val bundle = Bundle().apply {
+                        putSerializable("house", it)
+                    }
                     findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
                 }
             } else {

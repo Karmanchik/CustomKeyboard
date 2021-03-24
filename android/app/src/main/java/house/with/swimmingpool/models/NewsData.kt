@@ -1,5 +1,7 @@
 package house.with.swimmingpool.models
 
+import java.io.Serializable
+
 data class NewsData(
     val date: String?,
     val hits: Int?,
@@ -8,7 +10,7 @@ data class NewsData(
     val introtext: String?,
     val tags: List<String>?,
     val title: String?
-) {
+): Serializable {
 
     companion object {
         fun createEmpty(): NewsData = NewsData(
