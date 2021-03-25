@@ -1,14 +1,13 @@
 package house.with.swimmingpool.ui.cabinet.password
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.R
-import house.with.swimmingpool.databinding.FragmentFavouritesContainerHousesBinding
 import house.with.swimmingpool.databinding.FragmentPasswordBinding
+
 
 class PasswordFragment : Fragment(R.layout.fragment_password){
 

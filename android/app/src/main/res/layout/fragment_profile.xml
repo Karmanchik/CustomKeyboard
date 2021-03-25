@@ -13,7 +13,7 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:elevation="0dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="45dp"
         android:layout_gravity="center">
 
         <ImageView
@@ -99,22 +99,31 @@
     app:layout_constraintTop_toTopOf="parent" />
 
     <br.com.sapereaude.maskedEditText.MaskedEditText
-        android:id="@+id/phone_input"
+        android:id="@+id/phone_input_consultation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:paddingTop="4dp"
-        android:layout_marginEnd="12dp"
-        android:hint="0000000000"
-        android:textSize="18dp"
-        android:fontFamily="@font/lato"
         android:inputType="phone"
+        android:textCursorDrawable="@color/black"
         android:typeface="monospace"
         app:allowed_chars="1234567890"
-        app:keep_hint="true"
+        android:background="@color/white"
         app:mask="+7(###)###-##-##"
-        android:backgroundTint="#A1A1A1"
+        android:hint="0000000000"
+        app:keep_hint="true"
+        android:fontFamily="@font/lato_regular"
+        android:textSize="16sp"
+        android:textColor="#808080"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="10dp"
         />
+
+    <View
+        android:id="@+id/divider11"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
 
     <TextView
         android:id="@+id/textView38"
