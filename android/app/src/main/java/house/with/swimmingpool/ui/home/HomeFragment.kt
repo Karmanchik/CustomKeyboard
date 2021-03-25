@@ -54,6 +54,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var houseCatalogData: List<HouseCatalogData>? = null
+
+
         homeBinding?.appbar?.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
             val percentage = (abs(i).toFloat() / appBarLayout.totalScrollRange)
 
@@ -135,12 +138,19 @@ class HomeFragment : Fragment() {
                     .into(secondAdBanner)
             }
 
+            nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                if (shortCatalogRV.bottom in (oldScrollY + 1) until scrollY){
+                    setShortCatalog(houseCatalogData)
+                }
+            }
+            shortCatalogRV.setOnFocusChangeListener { v, hasFocus ->
+                Log.e("scroll", "fokuse $hasFocus")
+            }
+
             segmentedControl.addOnSegmentClickListener { svh ->
                 RealtyServiceImpl().getHouseCatalog { data, e ->
                     if (e == null && data != null) {
-                        setShortCatalog(
-
-                            when (svh.absolutePosition) {
+                          houseCatalogData = when (svh.absolutePosition) {
                                 0 -> {
                                     data.filter { it.type == "house" || it.type == "village" }
                                 }
@@ -153,7 +163,7 @@ class HomeFragment : Fragment() {
                                     data.filter { it.type == "complex" }
                                 }
                             }
-                        )
+                        setShortCatalog(houseCatalogData)
                     }
                 }
             }
@@ -200,19 +210,21 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setShortCatalog(data: List<HouseCatalogData>) {
+    private fun setShortCatalog(data: List<HouseCatalogData>?) {
         homeBinding?.apply {
-            textViewVideosCount.text = "${data.size}  предложений"
-            shortCatalogRV.adapter = if (data.size > 2) {
-                CatalogAdapter(listOf(data[0], data[1]), requireContext()) {
-                    val bundle = Bundle().apply {
-                        putSerializable("house", it)
+            if (data != null) {
+                textViewVideosCount.text = "${data.size}  предложений"
+                shortCatalogRV.adapter = if (data.size > 2) {
+                    CatalogAdapter(listOf(data[0], data[1]), requireContext()) {
+                        val bundle = Bundle().apply {
+                            putSerializable("house", it)
+                        }
+                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
                     }
-                    findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
-                }
-            } else {
-                CatalogAdapter(data, requireContext()) {
-                    findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+                } else {
+                    CatalogAdapter(data, requireContext()) {
+                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+                    }
                 }
             }
         }
