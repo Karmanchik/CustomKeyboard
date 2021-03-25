@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/gggggg"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -44,6 +45,7 @@
                     android:layout_height="460dp" />
 
                 <TextView
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="104dp"
@@ -56,6 +58,7 @@
                     android:textColor="@color/white"/>
 
                 <TextView
+                    android:id="@+id/textViewLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -108,7 +111,7 @@
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/whiteButtonFilterRV"
+                android:id="@+id/whiteButtonGalleryRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
@@ -123,6 +126,7 @@
                 android:layout_marginTop="10dp">
 
                 <TextView
+                    android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="500 000 - 100 000 000 руб."
@@ -133,6 +137,7 @@
                     android:textColor="@color/black"/>
 
                 <TextView
+                    android:id="@+id/discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+10%"
@@ -270,6 +275,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/noteLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -304,6 +310,7 @@
 
 
                 <TextView
+                    android:id="@+id/noteText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
@@ -562,6 +569,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_object"
@@ -578,7 +586,6 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="260dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
@@ -589,19 +596,13 @@
                     android:id="@+id/you_tube_player_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:showFullScreenButton="false"
                     android:visibility="visible"
                     app:showYouTubeButton="false"
                     app:showSeekBar="false"
                     app:showVideoCurrentTime="false"
                     app:showVideoDuration="false"
-
-                    android:layout_gravity="center"
-                    >
+                    android:layout_gravity="center">
 
                 </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
 
@@ -621,6 +622,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/stories_filter"
                     android:elevation="1dp"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -646,6 +648,7 @@
                 android:background="?android:attr/listDivider" />
 
             <TextView
+                android:id="@+id/housesListText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Список домов"
@@ -689,7 +692,7 @@
                 android:textSize="18dp"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:text="Collapse" />
+                android:text="Посмотреть список домов" />
 
 
             <androidx.cardview.widget.CardView

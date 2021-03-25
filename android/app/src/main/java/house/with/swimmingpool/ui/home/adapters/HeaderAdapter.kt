@@ -10,7 +10,7 @@ import house.with.swimmingpool.models.MainBannersData
 
 class HeaderAdapter(
         var items: List<MainBannersData>,
-        var onItemSelected: () -> Unit
+        var onItemSelected: (Int) -> Unit
 ): RecyclerView.Adapter<HeaderAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -39,7 +39,9 @@ class HeaderAdapter(
                     textView21.text = description
                 }
             }
-            itemView.setOnClickListener { onItemSelected.invoke() }
+            if(items[position].id != null){
+                itemView.setOnClickListener { onItemSelected.invoke(items[position].id?.toInt() ?: 0) }
+            }
         }
 
     }

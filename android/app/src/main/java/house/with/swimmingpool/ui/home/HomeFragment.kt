@@ -112,7 +112,7 @@ class HomeFragment : Fragment() {
                     val vp = mainHousesContainer
                     vp.adapter = HeaderAdapter(data) {
                         val bundle = Bundle().apply {
-                            putString("id", "dsfsdfsd")
+                            putInt("house", it)
                         }
                         findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
@@ -221,13 +221,16 @@ class HomeFragment : Fragment() {
                 shortCatalogRV.adapter = if (data.size > 2) {
                     CatalogAdapter(listOf(data[0], data[1]), requireContext()) {
                         val bundle = Bundle().apply {
-                            putSerializable("house", it)
+                            putInt("house", it)
                         }
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
                 } else {
                     CatalogAdapter(data, requireContext()) {
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+                        val bundle = Bundle().apply {
+                            putInt("house", it)
+                        }
+                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
                 }
             }

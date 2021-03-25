@@ -5,10 +5,7 @@ import com.google.gson.JsonObject
 import house.with.swimmingpool.api.config.interfaces.IRealtyService
 import house.with.swimmingpool.api.retrofit.IRealty
 import house.with.swimmingpool.api.retrofit.getRetrofit
-import house.with.swimmingpool.models.Answer
-import house.with.swimmingpool.models.HouseCatalog
-import house.with.swimmingpool.models.HouseCatalogData
-import house.with.swimmingpool.models.HouseExample
+import house.with.swimmingpool.models.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,19 +35,19 @@ class RealtyServiceImpl : IRealtyService {
             })
     }
 
-    override fun getHouseExample() {
+    override fun getHouseExample(id: Int, onLoaded: (data: HouseExampleData?, e: Throwable?) -> Unit) {
         getRetrofit().create(IRealty::class.java)
-            .getHousesExample()
+            .getHousesExample(id)
             .enqueue(object : Callback<HouseExample> {
                 override fun onResponse(
                     call: Call<HouseExample>,
                     response: Response<HouseExample>
                 ) {
-                    Log.e("Done", response.body()!!.data!!.formattedRegistration().toString())
+                    onLoaded.invoke(response.body()?.data, null)
                 }
 
                 override fun onFailure(call: Call<HouseExample>, t: Throwable) {
-                    Log.e("Done", "Error", t)
+                    onLoaded.invoke(null, t)
                 }
             })
     }

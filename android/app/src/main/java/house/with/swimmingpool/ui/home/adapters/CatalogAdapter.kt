@@ -16,8 +16,7 @@ import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 class CatalogAdapter(
         var items: List<HouseCatalogData>,
         var ctx: Context,
-        var onItemSelected: (HouseCatalogData) -> Unit
-
+        var onItemSelected: (Int) -> Unit
 ): RecyclerView.Adapter<CatalogAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -34,7 +33,7 @@ class CatalogAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
 
-            itemView.setOnClickListener { onItemSelected.invoke(items[position]) }
+            itemView.setOnClickListener { onItemSelected.invoke(items[position].id ?: 0) }
             view.apply {
 
                 likeView.setImageResource(R.drawable.like_enabled)

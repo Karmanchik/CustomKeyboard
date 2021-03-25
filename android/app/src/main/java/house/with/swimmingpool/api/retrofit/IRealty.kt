@@ -9,14 +9,17 @@ import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Path
 
 interface IRealty {
 
     @GET("objects")
     fun getHouses(): Call<HouseCatalog>
 
-    @GET("objects/921")
-    fun getHousesExample(): Call<HouseExample>
+    @GET("objects/{id}")
+    fun getHousesExample(
+            @Path("id") id: Int
+    ): Call<HouseExample>
 
     @GET("params")
     fun getParamsForFilter(
