@@ -10,21 +10,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
-import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.databinding.FragmentHouseBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.models.MainTags
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 import house.with.swimmingpool.ui.home.adapters.SeenHousesAdapter
 import house.with.swimmingpool.ui.house.adapters.*
-import java.io.File
-import java.io.FileInputStream
 
 class HouseFragment : Fragment() {
 
