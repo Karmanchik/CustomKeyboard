@@ -98,6 +98,10 @@ class HouseFragment : Fragment() {
                     }
                 }
             }
+
+            houseBackIcon.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 

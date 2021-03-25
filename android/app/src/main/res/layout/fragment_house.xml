@@ -20,6 +20,7 @@
                 android:layout_height="460dp">
 
                 <ImageView
+                    android:id="@+id/houseBackIcon"
                     android:layout_width="15dp"
                     android:layout_height="25dp"
                     android:layout_marginStart="12dp"
@@ -564,7 +565,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_object"
-
+                android:lineHeight="24.4dp"
+                android:textColor="@color/black"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
@@ -658,7 +660,7 @@
                 android:id="@+id/listHouseBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:paddingStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="15dp"
                 />
@@ -678,7 +680,7 @@
                 android:textSize="18dp"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:text="Показать все" />
+                android:text="Скрыть" />
 
             <TextView
                 android:id="@+id/showListHouseBoxGoToRegister"
@@ -879,6 +881,7 @@
                 android:layout_height="wrap_content"
                 app:cardElevation="10dp"
                 android:elevation="10dp"
+                app:cardCornerRadius="6dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp">
 

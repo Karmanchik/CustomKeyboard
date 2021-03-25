@@ -62,7 +62,7 @@ class SeenHousesAdapter(
                 items[position]?.apply {
                     textViewTitle.text = title
                     textViewLocation.text = location
-                    textViewPrice.text = price
+                    textViewPrice.text = "$price руб."
                     if(this?.square != null) {
                         textViewSquare.text = "$square м²"      //fix me!!!
                     }else{
