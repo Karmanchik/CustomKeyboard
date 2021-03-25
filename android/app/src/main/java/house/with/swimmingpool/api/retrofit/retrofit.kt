@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+val mainRetrofit by lazy { getRetrofit() }
 
 fun getRetrofit(): Retrofit {
         val baseUrl = "https://domsbasseinom.ru/app/"

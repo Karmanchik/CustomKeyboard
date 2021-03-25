@@ -10,7 +10,8 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentVariantsBinding
 
 class VariantsFragment(
-        val items: List<Pair<String, Boolean>>
+        val items: List<Pair<String, Boolean>>,
+        val onItemsSelected: (List<Pair<String, Boolean>>) -> Unit
 ) : BottomSheetDialogFragment() {
 
     lateinit var binding : FragmentVariantsBinding
@@ -34,13 +35,17 @@ class VariantsFragment(
 
         binding.apply {
             closeIcon.setOnClickListener { dismiss() }
-            variantsRV.adapter = VariantsAdapter(items, requireContext())
+            variantsRV.adapter = VariantsAdapter(items.toMutableList(), requireContext())
+            textView39.setOnClickListener {
+                onItemsSelected.invoke((variantsRV.adapter as VariantsAdapter).items)
+                dismiss()
+            }
         }
     }
 
     companion object {
-        fun newInstance(items: List<Pair<String, Boolean>>, ): VariantsFragment {
-            return VariantsFragment(items)
+        fun newInstance(items: List<Pair<String, Boolean>>, onItemsSelected: (List<Pair<String, Boolean>>) -> Unit): VariantsFragment {
+            return VariantsFragment(items, onItemsSelected)
         }
     }
 

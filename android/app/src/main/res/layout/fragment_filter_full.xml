@@ -68,16 +68,6 @@
                     android:hint="Район" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <house.with.swimmingpool.views.CustomEditField
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                app:title="Форма оплаты"
-                app:buttonMode="true"
-                app:passwordMode="true"
-                android:id="@+id/variable_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/filter_full_edit_text_container"
                 android:layout_width="match_parent">
