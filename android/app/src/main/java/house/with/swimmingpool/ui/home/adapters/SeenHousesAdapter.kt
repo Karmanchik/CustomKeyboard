@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.home.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,9 +17,7 @@ import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 class SeenHousesAdapter(
         val ctx: Context,
         var items: List<HouseCatalogData?>,
-        var onItemSelected: (
-//                House
-        ) -> Unit
+        var onItemSelected: (Int) -> Unit
 ): RecyclerView.Adapter<SeenHousesAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -33,10 +32,9 @@ class SeenHousesAdapter(
 
     inner class Holder(private val view: ItemHouseGridBinding): RecyclerView.ViewHolder(view.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
-            itemView.setOnClickListener { onItemSelected.invoke(
-//                    items[position]
-            ) }
+            itemView.setOnClickListener { onItemSelected.invoke(items[position]?.id ?: 0) }
 
             view.apply {
 
@@ -62,13 +60,14 @@ class SeenHousesAdapter(
                 items[position]?.apply {
                     textViewTitle.text = title
                     textViewLocation.text = location
+
                     textViewPrice.text = "$price руб."
-                    if(this?.square != null) {
+                    if(this.square != null) {
                         textViewSquare.text = "$square м²"      //fix me!!!
                     }else{
                         textViewSquare.visibility = View.GONE
                     }
-                    if(this?.square_area != null) {
+                    if(this.square_area != null) {
                         textViewSquareArea.text = "$square_area соток" //fix me!!!
                     }else{
                         textViewSquareArea.visibility = View.GONE

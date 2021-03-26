@@ -1,8 +1,10 @@
 package house.with.swimmingpool.ui.house.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.databinding.ItemListHouseBoxBinding
@@ -26,14 +28,27 @@ class ListHouseBoxAdapter(
     inner class Holder(private val view: ItemListHouseBoxBinding) :
             RecyclerView.ViewHolder(view.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
             view.apply {
-                title.text = items?.get(position)?.title ?: ""
-                price.text = items?.get(position)?.price ?: ""
-                number.text = items?.get(position)?.number
-//                dividerIndicator.setBackgroundColor(Color.parseColor(items?.get(position)?.status?.color))
-            }
+                items?.get(position)?.apply {
+                    textViewTitle.text = title ?: ""
+                    textViewPrice.text = price ?: ""
+                    textViewNumber.text = number
+                    if (square != null) {
+                        textViewSquare.text = "$square соток"
+                    } else {
+                        textViewSquare.visibility = View.GONE
+                    }
 
+                    if (square_area != null) {
+                        textViewSquareArea.text = "$square_area м²"
+                    } else {
+                        textViewSquareArea.visibility = View.GONE
+                    }
+//                dividerIndicator.setBackgroundColor(Color.parseColor(items?.get(position)?.status?.color))
+                }
+            }
         }
     }
 }

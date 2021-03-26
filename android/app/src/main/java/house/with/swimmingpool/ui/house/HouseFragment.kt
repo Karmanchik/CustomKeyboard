@@ -184,7 +184,10 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 similarObjects.apply {
                     layoutManager = GridLayoutManager(context, 2)
                     adapter = SeenHousesAdapter(requireContext(), listOf(data?.get(0), data?.get(1))) {
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+                        val bundle = Bundle().apply {
+                            putSerializable("house", it)
+                        }
+                        findNavController().navigate(R.id.action_houseFragment_self, bundle)
                     }
                 }
             }
