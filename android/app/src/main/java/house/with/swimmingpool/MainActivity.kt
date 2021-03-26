@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.yandex.mapkit.MapKitFactory
 import house.with.swimmingpool.api.config.controllers.NewsServiceImpl
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.api.config.controllers.StoriesServiceImpl
@@ -38,5 +39,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
         navView.setupWithNavController(navController)
+
+        MapKitFactory.setApiKey("bb9c9bdc-48ad-4806-b55d-48c2e98b3b0d")
+        MapKitFactory.initialize(this)
     }
 }

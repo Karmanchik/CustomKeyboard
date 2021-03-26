@@ -10,16 +10,16 @@ import androidx.fragment.app.transaction
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
+import com.yandex.mapkit.Animation
+import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.map.CameraPosition
+import com.yandex.mapkit.mapview.MapView
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentHouseBinding
-import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.models.HouseExampleData
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 import house.with.swimmingpool.ui.home.adapters.SeenHousesAdapter
@@ -30,14 +30,14 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
     private var houseObjectBinding: FragmentHouseBinding? = null
 
-    private var map: GoogleMap? = null
+    private var mapview: MapView? = null
 
     private var houseExampleData: HouseExampleData? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         houseObjectBinding = FragmentHouseBinding.inflate(layoutInflater)
 
@@ -57,10 +57,11 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                     data.getGallery().apply {
                         whiteButtonGalleryRV.adapter =
-                                MainGalleryAndDateAdapter(
-                                        requireContext(),
-                                        this,
-                                        this@HouseFragment)
+                            MainGalleryAndDateAdapter(
+                                requireContext(),
+                                this,
+                                this@HouseFragment
+                            )
 
                         val galleryNameList: ArrayList<String> = arrayListOf()
                         var listImage: ArrayList<String> = arrayListOf()
@@ -98,7 +99,14 @@ class HouseFragment : Fragment(), ISingleHouseView {
 //                        noteText = note
                     }
 
-                    whiteButtonRV.adapter = WhiteButtonAdapter(requireContext(), this@HouseFragment, listOf("Общие", "Коммуникации", "Оформление", "Оплата"))
+                    whiteButtonRV.adapter = WhiteButtonAdapter(
+                        requireContext(), this@HouseFragment, listOf(
+                            "Общие",
+                            "Коммуникации",
+                            "Оформление",
+                            "Оплата"
+                        )
+                    )
 
                     showInformation(0)
 
@@ -112,14 +120,15 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                     Glide.with(requireContext())
 //                            .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
-                            .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
-                            .error(R.drawable.error_placeholder_midle)
-                            .placeholder(R.drawable.placeholder)
-                            .into(imageViewVideoPreloader)
+                        .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
+                        .error(R.drawable.error_placeholder_midle)
+                        .placeholder(R.drawable.placeholder)
+                        .into(imageViewVideoPreloader)
 
                     youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                         override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                            val videoId = "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
+                            val videoId =
+                                "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
                             youTubePlayer.loadVideo(videoId, 0f)
                             youTubePlayer.pause()
 
@@ -148,7 +157,10 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
 
                     if (data.advantages != null) {
-                        whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(requireContext(), data.advantages)
+                        whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(
+                            requireContext(),
+                            data.advantages
+                        )
                     } else {
                         whiteButtonAdvantagesRV.visibility = View.GONE
                     }
@@ -165,18 +177,25 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         showListHouse(false)
                     }
 
-                }
-            }
+                    try {
+                        val latitude = data.geolocation?.latitude ?: .0
+                        val longitude = data.geolocation?.longitude ?: .0
 
-//            mapView.onCreate(savedInstanceState?.getBundle())
+                        Log.e("test", "${latitude}:::${longitude}")
 
-            mapView.getMapAsync { googleMap ->
-                map = googleMap
-                val positions = LatLng(55.75222, 37.61556)
+                        mapview = mapView
+                        mapview?.map?.move(
+                            CameraPosition(
+                                Point(latitude, longitude), 11.0f, 0.0f, 0.0f
+                            ),
+                            Animation(Animation.Type.SMOOTH, 0F),
+                            null
+                        )
+                        mapview?.map?.mapObjects?.addPlacemark(Point(latitude, longitude))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
 
-                googleMap.apply {
-                    addMarker(MarkerOptions().position(positions).title("Marker in Sydney"))
-                    moveCamera(CameraUpdateFactory.newLatLngZoom(positions, 10f))
                 }
             }
 
@@ -214,15 +233,18 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         collapseListHouseBox.visibility = View.GONE
                         layoutManager = GridLayoutManager(context, 3)
                         if ((houseExampleData?.children?.size) ?: 0 < 6) {
-                            adapter = ListHouseBoxAdapter(requireContext(), houseExampleData?.children)
+                            adapter = ListHouseBoxAdapter(
+                                requireContext(),
+                                houseExampleData?.children
+                            )
                         } else {
                             houseExampleData?.apply {
                                 adapter = ListHouseBoxAdapter(
-                                        requireContext(),
-                                        listOf(
-                                                children?.get(0), children?.get(1), children?.get(2),
-                                                children?.get(3), children?.get(4), children?.get(5),
-                                        )
+                                    requireContext(),
+                                    listOf(
+                                        children?.get(0), children?.get(1), children?.get(2),
+                                        children?.get(3), children?.get(4), children?.get(5),
+                                    )
                                 )
                             }
                         }
@@ -250,30 +272,42 @@ class HouseFragment : Fragment(), ISingleHouseView {
         }
     }
 
+    override fun onStop() {
+        mapview?.onStop()
+        MapKitFactory.getInstance().onStop()
+        super.onStop()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        MapKitFactory.getInstance().onStart()
+        mapview?.onStart()
+    }
+
     override fun showInformation(position: Int) {
         if (houseExampleData != null) {
             val fragment = when (position) {
                 0 -> {
                     InformationFragment(
-                            houseExampleData?.formattedGeneral()
+                        houseExampleData?.formattedGeneral()
                     )
                 }
 
                 1 -> {
                     InformationFragment(
-                            houseExampleData?.formattedCommunications()
+                        houseExampleData?.formattedCommunications()
                     )
                 }
 
                 2 -> {
                     InformationFragment(
-                            houseExampleData?.formattedRegistration()
+                        houseExampleData?.formattedRegistration()
                     )
                 }
 
                 else -> {
                     InformationFragment(
-                            houseExampleData?.formattedPayment()
+                        houseExampleData?.formattedPayment()
                     )
                 }
             }
