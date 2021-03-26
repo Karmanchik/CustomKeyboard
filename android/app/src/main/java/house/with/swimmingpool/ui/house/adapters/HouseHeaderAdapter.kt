@@ -32,7 +32,6 @@ class HouseHeaderAdapter(
                 .into(view.imageView3)
 
             Log.e("testing", items[position])
-
         }
     }
 }

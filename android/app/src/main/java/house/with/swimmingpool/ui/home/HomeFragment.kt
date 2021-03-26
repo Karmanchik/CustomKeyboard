@@ -147,9 +147,7 @@ class HomeFragment : Fragment() {
                     setShortCatalog(houseCatalogData)
                 }
             }
-            shortCatalogRV.setOnFocusChangeListener { v, hasFocus ->
-                Log.e("scroll", "fokuse $hasFocus")
-            }
+
 
             segmentedControl.addOnSegmentClickListener { svh ->
                 RealtyServiceImpl().getHouseCatalog { data, e ->

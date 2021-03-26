@@ -35,7 +35,7 @@ class CatalogAdapter(
 
             itemView.setOnClickListener { onItemSelected.invoke(items[position].id ?: 0) }
             view.apply {
-
+            housesImageContainerLayout.setOnClickListener { onItemSelected.invoke(items[position].id ?: 0) }
                 likeView.setImageResource(R.drawable.like_enabled)
 
                 items[position].apply {
@@ -44,14 +44,14 @@ class CatalogAdapter(
                     vp.adapter = when {
                         photos != null && photos.isNotEmpty() -> {
                             Log.e("photos", photos.size.toString())
-                             CatalogImageAdapter(photos, listOf("-cYOlHknhBU") , ctx)
+                             CatalogImageAdapter(photos, listOf("-cYOlHknhBU") , ctx, onItemSelected, items[position].id ?: 0)
                         }
                         icon != null ->{
                             Log.e("photos", icon.toString())
-                            CatalogImageAdapter(listOf(icon), listOf("-cYOlHknhBU") , ctx)
+                            CatalogImageAdapter(listOf(icon), listOf("-cYOlHknhBU") , ctx, onItemSelected, items[position].id ?: 0)
                         }
                         else -> {
-                            CatalogImageAdapter(listOf(""), listOf("-cYOlHknhBU") , ctx)
+                            CatalogImageAdapter(listOf(""), listOf("-cYOlHknhBU") , ctx, onItemSelected, items[position].id ?: 0)
                         }
                     }
                     dotsIndicatorCatalogItem.setViewPager2(vp)

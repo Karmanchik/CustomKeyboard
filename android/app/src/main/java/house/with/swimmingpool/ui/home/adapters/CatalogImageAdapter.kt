@@ -23,7 +23,9 @@ import house.with.swimmingpool.databinding.ItemHouseCotalogImageBinding
 class CatalogImageAdapter(
     var items: List<String?>,
     var videos: List<String>?,
-    val ctx: Context
+    val ctx: Context,
+    var onItemSelected: (Int) -> Unit,
+    var id: Int
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val itemsCount = (videos?.size ?: 0) + items.size + 1
@@ -89,6 +91,7 @@ class CatalogImageAdapter(
     inner class CatalogImageHolder(private val view: ItemHouseCotalogImageBinding):
         RecyclerView.ViewHolder(view.root) {
         fun bind(position: Int) {
+            itemView.setOnClickListener { onItemSelected.invoke(id) }
             Glide.with(ctx)
                 .load(items[position])
                 .error(R.drawable.error_placeholder_midle)

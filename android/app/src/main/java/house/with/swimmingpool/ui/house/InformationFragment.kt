@@ -34,23 +34,23 @@ class InformationFragment(
                 when (index) {
                     0 -> {
                         key.text = entry.key
-                        value.text = entry.value
+                        value.text = entry.value.dropLast(1).drop(1)
                     }
                     1 -> {
                         key1.text = entry.key
-                        value1.text = entry.value
+                        value1.text = entry.value.dropLast(1).drop(1)
                     }
                     2 -> {
                         key2.text = entry.key
-                        value2.text = entry.value
+                        value2.text = entry.value.dropLast(1).drop(1)
                     }
                     3 -> {
                         key3.text = entry.key
-                        value3.text = entry.value
+                        value3.text = entry.value.dropLast(1).drop(1)
                     }
                     else -> {
                         key4.text = entry.key
-                        value4.text = entry.value
+                        value4.text = entry.value.dropLast(1).drop(1)
                     }
                 }
             }
