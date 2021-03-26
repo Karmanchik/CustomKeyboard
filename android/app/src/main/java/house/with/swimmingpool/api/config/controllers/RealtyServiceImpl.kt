@@ -48,6 +48,7 @@ class RealtyServiceImpl : IRealtyService {
 
                 override fun onFailure(call: Call<HouseExample>, t: Throwable) {
                     onLoaded.invoke(null, t)
+                    Log.e("taskException", "error", t)
                 }
             })
     }

@@ -81,6 +81,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/hitsText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="915"
@@ -108,6 +109,12 @@
                     app:selectedDotColor="@color/white"
                     />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:background="@drawable/header_bottom"
+                    android:layout_alignParentBottom="true"/>
+
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -117,7 +124,6 @@
                 android:paddingBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginBottom="12dp"
                 />
 
             <LinearLayout
@@ -323,12 +329,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/titleOfNotes" />
 
-                <!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:background="@drawable/header_bottom"-->
-<!--                    tools:layout_editor_absoluteX="11dp"-->
-<!--                    tools:layout_editor_absoluteY="31dp" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -340,215 +340,11 @@
                 android:layout_marginBottom="15dp"
                 />
 
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/informationFrame"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Участок"
-                    android:fontFamily="@font/lato"
-                    android:textSize="16sp"
-                    android:textColor="#66000000"
-                    android:layout_weight="0"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-                    android:fontFamily="@font/lato"
-                    android:textSize="20dp"
-                    android:textColor="#80A1A1A1"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="7 соток"
-                    android:fontFamily="@font/lato_regular"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:layout_weight="0"
-                    />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Площадь м2"
-                    android:fontFamily="@font/lato"
-                    android:textSize="16sp"
-                    android:textColor="#66000000"
-                    android:layout_weight="0"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-                    android:fontFamily="@font/lato"
-                    android:textSize="20dp"
-                    android:textColor="#80A1A1A1"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="350 м2"
-                    android:fontFamily="@font/lato_regular"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:layout_weight="0"
-                    />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Класс дома"
-                    android:fontFamily="@font/lato"
-                    android:textSize="16sp"
-                    android:textColor="#66000000"
-                    android:layout_weight="0"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-                    android:fontFamily="@font/lato"
-                    android:textSize="20dp"
-                    android:textColor="#80A1A1A1"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Бизнес класс"
-                    android:fontFamily="@font/lato_regular"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:layout_weight="0"
-                    />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Паркинг"
-                    android:fontFamily="@font/lato"
-                    android:textSize="16sp"
-                    android:textColor="#66000000"
-                    android:layout_weight="0"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-                    android:fontFamily="@font/lato"
-                    android:textSize="20dp"
-                    android:textColor="#80A1A1A1"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Придомовой"
-                    android:fontFamily="@font/lato_regular"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:layout_weight="0"
-                    />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Расстрояние до моря"
-                    android:fontFamily="@font/lato"
-                    android:textSize="16sp"
-                    android:textColor="#66000000"
-                    android:layout_weight="0"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-                    android:fontFamily="@font/lato"
-                    android:textSize="20dp"
-                    android:textColor="#80A1A1A1"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4500 м"
-                    android:fontFamily="@font/lato_regular"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:layout_weight="0"
-                    />
-
-
-            </LinearLayout>
+                android:layout_height="wrap_content">
+            </FrameLayout>
 
             <View
                 android:layout_width="match_parent"

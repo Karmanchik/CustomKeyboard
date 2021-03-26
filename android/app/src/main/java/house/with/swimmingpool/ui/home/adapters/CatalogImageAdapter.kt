@@ -134,60 +134,6 @@ class CatalogImageAdapter(
                     }
                 }
             })
-
-//            view.youTubePlayerView.addYouTubePlayerListener(object :
-//                    AbstractYouTubePlayerListener() {
-//                override fun onReady(youTubePlayer: YouTubePlayer) {
-//                    val videoId = videos?.get(position) ?: ""
-//                    youTubePlayer.loadVideo(videoId, 0f)
-//                    youTubePlayer.pause()
-//
-//                    view.imageViewVideoPreloader.setOnClickListener {
-//                        it.visibility = View.GONE
-//                        view.relativeLayout.visibility = View.GONE
-//                        view.youTubePlayerView.visibility = View.VISIBLE
-//                        youTubePlayer.play()
-//                    }
-//                }
-//            })
-//            view.youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayer(){})
-        }
-
-        fun openYouTube() {
-            Log.e("youTube", "startOpen")
-            view.youTubePlayerView.enterFullScreen()
-            view.youTubePlayerView.addYouTubePlayerListener(object :
-                    AbstractYouTubePlayerListener() {
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    val videoId = "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
-                    youTubePlayer.loadVideo(videoId, 0f)
-                    youTubePlayer.pause()
-                    Log.e("youTube", "open ${videoId.toString()} ${adapterPosition - items.size}")
-                }
-
-                override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
-                    Log.e("youTube", error.name.toString())
-                }
-            })
-        }
-
-        fun closeYouTube(){
-            view.youTubePlayerView.release()
         }
     }
-
-//    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
-//        if(holder is CatalogListVideoHolder){
-//            holder.closeYouTube()
-//            Log.e("youTube", "close")
-//        }
-//    }
-//
-//
-//
-//    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
-//        if(holder is CatalogListVideoHolder){
-//            holder.openYouTube()
-//        }
-//    }
 }

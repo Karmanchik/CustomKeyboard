@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.house.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -24,12 +25,13 @@ class HouseHeaderAdapter(
     inner class Holder(private val view: ItemHeaderHouseSingleImageBinding): RecyclerView.ViewHolder(view.root) {
 
         fun bind(position: Int) {
-
             Glide.with(itemView.context)
                 .load(items[position])
                 .error(R.drawable.error_placeholder_big)
                 .placeholder(R.drawable.gradient_placeholder_big)
                 .into(view.imageView3)
+
+            Log.e("testing", items[position])
 
         }
     }

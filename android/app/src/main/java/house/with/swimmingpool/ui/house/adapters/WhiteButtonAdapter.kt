@@ -2,16 +2,17 @@ package house.with.swimmingpool.ui.house.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemWhiteButtonBinding
+import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
 
 class WhiteButtonAdapter(
     var ctx: Context,
+    var parentView: ISingleHouseView,
     var items: List<String>
 ) : RecyclerView.Adapter<WhiteButtonAdapter.Holder>() {
 
@@ -56,6 +57,8 @@ class WhiteButtonAdapter(
                         lastCheckedPosition = position
                         view.whiteButtonLayout.background = ctx.getDrawable(R.drawable.white_button_without_corners)
                         view.whiteButtonLayout.elevation = 10F
+
+                        parentView.showInformation(position)
                     }
                 }
             }

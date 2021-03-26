@@ -7,7 +7,7 @@ import com.google.gson.JsonObject
 
 data class HouseExampleData(
     val analogs: List<HouseCatalogData>?,
-//    val children: List<Children>?,
+    val children: List<Children>?,
     val communications: JsonObject?,
     val advantages : List<String>?,
     val description: String?,
@@ -45,10 +45,6 @@ data class HouseExampleData(
 
     fun formattedCommunications(): Map<String, String>? {
         return communications?.entrySet()?.map { Pair(it.key, it.value.toString()) }?.toMap()
-    }
-
-    fun formattedGalleries(): Map<String, JsonElement>? {
-        return galleries?.entrySet()?.map { Pair(it.key, it.value) }?.toMap()
     }
 
     fun formattedGeneral(): Map<String, String>? {

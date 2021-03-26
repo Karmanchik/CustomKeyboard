@@ -120,7 +120,7 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            BannersServiceImpl().getBanners { data, e ->
+       BannersServiceImpl().getBanners { data, e ->
                 Glide.with(this@HomeFragment)
                     .load(data?.get(0)?.bigBanner)
                     .error(R.drawable.placeholder)

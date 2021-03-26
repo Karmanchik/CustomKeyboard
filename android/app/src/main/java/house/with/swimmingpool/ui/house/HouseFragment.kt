@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.transaction
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -17,16 +19,20 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.You
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentHouseBinding
+import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.models.HouseExampleData
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
-import house.with.swimmingpool.ui.home.adapters.IViewHouse
 import house.with.swimmingpool.ui.home.adapters.SeenHousesAdapter
 import house.with.swimmingpool.ui.house.adapters.*
+import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
 
-class HouseFragment : Fragment(), IViewHouse {
+class HouseFragment : Fragment(), ISingleHouseView {
 
     private var houseObjectBinding: FragmentHouseBinding? = null
 
     private var map: GoogleMap? = null
+
+    private var houseExampleData: HouseExampleData? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -47,41 +53,70 @@ class HouseFragment : Fragment(), IViewHouse {
 
             RealtyServiceImpl().getHouseExample(houseId ?: 0) { data, e ->
                 if (data != null) {
-                    whiteButtonGalleryRV.adapter =
-                            MainGalleryAndDateAdapter(
-                                    requireContext(),
-                                    data.getGallery(),
-                                    this@HouseFragment)
+                    houseExampleData = data
 
-//                    data.getGallery()?.forEach {
-//                        Log.e("tagss", it.second[0].name)
-//                    }
+                    data.getGallery().apply {
+                        whiteButtonGalleryRV.adapter =
+                                MainGalleryAndDateAdapter(
+                                        requireContext(),
+                                        this,
+                                        this@HouseFragment)
 
+                        val galleryNameList: ArrayList<String> = arrayListOf()
+                        var listImage: ArrayList<String> = arrayListOf()
+
+                        if (galleryNameList.size == 0) {
+                            whiteButtonGalleryRV.visibility = View.GONE
+                        }
+
+                        if (!this.isNullOrEmpty()) {
+                            this.first().second.forEach { img ->
+                                listImage.add(img.url)
+                            }
+
+                            this.forEach {
+                                galleryNameList.add(it.first)
+                            }
+                        }
+                        showHeaderGallery(listImage)
+                    }
 
                     price.text = data.price + " руб."
                     discount.text = data.discount.toString()
+                    title.text = data.title
+                    textViewLocation.text = data.location
+                    hitsText.text = data.hits.toString()
 
                     if (data.mainTags != null) {
                         hashTagRV.adapter = TagAdapter(requireContext(), data.mainTags)
                     }
 
-                    setMainHouseContainer()
-
-                    title.text = data.title
-                    textViewLocation.text = data.location
-
                     val note = null
-
-
                     if (note == null) {
                         noteLayout.visibility = View.GONE
                     } else {
 //                        noteText = note
                     }
 
-                    description.text = data.description
+                    whiteButtonRV.adapter = WhiteButtonAdapter(requireContext(), this@HouseFragment, listOf("Общие", "Коммуникации", "Оформление", "Оплата"))
+
+                    showInformation(0)
+
+                    if (data.description.isNullOrEmpty()) {
+                        description.visibility = View.GONE
+                    } else {
+                        description.text = data.description
+                    }
 
 //                    if (data.video.isNullOrEmpty()) {
+
+                    Glide.with(requireContext())
+//                            .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
+                            .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
+                            .error(R.drawable.error_placeholder_midle)
+                            .placeholder(R.drawable.placeholder)
+                            .into(imageViewVideoPreloader)
+
                     youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                         override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
                             val videoId = "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
@@ -118,23 +153,20 @@ class HouseFragment : Fragment(), IViewHouse {
                         whiteButtonAdvantagesRV.visibility = View.GONE
                     }
 
+                    listHouseBox.apply {
+                        showListHouse(false)
+                    }
+
+                    showListHouseBox.setOnClickListener {
+                        showListHouse(true)
+                    }
+
+                    collapseListHouseBox.setOnClickListener {
+                        showListHouse(false)
+                    }
+
                 }
             }
-
-            whiteButtonRV.adapter = WhiteButtonAdapter(requireContext(), listOf("Общие", "Коммуникации", "Оформление", "Оплата"))
-
-            listHouseBox.apply {
-                showListHouse(false)
-            }
-
-            showListHouseBox.setOnClickListener {
-                showListHouse(true)
-            }
-
-            collapseListHouseBox.setOnClickListener {
-                showListHouse(false)
-            }
-
 
 //            mapView.onCreate(savedInstanceState?.getBundle())
 
@@ -165,33 +197,38 @@ class HouseFragment : Fragment(), IViewHouse {
 
     private fun showListHouse(full: Boolean) {
         houseObjectBinding?.apply {
-            if (full) {
-
-                listHouseBox.apply {
-                    showListHouseBox.visibility = View.GONE
-                    collapseListHouseBox.visibility = View.VISIBLE
-                    layoutManager = GridLayoutManager(context, 3)
-                    adapter = ListHouseBoxAdapter(requireContext(), listOf("", "", "", "", "", "", "", "", "", "", "", "", ""))
+            if (houseExampleData != null) {
+                if (full) {
+                    listHouseBox.apply {
+                        showListHouseBox.visibility = View.GONE
+                        collapseListHouseBox.visibility = View.VISIBLE
+                        layoutManager = GridLayoutManager(context, 3)
+                        adapter = ListHouseBoxAdapter(requireContext(), houseExampleData?.children)
+                    }
+                } else {
+                    listHouseBox.apply {
+                        showListHouseBox.visibility = View.VISIBLE
+                        collapseListHouseBox.visibility = View.GONE
+                        layoutManager = GridLayoutManager(context, 3)
+                        if ((houseExampleData?.children?.size) ?: 0 < 6) {
+                            adapter = ListHouseBoxAdapter(requireContext(), houseExampleData?.children)
+                        } else {
+                            houseExampleData?.apply {
+                                adapter = ListHouseBoxAdapter(
+                                        requireContext(),
+                                        listOf(
+                                                children?.get(0), children?.get(1), children?.get(2),
+                                                children?.get(3), children?.get(4), children?.get(5),
+                                        )
+                                )
+                            }
+                        }
+                    }
                 }
             } else {
-                listHouseBox.apply {
-                    showListHouseBox.visibility = View.VISIBLE
-                    collapseListHouseBox.visibility = View.GONE
-                    layoutManager = GridLayoutManager(context, 3)
-                    adapter = ListHouseBoxAdapter(requireContext(), listOf("", "", "", "", "", ""))
-                }
+                listHouseBox.visibility = View.GONE
+                showListHouseBox.visibility = View.GONE
             }
-        }
-    }
-
-    private fun setMainHouseContainer(
-//            photos: List<String>
-    ) {
-        houseObjectBinding?.apply {
-            val vp = mainHousesContainer
-            vp.adapter = HouseHeaderAdapter(listOf("", "", ""))
-
-            dotsIndicator.setViewPager2(vp)
         }
     }
 
@@ -202,10 +239,45 @@ class HouseFragment : Fragment(), IViewHouse {
 
     override fun showHeaderGallery(list: ArrayList<String>) {
         houseObjectBinding?.apply {
+            Log.e("testing", list.toString())
             val vp = mainHousesContainer
             vp.adapter = HouseHeaderAdapter(list)
 
             dotsIndicator.setViewPager2(vp)
+        }
+    }
+
+    override fun showInformation(position: Int) {
+        if (houseExampleData != null) {
+            val fragment = when (position) {
+                0 -> {
+                    InformationFragment(
+                            houseExampleData?.formattedGeneral()
+                    )
+                }
+
+                1 -> {
+                    InformationFragment(
+                            houseExampleData?.formattedCommunications()
+                    )
+                }
+
+                2 -> {
+                    InformationFragment(
+                            houseExampleData?.formattedRegistration()
+                    )
+                }
+
+                else -> {
+                    InformationFragment(
+                            houseExampleData?.formattedPayment()
+                    )
+                }
+            }
+
+            childFragmentManager.transaction {
+                replace(R.id.informationFrame, fragment)
+            }
         }
     }
 }

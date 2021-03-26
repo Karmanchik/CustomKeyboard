@@ -38,7 +38,10 @@ class LikedFragment : Fragment(R.layout.fragment_favourites_container_liked){
                     if (e == null && data != null) {
                         likedRV.adapter =
                             CatalogAdapter(data, requireContext()) {
-                                findNavController().navigate(R.id.action_favouritesFragment_to_houseFragment)
+                                val bundle = Bundle().apply {
+                                    putInt("house", it)
+                                }
+                                findNavController().navigate(R.id.action_favouritesFragment_to_houseFragment, bundle)
                             }
                     } else {
                         Log.e("taf", e.toString())
