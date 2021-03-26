@@ -20,6 +20,7 @@ import house.with.swimmingpool.ui.filter.variants.VariantsFragment
 import house.with.swimmingpool.ui.onRightDrawableClicked
 import house.with.swimmingpool.ui.removeRightIcon
 import house.with.swimmingpool.ui.setRightIcon
+import house.with.swimmingpool.views.CustomEditField
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -116,24 +117,15 @@ class FullFilterFragment : Fragment() {
             chip24.setOnClickListener { onChipClicked(it) }
 
             resetButton.setOnClickListener {
-                area.text?.clear()
-                price.text?.clear()
-                square.text?.clear()
-                docType.text?.clear()
-                moneyType.text?.clear()
-                style.text?.clear()
-                sea.text?.clear()
-                houseType.text?.clear()
+                area.value = ""
+                price.value = ""
+                square.value = ""
+                docType.value = ""
+                moneyType.value = ""
+                style.value = ""
+                sea.value = ""
+                houseType.value = ""
             }
-
-            area.initEditText()
-            price.initEditText()
-            square.initEditText()
-            docType.initEditText()
-            moneyType.initEditText()
-            style.initEditText()
-            sea.initEditText()
-            houseType.initEditText()
 
             area.setOnClickListener {
                 if (districtsFilter == null) {
@@ -142,7 +134,7 @@ class FullFilterFragment : Fragment() {
 
                 openVariants(districtsFilter!!) {
                     districtsFilter = it
-                    area.setText(it.filter { it.second }.map { it.first }.joinToString(", "))
+                    area.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
                 }
             }
 
@@ -154,7 +146,7 @@ class FullFilterFragment : Fragment() {
 
                 openVariants(registrationTypeFilter!!) {
                     registrationTypeFilter = it
-                    docType.setText(it.filter { it.second }.map { it.first }.joinToString(", "))
+                    docType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
                 }
             }
 
@@ -165,7 +157,7 @@ class FullFilterFragment : Fragment() {
 
                 openVariants(paymentTypeFilter!!) {
                     paymentTypeFilter = it
-                    moneyType.setText(it.filter { it.second }.map { it.first }.joinToString(", "))
+                    moneyType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
                 }
             }
 
@@ -176,7 +168,7 @@ class FullFilterFragment : Fragment() {
 
                 openVariants(interiorFilter!!) {
                     interiorFilter = it
-                    style.setText(it.filter { it.second }.map { it.first }.joinToString(", "))
+                    style.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
                 }
             }
 
@@ -188,7 +180,7 @@ class FullFilterFragment : Fragment() {
 
                 openVariants(buildingClassFilter!!) {
                     buildingClassFilter = it
-                    houseType.setText(it.filter { it.second }.map { it.first }.joinToString(", "))
+                    houseType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
                 }
             }
 
@@ -224,14 +216,6 @@ class FullFilterFragment : Fragment() {
     ) {
         VariantsFragment.newInstance(list, onItemsSelected)
             .show(parentFragmentManager, "VariantsFragment")
-    }
-
-    private fun EditText.initEditText() {
-        doOnTextChanged { text, _, _, _ ->
-            if (!text.isNullOrEmpty()) setRightIcon(R.drawable.ic_clear_field)
-            else removeRightIcon()
-        }
-        onRightDrawableClicked { text.clear() }
     }
 
     private fun onChipClicked(it: View) {

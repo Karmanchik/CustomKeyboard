@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
-                app:srcCompat="@drawable/ic_red_cancel" />
+                app:srcCompat="@drawable/ic_close_mono" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -67,14 +67,26 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="#DB5249"
+                android:fontFamily="@font/lato"
+                android:id="@+id/cancel"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Сбросить" />
+
+            <TextView
                 android:textColor="#00A8FF"
                 android:fontFamily="@font/lato"
                 android:gravity="end"
-                android:id="@+id/textView39"
+                android:id="@+id/done"
+                android:textSize="17sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Готово" />
+
         </LinearLayout>
 
     </LinearLayout>

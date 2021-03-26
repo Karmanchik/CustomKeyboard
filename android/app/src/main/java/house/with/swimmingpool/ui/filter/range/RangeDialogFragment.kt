@@ -32,6 +32,7 @@ class RangeDialogFragment : BottomSheetDialogFragment() {
 
         binding.apply {
             closeIcon.setOnClickListener { dismiss() }
+            cancel.setOnClickListener { dismiss() }
         }
     }
 
