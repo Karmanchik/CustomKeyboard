@@ -13,11 +13,12 @@
         android:roundIcon="@mipmap/ic_launch_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ДомСБассейном">
-        <activity android:name=".ui.login.LoginActivity"></activity>
+        <activity android:name=".ui.search.SearchActivity"></activity>
+        <activity android:name=".ui.login.LoginActivity" />
         <activity
             android:name=".ui.home.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/Theme.ДомСБассейном.NoActionBar"></activity>
+            android:theme="@style/Theme.ДомСБассейном.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
