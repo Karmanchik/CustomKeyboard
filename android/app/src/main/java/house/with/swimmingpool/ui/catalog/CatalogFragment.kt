@@ -83,7 +83,7 @@ class CatalogFragment : Fragment() {
     private fun showFilter() {
         // delete filter
         // показывать количество фильтров и вывод фильтра с листенерами
-        val labels = mutableListOf<String>()
+        val labels = mutableListOf<Label>()
         //цена
         //площадь
 
@@ -123,7 +123,7 @@ class CatalogFragment : Fragment() {
 //                tagsVariants?.entries?.firstOrNull { it.value == text }?.key?.toString()
 //            }.toList()
 
-        binding?.filtersList?.adapter = FilterItemsAdapter(listOf("Ипотека", "Квартира")) {}
+        binding?.filtersList?.adapter = FilterItemsAdapter(listOf())
     }
 
     override fun onDestroy() {

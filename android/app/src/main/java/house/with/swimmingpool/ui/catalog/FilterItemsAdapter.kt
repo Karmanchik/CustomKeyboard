@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.databinding.ItemFilterCatalogBinding
 
 class FilterItemsAdapter(
-    var items: List<String>,
-    var onItemDeleted: (String) -> Unit
+    var items: List<Label>
 ): RecyclerView.Adapter<FilterItemsAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -23,10 +22,9 @@ class FilterItemsAdapter(
     inner class Holder(private val view: ItemFilterCatalogBinding): RecyclerView.ViewHolder(view.root) {
 
         fun bind(position: Int) {
-            view.title.text = items[position]
+            view.title.text = items[position].title
             itemView.setOnClickListener {
-                onItemDeleted.invoke(items[position])
-                notifyItemRemoved(adapterPosition)
+                items[position].onDelete.invoke()
             }
         }
 
