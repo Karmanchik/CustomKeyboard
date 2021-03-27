@@ -1,6 +1,8 @@
 package house.with.swimmingpool.ui.house
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import androidx.fragment.app.transaction
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.yandex.mapkit.Animation
@@ -44,18 +47,18 @@ class HouseFragment : Fragment(), ISingleHouseView {
         return houseObjectBinding?.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val houseId = arguments?.getInt("house")
+        val singleHouseObject = Gson().fromJson((arguments?.getString("home")), HouseExampleData ::class.java)
 
         houseObjectBinding?.apply {
 
-            RealtyServiceImpl().getHouseExample(houseId ?: 0) { data, e ->
-                if (data != null) {
-                    houseExampleData = data
+                if (singleHouseObject != null) {
+                    houseExampleData = singleHouseObject
 
-                    data.getGallery().apply {
+                    singleHouseObject.getGallery().apply {
                         whiteButtonGalleryRV.adapter =
                             MainGalleryAndDateAdapter(
                                 requireContext(),
@@ -82,14 +85,18 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         showHeaderGallery(listImage)
                     }
 
-                    price.text = data.price + " руб."
-                    discount.text = data.discount.toString()
-                    title.text = data.title
-                    textViewLocation.text = data.location
-                    hitsText.text = data.hits.toString()
+                    price.text = singleHouseObject.price + " руб."
+                    if (singleHouseObject.priceHike != 0) {
+                        discount.text = "+${singleHouseObject.priceHike}%"
+                    }else{
+                        discount.visibility = View.INVISIBLE
+                    }
+                    title.text = singleHouseObject.title
+                    textViewLocation.text = singleHouseObject.location
+                    hitsText.text = singleHouseObject.hits.toString()
 
-                    if (data.mainTags != null) {
-                        hashTagRV.adapter = TagAdapter(requireContext(), data.mainTags)
+                    if (singleHouseObject.mainTags != null) {
+                        hashTagRV.adapter = TagAdapter(requireContext(), singleHouseObject.mainTags)
                     }
 
                     val note = null
@@ -110,10 +117,10 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                     showInformation(0)
 
-                    if (data.description.isNullOrEmpty()) {
+                    if (singleHouseObject.description.isNullOrEmpty()) {
                         description.visibility = View.GONE
                     } else {
-                        description.text = data.description
+                        description.text = Html.fromHtml(singleHouseObject.description)
                     }
 
 //                    if (data.video.isNullOrEmpty()) {
@@ -146,20 +153,20 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     })
 //                    }
 
-                    if (data.type == "house" || data.type == "flat") {
+                    if (singleHouseObject.type == "house" || singleHouseObject.type == "flat") {
                         housesListText.visibility = View.GONE
                         listHouseBox.visibility = View.GONE
                     }
 
-                    if (data.type == "complex") {
+                    if (singleHouseObject.type == "complex") {
                         housesListText.text = "Список квартир"
                     }
 
 
-                    if (data.advantages != null) {
+                    if (singleHouseObject.advantages != null) {
                         whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(
                             requireContext(),
-                            data.advantages
+                            singleHouseObject.advantages
                         )
                     } else {
                         whiteButtonAdvantagesRV.visibility = View.GONE
@@ -178,8 +185,8 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     }
 
                     try {
-                        val latitude = data.geolocation?.latitude ?: .0
-                        val longitude = data.geolocation?.longitude ?: .0
+                        val latitude = singleHouseObject.geolocation?.latitude ?: .0
+                        val longitude = singleHouseObject.geolocation?.longitude ?: .0
 
                         Log.e("test", "${latitude}:::${longitude}")
 
@@ -197,7 +204,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     }
 
                 }
-            }
+
 
             RealtyServiceImpl().getHouseCatalog { data, e ->
                 similarObjects.apply {
@@ -285,6 +292,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
     }
 
     override fun showInformation(position: Int) {
+        houseObjectBinding?.whiteButtonRV?.scrollToPosition(position)
         if (houseExampleData != null) {
             val fragment = when (position) {
                 0 -> {

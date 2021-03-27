@@ -30,7 +30,9 @@ class RealtyServiceImpl : IRealtyService {
                     try {
                         onLoaded.invoke(null, t)
                     } catch (e: Exception) {
+
                     }
+                    Log.e("taskException", "error1", t)
                 }
             })
     }

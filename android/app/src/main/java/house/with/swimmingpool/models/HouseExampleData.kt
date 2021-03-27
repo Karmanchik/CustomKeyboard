@@ -26,6 +26,7 @@ data class HouseExampleData(
     val payment: JsonObject?,
     val price: String?,
     val price_of_one_meter: String?,
+    val priceHike: Int?,
     val promo: String,
     val registration: JsonObject?,
     val statuses: List<String>?,

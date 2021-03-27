@@ -274,11 +274,11 @@
                 android:id="@+id/hashTagRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="15dp"
                 android:layout_marginTop="12dp"
-                android:paddingEnd="6dp"
                 android:layout_marginBottom="15dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                android:paddingStart="15dp"
+                android:paddingEnd="6dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/noteLayout"
@@ -459,8 +459,8 @@
                 android:id="@+id/listHouseBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="12dp"
-                android:layout_marginEnd="12dp"
+                android:paddingStart="6dp"
+                android:layout_marginEnd="6dp"
                 android:layout_marginBottom="15dp"
                 />
 
