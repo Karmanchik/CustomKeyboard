@@ -16,6 +16,7 @@ class App: Application() {
         super.onCreate()
         setting = Setting(applicationContext)
         database = Room.databaseBuilder(this, RoomDataBase::class.java, "database")
+            .allowMainThreadQueries()
             .build()
     }
 

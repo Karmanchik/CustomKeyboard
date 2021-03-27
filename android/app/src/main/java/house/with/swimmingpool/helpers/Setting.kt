@@ -3,6 +3,7 @@ package house.with.swimmingpool.helpers
 import android.content.Context
 import androidx.core.content.edit
 import com.google.gson.Gson
+import house.with.swimmingpool.App
 import house.with.swimmingpool.models.HouseCatalogData
 
 class Setting(ctx: Context) {
@@ -17,8 +18,13 @@ class Setting(ctx: Context) {
         get() = token != null
 
     var houses: List<HouseCatalogData>
-        get() = pref.getStringSet(Keys.HOUSE_LIST, setOf())!!.map { Gson().fromJson(it, HouseCatalogData::class.java) }
-        set(value) = pref.edit { putStringSet(Keys.HOUSE_LIST, value.map { Gson().toJson(it) }.toSet()) }
+        get() = App.database?.eventsDao()?.getAll() ?: listOf()
+        set(value) {
+            App.database?.eventsDao()?.let { db ->
+                db.getAll().forEach { db.delete(it) }
+                value.forEach { db.insert(it) }
+            }
+        }
 
     object Keys {
         const val TOKEN = "TOKEN"
