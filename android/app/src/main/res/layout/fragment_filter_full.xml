@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:scaleType="fitStart"
-                    app:srcCompat="@drawable/ic_red_cancel" />
+                    app:srcCompat="@drawable/blue_back" />
 
                 <TextView
                     android:id="@+id/textView26"
@@ -55,6 +55,32 @@
                     android:textColor="#E5473D"
                     android:textSize="17sp" />
             </LinearLayout>
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E7E7E7" />
+
+            <segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl
+                android:id="@+id/segmented_control"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="14dp"
+                app:columnCount="3"
+                app:distributeEvenly="true"
+                app:radius="6dp"
+                app:segments="@array/main_segment_control_variants"
+                app:selectedBackgroundColor="@color/main_blue"
+                app:selectedStrokeColor="@color/main_blue"
+                app:strokeWidth="1dp"
+                app:textSize="14sp"
+                app:textVerticalPadding="6dp"
+                app:unSelectedStrokeColor="#E6E6E6"
+                app:unSelectedTextColor="#808080" />
 
             <house.with.swimmingpool.views.CustomFieldButton
                 app:titl="Район"
