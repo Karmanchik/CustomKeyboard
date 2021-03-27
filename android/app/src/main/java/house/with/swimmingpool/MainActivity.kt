@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val fab = findViewById<View>(R.id.call)
         val navController = findNavController(R.id.nav_host_fragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.label.toString() == "Home") {
+            if (destination.label.toString() in listOf("Home", "CatalogViewModel")) {
                 fab.visibility = View.VISIBLE
             } else {
                 fab.visibility = View.GONE
