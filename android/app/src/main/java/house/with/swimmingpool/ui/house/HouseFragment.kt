@@ -51,170 +51,179 @@ class HouseFragment : Fragment(), ISingleHouseView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val singleHouseObject = Gson().fromJson((arguments?.getString("home")), HouseExampleData ::class.java)
+        val singleHouseObject =
+            Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)
+
+        showHome(singleHouseObject)
+
+        RealtyServiceImpl().getHouseExample(singleHouseObject.id ?: 0) { data, e ->
+            data?.let { showHome(it) }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun showHome(singleHouseObject: HouseExampleData) {
 
         houseObjectBinding?.apply {
 
-                if (singleHouseObject != null) {
-                    houseExampleData = singleHouseObject
+            houseExampleData = singleHouseObject
 
-                    singleHouseObject.getGallery().apply {
-                        whiteButtonGalleryRV.adapter =
-                            MainGalleryAndDateAdapter(
-                                requireContext(),
-                                this,
-                                this@HouseFragment
-                            )
-
-                        val galleryNameList: ArrayList<String> = arrayListOf()
-                        var listImage: ArrayList<String> = arrayListOf()
-
-                        if (galleryNameList.size == 0) {
-                            whiteButtonGalleryRV.visibility = View.GONE
-                        }
-
-                        if (!this.isNullOrEmpty()) {
-                            this.first().second.forEach { img ->
-                                listImage.add(img.url)
-                            }
-
-                            this.forEach {
-                                galleryNameList.add(it.first)
-                            }
-                        }
-                        showHeaderGallery(listImage)
-                    }
-
-                    price.text = singleHouseObject.price + " руб."
-                    if (singleHouseObject.priceHike != 0) {
-                        discount.text = "+${singleHouseObject.priceHike}%"
-                    }else{
-                        discount.visibility = View.INVISIBLE
-                    }
-                    title.text = singleHouseObject.title
-                    textViewLocation.text = singleHouseObject.location
-                    hitsText.text = singleHouseObject.hits.toString()
-
-                    if (singleHouseObject.mainTags != null) {
-                        hashTagRV.adapter = TagAdapter(requireContext(), singleHouseObject.mainTags)
-                    }
-
-                    val note = null
-                    if (note == null) {
-                        noteLayout.visibility = View.GONE
-                    } else {
-//                        noteText = note
-                    }
-
-                    whiteButtonRV.adapter = WhiteButtonAdapter(
-                        requireContext(), this@HouseFragment, listOf(
-                            "Общие",
-                            "Коммуникации",
-                            "Оформление",
-                            "Оплата"
-                        )
+            singleHouseObject.getGallery().apply {
+                whiteButtonGalleryRV.adapter =
+                    MainGalleryAndDateAdapter(
+                        requireContext(),
+                        this,
+                        this@HouseFragment
                     )
 
-                    showInformation(0)
+                val galleryNameList: ArrayList<String> = arrayListOf()
+                val listImage: ArrayList<String> = arrayListOf()
 
-                    if (singleHouseObject.description.isNullOrEmpty()) {
-                        description.visibility = View.GONE
-                    } else {
-                        description.text = Html.fromHtml(singleHouseObject.description)
+                if (galleryNameList.size == 0) {
+                    whiteButtonGalleryRV.visibility = View.GONE
+                }
+
+                if (!this.isNullOrEmpty()) {
+                    this.first().second.forEach { img ->
+                        listImage.add(img.url)
                     }
+
+                    this.forEach {
+                        galleryNameList.add(it.first)
+                    }
+                }
+                showHeaderGallery(listImage)
+            }
+
+            price.text = singleHouseObject.price + " руб."
+            if (singleHouseObject.priceHike != 0) {
+                discount.text = "+${singleHouseObject.priceHike}%"
+            } else {
+                discount.visibility = View.INVISIBLE
+            }
+            title.text = singleHouseObject.title
+            textViewLocation.text = singleHouseObject.location
+            hitsText.text = singleHouseObject.hits.toString()
+
+            if (singleHouseObject.mainTags != null) {
+                hashTagRV.adapter = TagAdapter(requireContext(), singleHouseObject.mainTags)
+            }
+
+            val note = null
+            if (note == null) {
+                noteLayout.visibility = View.GONE
+            } else {
+//                        noteText = note
+            }
+
+            whiteButtonRV.adapter = WhiteButtonAdapter(
+                requireContext(), this@HouseFragment, listOf(
+                    "Общие",
+                    "Коммуникации",
+                    "Оформление",
+                    "Оплата"
+                )
+            )
+
+            showInformation(0)
+
+            if (singleHouseObject.description.isNullOrEmpty()) {
+                description.visibility = View.GONE
+            } else {
+                description.text = Html.fromHtml(singleHouseObject.description)
+            }
 
 //                    if (data.video.isNullOrEmpty()) {
 
-                    Glide.with(requireContext())
+            Glide.with(requireContext())
 //                            .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
-                        .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
-                        .error(R.drawable.error_placeholder_midle)
-                        .placeholder(R.drawable.placeholder)
-                        .into(imageViewVideoPreloader)
+                .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
+                .error(R.drawable.error_placeholder_midle)
+                .placeholder(R.drawable.placeholder)
+                .into(imageViewVideoPreloader)
 
-                    youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
-                        override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                            val videoId =
-                                "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
-                            youTubePlayer.loadVideo(videoId, 0f)
-                            youTubePlayer.pause()
+            youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+                override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                    val videoId =
+                        "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
+                    youTubePlayer.loadVideo(videoId, 0f)
+                    youTubePlayer.pause()
 
-                            youTubePlayerView.minimumHeight = imageViewVideoPreloader.height
+                    youTubePlayerView.minimumHeight = imageViewVideoPreloader.height
 
-                            imageViewVideoPreloader.setOnClickListener {
-                                it.visibility = View.INVISIBLE
-                                relativeLayout.visibility = View.INVISIBLE
-                                youTubePlayer.play()
-                                youTubePlayerView.enterFullScreen()
-                                youTubePlayerView.exitFullScreen()
-                                youTubePlayerView.enterFullScreen()
-                            }
-                        }
-                    })
+                    imageViewVideoPreloader.setOnClickListener {
+                        it.visibility = View.INVISIBLE
+                        relativeLayout.visibility = View.INVISIBLE
+                        youTubePlayer.play()
+                        youTubePlayerView.enterFullScreen()
+                        youTubePlayerView.exitFullScreen()
+                        youTubePlayerView.enterFullScreen()
+                    }
+                }
+            })
 //                    }
 
-                    if (singleHouseObject.type == "house" || singleHouseObject.type == "flat") {
-                        housesListText.visibility = View.GONE
-                        listHouseBox.visibility = View.GONE
-                    }
+            if (singleHouseObject.type == "house" || singleHouseObject.type == "flat") {
+                housesListText.visibility = View.GONE
+                listHouseBox.visibility = View.GONE
+            }
 
-                    if (singleHouseObject.type == "complex") {
-                        housesListText.text = "Список квартир"
-                    }
+            if (singleHouseObject.type == "complex") {
+                housesListText.text = "Список квартир"
+            }
 
 
-                    if (singleHouseObject.advantages != null) {
-                        whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(
-                            requireContext(),
-                            singleHouseObject.advantages
-                        )
-                    } else {
-                        whiteButtonAdvantagesRV.visibility = View.GONE
-                    }
+            if (singleHouseObject.advantages != null) {
+                whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(
+                    requireContext(),
+                    singleHouseObject.advantages
+                )
+            } else {
+                whiteButtonAdvantagesRV.visibility = View.GONE
+            }
 
-                    listHouseBox.apply {
-                        showListHouse(false)
-                    }
+            listHouseBox.apply {
+                showListHouse(false)
+            }
 
-                    showListHouseBox.setOnClickListener {
-                        showListHouse(true)
-                    }
+            showListHouseBox.setOnClickListener {
+                showListHouse(true)
+            }
 
-                    collapseListHouseBox.setOnClickListener {
-                        showListHouse(false)
-                    }
+            collapseListHouseBox.setOnClickListener {
+                showListHouse(false)
+            }
 
-                    try {
-                        val latitude = singleHouseObject.geolocation?.latitude ?: .0
-                        val longitude = singleHouseObject.geolocation?.longitude ?: .0
+            try {
+                val latitude = singleHouseObject.geolocation?.latitude ?: .0
+                val longitude = singleHouseObject.geolocation?.longitude ?: .0
 
-                        Log.e("test", "${latitude}:::${longitude}")
+                Log.e("test", "${latitude}:::${longitude}")
 
-                        mapview = mapView
-                        mapview?.map?.move(
-                            CameraPosition(
-                                Point(latitude, longitude), 11.0f, 0.0f, 0.0f
-                            ),
-                            Animation(Animation.Type.SMOOTH, 0F),
-                            null
-                        )
-                        mapview?.map?.mapObjects?.addPlacemark(Point(latitude, longitude))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-
-                }
+                mapview = mapView
+                mapview?.map?.move(
+                    CameraPosition(
+                        Point(latitude, longitude), 11.0f, 0.0f, 0.0f
+                    ),
+                    Animation(Animation.Type.SMOOTH, 0F),
+                    null
+                )
+                mapview?.map?.mapObjects?.addPlacemark(Point(latitude, longitude))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
 
 
             RealtyServiceImpl().getHouseCatalog { data, e ->
                 similarObjects.apply {
                     layoutManager = GridLayoutManager(context, 2)
-                    adapter = SeenHousesAdapter(requireContext(), listOf(data?.get(0), data?.get(1))) {
-                        val bundle = Bundle().apply {
-                            putSerializable("house", it)
+                    adapter =
+                        SeenHousesAdapter(requireContext(), listOf(data?.get(0), data?.get(1))) {
+                            val bundle = Bundle().apply {
+                                putSerializable("house", it)
+                            }
+                            findNavController().navigate(R.id.action_houseFragment_self, bundle)
                         }
-                        findNavController().navigate(R.id.action_houseFragment_self, bundle)
-                    }
                 }
             }
 
