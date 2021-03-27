@@ -92,8 +92,6 @@ class RangeDialogFragment(
 
     private val module get() = range1.second - range1.first
 
-    private val max get() = range1.second - module
-
     companion object {
         fun newInstance(
             range: Pair<Int, Int>,
