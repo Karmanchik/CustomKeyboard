@@ -56,109 +56,77 @@
                     android:textSize="17sp" />
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/filter_full_edit_text_container"
-                android:layout_width="match_parent">
+            <house.with.swimmingpool.views.CustomFieldButton
+                app:titl="Район"
+                android:id="@+id/area"
+                app:buttonMod="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/area"
-                    style="@style/filter_full_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Район" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <house.with.swimmingpool.views.CustomFieldButton
+                app:titl="Цена, р."
+                android:id="@+id/price"
+                app:buttonMod="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/filter_full_edit_text_container"
-                android:layout_width="match_parent">
+            <house.with.swimmingpool.views.CustomFieldButton
+                app:titl="Площадь"
+                android:id="@+id/square"
+                app:buttonMod="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/price"
-                    style="@style/filter_full_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Цена, р." />
+            <house.with.swimmingpool.views.CustomFieldButton
+                app:titl="Оформление"
+                android:id="@+id/docType"
+                app:buttonMod="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            <house.with.swimmingpool.views.CustomFieldButton
+                app:titl="Форма оплаты"
+                android:id="@+id/moneyType"
+                app:buttonMod="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/filter_full_edit_text_container"
-                android:layout_width="match_parent">
+            <house.with.swimmingpool.views.CustomFieldButton
+                app:titl="Отделка"
+                android:id="@+id/style"
+                app:buttonMod="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/square"
-                    style="@style/filter_full_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Площадь" />
+            <house.with.swimmingpool.views.CustomFieldButton
+                app:titl="Расстояние до моря"
+                android:id="@+id/sea"
+                app:buttonMod="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/filter_full_edit_text_container"
-                android:layout_width="match_parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/docType"
-                    style="@style/filter_full_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Оформление" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/filter_full_edit_text_container"
-                android:layout_width="match_parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/moneyType"
-                    style="@style/filter_full_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Форма оплаты" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/filter_full_edit_text_container"
-                android:layout_width="match_parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/style"
-                    style="@style/filter_full_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Отделка" />
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/filter_full_edit_text_container"
-                android:layout_width="match_parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sea"
-                    style="@style/filter_full_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Расстояние до моря" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/filter_full_edit_text_container"
-                android:layout_width="match_parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/houseType"
-                    style="@style/filter_full_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Класс дома" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+            <house.with.swimmingpool.views.CustomFieldButton
+                app:titl="Класс дома"
+                android:id="@+id/houseType"
+                app:buttonMod="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/textView32"

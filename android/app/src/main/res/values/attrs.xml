@@ -8,4 +8,11 @@
         <attr name="title" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="CustomFieldButton">
+        <attr name="buttonMod" format="boolean" />
+        <attr name="passwordMod" format="boolean" />
+        <attr name="need_show_clear_butto" format="boolean" />
+        <attr name="titl" format="string" />
+    </declare-styleable>
+
 </resources>
