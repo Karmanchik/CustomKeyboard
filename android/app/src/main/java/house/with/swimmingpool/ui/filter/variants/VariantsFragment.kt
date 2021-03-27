@@ -36,10 +36,11 @@ class VariantsFragment(
         binding.apply {
             closeIcon.setOnClickListener { dismiss() }
             variantsRV.adapter = VariantsAdapter(items.toMutableList(), requireContext())
-            textView39.setOnClickListener {
+            done.setOnClickListener {
                 onItemsSelected.invoke((variantsRV.adapter as VariantsAdapter).items)
                 dismiss()
             }
+            cancel.setOnClickListener { dismiss() }
         }
     }
 

@@ -14,7 +14,9 @@ import retrofit2.http.Path
 interface IRealty {
 
     @GET("objects")
-    fun getHouses(): Call<HouseCatalog>
+    fun getHouses(
+
+    ): Call<HouseCatalog>
 
     @GET("objects/{id}")
     fun getHousesExample(
