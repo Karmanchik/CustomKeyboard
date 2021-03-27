@@ -33,7 +33,9 @@ class ListHouseBoxAdapter(
             view.apply {
                 items?.get(position)?.apply {
                     textViewTitle.text = title ?: ""
-                    textViewPrice.text = price ?: ""
+                    if (price != "") {
+                        textViewPrice.text = ((price ?: "") + " руб.")
+                    }
                     textViewNumber.text = number
                     if (square != null) {
                         textViewSquare.text = "$square соток"

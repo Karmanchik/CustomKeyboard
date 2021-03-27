@@ -139,11 +139,11 @@ class HomeFragment : Fragment() {
             }
 
             nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (oldScrollY < shortCatalogRV.bottom && scrollY > shortCatalogRV.bottom){
+                if (shortCatalogRV.bottom in (oldScrollY + 1) until scrollY){
                     setShortCatalog(houseCatalogData)
                 }
 
-                if(oldScrollY > textViewShortCatalog.top - coordinateLayout.height && scrollY < textViewShortCatalog.top - coordinateLayout.height){
+                if(textViewShortCatalog.top - coordinateLayout.height in (scrollY + 1) until oldScrollY){
                     setShortCatalog(houseCatalogData)
                 }
             }

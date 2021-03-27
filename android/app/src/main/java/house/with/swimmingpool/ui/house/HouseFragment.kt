@@ -1,6 +1,8 @@
 package house.with.swimmingpool.ui.house
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -44,13 +46,13 @@ class HouseFragment : Fragment(), ISingleHouseView {
         return houseObjectBinding?.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val houseId = arguments?.getInt("house")
 
         houseObjectBinding?.apply {
-
             RealtyServiceImpl().getHouseExample(houseId ?: 0) { data, e ->
                 if (data != null) {
                     houseExampleData = data
@@ -83,7 +85,11 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     }
 
                     price.text = data.price + " руб."
-                    discount.text = data.discount.toString()
+                    if (data.priceHike != 0) {
+                        discount.text = "+${data.priceHike}%"
+                    }else{
+                        discount.visibility = View.INVISIBLE
+                    }
                     title.text = data.title
                     textViewLocation.text = data.location
                     hitsText.text = data.hits.toString()
@@ -113,7 +119,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     if (data.description.isNullOrEmpty()) {
                         description.visibility = View.GONE
                     } else {
-                        description.text = data.description
+                        description.text = Html.fromHtml(data.description)
                     }
 
 //                    if (data.video.isNullOrEmpty()) {
@@ -285,6 +291,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
     }
 
     override fun showInformation(position: Int) {
+        houseObjectBinding?.whiteButtonRV?.scrollToPosition(position)
         if (houseExampleData != null) {
             val fragment = when (position) {
                 0 -> {
