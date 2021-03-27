@@ -44,7 +44,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/conter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_medium"
@@ -52,17 +52,6 @@
                         android:text="694 предложения"
                         android:textColor="@color/black"
                         android:textSize="17sp" />
-
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:alpha="0.5"
-                        android:textSize="10sp"
-                        android:fontFamily="@font/lato"
-                        android:gravity="center"
-                        android:text="от 9 000 000 до 30 000 000 руб."
-                        android:textColor="@color/black" />
 
                 </LinearLayout>
 
