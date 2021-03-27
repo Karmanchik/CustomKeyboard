@@ -61,12 +61,16 @@ class HomeFragment : Fragment() {
             val percentage = (abs(i).toFloat() / appBarLayout.totalScrollRange)
 
             Log.e("test percentage", percentage.toString())
-            homeBinding?.zatemnitel?.alpha = percentage / 2
+//            homeBinding?.zatemnitel?.alpha = percentage / 2
             homeBinding?.test?.elevation = 1 - percentage
             homeBinding?.toolbar?.elevation = percentage
         })
 
         homeBinding?.apply {
+
+            imageViewSearch.setOnClickListener {
+                findNavController().navigate(R.id.action_navigation_home_to_searchActivity)
+            }
 
             toolbar.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -109,14 +113,14 @@ class HomeFragment : Fragment() {
 
             BannersServiceImpl().getMainBanners { data, e ->
                 if (e == null && data != null) {
-                    val vp = mainHousesContainer
-                    vp.adapter = HeaderAdapter(data) {
-                        val bundle = Bundle().apply {
-                            putInt("house", it)
-                        }
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
-                    }
-                    dotsIndicator.setViewPager2(vp)
+//                    val vp = mainHousesContainer
+//                    vp.adapter = HeaderAdapter(data) {
+//                        val bundle = Bundle().apply {
+//                            putInt("house", it)
+//                        }
+//                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
+//                    }
+//                    dotsIndicator.setViewPager2(vp)
                 }
             }
 

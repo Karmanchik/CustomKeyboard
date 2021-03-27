@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_navigation_home_to_houseFragment"
             app:destination="@id/houseFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_searchActivity"
+            app:destination="@id/searchActivity" />
     </fragment>
 
     <fragment
@@ -133,4 +136,9 @@
         android:id="@+id/loginActivity"
         android:name="house.with.swimmingpool.ui.login.LoginActivity"
         android:label="LoginActivity" />
+    <activity
+        android:id="@+id/searchActivity"
+        android:name="house.with.swimmingpool.ui.search.SearchActivity"
+        android:label="activity_search"
+        tools:layout="@layout/activity_search" />
 </navigation>

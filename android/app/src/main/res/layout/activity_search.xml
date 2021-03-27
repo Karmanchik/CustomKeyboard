@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -19,20 +20,45 @@
             android:layout_marginStart="12dp"
             android:layout_marginBottom="9dp"
             android:layout_marginTop="9dp"
+            android:layout_weight="1"
             android:background="@drawable/circle_corners6_with_bacgraund">
 
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
                 android:src="@drawable/ic_seaech_gray"/>
 
             <EditText
+                android:id="@+id/inputText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Поиск"/>
+                android:drawableEnd="@drawable/ic_clear_field"
+                android:hint="Поиск"
+                android:paddingEnd="11dp"
+                android:backgroundTint="#00000000"/>
 
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_rad_cross"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="18dp"
+            android:layout_weight="0"/>
+
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E6E6E6"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>
