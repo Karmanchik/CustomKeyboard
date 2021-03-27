@@ -5,10 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.gson.JsonObject
@@ -17,10 +15,6 @@ import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFilterFullBinding
 import house.with.swimmingpool.ui.filter.range.RangeDialogFragment
 import house.with.swimmingpool.ui.filter.variants.VariantsFragment
-import house.with.swimmingpool.ui.onRightDrawableClicked
-import house.with.swimmingpool.ui.removeRightIcon
-import house.with.swimmingpool.ui.setRightIcon
-import house.with.swimmingpool.views.CustomEditField
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -33,6 +27,20 @@ class FullFilterFragment : Fragment() {
 
     private var filterConfig: JsonObject? = null
     private val filterCategories get() = filterConfig?.entrySet()?.map { Pair(it.key, it.value) }
+
+    private var selectedPriceRange: Pair<Int, Int>? = null
+    private val getPriceRange
+        get() = Pair(
+            filterCategories?.firstOrNull { it.first == "minPrice" }?.second?.asInt ?: 0,
+            filterCategories?.firstOrNull { it.first == "maxPrice" }?.second?.asInt ?: 0
+        )
+
+    private var selectedSquareRange: Pair<Int, Int>? = null
+    private val getSquareRange
+        get() = Pair(
+            filterCategories?.firstOrNull { it.first == "minSquare" }?.second?.asInt ?: 0,
+            filterCategories?.firstOrNull { it.first == "maxSquare" }?.second?.asInt ?: 0
+        )
 
     private val districtsVariants
         get() = filterCategories
@@ -185,11 +193,31 @@ class FullFilterFragment : Fragment() {
             }
 
             sea.setOnClickListener {
-                openRange()
+//                openRange()
+            }
+
+            square.setOnClickListener {
+                openRange(
+                    getSquareRange,
+                    "Площадь",
+                    selectedSquareRange?.first ?: getSquareRange.first,
+                    selectedSquareRange?.second ?: getSquareRange.second
+                ) { min, max ->
+                    square.value = "${min}m2. - ${max}m2."
+                    selectedSquareRange = Pair(min, max)
+                }
             }
 
             price.setOnClickListener {
-                openRange()
+                openRange(
+                    getPriceRange,
+                    "Цена, р.",
+                    selectedPriceRange?.first ?: getPriceRange.first,
+                    selectedPriceRange?.second ?: getPriceRange.second
+                ) { min, max ->
+                    price.value = "${min}р. - ${max}р."
+                    selectedPriceRange = Pair(min, max)
+                }
             }
         }
 
@@ -206,8 +234,14 @@ class FullFilterFragment : Fragment() {
         }
     }
 
-    private fun openRange() {
-        RangeDialogFragment().newInstance().show(parentFragmentManager, "range")
+    private fun openRange(
+        range: Pair<Int, Int>,
+        title: String,
+        selectedMinValue: Int,
+        selectedMaxInt: Int,
+        onEnter: (min: Int, max: Int) -> Unit
+    ) {
+        RangeDialogFragment.newInstance(range, title, selectedMinValue, selectedMaxInt, onEnter).show(parentFragmentManager, "range")
     }
 
     private fun openVariants(
