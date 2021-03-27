@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
@@ -242,6 +243,7 @@ class FullFilterFragment : Fragment() {
                 RealtyServiceImpl().getParamsForFilter()?.data?.let {
                     launch(Dispatchers.Main) {
                         filterConfig = it
+                        App.setting.filterConfig?.let { showFilter(it) }
                     }
                 }
             } catch (e: Exception) {
@@ -273,7 +275,7 @@ class FullFilterFragment : Fragment() {
         val filter = FilterObjectsRequest(
             // раен
             districts = binding.area.value?.split(", ")
-                ?.mapNotNull { districtsVariants?.get(it) },
+                ?.mapNotNull { value -> districtsVariants?.entries?.firstOrNull { it.value == value }?.key },
 
             // цена
             price_all_from = (selectedPriceRange?.first ?: getPriceRange.first).toString(),
@@ -285,19 +287,19 @@ class FullFilterFragment : Fragment() {
 
             // оформление
             registrationTypes = binding.docType.value?.split(", ")
-                ?.mapNotNull { registrationTypeVariants?.get(it) },
+                ?.mapNotNull { value -> registrationTypeVariants?.entries?.firstOrNull { it.value == value }?.key },
 
             // форма оплаты
             paymentTypes = binding.moneyType.value?.split(", ")
-                ?.mapNotNull { paymentTypeVariants?.get(it) },
+                ?.mapNotNull { value -> paymentTypeVariants?.entries?.firstOrNull { it.value == value }?.key },
 
             // отделка
             interiorTypes = binding.style.value?.split(", ")
-                ?.mapNotNull { interiorVariants?.get(it) },
+                ?.mapNotNull { value -> interiorVariants?.entries?.firstOrNull { it.value == value }?.key },
 
             // класс дома
             buildingClass = binding.houseType.value?.split(", ")
-                ?.mapNotNull { buildingClassVariants?.get(it) },
+                ?.mapNotNull { value -> buildingClassVariants?.entries?.firstOrNull { it.value == value }?.key },
 
             // чипы
             advantages = binding.chipGroup.children
@@ -315,13 +317,59 @@ class FullFilterFragment : Fragment() {
                 binding.showCatalogButton.text = "Показать ${data.size} предложений"
                 binding.showCatalogButton.setOnClickListener {
                     App.setting.houses = data
-                    findNavController().navigate(R.id.action_shortFilterFragment_to_catalogViewModel)
+                    findNavController().navigate(R.id.action_fullFilterFragment_to_catalogViewModel)
                 }
             } else {
                 binding.showCatalogButton.isEnabled = false
                 binding.showCatalogButton.text = "Нет объектов"
                 binding.showCatalogButton.setOnClickListener(null)
             }
+        }
+    }
+
+    private fun showFilter(filter: FilterObjectsRequest) {
+        Log.e("showFilter", Gson().toJson(filter))
+        binding.area.value = filter.districts
+            ?.mapNotNull { districtsVariants?.get(it) }
+            ?.joinToString(", ")
+
+        filter.price_all_from?.let {
+            selectedPriceRange = Pair(
+                filter.price_all_from?.toIntOrNull() ?: 0,
+                filter.price_all_to?.toIntOrNull() ?: 0
+            )
+            binding.price.value = "${filter.price_all_from}р. - ${filter.price_all_to}р."
+        }
+
+        filter.square_all_from?.let {
+            selectedSquareRange = Pair(
+                filter.square_all_from?.toIntOrNull() ?: 0,
+                filter.square_all_to?.toIntOrNull() ?: 0
+            )
+            binding.square.value = "${filter.square_all_from}m2. - ${filter.square_all_to}m2."
+        }
+
+        binding.docType.value = filter.registrationTypes
+            ?.mapNotNull { registrationTypeVariants?.get(it) }
+            ?.joinToString(", ")
+
+        binding.moneyType.value = filter.paymentTypes
+            ?.mapNotNull { paymentTypeVariants?.get(it) }
+            ?.joinToString(", ")
+
+        binding.style.value = filter.interiorTypes
+            ?.mapNotNull { interiorVariants?.get(it) }
+            ?.joinToString(", ")
+
+        binding.houseType.value = filter.buildingClass
+            ?.mapNotNull { buildingClassVariants?.get(it) }
+            ?.joinToString(", ")
+
+        binding.chipGroup.children.forEach {
+            val text = (it as TextView).text.toString()
+            val idForText = tagsVariants?.entries?.firstOrNull { it.value == text }?.key
+            if (filter.advantages?.any { it == idForText } == true)
+                it.performClick()
         }
     }
 
