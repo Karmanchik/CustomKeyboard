@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.filter.short
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.appyvet.materialrangebar.RangeBar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.JsonObject
+import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFilterShortBinding
@@ -22,7 +24,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class ShortFilterFragment(val onClick: () -> Unit) : BottomSheetDialogFragment() {
+class ShortFilterFragment(
+    private val onClick: () -> Unit
+) : BottomSheetDialogFragment() {
 
     lateinit var binding: FragmentFilterShortBinding
     private lateinit var viewModel: ShortFilterViewModel
@@ -80,14 +84,28 @@ class ShortFilterFragment(val onClick: () -> Unit) : BottomSheetDialogFragment()
                                 leftPinValue: String?,
                                 rightPinValue: String?
                             ) {
-                                Log.e("testK", k.toString())
-                                Log.e("test", "range: $rightPinIndex, ${rightPinIndex * k}, ${rightPinIndex.toValue()}")
                                 binding.min.setText(leftPinIndex.toValue().toString())
                                 binding.max.setText(rightPinIndex.toValue().toString())
                             }
 
                             override fun onTouchStarted(rangeBar: RangeBar?) = Unit
-                            override fun onTouchEnded(rangeBar: RangeBar?) = Unit
+                            @SuppressLint("SetTextI18n")
+                            override fun onTouchEnded(rangeBar: RangeBar?) {
+                                RealtyServiceImpl().getHouseCatalog { data, e ->
+                                    if (data != null) {
+                                        binding.showButton.isEnabled = true
+                                        binding.showButton.text = "Показать ${data.size} предложений"
+                                        binding.showButton.setOnClickListener {
+                                            App.setting.houses = data
+                                            findNavController().navigate(R.id.action_shortFilterFragment_to_catalogViewModel)
+                                        }
+                                    } else {
+                                        binding.showButton.isEnabled = false
+                                        binding.showButton.text = "Нет объектов"
+                                        binding.showButton.setOnClickListener(null)
+                                    }
+                                }
+                            }
                         })
 
                         binding.apply {
