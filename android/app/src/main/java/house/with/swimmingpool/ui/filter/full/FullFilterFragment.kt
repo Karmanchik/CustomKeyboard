@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.gson.JsonObject
+import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFilterFullBinding
@@ -143,6 +144,7 @@ class FullFilterFragment : Fragment() {
                 openVariants(districtsFilter!!) {
                     districtsFilter = it
                     area.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    load()
                 }
             }
 
@@ -155,6 +157,7 @@ class FullFilterFragment : Fragment() {
                 openVariants(registrationTypeFilter!!) {
                     registrationTypeFilter = it
                     docType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    load()
                 }
             }
 
@@ -166,6 +169,7 @@ class FullFilterFragment : Fragment() {
                 openVariants(paymentTypeFilter!!) {
                     paymentTypeFilter = it
                     moneyType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    load()
                 }
             }
 
@@ -177,6 +181,7 @@ class FullFilterFragment : Fragment() {
                 openVariants(interiorFilter!!) {
                     interiorFilter = it
                     style.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    load()
                 }
             }
 
@@ -189,6 +194,7 @@ class FullFilterFragment : Fragment() {
                 openVariants(buildingClassFilter!!) {
                     buildingClassFilter = it
                     houseType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    load()
                 }
             }
 
@@ -205,6 +211,7 @@ class FullFilterFragment : Fragment() {
                 ) { min, max ->
                     square.value = "${min}m2. - ${max}m2."
                     selectedSquareRange = Pair(min, max)
+                    load()
                 }
             }
 
@@ -217,6 +224,7 @@ class FullFilterFragment : Fragment() {
                 ) { min, max ->
                     price.value = "${min}р. - ${max}р."
                     selectedPriceRange = Pair(min, max)
+                    load()
                 }
             }
         }
@@ -252,6 +260,23 @@ class FullFilterFragment : Fragment() {
             .show(parentFragmentManager, "VariantsFragment")
     }
 
+    private fun load() {
+        RealtyServiceImpl().getHouseCatalog { data, e ->
+            if (data != null) {
+                binding.showCatalogButton.isEnabled = true
+                binding.showCatalogButton.text = "Показать ${data.size} предложений"
+                binding.showCatalogButton.setOnClickListener {
+                    App.setting.houses = data
+                    findNavController().navigate(R.id.action_shortFilterFragment_to_catalogViewModel)
+                }
+            } else {
+                binding.showCatalogButton.isEnabled = false
+                binding.showCatalogButton.text = "Нет объектов"
+                binding.showCatalogButton.setOnClickListener(null)
+            }
+        }
+    }
+
     private fun onChipClicked(it: View) {
         if (it.tag as String == "1") {
             it.setBackgroundResource(R.drawable.selected_chip)
@@ -264,8 +289,8 @@ class FullFilterFragment : Fragment() {
             it.tag = "1"
             isOptionSelected--
         }
-        Log.e("options", isOptionSelected.toString())
         binding.showCatalogButton.isEnabled = isOptionSelected == 0
+        load()
     }
 
 }
