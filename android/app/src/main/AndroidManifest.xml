@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launch_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ДомСБассейном">
-        <activity android:name=".ui.search.SearchActivity"></activity>
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity
             android:name=".ui.home.ScrollingActivity"

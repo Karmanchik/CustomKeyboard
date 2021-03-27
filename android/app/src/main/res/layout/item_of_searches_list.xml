@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="21dp"
+    android:elevation="0dp"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="6dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="87dp"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Котедж на берегу моря, 156 м² на Котедж на берегу моря, 156 м² на Котедж на берегу моря, 156 м² на"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="14sp"
+            android:paddingEnd="20dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Котедж на берегу моря, 156 м² на..."
+            android:fontFamily="@font/lato_semibold"
+            android:textSize="11sp"
+            android:textColor="#A1A1A1"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 500 000 руб."
+            android:fontFamily="@font/lato_regular"
+            android:textSize="14sp"
+            android:textColor="#A1A1A1"
+            />
+
+    </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

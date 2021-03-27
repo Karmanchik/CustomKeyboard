@@ -9,6 +9,7 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import house.with.swimmingpool.databinding.ItemAdvantagesBinding
+import house.with.swimmingpool.databinding.ItemSearchButtonBinding
 import house.with.swimmingpool.ui.search.ISearchView
 
 class SearchTagAdapter(
@@ -29,7 +30,7 @@ class SearchTagAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return Holder(ItemAdvantagesBinding.inflate(layoutInflater, parent, false))
+        return Holder(ItemSearchButtonBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
@@ -37,11 +38,11 @@ class SearchTagAdapter(
 
     override fun getItemCount() = items.size
 
-    inner class Holder(private val view: ItemAdvantagesBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class Holder(private val view: ItemSearchButtonBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun bind(position: Int) {
-            itemView.setOnClickListener { parentView.showInformation() }
             view.apply {
+                itemView.setOnClickListener { parentView.showInformation(buttonWhite.text.toString()) }
                 buttonWhite.text = items[position]
             }
         }

@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.search.SearchActivity"
+
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="53dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:orientation="horizontal">
 
         <LinearLayout
@@ -18,7 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginStart="12dp"
-            android:layout_marginBottom="9dp"
+            android:layout_marginBottom="11dp"
             android:layout_marginTop="9dp"
             android:layout_weight="1"
             android:background="@drawable/circle_corners6_with_bacgraund">
@@ -27,6 +29,7 @@
                 android:layout_width="16dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="12dp"
+                android:layout_marginEnd="5dp"
                 android:src="@drawable/ic_seaech_gray"/>
 
             <EditText
@@ -35,6 +38,11 @@
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_clear_field"
                 android:hint="Поиск"
+                android:singleLine="true"
+                android:fontFamily="@font/lato"
+                android:textSize="16sp"
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
                 android:paddingEnd="11dp"
                 android:backgroundTint="#00000000"/>
 
@@ -56,10 +64,27 @@
         android:layout_height="1dp"
         android:background="#E6E6E6"/>
 
+
+
     <FrameLayout
         android:id="@+id/searchTagFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="15dp"
+        android:layout_weight="1"
         />
+
+    <TextView
+        android:id="@+id/showCatalogButton"
+        style="@style/main_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="44dp"
+        android:layout_weight="0"
+        android:enabled="false"
+        android:windowSoftInputMode="adjustResize"
+        android:text="Введите запрос для поиска" />
 
 </LinearLayout>
