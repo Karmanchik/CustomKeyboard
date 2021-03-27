@@ -10,6 +10,7 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
@@ -19,6 +20,57 @@ import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
 import house.with.swimmingpool.ui.toast
 
 class CatalogFragment : Fragment() {
+
+    private val filterConfig get() = App.setting.filterVariants
+    private val filterCategories get() = filterConfig?.entrySet()?.map { Pair(it.key, it.value) }
+
+    private val getPriceRange
+        get() = Pair(
+            filterCategories?.firstOrNull { it.first == "minPrice" }?.second?.asInt ?: 0,
+            filterCategories?.firstOrNull { it.first == "maxPrice" }?.second?.asInt ?: 0
+        )
+
+    private val getSquareRange
+        get() = Pair(
+            filterCategories?.firstOrNull { it.first == "minSquare" }?.second?.asInt ?: 0,
+            filterCategories?.firstOrNull { it.first == "maxSquare" }?.second?.asInt ?: 0
+        )
+
+    private val districtsVariants
+        get() = filterCategories
+            ?.firstOrNull { it.first == "districts" }
+            ?.second
+            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
+
+    private val registrationTypeVariants
+        get() = filterCategories
+            ?.firstOrNull { it.first == "registration_types" }
+            ?.second
+            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
+
+    private val paymentTypeVariants
+        get() = filterCategories
+            ?.firstOrNull { it.first == "payment_types" }
+            ?.second
+            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
+
+    private val interiorVariants
+        get() = filterCategories
+            ?.firstOrNull { it.first == "interior" }
+            ?.second
+            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
+
+    private val buildingClassVariants
+        get() = filterCategories
+            ?.firstOrNull { it.first == "building_class" }
+            ?.second
+            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
+
+    private val tagsVariants
+        get() = filterCategories
+            ?.firstOrNull { it.first == "advantages" }
+            ?.second
+            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
 
     private var binding: FragmentCatalogBinding? = null
 
@@ -81,49 +133,104 @@ class CatalogFragment : Fragment() {
     }
 
     private fun showFilter() {
-        // delete filter
-        // показывать количество фильтров и вывод фильтра с листенерами
+        binding?.countFilters?.text = "Выбрано (0)"
+        val filter = App.setting.filterConfig
+        if (filter == null) {
+            binding?.listFilterContainer?.visibility = View.GONE
+            binding?.filtersList?.adapter = null
+            return
+        }
+
         val labels = mutableListOf<Label>()
+
         //цена
+        if (filter.price_all_from != null) labels.add(Label("От ${filter.price_all_from}р.") {
+            App.setting.filterConfig = App.setting.filterConfig?.apply { price_all_from = null }
+            showFilter()
+        })
+        if (filter.price_all_to != null) labels.add(Label("До ${filter.price_all_to}р.") {
+            App.setting.filterConfig = App.setting.filterConfig?.apply { price_all_to = null }
+            showFilter()
+        })
+
         //площадь
+        if (filter.square_all_from != null) labels.add(Label("От ${filter.square_all_from}м2") {
+            App.setting.filterConfig = App.setting.filterConfig?.apply { square_all_from = null }
+            showFilter()
+        })
+        if (filter.square_all_to != null) labels.add(Label("До ${filter.square_all_to}м2") {
+            App.setting.filterConfig = App.setting.filterConfig?.apply { square_all_to = null }
+            showFilter()
+        })
 
-//        // раен
-//        districts = binding.area.value?.split(", ")
-//            ?.mapNotNull { value -> districtsVariants?.entries?.firstOrNull { it.value == value }?.key },
-//
-//        // цена
-//        price_all_from = (selectedPriceRange?.first ?: getPriceRange.first).toString(),
-//        price_all_to = (selectedPriceRange?.second ?: getPriceRange.second).toString(),
-//
-//        // площадь
-//        square_all_from = (selectedSquareRange?.first ?: getSquareRange.first).toString(),
-//        square_all_to = (selectedSquareRange?.second ?: getSquareRange.second).toString(),
-//
-//        // оформление
-//        registrationTypes = binding.docType.value?.split(", ")
-//            ?.mapNotNull { value -> registrationTypeVariants?.entries?.firstOrNull { it.value == value }?.key },
-//
-//        // форма оплаты
-//        paymentTypes = binding.moneyType.value?.split(", ")
-//            ?.mapNotNull { value -> paymentTypeVariants?.entries?.firstOrNull { it.value == value }?.key },
-//
-//        // отделка
-//        interiorTypes = binding.style.value?.split(", ")
-//            ?.mapNotNull { value -> interiorVariants?.entries?.firstOrNull { it.value == value }?.key },
-//
-//        // класс дома
-//        buildingClass = binding.houseType.value?.split(", ")
-//            ?.mapNotNull { value -> buildingClassVariants?.entries?.firstOrNull { it.value == value }?.key },
-//
-//        // чипы
-//        advantages = binding.chipGroup.children
-//            .filter { it.tag == "2" }
-//            .mapNotNull {
-//                val text = (it as TextView).text.toString()
-//                tagsVariants?.entries?.firstOrNull { it.value == text }?.key?.toString()
-//            }.toList()
+        // раен
+        filter.districts?.filter { districtsVariants?.containsKey(it) == true }
+            ?.map { item ->
+                Label(districtsVariants!![item]!!) {
+                    App.setting.filterConfig = App.setting.filterConfig?.apply {
+                        districts = districts?.filterNot { it == item }
+                    }
+                    showFilter()
+                }
+            }
 
-        binding?.filtersList?.adapter = FilterItemsAdapter(listOf())
+        // оформление
+        filter.registrationTypes?.filter { registrationTypeVariants?.containsKey(it) == true }
+            ?.map { item ->
+                Label(registrationTypeVariants!![item]!!) {
+                    App.setting.filterConfig = App.setting.filterConfig?.apply {
+                        registrationTypes = registrationTypes?.filterNot { it == item }
+                    }
+                    showFilter()
+                }
+            }
+
+        // форма оплаты
+        filter.paymentTypes?.filter { paymentTypeVariants?.containsKey(it) == true }
+            ?.map { item ->
+                Label(paymentTypeVariants!![item]!!) {
+                    App.setting.filterConfig = App.setting.filterConfig?.apply {
+                        paymentTypes = paymentTypes?.filterNot { it == item }
+                    }
+                    showFilter()
+                }
+            }
+
+        // отделка
+        filter.interiorTypes?.filter { interiorVariants?.containsKey(it) == true }
+            ?.map { item ->
+                Label(interiorVariants!![item]!!) {
+                    App.setting.filterConfig = App.setting.filterConfig?.apply {
+                        interiorTypes = interiorTypes?.filterNot { it == item }
+                    }
+                    showFilter()
+                }
+            }
+
+        // класс дома
+        filter.buildingClass?.filter { buildingClassVariants?.containsKey(it) == true }
+            ?.map { item ->
+                Label(buildingClassVariants!![item]!!) {
+                    App.setting.filterConfig = App.setting.filterConfig?.apply {
+                        buildingClass = buildingClass?.filterNot { it == item }
+                    }
+                    showFilter()
+                }
+            }
+
+        // чипы
+        filter.advantages?.filter { tagsVariants?.containsKey(it) == true }
+            ?.map { item ->
+                Label(tagsVariants!![item]!!) {
+                    App.setting.filterConfig = App.setting.filterConfig?.apply {
+                        advantages = advantages?.filterNot { it == item }
+                    }
+                    showFilter()
+                }
+            }
+
+        binding?.filtersList?.adapter = FilterItemsAdapter(labels)
+        binding?.countFilters?.text = "Выбрано (${labels.size})"
     }
 
     override fun onDestroy() {
