@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
+import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentCatalogBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
@@ -37,6 +38,7 @@ class CatalogFragment : Fragment() {
             val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
             findNavController().navigate(R.id.action_catalogViewModel_to_houseFragment, bundle)
         }
+        binding?.conter?.text = "${list.size} предложений"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +47,6 @@ class CatalogFragment : Fragment() {
         try {
             val list = App.setting.houses
             showList(list.toMutableList())
-            binding?.conter?.text = "${list.size} предложений"
         } catch (e: Exception) {
             toast(e.localizedMessage)
             Log.e("test", "load catalog", e)
@@ -72,6 +73,13 @@ class CatalogFragment : Fragment() {
 
         }
         showFilter()
+        if (App.setting.filterConfig == null) {
+            RealtyServiceImpl().getHouseCatalog { data, e ->
+                data?.let { list ->
+                    showList(list.toMutableList())
+                }
+            }
+        }
     }
 
     private fun showFilter() {
