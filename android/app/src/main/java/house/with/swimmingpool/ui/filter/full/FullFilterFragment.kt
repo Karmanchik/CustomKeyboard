@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.gson.JsonObject
@@ -71,6 +72,12 @@ class FullFilterFragment : Fragment() {
     private val buildingClassVariants
         get() = filterCategories
             ?.firstOrNull { it.first == "building_class" }
+            ?.second
+            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
+
+    private val tagsVariants
+        get() = filterCategories
+            ?.firstOrNull { it.first == "advantages" }
             ?.second
             ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
 
@@ -250,7 +257,8 @@ class FullFilterFragment : Fragment() {
         selectedMaxInt: Int,
         onEnter: (min: Int, max: Int) -> Unit
     ) {
-        RangeDialogFragment.newInstance(range, title, selectedMinValue, selectedMaxInt, onEnter).show(parentFragmentManager, "range")
+        RangeDialogFragment.newInstance(range, title, selectedMinValue, selectedMaxInt, onEnter)
+            .show(parentFragmentManager, "range")
     }
 
     private fun openVariants(
@@ -292,9 +300,12 @@ class FullFilterFragment : Fragment() {
                 ?.mapNotNull { buildingClassVariants?.get(it) },
 
             // чипы
-            advantages = listOf(
-
-            )
+            advantages = binding.chipGroup.children
+                .filter { it.tag == "2" }
+                .mapNotNull {
+                    val text = (it as TextView).text.toString()
+                    tagsVariants?.entries?.firstOrNull { it.value == text }?.key?.toString()
+                }.toList()
 
         )
         RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
@@ -319,14 +330,11 @@ class FullFilterFragment : Fragment() {
             it.setBackgroundResource(R.drawable.selected_chip)
             (it as TextView).setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             it.tag = "2"
-            isOptionSelected++
         } else {
             it.setBackgroundResource(R.drawable.unselected_chip)
             (it as TextView).setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
             it.tag = "1"
-            isOptionSelected--
         }
-        binding.showCatalogButton.isEnabled = isOptionSelected == 0
         load()
     }
 
