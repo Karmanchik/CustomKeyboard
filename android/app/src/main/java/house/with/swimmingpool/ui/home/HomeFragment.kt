@@ -82,8 +82,10 @@ class HomeFragment : Fragment() {
             RealtyServiceImpl().getHouseCatalog { data, e ->
                 lastSeenRV.apply {
                     layoutManager = GridLayoutManager(context, 2)
-                    adapter = SeenHousesAdapter(requireContext(), data ?: listOf(null)) {
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+                    adapter = SeenHousesAdapter(requireContext(), data ?: listOf(null)) { homeId ->
+                        val home = App.setting.houses.firstOrNull { it.id == homeId }
+                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
                 }
             }

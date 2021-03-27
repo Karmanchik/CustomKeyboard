@@ -20,6 +20,7 @@ import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.mapview.MapView
+import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentHouseBinding
@@ -96,7 +97,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
             }
 
             price.text = singleHouseObject.price + " руб."
-            if (singleHouseObject.priceHike != 0) {
+            if (singleHouseObject.priceHike != 0 && singleHouseObject.priceHike != null) {
                 discount.text = "+${singleHouseObject.priceHike}%"
             } else {
                 discount.visibility = View.INVISIBLE
@@ -218,10 +219,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 similarObjects.apply {
                     layoutManager = GridLayoutManager(context, 2)
                     adapter =
-                        SeenHousesAdapter(requireContext(), listOf(data?.get(0), data?.get(1))) {
-                            val bundle = Bundle().apply {
-                                putSerializable("house", it)
-                            }
+                        SeenHousesAdapter(requireContext(), listOf(data?.get(0), data?.get(1))) { homeId ->
+                            val home = App.setting.houses.firstOrNull { it.id == homeId }
+                            val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
                             findNavController().navigate(R.id.action_houseFragment_self, bundle)
                         }
                 }
