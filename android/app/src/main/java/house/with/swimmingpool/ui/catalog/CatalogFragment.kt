@@ -16,6 +16,7 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentCatalogBinding
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
 import house.with.swimmingpool.ui.toast
 
@@ -85,8 +86,11 @@ class CatalogFragment : Fragment() {
 
     private fun showList(list: MutableList<HouseCatalogData>) {
         binding?.litRV?.adapter = CatalogAdapter(list.map { it as Any }.toMutableList().apply {
-            add(4, "small")
-            add(2, "big")
+            try {
+                add(4, "small")
+                add(2, "big")
+            } catch (e: Exception) {
+            }
         }, requireContext()) { homeId ->
             val home = list.firstOrNull { it.id == homeId }
             val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
@@ -173,6 +177,7 @@ class CatalogFragment : Fragment() {
                     showFilter()
                 }
             }
+            ?.forEach { labels.add(it) }
 
         // оформление
         filter.registrationTypes?.filter { registrationTypeVariants?.containsKey(it) == true }
@@ -184,6 +189,7 @@ class CatalogFragment : Fragment() {
                     showFilter()
                 }
             }
+            ?.forEach { labels.add(it) }
 
         // форма оплаты
         filter.paymentTypes?.filter { paymentTypeVariants?.containsKey(it) == true }
@@ -195,6 +201,7 @@ class CatalogFragment : Fragment() {
                     showFilter()
                 }
             }
+            ?.forEach { labels.add(it) }
 
         // отделка
         filter.interiorTypes?.filter { interiorVariants?.containsKey(it) == true }
@@ -206,6 +213,7 @@ class CatalogFragment : Fragment() {
                     showFilter()
                 }
             }
+            ?.forEach { labels.add(it) }
 
         // класс дома
         filter.buildingClass?.filter { buildingClassVariants?.containsKey(it) == true }
@@ -217,6 +225,7 @@ class CatalogFragment : Fragment() {
                     showFilter()
                 }
             }
+            ?.forEach { labels.add(it) }
 
         // чипы
         filter.advantages?.filter { tagsVariants?.containsKey(it) == true }
@@ -228,9 +237,15 @@ class CatalogFragment : Fragment() {
                     showFilter()
                 }
             }
+            ?.forEach { labels.add(it) }
 
         binding?.filtersList?.adapter = FilterItemsAdapter(labels)
         binding?.countFilters?.text = "Выбрано (${labels.size})"
+
+        RealtyServiceImpl().getObjectsByFilter(App.setting.filterConfig ?: FilterObjectsRequest()) { data, e ->
+            val list = data ?: listOf()
+            showList(list.toMutableList())
+        }
     }
 
     override fun onDestroy() {
