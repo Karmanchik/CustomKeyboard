@@ -16,6 +16,7 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFilterShortBinding
+import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.onRightDrawableClicked
 import house.with.swimmingpool.ui.removeRightIcon
 import house.with.swimmingpool.ui.setRightIcon
@@ -91,8 +92,13 @@ class ShortFilterFragment(
                             override fun onTouchStarted(rangeBar: RangeBar?) = Unit
                             @SuppressLint("SetTextI18n")
                             override fun onTouchEnded(rangeBar: RangeBar?) {
-                                RealtyServiceImpl().getHouseCatalog { data, e ->
+                                val filter = FilterObjectsRequest(
+                                    price_all_from = binding.min.text.toString(),
+                                    price_all_to = binding.max.text.toString()
+                                )
+                                RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
                                     if (data != null) {
+                                        App.setting.filterConfig = filter
                                         binding.showButton.isEnabled = true
                                         binding.showButton.text = "Показать ${data.size} предложений"
                                         binding.showButton.setOnClickListener {

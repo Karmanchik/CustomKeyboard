@@ -14,6 +14,7 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFilterFullBinding
+import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.filter.range.RangeDialogFragment
 import house.with.swimmingpool.ui.filter.variants.VariantsFragment
 import kotlinx.coroutines.Dispatchers
@@ -261,8 +262,44 @@ class FullFilterFragment : Fragment() {
     }
 
     private fun load() {
-        RealtyServiceImpl().getHouseCatalog { data, e ->
+        val filter = FilterObjectsRequest(
+            // раен
+            districts = binding.area.value?.split(", ")
+                ?.mapNotNull { districtsVariants?.get(it) },
+
+            // цена
+            price_all_from = (selectedPriceRange?.first ?: getPriceRange.first).toString(),
+            price_all_to = (selectedPriceRange?.second ?: getPriceRange.second).toString(),
+
+            // площадь
+            square_all_from = (selectedSquareRange?.first ?: getSquareRange.first).toString(),
+            square_all_to = (selectedSquareRange?.second ?: getSquareRange.second).toString(),
+
+            // оформление
+            registrationTypes = binding.docType.value?.split(", ")
+                ?.mapNotNull { registrationTypeVariants?.get(it) },
+
+            // форма оплаты
+            paymentTypes = binding.moneyType.value?.split(", ")
+                ?.mapNotNull { paymentTypeVariants?.get(it) },
+
+            // отделка
+            interiorTypes = binding.style.value?.split(", ")
+                ?.mapNotNull { interiorVariants?.get(it) },
+
+            // класс дома
+            buildingClass = binding.houseType.value?.split(", ")
+                ?.mapNotNull { buildingClassVariants?.get(it) },
+
+            // чипы
+            advantages = listOf(
+
+            )
+
+        )
+        RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
             if (data != null) {
+                App.setting.filterConfig = filter
                 binding.showCatalogButton.isEnabled = true
                 binding.showCatalogButton.text = "Показать ${data.size} предложений"
                 binding.showCatalogButton.setOnClickListener {

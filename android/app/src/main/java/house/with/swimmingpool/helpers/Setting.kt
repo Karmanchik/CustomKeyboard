@@ -5,6 +5,7 @@ import androidx.core.content.edit
 import com.google.gson.Gson
 import house.with.swimmingpool.App
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.models.request.FilterObjectsRequest
 
 class Setting(ctx: Context) {
 
@@ -26,9 +27,16 @@ class Setting(ctx: Context) {
             }
         }
 
+    var filterConfig: FilterObjectsRequest?
+        get() = Gson().fromJson(pref.getString(Keys.FILTER, null), FilterObjectsRequest::class.java)
+        set(value) = pref.edit { putString(Keys.FILTER, Gson().toJson(value)) }
+
+    fun getObjectById(id: Int): HouseCatalogData? =
+        App.database?.eventsDao()?.getById(id)
+
     object Keys {
         const val TOKEN = "TOKEN"
-        const val HOUSE_LIST = "HOUSE_LIST"
+        const val FILTER = "FILTER"
     }
 
 }

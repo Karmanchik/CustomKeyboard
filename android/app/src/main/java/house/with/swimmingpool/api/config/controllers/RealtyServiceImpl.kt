@@ -6,9 +6,11 @@ import house.with.swimmingpool.api.config.interfaces.IRealtyService
 import house.with.swimmingpool.api.retrofit.IRealty
 import house.with.swimmingpool.api.retrofit.getRetrofit
 import house.with.swimmingpool.models.*
+import house.with.swimmingpool.models.request.FilterObjectsRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.create
 
 class RealtyServiceImpl : IRealtyService {
 
@@ -57,4 +59,26 @@ class RealtyServiceImpl : IRealtyService {
 
     override fun getParamsForFilter(): Answer<JsonObject>? =
         getRetrofit().create(IRealty::class.java).getParamsForFilter().execute().body()
+
+    override fun getObjectsByFilter(
+        filter: FilterObjectsRequest,
+        onLoaded: (data: List<HouseCatalogData>?, e: Throwable?) -> Unit
+    ) {
+        getRetrofit().create<IRealty>()
+            .getObjectsWithFilter(filter)
+            .enqueue(object : Callback<Answer<CountList>> {
+                override fun onResponse(
+                    call: Call<Answer<CountList>>,
+                    response: Response<Answer<CountList>>
+                ) {
+                    onLoaded.invoke(response.body()?.data?.list, null)
+                }
+
+                override fun onFailure(call: Call<Answer<CountList>>, t: Throwable) {
+                    onLoaded.invoke(null, t)
+                    Log.e("taskException", "error", t)
+                }
+
+            })
+    }
 }
