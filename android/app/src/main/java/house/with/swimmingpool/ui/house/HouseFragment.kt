@@ -55,10 +55,13 @@ class HouseFragment : Fragment(), ISingleHouseView {
         val singleHouseObject =
             Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)
 
-        showHome(singleHouseObject)
+        if(singleHouseObject != null) {
+            showHome(singleHouseObject)
 
-        RealtyServiceImpl().getHouseExample(singleHouseObject.id ?: 0) { data, e ->
-            data?.let { showHome(it) }
+
+            RealtyServiceImpl().getHouseExample(singleHouseObject.id ?: 0) { data, e ->
+                data?.let { showHome(it) }
+            }
         }
     }
 
