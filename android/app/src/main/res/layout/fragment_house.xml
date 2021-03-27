@@ -670,10 +670,20 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"/>
 
-            <com.yandex.mapkit.mapview.MapView
-                android:id="@+id/mapView"
-                android:layout_width="match_parent"
-                android:layout_height="245dp"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="6dp"
+                android:elevation="10dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="30dp"
+                >
+                <com.yandex.mapkit.mapview.MapView
+                    android:id="@+id/mapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="245dp"/>
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
