@@ -3,6 +3,7 @@ package house.with.swimmingpool.helpers
 import android.content.Context
 import androidx.core.content.edit
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.models.request.FilterObjectsRequest
@@ -31,12 +32,17 @@ class Setting(ctx: Context) {
         get() = Gson().fromJson(pref.getString(Keys.FILTER, null), FilterObjectsRequest::class.java)
         set(value) = pref.edit { putString(Keys.FILTER, Gson().toJson(value)) }
 
+    var filterVariants: JsonObject?
+        get() = Gson().fromJson(pref.getString(Keys.FILTER_VARIANTS, null), JsonObject::class.java)
+        set(value) = pref.edit { putString(Keys.FILTER_VARIANTS, Gson().toJson(value)) }
+
     fun getObjectById(id: Int): HouseCatalogData? =
         App.database?.eventsDao()?.getById(id)
 
     object Keys {
         const val TOKEN = "TOKEN"
         const val FILTER = "FILTER"
+        const val FILTER_VARIANTS = "FILTER_VARIANTS"
     }
 
 }

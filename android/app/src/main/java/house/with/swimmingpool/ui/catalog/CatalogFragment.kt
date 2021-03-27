@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
@@ -66,11 +68,7 @@ class CatalogFragment : Fragment() {
             deleteFilter.setOnClickListener {
                 App.setting.filterConfig = null
                 showFilter()
-            } // delete filter
-            // показывать количество фильтров и вывод фильтра с листенерами
-            // загружать если фильтр пустой
-            // реклама
-
+            }
         }
         showFilter()
         if (App.setting.filterConfig == null) {
@@ -83,6 +81,48 @@ class CatalogFragment : Fragment() {
     }
 
     private fun showFilter() {
+        // delete filter
+        // показывать количество фильтров и вывод фильтра с листенерами
+        val labels = mutableListOf<String>()
+        //цена
+        //площадь
+
+//        // раен
+//        districts = binding.area.value?.split(", ")
+//            ?.mapNotNull { value -> districtsVariants?.entries?.firstOrNull { it.value == value }?.key },
+//
+//        // цена
+//        price_all_from = (selectedPriceRange?.first ?: getPriceRange.first).toString(),
+//        price_all_to = (selectedPriceRange?.second ?: getPriceRange.second).toString(),
+//
+//        // площадь
+//        square_all_from = (selectedSquareRange?.first ?: getSquareRange.first).toString(),
+//        square_all_to = (selectedSquareRange?.second ?: getSquareRange.second).toString(),
+//
+//        // оформление
+//        registrationTypes = binding.docType.value?.split(", ")
+//            ?.mapNotNull { value -> registrationTypeVariants?.entries?.firstOrNull { it.value == value }?.key },
+//
+//        // форма оплаты
+//        paymentTypes = binding.moneyType.value?.split(", ")
+//            ?.mapNotNull { value -> paymentTypeVariants?.entries?.firstOrNull { it.value == value }?.key },
+//
+//        // отделка
+//        interiorTypes = binding.style.value?.split(", ")
+//            ?.mapNotNull { value -> interiorVariants?.entries?.firstOrNull { it.value == value }?.key },
+//
+//        // класс дома
+//        buildingClass = binding.houseType.value?.split(", ")
+//            ?.mapNotNull { value -> buildingClassVariants?.entries?.firstOrNull { it.value == value }?.key },
+//
+//        // чипы
+//        advantages = binding.chipGroup.children
+//            .filter { it.tag == "2" }
+//            .mapNotNull {
+//                val text = (it as TextView).text.toString()
+//                tagsVariants?.entries?.firstOrNull { it.value == text }?.key?.toString()
+//            }.toList()
+
         binding?.filtersList?.adapter = FilterItemsAdapter(listOf("Ипотека", "Квартира")) {}
     }
 

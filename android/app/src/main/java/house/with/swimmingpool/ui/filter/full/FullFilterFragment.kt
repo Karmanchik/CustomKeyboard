@@ -245,6 +245,7 @@ class FullFilterFragment : Fragment() {
                 RealtyServiceImpl().getParamsForFilter()?.data?.let {
                     launch(Dispatchers.Main) {
                         filterConfig = it
+                        App.setting.filterVariants = it
                         App.setting.filterConfig?.let { showFilter(it) }
                     }
                 }
