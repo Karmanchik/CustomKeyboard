@@ -44,6 +44,12 @@ class CatalogFragment : Fragment() {
             toast(e.localizedMessage)
             Log.e("test", "load catalog", e)
         }
+
+        binding?.toFilterView?.setOnClickListener {
+            findNavController().navigate(R.id.action_catalogViewModel_to_fullFilterFragment)
+        }
+
+        binding?.filtersList?.adapter = FilterItemsAdapter(listOf("Ипотека", "Квартира")) {}
     }
 
     override fun onDestroy() {

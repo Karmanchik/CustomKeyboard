@@ -89,6 +89,9 @@
         <action
             android:id="@+id/action_catalogViewModel_to_houseFragment"
             app:destination="@id/houseFragment" />
+        <action
+            android:id="@+id/action_catalogViewModel_to_fullFilterFragment"
+            app:destination="@id/fullFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/houseFragment"
