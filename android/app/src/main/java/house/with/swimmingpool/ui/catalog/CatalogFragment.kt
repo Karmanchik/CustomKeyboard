@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentCatalogBinding
+import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
 import house.with.swimmingpool.ui.toast
 
@@ -27,18 +28,23 @@ class CatalogFragment : Fragment() {
         return binding?.root
     }
 
+    private fun showList(list: MutableList<HouseCatalogData>) {
+        binding?.litRV?.adapter = CatalogAdapter(list.map { it as Any }.toMutableList().apply {
+            add(4, "small")
+            add(2, "big")
+        }, requireContext()) { homeId ->
+            val home = list.firstOrNull { it.id == homeId }
+            val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+            findNavController().navigate(R.id.action_catalogViewModel_to_houseFragment, bundle)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         try {
             val list = App.setting.houses
-
-            binding?.litRV?.adapter = CatalogAdapter(list, requireContext()) { homeId ->
-                val home = list.firstOrNull { it.id == homeId }
-                val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                findNavController().navigate(R.id.action_catalogViewModel_to_houseFragment, bundle)
-            }
-
+            showList(list.toMutableList())
             binding?.conter?.text = "${list.size} предложений"
         } catch (e: Exception) {
             toast(e.localizedMessage)
@@ -49,6 +55,26 @@ class CatalogFragment : Fragment() {
             findNavController().navigate(R.id.action_catalogViewModel_to_fullFilterFragment)
         }
 
+        binding?.apply {
+            closeFilterContainer.setOnClickListener { listFilterContainer.visibility = View.GONE }
+            countFilters.setOnClickListener { listFilterContainer.visibility = View.VISIBLE }
+            clearFilter.setOnClickListener {
+                App.setting.filterConfig = null
+                showFilter()
+            }
+            deleteFilter.setOnClickListener {
+                App.setting.filterConfig = null
+                showFilter()
+            } // delete filter
+            // показывать количество фильтров и вывод фильтра с листенерами
+            // загружать если фильтр пустой
+            // реклама
+
+        }
+        showFilter()
+    }
+
+    private fun showFilter() {
         binding?.filtersList?.adapter = FilterItemsAdapter(listOf("Ипотека", "Квартира")) {}
     }
 

@@ -236,6 +236,8 @@ class FullFilterFragment : Fragment() {
                     load()
                 }
             }
+
+            segmentedControl.setSelectedSegment(0)
         }
 
         GlobalScope.launch(Dispatchers.IO) {

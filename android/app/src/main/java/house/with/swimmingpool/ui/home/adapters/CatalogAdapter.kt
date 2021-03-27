@@ -2,62 +2,126 @@ package house.with.swimmingpool.ui.home.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import house.with.swimmingpool.R
+import house.with.swimmingpool.api.config.controllers.BannersServiceImpl
+import house.with.swimmingpool.databinding.ItemBigBannerBinding
 import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
+import house.with.swimmingpool.databinding.ItemSmallBannerBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 
 class CatalogAdapter(
-        var items: List<HouseCatalogData>,
+        var items: List<Any>,
         var ctx: Context,
         var onItemSelected: (Int) -> Unit
-): RecyclerView.Adapter<CatalogAdapter.Holder>() {
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        return Holder(ItemHouseCatalogBinding.inflate(layoutInflater, parent, false))
+    companion object {
+        const val obj = 1
+        const val big = 2
+        const val small = 3
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) =
-            holder.bind(position)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return when (viewType) {
+            obj ->
+                Holder(ItemHouseCatalogBinding.inflate(layoutInflater, parent, false))
+            big -> BigAd(ItemBigBannerBinding.inflate(layoutInflater, parent, false))
+            else -> SmallAd(ItemSmallBannerBinding.inflate(layoutInflater, parent, false))
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
+        is Holder -> holder.bind(items[position] as HouseCatalogData)
+        is BigAd -> holder.bind()
+        is SmallAd -> holder.bind()
+        else -> {}
+    }
 
     override fun getItemCount() = items.size
 
+    override fun getItemViewType(position: Int): Int = when (items[position]) {
+        is HouseCatalogData -> obj
+        is String -> {
+            if ((items[position] as String) == "big") big else small
+        }
+        else -> big
+    }
+
+    inner class BigAd(private val view: ItemBigBannerBinding): RecyclerView.ViewHolder(view.root) {
+        fun bind() {
+            BannersServiceImpl().getBanners { data, e ->
+                Glide.with(itemView.context)
+                    .load(data?.get(0)?.bigBanner)
+                    .error(R.drawable.placeholder)
+                    .dontAnimate()
+                    .placeholder(R.drawable.placeholder)
+                    .into(view.bigAdBanner)
+            }
+        }
+    }
+
+    inner class SmallAd(private val view: ItemSmallBannerBinding): RecyclerView.ViewHolder(view.root) {
+        fun bind() {
+            BannersServiceImpl().getBanners { data, e ->
+                Glide.with(itemView.context)
+                    .load(data?.get(1)?.smallBanner)
+                    .error(R.drawable.placeholder)
+                    .dontAnimate()
+                    .placeholder(R.drawable.placeholder)
+                    .into(view.firstAdBanner)
+                Glide.with(itemView.context)
+                    .load(data?.get(2)?.smallBanner)
+                    .error(R.drawable.placeholder)
+                    .dontAnimate()
+                    .placeholder(R.drawable.placeholder)
+                    .into(view.secondAdBanner)
+            }
+        }
+    }
+
     inner class Holder(private val view: ItemHouseCatalogBinding): RecyclerView.ViewHolder(view.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(position: Int) {
+        fun bind(item: HouseCatalogData) {
 
-            itemView.setOnClickListener { onItemSelected.invoke(items[position].id ?: 0) }
+            itemView.setOnClickListener { onItemSelected.invoke(item.id) }
             view.apply {
-            housesImageContainerLayout.setOnClickListener { onItemSelected.invoke(items[position].id ?: 0) }
+            housesImageContainerLayout.setOnClickListener { onItemSelected.invoke(item.id) }
                 likeView.setImageResource(R.drawable.like_enabled)
 
-                items[position].apply {
+                item.apply {
                     val vp = housesImageContainer
                     Log.e("photos", photos?.size.toString())
                     vp.adapter = when {
                         photos != null && photos.isNotEmpty() -> {
                             Log.e("photos", photos.size.toString())
-                             CatalogImageAdapter(photos, listOf("-cYOlHknhBU") , ctx, onItemSelected, items[position].id ?: 0)
+                             CatalogImageAdapter(photos, listOf("-cYOlHknhBU") , ctx, onItemSelected,
+                                 item.id
+                             )
                         }
                         icon != null ->{
                             Log.e("photos", icon.toString())
-                            CatalogImageAdapter(listOf(icon), listOf("-cYOlHknhBU") , ctx, onItemSelected, items[position].id ?: 0)
+                            CatalogImageAdapter(listOf(icon), listOf("-cYOlHknhBU") , ctx, onItemSelected,
+                                item.id
+                            )
                         }
                         else -> {
-                            CatalogImageAdapter(listOf(""), listOf("-cYOlHknhBU") , ctx, onItemSelected, items[position].id ?: 0)
+                            CatalogImageAdapter(listOf(""), listOf("-cYOlHknhBU") , ctx, onItemSelected,
+                                item.id
+                            )
                         }
                     }
                     dotsIndicatorCatalogItem.setViewPager2(vp)
                 }
 
-                items[position].apply {
+                item.apply {
                     textViewTitle.text = title
                     textViewDescription.text = location
                     textViewPrice.text = price
