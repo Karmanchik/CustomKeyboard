@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.databinding.FragmentSearchTagButtonBinding
 import house.with.swimmingpool.ui.house.adapters.WhiteButtonAdapter
+import house.with.swimmingpool.ui.search.ISearchView
+import house.with.swimmingpool.ui.search.adapters.SearchTagAdapter
 
-class SearchTagButtonFragment : Fragment(){
+class SearchTagButtonFragment(
+    private val parent: ISearchView,
+    private val listItems: List<String>) : Fragment(){
     private var searchTagBinding: FragmentSearchTagButtonBinding? = null
 
     override fun onCreateView(
@@ -18,7 +22,7 @@ class SearchTagButtonFragment : Fragment(){
     ): View? {
         searchTagBinding = FragmentSearchTagButtonBinding.inflate(layoutInflater)
 
-        searchTagBinding?.tagRV?.adapter = WhiteButtonAdapter(requireContext(), )
+        searchTagBinding?.tagRV?.adapter = SearchTagAdapter(requireContext(), parent, listItems)
 
         return searchTagBinding?.root
     }

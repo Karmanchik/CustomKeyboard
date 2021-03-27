@@ -113,14 +113,14 @@ class HomeFragment : Fragment() {
 
             BannersServiceImpl().getMainBanners { data, e ->
                 if (e == null && data != null) {
-//                    val vp = mainHousesContainer
-//                    vp.adapter = HeaderAdapter(data) {
-//                        val bundle = Bundle().apply {
-//                            putInt("house", it)
-//                        }
-//                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
-//                    }
-//                    dotsIndicator.setViewPager2(vp)
+                    val vp = mainHousesContainer
+                    vp.adapter = HeaderAdapter(data) {
+                        val bundle = Bundle().apply {
+                            putInt("house", it)
+                        }
+                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
+                    }
+                    dotsIndicator.setViewPager2(vp)
                 }
             }
 

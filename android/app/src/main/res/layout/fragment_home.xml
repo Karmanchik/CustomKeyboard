@@ -53,7 +53,6 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:id="@+id/imageViewSearch"
                         app:srcCompat="@drawable/ic_seach_white_custom" />
                 </LinearLayout>
 
@@ -66,10 +65,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="460dp">
 
-<!--                <androidx.viewpager2.widget.ViewPager2-->
-<!--                    android:id="@+id/mainHousesContainer"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="460dp" />-->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/mainHousesContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="460dp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="27dp"
@@ -93,6 +92,7 @@
                     android:layout_marginTop="60dp"
                     android:layout_marginEnd="12dp"
                     android:elevation="10dp"
+                    android:id="@+id/imageViewSearch"
                     android:src="@drawable/ic_seach_white_custom"
                     android:textColor="@color/white" />
 
