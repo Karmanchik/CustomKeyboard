@@ -1,22 +1,13 @@
 package house.with.swimmingpool
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
-import androidx.annotation.RequiresPermission
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.yandex.mapkit.MapKitFactory
-import house.with.swimmingpool.api.config.controllers.NewsServiceImpl
-import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
-import house.with.swimmingpool.api.config.controllers.StoriesServiceImpl
-import house.with.swimmingpool.api.config.controllers.VideosServiceImpl
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,5 +33,23 @@ class MainActivity : AppCompatActivity() {
 
         MapKitFactory.setApiKey("bb9c9bdc-48ad-4806-b55d-48c2e98b3b0d")
         MapKitFactory.initialize(this)
+    }
+
+    override fun onResume() {
+        when(
+        getSharedPreferences(App.HOUSE_WITH_SWIMMING_POOL, Context.MODE_PRIVATE)
+                .getString(App.SEARCH_ACTIVITY, "false")
+        ){
+           App.SEARCH_ACTIVITY_TO_CATALOG -> {
+                findNavController(R.id.nav_host_fragment)
+                        .navigate(R.id.action_navigation_home_to_catalogViewModel)
+            }
+
+            App.SEARCH_ACTIVITY_TO_OBJECT -> {
+                findNavController(R.id.nav_host_fragment)
+                        .navigate(R.id.action_navigation_home_to_houseFragment)
+            }
+        }
+        super.onResume()
     }
 }
