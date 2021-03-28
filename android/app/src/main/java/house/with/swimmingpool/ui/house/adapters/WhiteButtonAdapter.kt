@@ -47,7 +47,7 @@ class WhiteButtonAdapter(
                     view.whiteButtonLayout.elevation = 0F
                 }else{
                     view.whiteButtonLayout.background = ctx.getDrawable(R.drawable.white_button_without_corners)
-                    view.whiteButtonLayout.elevation = 5F
+                    view.whiteButtonLayout.elevation = 8F
                 }
 
                 buttonWhite.setOnClickListener {
@@ -56,7 +56,7 @@ class WhiteButtonAdapter(
                         notifyItemChanged(lastCheckedPosition)
                         lastCheckedPosition = position
                         view.whiteButtonLayout.background = ctx.getDrawable(R.drawable.white_button_without_corners)
-                        view.whiteButtonLayout.elevation = 5F
+                        view.whiteButtonLayout.elevation = 8F
 
                         parentView.showInformation(position)
                     }

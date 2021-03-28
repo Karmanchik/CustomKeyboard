@@ -4,7 +4,7 @@
     android:id="@+id/whiteButtonLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/white_button_with_corner4"
+    android:background="@drawable/white_button_without_corners"
     android:layout_margin="5dp">
 
     <TextView

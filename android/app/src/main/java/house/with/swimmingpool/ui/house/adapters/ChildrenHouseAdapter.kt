@@ -1,4 +1,4 @@
-package house.with.swimmingpool.ui.home.adapters
+package house.with.swimmingpool.ui.house.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,15 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseGridBinding
-import house.with.swimmingpool.models.House
-import house.with.swimmingpool.models.HouseCatalogData
-import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
+import house.with.swimmingpool.models.Children
 
-class SeenHousesAdapter(
+class ChildrenHouseAdapter (
         val ctx: Context,
-        var items: List<HouseCatalogData?>,
+        var items: List<Children?>,
         var onItemSelected: (Int) -> Unit
-): RecyclerView.Adapter<SeenHousesAdapter.Holder>() {
+): RecyclerView.Adapter<ChildrenHouseAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -28,9 +26,9 @@ class SeenHousesAdapter(
     override fun onBindViewHolder(holder: Holder, position: Int) =
             holder.bind(position)
 
-    override fun getItemCount() = if(items.size > 4) 4 else items.size
+    override fun getItemCount() = if (items.size > 4) 4 else items.size
 
-    inner class Holder(private val view: ItemHouseGridBinding): RecyclerView.ViewHolder(view.root) {
+    inner class Holder(private val view: ItemHouseGridBinding) : RecyclerView.ViewHolder(view.root) {
 
         @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
@@ -38,20 +36,20 @@ class SeenHousesAdapter(
 
             view.apply {
 
-                if(items[position] != null) {
+                if (items[position] != null) {
                     Glide.with(ctx)
-                            .load(
-                                    when {
-                                         items[position]?.icon != "" -> {
-                                            items[position]?.icon
-                                        }
-                                        items[position]?.photos?.get(0) != "" -> {
-                                            items[position]?.photos?.get(0)
-                                        }
-                                        else -> {
-                                            ""
-                                        }
-                                    }
+                            .load(""
+//                                    when {
+//                                         items[position]?.icon != "" -> {
+//                                            items[position]?.icon
+//                                        }
+//                                        items[position]?.photos?.get(0) != "" -> {
+//                                            items[position]?.photos?.get(0)
+//                                        }
+//                                        else -> {
+//                                            ""
+//                                        }
+//                                    }
                             )
                             .error(R.drawable.error_placeholder_midle)
                             .placeholder(R.drawable.placeholder)
@@ -59,7 +57,7 @@ class SeenHousesAdapter(
                 }
                 items[position]?.apply {
                     textViewTitle.text = title
-                    textViewLocation.text = location
+//                    textViewLocation.text = location
 
                     textViewPrice.text = "$price руб."
                     if (this.square != null && square != "0") {
@@ -77,9 +75,6 @@ class SeenHousesAdapter(
                     }
                 }
             }
-
         }
-
     }
-
 }

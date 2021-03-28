@@ -1,6 +1,7 @@
 package house.with.swimmingpool.ui.house
 
 import android.annotation.SuppressLint
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -26,6 +27,7 @@ import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentHouseBinding
 import house.with.swimmingpool.models.HouseExampleData
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
+import house.with.swimmingpool.ui.favourites.liked.binding
 import house.with.swimmingpool.ui.home.adapters.SeenHousesAdapter
 import house.with.swimmingpool.ui.house.adapters.*
 import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
@@ -62,6 +64,29 @@ class HouseFragment : Fragment(), ISingleHouseView {
             RealtyServiceImpl().getHouseExample(singleHouseObject.id ?: 0) { data, e ->
                 data?.let { showHome(it) }
             }
+        }else{
+            houseObjectBinding?.apply{
+                price.visibility = View.INVISIBLE
+                discount.visibility = View.INVISIBLE
+                textViewLocation.visibility = View.INVISIBLE
+                textViewForMonth.visibility = View.INVISIBLE
+                noteLayout.visibility = View.GONE
+                textViewAboutObject.visibility = View.GONE
+                description.visibility = View.GONE
+                videoLayout.visibility = View.GONE
+                textViewAdvantages.visibility = View.GONE
+                textViewSimilarObject.visibility = View.GONE
+                textViewMoneyInMonth.visibility = View.INVISIBLE
+                textViewLocationMap.visibility = View.GONE
+                mapLayout.visibility = View.GONE
+                housesListText.visibility = View.GONE
+                showListHouseBox.visibility = View.GONE
+                consultationLayout.visibility = View.GONE
+                collBackLayout.visibility = View.GONE
+                paperwork.visibility = View.GONE
+                dividerFirst.visibility = View.GONE
+                dividerSecond.visibility = View.GONE
+            }
         }
     }
 
@@ -85,6 +110,8 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 if (galleryNameList.size == 0) {
                     whiteButtonGalleryRV.visibility = View.GONE
+                }else{
+                    whiteButtonGalleryRV.visibility = View.VISIBLE
                 }
 
                 if (!this.isNullOrEmpty()) {
@@ -104,6 +131,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 discount.text = "+${singleHouseObject.priceHike}%"
             } else {
                 discount.visibility = View.INVISIBLE
+                textViewForMonth.visibility = View.INVISIBLE
             }
             title.text = singleHouseObject.title
             textViewLocation.text = singleHouseObject.location
@@ -118,6 +146,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 noteLayout.visibility = View.GONE
             } else {
 //                        noteText = note
+                noteLayout.visibility = View.VISIBLE
             }
 
             whiteButtonRV.adapter = WhiteButtonAdapter(
@@ -133,7 +162,12 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
             if (singleHouseObject.description.isNullOrEmpty()) {
                 description.visibility = View.GONE
+                textViewAboutObject.visibility = View.GONE
+                dividerFirst.visibility = View.GONE
             } else {
+                description.visibility = View.VISIBLE
+                textViewAboutObject.visibility = View.VISIBLE
+                dividerFirst.visibility = View.VISIBLE
                 description.text = Html.fromHtml(singleHouseObject.description)
             }
 
@@ -146,30 +180,38 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 .placeholder(R.drawable.placeholder)
                 .into(imageViewVideoPreloader)
 
-            youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
-                override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                    val videoId =
-                        "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
-                    youTubePlayer.loadVideo(videoId, 0f)
-                    youTubePlayer.pause()
+            if(singleHouseObject.video.isNotEmpty()) {
+                videoLayout.visibility = View.VISIBLE
+                youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+                    override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                        val videoId =
+                                "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
+                        youTubePlayer.loadVideo(videoId, 0f)
+                        youTubePlayer.pause()
 
-                    youTubePlayerView.minimumHeight = imageViewVideoPreloader.height
+                        youTubePlayerView.minimumHeight = imageViewVideoPreloader.height
 
-                    imageViewVideoPreloader.setOnClickListener {
-                        it.visibility = View.INVISIBLE
-                        relativeLayout.visibility = View.INVISIBLE
-                        youTubePlayer.play()
-                        youTubePlayerView.enterFullScreen()
-                        youTubePlayerView.exitFullScreen()
-                        youTubePlayerView.enterFullScreen()
+                        imageViewVideoPreloader.setOnClickListener {
+                            it.visibility = View.INVISIBLE
+                            relativeLayout.visibility = View.INVISIBLE
+                            youTubePlayer.play()
+                            youTubePlayerView.enterFullScreen()
+                            youTubePlayerView.exitFullScreen()
+                            youTubePlayerView.enterFullScreen()
+                        }
                     }
-                }
-            })
+                })
+            }else{
+                videoLayout.visibility = View.GONE
+            }
 //                    }
 
             if (singleHouseObject.type == "house" || singleHouseObject.type == "flat") {
                 housesListText.visibility = View.GONE
                 listHouseBox.visibility = View.GONE
+            }else{
+                housesListText.visibility = View.VISIBLE
+                listHouseBox.visibility = View.VISIBLE
             }
 
             if (singleHouseObject.type == "complex") {
@@ -178,11 +220,14 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
 
             if (singleHouseObject.advantages != null) {
+                textViewAdvantages.visibility = View.VISIBLE
+                whiteButtonAdvantagesRV.visibility = View.VISIBLE
                 whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(
                     requireContext(),
                     singleHouseObject.advantages
                 )
             } else {
+                textViewAdvantages.visibility = View.GONE
                 whiteButtonAdvantagesRV.visibility = View.GONE
             }
 
@@ -196,6 +241,15 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
             collapseListHouseBox.setOnClickListener {
                 showListHouse(false)
+            }
+
+            if (singleHouseObject.geolocation?.latitude == null
+                    || singleHouseObject.geolocation.longitude == null){
+                textViewLocationMap.visibility = View.GONE
+                mapLayout.visibility = View.GONE
+            }else{
+                textViewLocationMap.visibility = View.VISIBLE
+                mapLayout.visibility = View.VISIBLE
             }
 
             try {
@@ -218,16 +272,23 @@ class HouseFragment : Fragment(), ISingleHouseView {
             }
 
 
-            RealtyServiceImpl().getHouseCatalog { data, e ->
+            singleHouseObject.children
+
+            if (singleHouseObject.children != null) {
                 similarObjects.apply {
                     layoutManager = GridLayoutManager(context, 2)
                     adapter =
-                        SeenHousesAdapter(requireContext(), listOf(data?.get(0), data?.get(1))) { homeId ->
-                            val home = App.setting.houses.firstOrNull { it.id == homeId }
-                            val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                            findNavController().navigate(R.id.action_houseFragment_self, bundle)
-                        }
+                            ChildrenHouseAdapter(requireContext(), listOf(singleHouseObject.children[0], singleHouseObject.children[1])){ homeId ->
+                                val home = App.setting.houses.firstOrNull { it.id == homeId }
+                                val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                                findNavController().navigate(R.id.action_houseFragment_self, bundle)
+                            }
+                    similarObjects.visibility = View.VISIBLE
+                    textViewSimilarObject.visibility = View.VISIBLE
                 }
+            }else{
+                similarObjects.visibility = View.GONE
+                textViewSimilarObject.visibility = View.GONE
             }
 
             houseBackIcon.setOnClickListener {
@@ -239,6 +300,13 @@ class HouseFragment : Fragment(), ISingleHouseView {
     private fun showListHouse(full: Boolean) {
         houseObjectBinding?.apply {
             if (houseExampleData != null) {
+
+                if (houseExampleData?.children?.size ?: 0 <= 6){
+                    showListHouseBox.visibility = View.GONE
+                }else{
+                    showListHouseBox.visibility = View.VISIBLE
+                }
+
                 if (full) {
                     listHouseBox.apply {
                         showListHouseBox.visibility = View.GONE

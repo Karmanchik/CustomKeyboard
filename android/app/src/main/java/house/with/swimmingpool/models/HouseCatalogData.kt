@@ -31,7 +31,7 @@ data class HouseCatalogData(
     val price_of_one_meter: String?,
     val promo: String?,
     val square: String?,
-    val square_area: JsonElement?,
+    val square_area: String?,
     val statuses: List<String>?,
     val title: String?,
     val type: String?,

@@ -66,7 +66,7 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginBottom="84dp"
                     android:fontFamily="@font/lato_regular"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textColor="@color/white"
                     android:text="Адлер, Молдовка, ул. Тимашевская" />
 
@@ -88,10 +88,10 @@
                     android:fontFamily="@font/lato"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginBottom="84dp"
+                    android:layout_marginBottom="85dp"
                     android:layout_marginEnd="12dp"
                     android:textColor="@color/white"
-                    android:textSize="10sp"/>
+                    android:textSize="12sp"/>
 
                 <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                     android:id="@+id/dots_indicator"
@@ -163,6 +163,7 @@
 
 
                 <TextView
+                    android:id="@+id/textViewMoneyInMonth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -173,6 +174,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/textViewForMonth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="14dp"
@@ -347,6 +349,7 @@
             </FrameLayout>
 
             <View
+                android:id="@+id/dividerFirst"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginEnd="12dp"
@@ -355,6 +358,7 @@
                 android:background="?android:attr/listDivider" />
 
             <TextView
+                android:id="@+id/textViewAboutObject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Об объекте"
@@ -378,6 +382,7 @@
                 android:textSize="14sp"/>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/videoLayout"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -436,6 +441,7 @@
             </androidx.cardview.widget.CardView>
 
             <View
+                android:id="@+id/dividerSecond"
                 android:layout_width="match_parent"
                 android:layout_marginTop="30dp"
                 android:layout_height="1dp"
@@ -503,6 +509,7 @@
                 >
 
                 <LinearLayout
+                    android:id="@+id/consultationLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -633,6 +640,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/textViewAdvantages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Преимущества"
@@ -661,6 +669,7 @@
                 android:background="?android:attr/listDivider" />
 
             <TextView
+                android:id="@+id/textViewLocationMap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Локация"
@@ -671,6 +680,7 @@
                 android:textSize="20sp"/>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/mapLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="6dp"
@@ -695,6 +705,7 @@
                 android:layout_marginEnd="12dp">
 
                 <LinearLayout
+                    android:id="@+id/collBackLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -755,6 +766,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/textViewSimilarObject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Похожие объекты"
@@ -772,9 +784,10 @@
                 android:layout_marginStart="12dp" />
 
             <ImageView
+                android:id="@+id/paperwork"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/paperworck"
+                android:src="@drawable/paperwork"
                 android:adjustViewBounds="true"/>
 
         </LinearLayout>
