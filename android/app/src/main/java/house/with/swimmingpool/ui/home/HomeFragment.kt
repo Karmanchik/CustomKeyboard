@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.tabs.TabLayout
+import com.google.gson.Gson
+import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.*
 import house.with.swimmingpool.databinding.FragmentHomeBinding
@@ -57,22 +59,11 @@ class HomeFragment : Fragment() {
         var houseCatalogData: List<HouseCatalogData>? = null
 
 
-        homeBinding?.appbar?.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
-            val percentage = (abs(i).toFloat() / appBarLayout.totalScrollRange)
-
-            Log.e("test percentage", percentage.toString())
-//            homeBinding?.zatemnitel?.alpha = percentage / 2
-            homeBinding?.test?.elevation = 1 - percentage
-            homeBinding?.toolbar?.elevation = percentage
-        })
-
         homeBinding?.apply {
 
             imageViewSearch.setOnClickListener {
                 findNavController().navigate(R.id.action_navigation_home_to_searchActivity)
             }
-
-            toolbar.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             VideosServiceImpl().getVideos { data, e ->
                 if (e == null && data != null)
@@ -87,7 +78,7 @@ class HomeFragment : Fragment() {
                         val bundle = Bundle().apply {
                             putSerializable("house", it)
                         }
-                        findNavController().navigate(R.id.action_navigation_home_to_newsSingleFragment)
+                        findNavController().navigate(R.id.action_navigation_home_to_newsSingleFragment, bundle)
                     }
                 }
             }
@@ -95,8 +86,10 @@ class HomeFragment : Fragment() {
             RealtyServiceImpl().getHouseCatalog { data, e ->
                 lastSeenRV.apply {
                     layoutManager = GridLayoutManager(context, 2)
-                    adapter = SeenHousesAdapter(requireContext(), data ?: listOf(null)) {
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment)
+                    adapter = SeenHousesAdapter(requireContext(), data ?: listOf(null)) { homeId ->
+                        val home = App.setting.houses.firstOrNull { it.id == homeId }
+                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
                 }
             }
@@ -114,10 +107,9 @@ class HomeFragment : Fragment() {
             BannersServiceImpl().getMainBanners { data, e ->
                 if (e == null && data != null) {
                     val vp = mainHousesContainer
-                    vp.adapter = HeaderAdapter(data) {
-                        val bundle = Bundle().apply {
-                            putInt("house", it)
-                        }
+                    vp.adapter = HeaderAdapter(data) { homeId ->
+                        val home = App.setting.houses.firstOrNull { it.id == homeId }
+                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
                         findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
                     dotsIndicator.setViewPager2(vp)
@@ -143,17 +135,15 @@ class HomeFragment : Fragment() {
             }
 
             nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (oldScrollY < shortCatalogRV.bottom && scrollY > shortCatalogRV.bottom){
+                if (shortCatalogRV.bottom in (oldScrollY + 1) until scrollY){
                     setShortCatalog(houseCatalogData)
                 }
 
-                if(oldScrollY > textViewShortCatalog.top - coordinateLayout.height && scrollY < textViewShortCatalog.top - coordinateLayout.height){
+                if(textViewShortCatalog.top - coordinateLayout.height in (scrollY + 1) until oldScrollY){
                     setShortCatalog(houseCatalogData)
                 }
             }
-            shortCatalogRV.setOnFocusChangeListener { v, hasFocus ->
-                Log.e("scroll", "fokuse $hasFocus")
-            }
+
 
             segmentedControl.addOnSegmentClickListener { svh ->
                 RealtyServiceImpl().getHouseCatalog { data, e ->
@@ -221,19 +211,18 @@ class HomeFragment : Fragment() {
     private fun setShortCatalog(data: List<HouseCatalogData>?) {
         homeBinding?.apply {
             if (data != null) {
+                App.setting.houses = data
                 textViewVideosCount.text = "${data.size}  предложений"
                 shortCatalogRV.adapter = if (data.size > 2) {
-                    CatalogAdapter(listOf(data[0], data[1]), requireContext()) {
-                        val bundle = Bundle().apply {
-                            putInt("house", it)
-                        }
+                    CatalogAdapter(listOf(data[0], data[1]), requireContext()) { homeId ->
+                        val home = App.setting.houses.firstOrNull { it.id == homeId }
+                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
                         findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
                 } else {
-                    CatalogAdapter(data, requireContext()) {
-                        val bundle = Bundle().apply {
-                            putInt("house", it)
-                        }
+                    CatalogAdapter(data, requireContext()) { homeId ->
+                        val home = App.setting.houses.firstOrNull { it.id == homeId }
+                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
                         findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
                 }

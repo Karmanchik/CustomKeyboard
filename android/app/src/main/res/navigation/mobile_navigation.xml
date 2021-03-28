@@ -92,11 +92,18 @@
         <action
             android:id="@+id/action_catalogViewModel_to_houseFragment"
             app:destination="@id/houseFragment" />
+        <action
+            android:id="@+id/action_catalogViewModel_to_fullFilterFragment"
+            app:destination="@id/fullFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/houseFragment"
         android:name="house.with.swimmingpool.ui.house.HouseFragment"
-        android:label="HouseFragment" />
+        android:label="HouseFragment" >
+        <action
+            android:id="@+id/action_houseFragment_self"
+            app:destination="@id/houseFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cabinetFragment"
         android:name="house.with.swimmingpool.ui.cabinet.CabinetFragment"

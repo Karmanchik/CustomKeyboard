@@ -5,21 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doOnTextChanged
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import com.google.gson.JsonObject
+import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFilterFullBinding
+import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.filter.range.RangeDialogFragment
 import house.with.swimmingpool.ui.filter.variants.VariantsFragment
-import house.with.swimmingpool.ui.onRightDrawableClicked
-import house.with.swimmingpool.ui.removeRightIcon
-import house.with.swimmingpool.ui.setRightIcon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,6 +31,20 @@ class FullFilterFragment : Fragment() {
 
     private var filterConfig: JsonObject? = null
     private val filterCategories get() = filterConfig?.entrySet()?.map { Pair(it.key, it.value) }
+
+    private var selectedPriceRange: Pair<Int, Int>? = null
+    private val getPriceRange
+        get() = Pair(
+            filterCategories?.firstOrNull { it.first == "minPrice" }?.second?.asInt ?: 0,
+            filterCategories?.firstOrNull { it.first == "maxPrice" }?.second?.asInt ?: 0
+        )
+
+    private var selectedSquareRange: Pair<Int, Int>? = null
+    private val getSquareRange
+        get() = Pair(
+            filterCategories?.firstOrNull { it.first == "minSquare" }?.second?.asInt ?: 0,
+            filterCategories?.firstOrNull { it.first == "maxSquare" }?.second?.asInt ?: 0
+        )
 
     private val districtsVariants
         get() = filterCategories
@@ -60,6 +73,12 @@ class FullFilterFragment : Fragment() {
     private val buildingClassVariants
         get() = filterCategories
             ?.firstOrNull { it.first == "building_class" }
+            ?.second
+            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
+
+    private val tagsVariants
+        get() = filterCategories
+            ?.firstOrNull { it.first == "advantages" }
             ?.second
             ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
 
@@ -116,24 +135,15 @@ class FullFilterFragment : Fragment() {
             chip24.setOnClickListener { onChipClicked(it) }
 
             resetButton.setOnClickListener {
-                area.text?.clear()
-                price.text?.clear()
-                square.text?.clear()
-                docType.text?.clear()
-                moneyType.text?.clear()
-                style.text?.clear()
-                sea.text?.clear()
-                houseType.text?.clear()
+                area.value = ""
+                price.value = ""
+                square.value = ""
+                docType.value = ""
+                moneyType.value = ""
+                style.value = ""
+                sea.value = ""
+                houseType.value = ""
             }
-
-            area.initEditText()
-            price.initEditText()
-            square.initEditText()
-            docType.initEditText()
-            moneyType.initEditText()
-            style.initEditText()
-            sea.initEditText()
-            houseType.initEditText()
 
             area.setOnClickListener {
                 if (districtsFilter == null) {
@@ -142,7 +152,8 @@ class FullFilterFragment : Fragment() {
 
                 openVariants(districtsFilter!!) {
                     districtsFilter = it
-                    area.setText(it.filter { it.second }.map { it.first }.joinToString(", "))
+                    area.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    load()
                 }
             }
 
@@ -154,7 +165,8 @@ class FullFilterFragment : Fragment() {
 
                 openVariants(registrationTypeFilter!!) {
                     registrationTypeFilter = it
-                    docType.setText(it.filter { it.second }.map { it.first }.joinToString(", "))
+                    docType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    load()
                 }
             }
 
@@ -165,7 +177,8 @@ class FullFilterFragment : Fragment() {
 
                 openVariants(paymentTypeFilter!!) {
                     paymentTypeFilter = it
-                    moneyType.setText(it.filter { it.second }.map { it.first }.joinToString(", "))
+                    moneyType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    load()
                 }
             }
 
@@ -176,7 +189,8 @@ class FullFilterFragment : Fragment() {
 
                 openVariants(interiorFilter!!) {
                     interiorFilter = it
-                    style.setText(it.filter { it.second }.map { it.first }.joinToString(", "))
+                    style.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    load()
                 }
             }
 
@@ -188,17 +202,42 @@ class FullFilterFragment : Fragment() {
 
                 openVariants(buildingClassFilter!!) {
                     buildingClassFilter = it
-                    houseType.setText(it.filter { it.second }.map { it.first }.joinToString(", "))
+                    houseType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    load()
                 }
             }
 
             sea.setOnClickListener {
-                openRange()
+//                openRange()
+            }
+
+            square.setOnClickListener {
+                openRange(
+                    getSquareRange,
+                    "Площадь",
+                    selectedSquareRange?.first ?: getSquareRange.first,
+                    selectedSquareRange?.second ?: getSquareRange.second
+                ) { min, max ->
+                    square.value = "${min}m2. - ${max}m2."
+                    selectedSquareRange = Pair(min, max)
+                    load()
+                }
             }
 
             price.setOnClickListener {
-                openRange()
+                openRange(
+                    getPriceRange,
+                    "Цена, р.",
+                    selectedPriceRange?.first ?: getPriceRange.first,
+                    selectedPriceRange?.second ?: getPriceRange.second
+                ) { min, max ->
+                    price.value = "${min}р. - ${max}р."
+                    selectedPriceRange = Pair(min, max)
+                    load()
+                }
             }
+
+            segmentedControl.setSelectedSegment(0)
         }
 
         GlobalScope.launch(Dispatchers.IO) {
@@ -206,6 +245,8 @@ class FullFilterFragment : Fragment() {
                 RealtyServiceImpl().getParamsForFilter()?.data?.let {
                     launch(Dispatchers.Main) {
                         filterConfig = it
+                        App.setting.filterVariants = it
+                        App.setting.filterConfig?.let { showFilter(it) }
                     }
                 }
             } catch (e: Exception) {
@@ -214,8 +255,15 @@ class FullFilterFragment : Fragment() {
         }
     }
 
-    private fun openRange() {
-        RangeDialogFragment().newInstance().show(parentFragmentManager, "range")
+    private fun openRange(
+        range: Pair<Int, Int>,
+        title: String,
+        selectedMinValue: Int,
+        selectedMaxInt: Int,
+        onEnter: (min: Int, max: Int) -> Unit
+    ) {
+        RangeDialogFragment.newInstance(range, title, selectedMinValue, selectedMaxInt, onEnter)
+            .show(parentFragmentManager, "range")
     }
 
     private fun openVariants(
@@ -226,12 +274,106 @@ class FullFilterFragment : Fragment() {
             .show(parentFragmentManager, "VariantsFragment")
     }
 
-    private fun EditText.initEditText() {
-        doOnTextChanged { text, _, _, _ ->
-            if (!text.isNullOrEmpty()) setRightIcon(R.drawable.ic_clear_field)
-            else removeRightIcon()
+    private fun load() {
+        val filter = FilterObjectsRequest(
+            // раен
+            districts = binding.area.value?.split(", ")
+                ?.mapNotNull { value -> districtsVariants?.entries?.firstOrNull { it.value == value }?.key },
+
+            // цена
+            price_all_from = (selectedPriceRange?.first ?: getPriceRange.first).toString(),
+            price_all_to = (selectedPriceRange?.second ?: getPriceRange.second).toString(),
+
+            // площадь
+            square_all_from = (selectedSquareRange?.first ?: getSquareRange.first).toString(),
+            square_all_to = (selectedSquareRange?.second ?: getSquareRange.second).toString(),
+
+            // оформление
+            registrationTypes = binding.docType.value?.split(", ")
+                ?.mapNotNull { value -> registrationTypeVariants?.entries?.firstOrNull { it.value == value }?.key },
+
+            // форма оплаты
+            paymentTypes = binding.moneyType.value?.split(", ")
+                ?.mapNotNull { value -> paymentTypeVariants?.entries?.firstOrNull { it.value == value }?.key },
+
+            // отделка
+            interiorTypes = binding.style.value?.split(", ")
+                ?.mapNotNull { value -> interiorVariants?.entries?.firstOrNull { it.value == value }?.key },
+
+            // класс дома
+            buildingClass = binding.houseType.value?.split(", ")
+                ?.mapNotNull { value -> buildingClassVariants?.entries?.firstOrNull { it.value == value }?.key },
+
+            // чипы
+            advantages = binding.chipGroup.children
+                .filter { it.tag == "2" }
+                .mapNotNull {
+                    val text = (it as TextView).text.toString()
+                    tagsVariants?.entries?.firstOrNull { it.value == text }?.key?.toString()
+                }.toList()
+
+        )
+        RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
+            if (data != null) {
+                App.setting.filterConfig = filter
+                binding.showCatalogButton.isEnabled = true
+                binding.showCatalogButton.text = "Показать ${data.size} предложений"
+                binding.showCatalogButton.setOnClickListener {
+                    App.setting.houses = data
+                    findNavController().navigate(R.id.action_fullFilterFragment_to_catalogViewModel)
+                }
+            } else {
+                binding.showCatalogButton.isEnabled = false
+                binding.showCatalogButton.text = "Нет объектов"
+                binding.showCatalogButton.setOnClickListener(null)
+            }
         }
-        onRightDrawableClicked { text.clear() }
+    }
+
+    private fun showFilter(filter: FilterObjectsRequest) {
+        Log.e("showFilter", Gson().toJson(filter))
+        binding.area.value = filter.districts
+            ?.mapNotNull { districtsVariants?.get(it) }
+            ?.joinToString(", ")
+
+        filter.price_all_from?.let {
+            selectedPriceRange = Pair(
+                filter.price_all_from?.toIntOrNull() ?: 0,
+                filter.price_all_to?.toIntOrNull() ?: 0
+            )
+            binding.price.value = "${filter.price_all_from}р. - ${filter.price_all_to}р."
+        }
+
+        filter.square_all_from?.let {
+            selectedSquareRange = Pair(
+                filter.square_all_from?.toIntOrNull() ?: 0,
+                filter.square_all_to?.toIntOrNull() ?: 0
+            )
+            binding.square.value = "${filter.square_all_from}m2. - ${filter.square_all_to}m2."
+        }
+
+        binding.docType.value = filter.registrationTypes
+            ?.mapNotNull { registrationTypeVariants?.get(it) }
+            ?.joinToString(", ")
+
+        binding.moneyType.value = filter.paymentTypes
+            ?.mapNotNull { paymentTypeVariants?.get(it) }
+            ?.joinToString(", ")
+
+        binding.style.value = filter.interiorTypes
+            ?.mapNotNull { interiorVariants?.get(it) }
+            ?.joinToString(", ")
+
+        binding.houseType.value = filter.buildingClass
+            ?.mapNotNull { buildingClassVariants?.get(it) }
+            ?.joinToString(", ")
+
+        binding.chipGroup.children.forEach {
+            val text = (it as TextView).text.toString()
+            val idForText = tagsVariants?.entries?.firstOrNull { it.value == text }?.key
+            if (filter.advantages?.any { it == idForText } == true)
+                it.performClick()
+        }
     }
 
     private fun onChipClicked(it: View) {
@@ -239,15 +381,12 @@ class FullFilterFragment : Fragment() {
             it.setBackgroundResource(R.drawable.selected_chip)
             (it as TextView).setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             it.tag = "2"
-            isOptionSelected++
         } else {
             it.setBackgroundResource(R.drawable.unselected_chip)
             (it as TextView).setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
             it.tag = "1"
-            isOptionSelected--
         }
-        Log.e("options", isOptionSelected.toString())
-        binding.showCatalogButton.isEnabled = isOptionSelected == 0
+        load()
     }
 
 }
