@@ -22,10 +22,11 @@
 
                 <ImageView
                     android:id="@+id/houseBackIcon"
-                    android:layout_width="15dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_width="35dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="50dp"
+                    android:padding="10dp"
                     android:elevation="2dp"
                     android:src="@drawable/ic_back_arrou_white"
                     android:adjustViewBounds="true"/>
@@ -383,6 +384,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/videoLayout"
+                android:visibility="gone"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -465,6 +467,7 @@
                 android:id="@+id/listHouseBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:paddingStart="6dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="15dp"
@@ -554,9 +557,10 @@
                                 android:fontFamily="@font/lato"
                                 android:hint="Введите e-mail"
                                 android:singleLine="true"
+                                android:textColor="@color/black"
                                 android:textColorHighlight="@color/white"
                                 android:textColorHint="#808080"
-                                android:textCursorDrawable="@color/black" />
+                                android:textCursorDrawable="@null" />
 
                             </com.google.android.material.textfield.TextInputLayout>
                     </RelativeLayout>
@@ -583,7 +587,7 @@
                             app:keep_hint="true"
                             android:fontFamily="@font/lato_regular"
                             android:textSize="16sp"
-                            android:textColor="#808080"
+                            android:textColor="@color/black"
                             android:layout_marginTop="12dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginBottom="12dp"
@@ -622,8 +626,9 @@
                                 android:hint="Впишите ваш вопрос"
                                 android:gravity="top"
                                 android:textColorHighlight="@color/white"
+                                android:textColor="@color/black"
                                 android:textColorHint="#808080"
-                                android:textCursorDrawable="@color/black" />
+                                android:textCursorDrawable="@null" />
 
                         </com.google.android.material.textfield.TextInputLayout>
                     </RelativeLayout>
@@ -661,8 +666,9 @@
                 />
 
             <View
+                android:id="@+id/advantagesDivider"
                 android:layout_width="match_parent"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="22.5dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
@@ -674,7 +680,7 @@
                 android:layout_height="wrap_content"
                 android:text="Локация"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/lato_bold"
                 android:textColor="@color/black"
                 android:textSize="20sp"/>
@@ -685,6 +691,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="6dp"
                 android:elevation="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="30dp"

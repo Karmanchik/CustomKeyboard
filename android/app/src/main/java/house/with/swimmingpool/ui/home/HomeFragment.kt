@@ -1,8 +1,8 @@
 package house.with.swimmingpool.ui.home
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,25 +14,22 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.*
 import house.with.swimmingpool.databinding.FragmentHomeBinding
-import house.with.swimmingpool.models.House
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
-import kotlin.math.abs
 
 
 class HomeFragment : Fragment() {
 
     private var homeBinding: FragmentHomeBinding? = null
     private lateinit var homeViewModel: HomeViewModel
+    private var mainContainerLink: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,10 +104,29 @@ class HomeFragment : Fragment() {
             BannersServiceImpl().getMainBanners { data, e ->
                 if (e == null && data != null) {
                     val vp = mainHousesContainer
-                    vp.adapter = HeaderAdapter(data) { homeId ->
-                        val home = App.setting.houses.firstOrNull { it.id == homeId }
-                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
+                    vp.adapter = HeaderAdapter(data)
+                    { link ->
+
+                        val splitLink = link.split("/")
+
+                        when(splitLink.first().toString()){
+                            "objects" -> {
+                                val home = App.setting.houses.firstOrNull { it.id == splitLink.last().toInt() }
+                                val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                                findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
+                            }
+                            "news" -> {}
+                            "video" -> {}
+                            "https:" -> {
+                                val browserIntent = Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse("http://www.google.com"
+                                        ))
+                                startActivity(browserIntent);}
+                        }
+//                        val home = App.setting.houses.firstOrNull { it.id == link }
+//                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+//                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
                     dotsIndicator.setViewPager2(vp)
                 }
@@ -212,7 +228,7 @@ class HomeFragment : Fragment() {
         homeBinding?.apply {
             if (data != null) {
                 App.setting.houses = data
-                textViewVideosCount.text = "${data.size}  предложений"
+                textViewVideosCount.text = "${data.size} предложений"
                 shortCatalogRV.adapter = if (data.size > 2) {
                     CatalogAdapter(listOf(data[0], data[1]), requireContext()) { homeId ->
                         val home = App.setting.houses.firstOrNull { it.id == homeId }

@@ -43,17 +43,17 @@ class MainGalleryAndDateAdapter (
         @SuppressLint("UseCompatLoadingForDrawables", "ResourceAsColor")
         fun bind(position: Int) {
             view.apply {
-                val keys: ArrayList<String> = arrayListOf()
+                var key = ""
                 val listOfImages: ArrayList<String> = arrayListOf()
 
                 items?.get(position)?.let {
                     Log.e("listOfImages", it.first)
-                    keys.add(it.first)
+                    key = it.first
                     it.second.forEach { im ->
                         listOfImages.add(im.url)
                     }
                 }
-                buttonWhite.text = keys[position]
+                buttonWhite.text = key
 
                 if (position != lastCheckedPosition) {
                     view.buttonWhite.background = ctx.getDrawable(R.drawable.white_button_with_corner4)
@@ -71,8 +71,6 @@ class MainGalleryAndDateAdapter (
                         view.buttonWhite.background = ctx.getDrawable(R.drawable.blue_button_with_corner4)
                         view.buttonWhite.setTextColor(Color.parseColor("#FFFFFF"))
                     }
-                    view.buttonWhite.isClickable = false
-                    view.buttonWhite.isEnabled = false
                     parentView.showHeaderGallery(listOfImages)
                 }
             }

@@ -54,12 +54,15 @@ class HouseFragment : Fragment(), ISingleHouseView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        houseObjectBinding?.houseBackIcon?.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         val singleHouseObject =
             Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)
 
         if(singleHouseObject != null) {
             showHome(singleHouseObject)
-
 
             RealtyServiceImpl().getHouseExample(singleHouseObject.id ?: 0) { data, e ->
                 data?.let { showHome(it) }
@@ -108,7 +111,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 val galleryNameList: ArrayList<String> = arrayListOf()
                 val listImage: ArrayList<String> = arrayListOf()
 
-                if (galleryNameList.size == 0) {
+                if (this.isNullOrEmpty() || this.size == 1) {
                     whiteButtonGalleryRV.visibility = View.GONE
                 }else{
                     whiteButtonGalleryRV.visibility = View.VISIBLE
@@ -160,14 +163,18 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
             showInformation(0)
 
-            if (singleHouseObject.description.isNullOrEmpty()) {
+            if (singleHouseObject.description?.trim().isNullOrEmpty() ) {
                 description.visibility = View.GONE
                 textViewAboutObject.visibility = View.GONE
                 dividerFirst.visibility = View.GONE
+                dividerSecond.visibility = View.GONE
+                videoLayout.visibility = View.GONE
             } else {
+                videoLayout.visibility = View.VISIBLE
                 description.visibility = View.VISIBLE
                 textViewAboutObject.visibility = View.VISIBLE
                 dividerFirst.visibility = View.VISIBLE
+                dividerSecond.visibility = View.VISIBLE
                 description.text = Html.fromHtml(singleHouseObject.description)
             }
 
@@ -222,6 +229,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
             if (singleHouseObject.advantages != null) {
                 textViewAdvantages.visibility = View.VISIBLE
                 whiteButtonAdvantagesRV.visibility = View.VISIBLE
+                advantagesDivider.visibility = View.VISIBLE
                 whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(
                     requireContext(),
                     singleHouseObject.advantages
@@ -229,6 +237,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
             } else {
                 textViewAdvantages.visibility = View.GONE
                 whiteButtonAdvantagesRV.visibility = View.GONE
+                advantagesDivider.visibility = View.GONE
             }
 
             listHouseBox.apply {
@@ -290,22 +299,12 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 similarObjects.visibility = View.GONE
                 textViewSimilarObject.visibility = View.GONE
             }
-
-            houseBackIcon.setOnClickListener {
-                findNavController().popBackStack()
-            }
         }
     }
 
     private fun showListHouse(full: Boolean) {
         houseObjectBinding?.apply {
             if (houseExampleData != null) {
-
-                if (houseExampleData?.children?.size ?: 0 <= 6){
-                    showListHouseBox.visibility = View.GONE
-                }else{
-                    showListHouseBox.visibility = View.VISIBLE
-                }
 
                 if (full) {
                     listHouseBox.apply {
@@ -316,16 +315,17 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     }
                 } else {
                     listHouseBox.apply {
-                        showListHouseBox.visibility = View.VISIBLE
                         collapseListHouseBox.visibility = View.GONE
                         layoutManager = GridLayoutManager(context, 3)
-                        if ((houseExampleData?.children?.size) ?: 0 < 6) {
+                        if ((houseExampleData?.children?.size) ?: 0 <= 6) {
+                            showListHouseBox.visibility = View.GONE
                             adapter = ListHouseBoxAdapter(
                                 requireContext(),
                                 houseExampleData?.children
                             )
                         } else {
                             houseExampleData?.apply {
+                                showListHouseBox.visibility = View.VISIBLE
                                 adapter = ListHouseBoxAdapter(
                                     requireContext(),
                                     listOf(
@@ -354,7 +354,11 @@ class HouseFragment : Fragment(), ISingleHouseView {
             Log.e("testing", list.toString())
             val vp = mainHousesContainer
             vp.adapter = HouseHeaderAdapter(list)
-
+            if(list.size < 2) {
+                dotsIndicator.visibility = View.INVISIBLE
+            }else{
+                dotsIndicator.visibility = View.VISIBLE
+            }
             dotsIndicator.setViewPager2(vp)
         }
     }
