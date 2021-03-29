@@ -6,9 +6,11 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.transaction
+import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
@@ -17,11 +19,23 @@ import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.onRightDrawableClicked
 import house.with.swimmingpool.ui.search.fragments.SearchTagButtonFragment
 import house.with.swimmingpool.ui.search.fragments.SearchesListFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class SearchActivity : AppCompatActivity(), ISearchView {
 
     private lateinit var searchBinding: ActivitySearchBinding
+
+    private var filterConfig: JsonObject? = null
+    private val filterCategories get() = filterConfig?.entrySet()?.map { Pair(it.key, it.value) }
+    private val tagsVariants
+        get() = filterCategories
+                ?.firstOrNull { it.first == "advantages" }
+                ?.second
+                ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +51,6 @@ class SearchActivity : AppCompatActivity(), ISearchView {
             var lastCountInputTextChar = 0
 
             inputText.doOnTextChanged { text, start, before, count ->
-                Log.e("ttttttt", text.toString())
                 if (count != 0) {
                     showCatalogButton.isEnabled = true
                     showCatalogButton.text = "Ищем..."
@@ -46,20 +59,9 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                 } else {
                     showCatalogButton.isEnabled = false
                     showCatalogButton.text = "Введите запрос для поиска"
-                    Log.e("testing", "fghjkl;'")
                     searchFrame.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
-                    supportFragmentManager.transaction {
-                        replace(R.id.searchFrame, SearchTagButtonFragment(
-                                this@SearchActivity,
-                                listOf(
-                                        "Коттеджи в сочи",
-                                        "Дом с бассейном",
-                                        "У моря",
-                                        "Красная поляна",
-                                        "На горе"
-                                )))
-                    }
+                    showAdvantages()
                 }
 
                 lastCountInputTextChar = count
@@ -74,21 +76,37 @@ class SearchActivity : AppCompatActivity(), ISearchView {
 
             }
 
-            supportFragmentManager.transaction {
-                replace(R.id.searchFrame, SearchTagButtonFragment(
-                        this@SearchActivity,
-                        listOf(
-                                "Коттеджи в сочи",
-                                "Дом с бассейном",
-                                "У моря",
-                                "Красная поляна",
-                                "На горе"
-                        )))
+            GlobalScope.launch(Dispatchers.IO) {
+                try {
+                    RealtyServiceImpl().getParamsForFilter()?.data?.let {
+                        launch(Dispatchers.Main) {
+                            filterConfig = it
+                            App.setting.filterVariants = it
+                            App.setting.filterConfig?.let { showAdvantages() }
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("test", "load", e)
+                }
             }
 
             buttonClose.setOnClickListener {
                 finish()
             }
+        }
+    }
+
+    private fun showAdvantages() {
+        val lisAdvantages = arrayListOf<String>()
+
+        tagsVariants?.forEach {
+            lisAdvantages.add(it.value)
+        }
+
+        supportFragmentManager.transaction {
+            replace(R.id.searchFrame, SearchTagButtonFragment(
+                    this@SearchActivity,
+                    lisAdvantages))
         }
     }
 
