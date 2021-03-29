@@ -55,6 +55,15 @@ class ShortFilterFragment(
         return binding.root
     }
 
+    private fun String.addDividers(): String {
+        return reversed()
+            .toList()
+            .chunked(3)
+            .map { it.joinToString("") }
+            .joinToString(" ")
+            .reversed()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -66,8 +75,6 @@ class ShortFilterFragment(
             closeIcon.setOnClickListener {
                 dismiss()
             }
-
-
         }
 
         GlobalScope.launch(Dispatchers.IO) {
@@ -85,8 +92,8 @@ class ShortFilterFragment(
                                 leftPinValue: String?,
                                 rightPinValue: String?
                             ) {
-                                binding.min.setText(leftPinIndex.toValue().toString())
-                                binding.max.setText(rightPinIndex.toValue().toString())
+                                binding.min.setText(leftPinIndex.toValue().toString().addDividers())
+                                binding.max.setText(rightPinIndex.toValue().toString().addDividers())
                             }
 
                             override fun onTouchStarted(rangeBar: RangeBar?) = Unit
@@ -99,8 +106,15 @@ class ShortFilterFragment(
                                 RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
                                     if (data != null) {
                                         App.setting.filterConfig = filter
-                                        binding.showButton.isEnabled = true
-                                        binding.showButton.text = "Показать ${data.size} предложений"
+
+                                        if (data.isNotEmpty()) {
+                                            binding.showButton.text = "Показать ${data.size} предложений"
+                                            binding.showButton.isEnabled = true
+                                        } else {
+                                            binding.showButton.text = "Ничего не найдено"
+                                            binding.showButton.isEnabled = false
+                                        }
+
                                         binding.showButton.setOnClickListener {
                                             App.setting.houses = data
                                             findNavController().navigate(R.id.action_shortFilterFragment_to_catalogViewModel)
@@ -115,8 +129,8 @@ class ShortFilterFragment(
                         })
 
                         binding.apply {
-                            min.setText(getPriceRange.first.toString())
-                            max.setText(getPriceRange.second.toString())
+                            min.setText(getPriceRange.first.toString().addDividers())
+                            max.setText(getPriceRange.second.toString().addDividers())
                         }
                     }
                 }

@@ -26,8 +26,6 @@ import kotlinx.coroutines.launch
 class FullFilterFragment : Fragment() {
 
     lateinit var binding: FragmentFilterFullBinding
-    private lateinit var viewModel: FullFilterViewModel
-    private var isOptionSelected = 0
 
     private var filterConfig: JsonObject? = null
     private val filterCategories get() = filterConfig?.entrySet()?.map { Pair(it.key, it.value) }
@@ -94,7 +92,6 @@ class FullFilterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFilterFullBinding.inflate(layoutInflater)
-        viewModel = FullFilterViewModel()
         return binding.root
     }
 
@@ -143,6 +140,10 @@ class FullFilterFragment : Fragment() {
                 style.value = ""
                 sea.value = ""
                 houseType.value = ""
+                chipGroup.children.forEach {
+                    if (it.tag == "2") it.performClick()
+                }
+                App.setting.filterConfig = null
             }
 
             area.setOnClickListener {
@@ -238,6 +239,7 @@ class FullFilterFragment : Fragment() {
             }
 
             segmentedControl.setSelectedSegment(0)
+            segmentedControl.addOnSegmentClickListener { segmentId = it.absolutePosition }
         }
 
         GlobalScope.launch(Dispatchers.IO) {
@@ -274,8 +276,17 @@ class FullFilterFragment : Fragment() {
             .show(parentFragmentManager, "VariantsFragment")
     }
 
+    var segmentId: Int = 0
+
     private fun load() {
+
+        val lol: String = if (segmentId == 0) "house" else if (segmentId == 1) "flat" else "complex"
+
+        Log.e("test", "load $lol")
+
         val filter = FilterObjectsRequest(
+            types = listOf(lol),
+
             // раен
             districts = binding.area.value?.split(", ")
                 ?.mapNotNull { value -> districtsVariants?.entries?.firstOrNull { it.value == value }?.key },
@@ -316,8 +327,15 @@ class FullFilterFragment : Fragment() {
         RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
             if (data != null) {
                 App.setting.filterConfig = filter
-                binding.showCatalogButton.isEnabled = true
-                binding.showCatalogButton.text = "Показать ${data.size} предложений"
+
+                if (data.isNotEmpty()) {
+                    binding.showCatalogButton.text = "Показать ${data.size} предложений"
+                    binding.showCatalogButton.isEnabled = true
+                } else {
+                    binding.showCatalogButton.text = "Ничего не найдено"
+                    binding.showCatalogButton.isEnabled = false
+                }
+
                 binding.showCatalogButton.setOnClickListener {
                     App.setting.houses = data
                     findNavController().navigate(R.id.action_fullFilterFragment_to_catalogViewModel)
@@ -331,7 +349,13 @@ class FullFilterFragment : Fragment() {
     }
 
     private fun showFilter(filter: FilterObjectsRequest) {
-        Log.e("showFilter", Gson().toJson(filter))
+        Log.e("filter", filter.types?.joinToString(", ").toString())
+        binding.segmentedControl.setSelectedSegment(when (filter.types?.firstOrNull()) {
+            "house" -> 0
+            "flat" -> 1
+            else -> 2
+        })
+
         binding.area.value = filter.districts
             ?.mapNotNull { districtsVariants?.get(it) }
             ?.joinToString(", ")
@@ -341,7 +365,7 @@ class FullFilterFragment : Fragment() {
                 filter.price_all_from?.toIntOrNull() ?: 0,
                 filter.price_all_to?.toIntOrNull() ?: 0
             )
-            binding.price.value = "${filter.price_all_from}р. - ${filter.price_all_to}р."
+            binding.price.value = "от ${filter.price_all_from} до ${filter.price_all_to} руб."
         }
 
         filter.square_all_from?.let {
@@ -349,7 +373,7 @@ class FullFilterFragment : Fragment() {
                 filter.square_all_from?.toIntOrNull() ?: 0,
                 filter.square_all_to?.toIntOrNull() ?: 0
             )
-            binding.square.value = "${filter.square_all_from}m2. - ${filter.square_all_to}m2."
+            binding.square.value = "от ${filter.square_all_from} до ${filter.square_all_to} м2."
         }
 
         binding.docType.value = filter.registrationTypes

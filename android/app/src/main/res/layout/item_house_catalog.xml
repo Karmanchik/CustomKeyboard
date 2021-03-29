@@ -35,7 +35,7 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/housesImageContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="245dp" />
 
             <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                 android:id="@+id/dots_indicator_catalog_item"

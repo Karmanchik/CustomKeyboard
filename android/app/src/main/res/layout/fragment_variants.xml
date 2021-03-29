@@ -32,7 +32,8 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/lato_medium"
                 android:id="@+id/textView40"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:textFontWeight="500"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Форма оплаты" />
@@ -46,14 +47,14 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:paddingTop="16dp"
+            android:paddingTop="20dp"
             android:background="@color/white"
             android:id="@+id/variantsRV"
             tools:itemCount="5"
             tools:listitem="@layout/item_variant"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
-            android:layout_height="500dp">
+            android:layout_height="450dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
