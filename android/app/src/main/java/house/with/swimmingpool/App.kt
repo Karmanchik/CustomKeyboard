@@ -10,6 +10,10 @@ class App: Application() {
     companion object {
         lateinit var setting: Setting
         var database: RoomDataBase? = null
+        const val SEARCH_ACTIVITY = "SEARCH_ACTIVITY"
+        const val SEARCH_ACTIVITY_TO_CATALOG = "SEARCH_ACTIVITY_TO_CATALOG"
+        const val SEARCH_ACTIVITY_TO_OBJECT = "SEARCH_ACTIVITY_TO_OBJECT"
+        const val HOUSE_WITH_SWIMMING_POOL = "HOUSE_WITH_SWIMMING_POOL"
     }
 
     override fun onCreate() {

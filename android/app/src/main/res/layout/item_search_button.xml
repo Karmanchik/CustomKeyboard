@@ -4,20 +4,23 @@
     android:id="@+id/whiteButtonLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/white_button_without_corners"
-    android:layout_margin="5dp">
+    android:background="@color/white"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="10dp"
+    >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Общие"
+        android:text="Коттеджи в сочи"
         android:id="@+id/buttonWhite"
+        android:background="@drawable/white_button_with_blue_border"
         android:fontFamily="@font/lato"
-        android:textSize="16sp"
-        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textColor="#00A8FF"
         android:paddingStart="10dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="10dp"/>
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingEnd="10dp"/>
 
 </RelativeLayout>

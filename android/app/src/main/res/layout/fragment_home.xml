@@ -23,7 +23,6 @@
 
             <RelativeLayout
                 android:elevation="1dp"
-                android:id="@+id/test"
                 app:layout_collapseMode="parallax"
                 android:layout_width="match_parent"
                 android:layout_height="460dp">
@@ -54,6 +53,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="60dp"
                     android:layout_marginEnd="12dp"
+                    android:elevation="10dp"
+                    android:id="@+id/imageViewSearch"
                     android:src="@drawable/ic_seach_white_custom"
                     android:textColor="@color/white" />
 

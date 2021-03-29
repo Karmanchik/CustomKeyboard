@@ -16,8 +16,8 @@ data class Children(
     val price_sq: Int?,
     val promo: String?,
     val property_status: String?,
-    val square: Double?,
-    val square_area: Double?,
+    val square: String?,
+    val square_area: String?,
 //    val status: Status?,
     val title: String?
 )

@@ -38,13 +38,13 @@ class ListHouseBoxAdapter(
                     }
                     textViewNumber.text = number
                     if (square != null) {
-                        textViewSquare.text = "$square соток"
+                        textViewSquare.text = "$square м²"
                     } else {
                         textViewSquare.visibility = View.GONE
                     }
 
                     if (square_area != null) {
-                        textViewSquareArea.text = "$square_area м²"
+                        textViewSquareArea.text = "$square_area сот."
                     } else {
                         textViewSquareArea.visibility = View.GONE
                     }
