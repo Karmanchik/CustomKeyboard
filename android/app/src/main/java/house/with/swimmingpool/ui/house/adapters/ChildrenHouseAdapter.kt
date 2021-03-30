@@ -11,10 +11,12 @@ import com.bumptech.glide.Glide
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseGridBinding
 import house.with.swimmingpool.models.Children
+import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.models.HouseExampleData
 
 class ChildrenHouseAdapter (
         val ctx: Context,
-        var items: List<Children?>,
+        var items: List<HouseCatalogData?>,
         var onItemSelected: (Int) -> Unit
 ): RecyclerView.Adapter<ChildrenHouseAdapter.Holder>() {
 
@@ -38,18 +40,18 @@ class ChildrenHouseAdapter (
 
                 if (items[position] != null) {
                     Glide.with(ctx)
-                            .load(""
-//                                    when {
-//                                         items[position]?.icon != "" -> {
-//                                            items[position]?.icon
-//                                        }
-//                                        items[position]?.photos?.get(0) != "" -> {
-//                                            items[position]?.photos?.get(0)
-//                                        }
-//                                        else -> {
-//                                            ""
-//                                        }
-//                                    }
+                            .load(
+                                    when {
+                                         items[position]?.icon != "" -> {
+                                            items[position]?.icon
+                                        }
+                                        items[position]?.photos?.get(0) != "" -> {
+                                            items[position]?.photos?.get(0)
+                                        }
+                                        else -> {
+                                            ""
+                                        }
+                                    }
                             )
                             .error(R.drawable.error_placeholder_midle)
                             .placeholder(R.drawable.placeholder)

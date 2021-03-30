@@ -11,9 +11,10 @@ import house.with.swimmingpool.models.Video
 import house.with.swimmingpool.models.VideosData
 
 class VideosAdapter(
-    val ctx: Context,
-    val items: List<VideosData>,
-    var onItemSelected: (VideosData) -> Unit
+        private val isFull: Boolean = false,
+        val ctx: Context,
+        val items: List<VideosData>,
+        var onItemSelected: (VideosData) -> Unit
 ): RecyclerView.Adapter<VideosAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -24,7 +25,7 @@ class VideosAdapter(
     override fun onBindViewHolder(holder: Holder, position: Int) =
             holder.bind(position)
 
-    override fun getItemCount() = if(items.size > 2) 2 else items.size
+    override fun getItemCount() = if(isFull) items.size else if(items.size > 2) 2 else items.size
 
     inner class Holder(private val view: ItemVideoBinding): RecyclerView.ViewHolder(view.root) {
 

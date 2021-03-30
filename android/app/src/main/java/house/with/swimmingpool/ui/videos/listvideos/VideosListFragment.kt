@@ -7,6 +7,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.R
+import house.with.swimmingpool.models.VideosData
+import house.with.swimmingpool.ui.home.adapters.VideosAdapter
 
 class VideosListFragment : Fragment(R.layout.fragment_video_list) {
 
@@ -19,9 +21,15 @@ class VideosListFragment : Fragment(R.layout.fragment_video_list) {
 
         view.findViewById<RecyclerView>(R.id.videosRV).apply {
             layoutManager = LinearLayoutManager(context)
-//            adapter = VideosAdapter(listOf(Video(), Video(), Video())) {
-//                findNavController().navigate(R.id.action_videosListFragment_to_videoFragment)
-//            }
+            adapter = VideosAdapter(true, requireContext(),listOf(
+                    VideosData("date", 4, "", 0, "introText", "Title"),
+                    VideosData("date", 4, "", 0, "introText", "Title"),
+                    VideosData("date", 4, "", 0, "introText", "Title"),
+                    VideosData("date", 4, "", 0, "introText", "Title"),
+                    VideosData("date", 4, "", 0, "introText", "Title")
+            )) {
+                findNavController().navigate(R.id.action_videosListFragment_to_videoFragment)
+            }
         }
     }
 

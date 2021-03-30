@@ -64,7 +64,7 @@ class HomeFragment : Fragment() {
 
             VideosServiceImpl().getVideos { data, e ->
                 if (e == null && data != null)
-                    videosRV.adapter = VideosAdapter(requireContext(), data) {
+                    videosRV.adapter = VideosAdapter(false, requireContext(), data) {
                         findNavController().navigate(R.id.action_navigation_home_to_videoFragment)
                     }
             }

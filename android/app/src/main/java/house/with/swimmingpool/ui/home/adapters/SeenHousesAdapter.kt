@@ -41,16 +41,22 @@ class SeenHousesAdapter(
                 if(items[position] != null) {
                     Glide.with(ctx)
                             .load(
-                                    when {
-                                         items[position]?.icon != "" -> {
-                                            items[position]?.icon
+                                    if(items[position] != null) {
+                                        when {
+                                            items[position]?.icon != "" -> {
+                                                items[position]?.icon
+                                            }
+                                            items[position]?.photos != null &&
+                                                    items[position]?.photos!!.isNotEmpty() &&
+                                                    items[position]?.photos?.get(0) != "" -> {
+                                                items[position]?.photos?.get(0)
+                                            }
+                                            else -> {
+                                                ""
+                                            }
                                         }
-                                        items[position]?.photos?.get(0) != "" -> {
-                                            items[position]?.photos?.get(0)
-                                        }
-                                        else -> {
-                                            ""
-                                        }
+                                    }else {
+                                        ""
                                     }
                             )
                             .error(R.drawable.error_placeholder_midle)

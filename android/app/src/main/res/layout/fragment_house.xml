@@ -22,13 +22,13 @@
 
                 <ImageView
                     android:id="@+id/houseBackIcon"
-                    android:layout_width="35dp"
-                    android:layout_height="55dp"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="2dp"
                     android:layout_marginTop="50dp"
                     android:padding="10dp"
                     android:elevation="2dp"
-                    android:src="@drawable/ic_back_arrou_white"
+                    android:src="@drawable/ic_back_arrow_white"
                     android:adjustViewBounds="true"/>
 
                 <ImageView
@@ -44,6 +44,14 @@
                     android:id="@+id/mainHousesContainer"
                     android:layout_width="match_parent"
                     android:layout_height="460dp" />
+
+                <ImageView
+                    android:id="@+id/mainHeaderPlaceholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="460dp"
+                    android:src="@drawable/error_placeholder_big"
+                    android:adjustViewBounds="true"
+                    android:scaleType="center"/>
 
                 <TextView
                     android:id="@+id/title"

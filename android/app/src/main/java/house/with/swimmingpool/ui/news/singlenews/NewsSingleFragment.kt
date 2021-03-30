@@ -23,7 +23,7 @@ class NewsSingleFragment : Fragment(R.layout.fragment_news_single) {
         super.onViewCreated(view, savedInstanceState)
         singleNewsBinding = FragmentNewsSingleBinding.inflate(layoutInflater)
 
-        val vp = view.findViewById<ViewPager2>(R.id.contentMediaVP2)
+        val vp = view.findViewById<ViewPager2>(R.id.housesImageContainer)
         vp.adapter = MediaAdapter(listOf("House()", ""))
 
 

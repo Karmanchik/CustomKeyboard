@@ -287,17 +287,17 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
             singleHouseObject.children
 
-            if (singleHouseObject.children != null) {
+            if (singleHouseObject.analogs != null) {
                 similarObjects.apply {
                     layoutManager = GridLayoutManager(context, 2)
-                    adapter = if(singleHouseObject.children.size > 1) {
-                        ChildrenHouseAdapter(requireContext(), listOf(singleHouseObject.children[0], singleHouseObject.children[1])) { homeId ->
+                    adapter = if(singleHouseObject.analogs.size > 1) {
+                        ChildrenHouseAdapter(requireContext(), listOf(singleHouseObject.analogs[0], singleHouseObject.analogs[1])) { homeId ->
                             val home = App.setting.houses.firstOrNull { it.id == homeId }
                             val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
                             findNavController().navigate(R.id.action_houseFragment_self, bundle)
                         }
                     }else{
-                        ChildrenHouseAdapter(requireContext(), singleHouseObject.children) { homeId ->
+                        ChildrenHouseAdapter(requireContext(), singleHouseObject.analogs) { homeId ->
                             val home = App.setting.houses.firstOrNull { it.id == homeId }
                             val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
                             findNavController().navigate(R.id.action_houseFragment_self, bundle)
@@ -367,8 +367,10 @@ class HouseFragment : Fragment(), ISingleHouseView {
             vp.adapter = HouseHeaderAdapter(list)
             if(list.size < 2) {
                 dotsIndicator.visibility = View.INVISIBLE
+                mainHeaderPlaceholder.visibility = View.VISIBLE
             }else{
                 dotsIndicator.visibility = View.VISIBLE
+                mainHeaderPlaceholder.visibility = View.INVISIBLE
             }
             dotsIndicator.setViewPager2(vp)
         }
