@@ -98,6 +98,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                             filterConfig = it
                             App.setting.filterVariants = it
                             App.setting.filterConfig?.let { showAdvantages() }
+                            showAdvantages()
                         }
                     }
                 } catch (e: Exception) {
