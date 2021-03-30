@@ -125,12 +125,12 @@ class CatalogAdapter(
                     textViewTitle.text = title
                     textViewDescription.text = location
                     textViewPrice.text = price
-                    if(square != null) {
+                    if(square != null && square.isNotEmpty()) {
                         textViewSquare.text = "$square м²"      //fix me!!!
                     }else{
                         textViewSquare.visibility = View.GONE
                     }
-                    if(square_area != null) {
+                    if(square_area != null && square_area.isNotEmpty()) {
                         textViewSquareArea.text = "$square_area соток" //fix me!!!
                     }else{
                         textViewSquareArea.visibility = View.GONE
