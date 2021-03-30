@@ -46,14 +46,14 @@ class RangeDialogFragment(
 
             done.setOnClickListener {
                 onEnter.invoke(
-                    min.text.toString().toIntOrNull() ?: 0,
-                    max.text.toString().toIntOrNull() ?: 0
+                    range.leftIndex.toValue(),
+                    range.rightIndex.toValue()
                 )
                 dismiss()
             }
 
-            min.setText(selectedMinValue1.toString())
-            max.setText(selectedMaxInt1.toString())
+            min.setText(selectedMinValue1.toString().addDividers())
+            max.setText(selectedMaxInt1.toString().addDividers())
 
             try {
                 range.setOnRangeBarChangeListener(object : RangeBar.OnRangeBarChangeListener {
@@ -64,8 +64,8 @@ class RangeDialogFragment(
                         leftPinValue: String?,
                         rightPinValue: String?
                     ) {
-                        min.setText(leftPinIndex.toValue().toString())
-                        max.setText(rightPinIndex.toValue().toString())
+                        min.setText(leftPinIndex.toValue().toString().addDividers())
+                        max.setText(rightPinIndex.toValue().toString().addDividers())
                     }
 
                     override fun onTouchStarted(rangeBar: RangeBar?) = Unit
@@ -82,6 +82,15 @@ class RangeDialogFragment(
                 Log.e("test", "range init", e)
             }
         }
+    }
+
+    private fun String.addDividers(): String {
+        return reversed()
+            .toList()
+            .chunked(3)
+            .map { it.joinToString("") }
+            .joinToString(" ")
+            .reversed()
     }
 
     private fun Int.toValue(): Int = (this) * k + range1.first

@@ -60,6 +60,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:layout_marginEnd="6dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -67,6 +68,7 @@
 
                     <TextView
                         android:id="@+id/minTitle"
+                        android:layout_weight="400"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -76,15 +78,27 @@
                         tools:ignore="SmallSp" />
 
                     <EditText
+                        android:background="@null"
                         android:id="@+id/min"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="550 000" />
+                        android:fontFamily="@font/lato_regular"
+                        android:textFontWeight="400"
+                        android:paddingBottom="12dp"
+                        android:textColor="@color/black"
+                        android:inputType="number"
+                        android:text="" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_weight="400"
+                        android:background="#E6E6E6" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginStart="6dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -92,6 +106,7 @@
 
                     <TextView
                         android:id="@+id/maxTitle"
+                        android:layout_weight="400"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -101,12 +116,23 @@
                         tools:ignore="SmallSp" />
 
                     <EditText
+                        android:background="@null"
                         android:id="@+id/max"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="50 000 000" />
+                        android:paddingBottom="12dp"
+                        android:fontFamily="@font/lato_regular"
+                        android:textFontWeight="400"
+                        android:textColor="@color/black"
+                        android:inputType="number"
+                        android:text="" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_weight="400"
+                        android:background="#E6E6E6" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -126,6 +152,7 @@
                 app:trackColor="#E6E6E6"
                 app:mrb_rangeBar="true"
                 app:mrb_thumbSize="12dp"
+                app:mrb_pinRadius="0dp"
                 app:mrb_tickHeight="0dp"
                 app:mrb_connectingLineColor="@color/main_blue"
                 android:layout_marginLeft="16dp"
