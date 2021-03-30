@@ -50,23 +50,38 @@ class SearchActivity : AppCompatActivity(), ISearchView {
 
             var lastCountInputTextChar = 0
 
+            inputText.setCompoundDrawablesWithIntrinsicBounds(
+                    null, null,
+                    null, null
+            )
+
             inputText.doOnTextChanged { text, start, before, count ->
                 if (count != 0) {
                     showCatalogButton.isEnabled = true
                     showCatalogButton.text = "Ищем..."
                     searchFrame.visibility = View.INVISIBLE
                     progressBar.visibility = View.VISIBLE
+
+                    inputText.setCompoundDrawablesWithIntrinsicBounds(
+                            null, null,
+                            ContextCompat.getDrawable(this@SearchActivity, R.drawable.ic_clear_field)
+                            , null
+                    )
+
                 } else {
                     showCatalogButton.isEnabled = false
                     showCatalogButton.text = "Введите запрос для поиска"
                     searchFrame.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     showAdvantages()
+
+                    inputText.setCompoundDrawablesWithIntrinsicBounds(
+                            null, null,
+                            null, null
+                    )
                 }
 
                 lastCountInputTextChar = count
-
-
 
                 Handler().postDelayed({
                     if (lastCountInputTextChar == count && count != 0) {

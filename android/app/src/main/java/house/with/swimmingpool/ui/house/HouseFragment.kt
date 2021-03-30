@@ -64,7 +64,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
         if(singleHouseObject != null) {
             showHome(singleHouseObject)
 
-            RealtyServiceImpl().getHouseExample(singleHouseObject.id ?: 0) { data, e ->
+            RealtyServiceImpl().getHouseExample(
+                    singleHouseObject.id ?: 0
+            ) { data, e ->
                 data?.let { showHome(it) }
             }
         }else{
@@ -163,7 +165,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
             showInformation(0)
 
-            if (singleHouseObject.description?.trim().isNullOrEmpty() ) {
+            val descriptionText = Html.fromHtml(singleHouseObject.description)
+
+            if (singleHouseObject.description?.trim().isNullOrEmpty() || descriptionText.isEmpty()) {
                 description.visibility = View.GONE
                 textViewAboutObject.visibility = View.GONE
                 dividerFirst.visibility = View.GONE
@@ -286,12 +290,19 @@ class HouseFragment : Fragment(), ISingleHouseView {
             if (singleHouseObject.children != null) {
                 similarObjects.apply {
                     layoutManager = GridLayoutManager(context, 2)
-                    adapter =
-                            ChildrenHouseAdapter(requireContext(), listOf(singleHouseObject.children[0], singleHouseObject.children[1])){ homeId ->
-                                val home = App.setting.houses.firstOrNull { it.id == homeId }
-                                val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                                findNavController().navigate(R.id.action_houseFragment_self, bundle)
-                            }
+                    adapter = if(singleHouseObject.children.size > 1) {
+                        ChildrenHouseAdapter(requireContext(), listOf(singleHouseObject.children[0], singleHouseObject.children[1])) { homeId ->
+                            val home = App.setting.houses.firstOrNull { it.id == homeId }
+                            val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                            findNavController().navigate(R.id.action_houseFragment_self, bundle)
+                        }
+                    }else{
+                        ChildrenHouseAdapter(requireContext(), singleHouseObject.children) { homeId ->
+                            val home = App.setting.houses.firstOrNull { it.id == homeId }
+                            val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                            findNavController().navigate(R.id.action_houseFragment_self, bundle)
+                        }
+                    }
                     similarObjects.visibility = View.VISIBLE
                     textViewSimilarObject.visibility = View.VISIBLE
                 }
