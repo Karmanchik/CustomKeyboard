@@ -60,7 +60,11 @@
     <fragment
         android:id="@+id/newsSingleFragment"
         android:name="house.with.swimmingpool.ui.news.singlenews.NewsSingleFragment"
-        android:label="NewsSingleFragment" />
+        android:label="NewsSingleFragment" >
+        <action
+            android:id="@+id/action_newsSingleFragment_to_houseFragment"
+            app:destination="@id/houseFragment" />
+    </fragment>
     <fragment
         android:id="@+id/newsListFragment"
         android:name="house.with.swimmingpool.ui.news.listnews.NewsListFragment"

@@ -71,7 +71,9 @@ class HomeFragment : Fragment() {
 
             NewsServiceImpl().getNews { data, e ->
                 if (e == null && data != null) {
-                    newsRV.adapter = NewsAdapter(data, requireContext()) {
+                    newsRV.adapter = NewsAdapter(
+                            if(data.size > 2) listOf(data[0], data[1]) else data,
+                            requireContext()) {
                         val bundle = Bundle().apply {
                             putSerializable("house", it)
                         }
