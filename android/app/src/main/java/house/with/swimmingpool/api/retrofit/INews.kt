@@ -8,7 +8,7 @@ import retrofit2.http.Path
 
 interface INews {
 
-    @GET("stories")
+    @GET("news")
     fun getNews(): Call<NewsX>
 
     @GET("news/{id}")

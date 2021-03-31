@@ -2,37 +2,68 @@ package house.with.swimmingpool.ui.news.listnews
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import house.with.swimmingpool.R
+import androidx.navigation.fragment.findNavController
 import house.with.swimmingpool.api.config.controllers.NewsServiceImpl
-import house.with.swimmingpool.models.News
+import house.with.swimmingpool.databinding.FragmentNewsListBinding
 import house.with.swimmingpool.models.NewsData
 import house.with.swimmingpool.ui.home.adapters.NewsAdapter
 
-class NewsListFragment : Fragment(R.layout.fragment_news_list) {
+class NewsListFragment : Fragment() {
+
+    private var newsListBinding: FragmentNewsListBinding? = null
+
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        newsListBinding = FragmentNewsListBinding.inflate(layoutInflater)
+        return newsListBinding?.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<RecyclerView>(R.id.newsRV).apply {
-            layoutManager = GridLayoutManager(context, 2)
+        newsListBinding?.apply {
+            backIcon.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
             NewsServiceImpl().getNews { data, e ->
-                if(data != null) {
-                    adapter = NewsAdapter(data, requireContext()) {
-                        findNavController().navigate(R.id.action_newsListFragment_to_newsSingleFragment)
-                    }
+                if (data != null) {
+                    showMewsList(data.toMutableList())
                 }
             }
-        }
 
+        }
         load() { Log.e("test", "") }
+    }
+
+    private fun showMewsList(newsList : MutableList<NewsData>){
+
+        newsListBinding?.newsRV?.apply {
+            adapter = NewsAdapter(newsList.map { it as Any }.toMutableList().apply {
+                try {
+                    add(6, "big")
+                } catch (e: Exception) {
+                    Log.e("testNewsBannerException", e.toString())
+                }
+            }, requireContext()) {
+//                findNavController().navigate(R.id.action_newsListFragment_to_newsSingleFragment)
+            }
+        }
     }
 
     fun load(onClick: () -> Unit) {
         onClick.invoke()
+    }
+
+    override fun onDestroy() {
+        newsListBinding = null
+        super.onDestroy()
     }
 
 }

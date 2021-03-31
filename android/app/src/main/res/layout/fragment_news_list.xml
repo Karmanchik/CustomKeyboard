@@ -15,7 +15,7 @@
         android:layout_marginTop="50dp"
         android:gravity="center">
         <ImageView
-            android:id="@+id/houseBackIcon"
+            android:id="@+id/backIcon"
             android:layout_width="40dp"
             android:layout_height="60dp"
             android:layout_marginStart="2dp"
@@ -29,9 +29,9 @@
             android:id="@+id/headerTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Коттеджные поселки в Сочи: плюсы, минусы, особенности выбора"
-            android:fontFamily="@font/lato"
-            android:textSize="14sp"
+            android:text="Новости недвижимости"
+            android:fontFamily="@font/lato_medium"
+            android:textSize="19sp"
             android:textColor="@color/black"
             android:gravity="center"
             android:layout_marginEnd="33dp"
@@ -40,42 +40,48 @@
             />
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/main_background">
-        <TextView
-            android:layout_marginTop="30dp"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/lato_semibold"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:id="@+id/textView30"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Новости недвижимости" />
 
-        <TextView
-            android:textSize="12sp"
-            android:fontFamily="@font/lato_regular"
-            android:alpha="0.4"
-            android:textColor="@color/black"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:id="@+id/textView31"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Он-лайн журнал" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="30dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato_bold"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:id="@+id/textView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Новости недвижимости" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="15dp"
-            android:id="@+id/newsRV"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <TextView
+                android:textSize="12sp"
+                android:fontFamily="@font/lato_regular"
+                android:alpha="0.4"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:id="@+id/textView31"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Он-лайн журнал" />
 
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="15dp"
+                android:id="@+id/newsRV"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
