@@ -19,57 +19,6 @@ import house.with.swimmingpool.ui.toast
 
 class CatalogFragment : Fragment() {
 
-    private val filterConfig get() = App.setting.filterVariants
-    private val filterCategories get() = filterConfig?.entrySet()?.map { Pair(it.key, it.value) }
-
-    private val getPriceRange
-        get() = Pair(
-            filterCategories?.firstOrNull { it.first == "minPrice" }?.second?.asInt ?: 0,
-            filterCategories?.firstOrNull { it.first == "maxPrice" }?.second?.asInt ?: 0
-        )
-
-    private val getSquareRange
-        get() = Pair(
-            filterCategories?.firstOrNull { it.first == "minSquare" }?.second?.asInt ?: 0,
-            filterCategories?.firstOrNull { it.first == "maxSquare" }?.second?.asInt ?: 0
-        )
-
-    private val districtsVariants
-        get() = filterCategories
-            ?.firstOrNull { it.first == "districts" }
-            ?.second
-            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
-
-    private val registrationTypeVariants
-        get() = filterCategories
-            ?.firstOrNull { it.first == "registration_types" }
-            ?.second
-            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
-
-    private val paymentTypeVariants
-        get() = filterCategories
-            ?.firstOrNull { it.first == "payment_types" }
-            ?.second
-            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
-
-    private val interiorVariants
-        get() = filterCategories
-            ?.firstOrNull { it.first == "interior" }
-            ?.second
-            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
-
-    private val buildingClassVariants
-        get() = filterCategories
-            ?.firstOrNull { it.first == "building_class" }
-            ?.second
-            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
-
-    private val tagsVariants
-        get() = filterCategories
-            ?.firstOrNull { it.first == "advantages" }
-            ?.second
-            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
-
     private var binding: FragmentCatalogBinding? = null
 
     override fun onCreateView(
@@ -121,7 +70,9 @@ class CatalogFragment : Fragment() {
     }
 
     private fun showFilter() {
-        RealtyServiceImpl().getObjectsByFilter(App.setting.filterConfig ?: FilterObjectsRequest()) { data, e ->
+        RealtyServiceImpl().getObjectsByFilter(
+            App.setting.filterConfig ?: FilterObjectsRequest()
+        ) { data, e ->
             val list = data ?: listOf()
             showList(list.toMutableList())
         }

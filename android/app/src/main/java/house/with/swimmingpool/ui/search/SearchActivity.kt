@@ -151,37 +151,43 @@ class SearchActivity : AppCompatActivity(), ISearchView {
             val filter = FilterObjectsRequest(dir = searchWord)
 
             RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
+                try {
+                    progressBar.visibility = View.GONE
 
-                progressBar.visibility = View.GONE
+                    searchFrame.visibility = View.VISIBLE
 
-                searchFrame.visibility = View.VISIBLE
-
-                if (data.isNullOrEmpty()) {
-                    showCatalogButton.text = "Ничего не найдено"
-                    showCatalogButton.isEnabled = false
-                } else {
-                    showCatalogButton.text = "Показать все совпадения (${data.size})"
-                    showCatalogButton.isEnabled = true
-                }
+                    if (data.isNullOrEmpty()) {
+                        showCatalogButton.text = "Ничего не найдено"
+                        showCatalogButton.isEnabled = false
+                    } else {
+                        showCatalogButton.text = "Показать все совпадения (${data.size})"
+                        showCatalogButton.isEnabled = true
+                    }
 
 
-                if (data != null && inputText.text.toString() != "") {
-                    App.setting.filterConfig = filter
-                    App.setting.houses = data
+                    if (data != null && inputText.text.toString() != "") {
+                        App.setting.filterConfig = filter
+                        App.setting.houses = data
 
-                    supportFragmentManager.beginTransaction()
-                        .replace(
-                            searchBinding.searchFrame.id,
-                            SearchesListFragment(data, this@SearchActivity)
+                        supportFragmentManager.beginTransaction()
+                            .replace(
+                                searchBinding.searchFrame.id,
+                                SearchesListFragment(data, this@SearchActivity)
+                            )
+                            .commit()
+                    }
+
+                    searchBinding.showCatalogButton.setOnClickListener {
+                        setResult(
+                            RESULT_OK,
+                            Intent().putExtra("action", HomeFragment.NAVIGATE_TO_CATALOG)
                         )
-                        .commit()
-                }
-
-                searchBinding.showCatalogButton.setOnClickListener {
-                    setResult(RESULT_OK, Intent().putExtra("action", HomeFragment.NAVIGATE_TO_CATALOG))
-                    finish()
+                        finish()
+                    }
+                } catch (e: Exception) {
                 }
             }
         }
+
     }
 }
