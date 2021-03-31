@@ -1,6 +1,8 @@
 package house.with.swimmingpool.ui.search
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -16,6 +18,7 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.ActivitySearchBinding
 import house.with.swimmingpool.models.request.FilterObjectsRequest
+import house.with.swimmingpool.ui.home.HomeFragment
 import house.with.swimmingpool.ui.onRightDrawableClicked
 import house.with.swimmingpool.ui.search.fragments.SearchTagButtonFragment
 import house.with.swimmingpool.ui.search.fragments.SearchesListFragment
@@ -32,9 +35,9 @@ class SearchActivity : AppCompatActivity(), ISearchView {
     private val filterCategories get() = filterConfig?.entrySet()?.map { Pair(it.key, it.value) }
     private val tagsVariants
         get() = filterCategories
-                ?.firstOrNull { it.first == "advantages" }
-                ?.second
-                ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
+            ?.firstOrNull { it.first == "advantages" }
+            ?.second
+            ?.let { it.asJsonObject.entrySet().map { Pair(it.key, it.value.asString) }.toMap() }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,8 +54,8 @@ class SearchActivity : AppCompatActivity(), ISearchView {
             var lastCountInputTextChar = 0
 
             inputText.setCompoundDrawablesWithIntrinsicBounds(
-                    null, null,
-                    null, null
+                null, null,
+                null, null
             )
 
             inputText.doOnTextChanged { text, start, before, count ->
@@ -63,9 +66,10 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                     progressBar.visibility = View.VISIBLE
 
                     inputText.setCompoundDrawablesWithIntrinsicBounds(
-                            null, null,
-                            ContextCompat.getDrawable(this@SearchActivity, R.drawable.ic_clear_field)
-                            , null
+                        null,
+                        null,
+                        ContextCompat.getDrawable(this@SearchActivity, R.drawable.ic_clear_field),
+                        null
                     )
 
                 } else {
@@ -76,8 +80,8 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                     showAdvantages()
 
                     inputText.setCompoundDrawablesWithIntrinsicBounds(
-                            null, null,
-                            null, null
+                        null, null,
+                        null, null
                     )
                 }
 
@@ -107,6 +111,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
             }
 
             buttonClose.setOnClickListener {
+                setResult(RESULT_CANCELED)
                 finish()
             }
         }
@@ -119,24 +124,25 @@ class SearchActivity : AppCompatActivity(), ISearchView {
             lisAdvantages.add(it.value)
         }
 
-        supportFragmentManager.transaction {
-            replace(R.id.searchFrame, SearchTagButtonFragment(
-                    this@SearchActivity,
-                    lisAdvantages))
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(
+                searchBinding.searchFrame.id, SearchTagButtonFragment(this, lisAdvantages)
+            )
+            .commit()
     }
 
     override fun showInformation(text: String) {
         searchBinding.apply {
             inputText.setText(text)
-
         }
     }
 
     override fun closeActivity() {
+        setResult(RESULT_OK, Intent().putExtra("action", HomeFragment.NAVIGATE_TO_OBJECT))
         finish()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showSearchedList(searchWord: String) {
 
         searchBinding.apply {
@@ -150,22 +156,29 @@ class SearchActivity : AppCompatActivity(), ISearchView {
 
                 searchFrame.visibility = View.VISIBLE
 
-                showCatalogButton.text = "Показать все совпадения (740)"
+                if (data.isNullOrEmpty()) {
+                    showCatalogButton.text = "Ничего не найдено"
+                    showCatalogButton.isEnabled = false
+                } else {
+                    showCatalogButton.text = "Показать все совпадения (${data.size})"
+                    showCatalogButton.isEnabled = true
+                }
+
 
                 if (data != null && inputText.text.toString() != "") {
                     App.setting.filterConfig = filter
                     App.setting.houses = data
-                    supportFragmentManager.transaction {
-                        replace(R.id.searchFrame, SearchesListFragment(data, this@SearchActivity))
-                    }
+
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            searchBinding.searchFrame.id,
+                            SearchesListFragment(data, this@SearchActivity)
+                        )
+                        .commit()
                 }
 
                 searchBinding.showCatalogButton.setOnClickListener {
-                    getSharedPreferences(
-                            App.HOUSE_WITH_SWIMMING_POOL, Context.MODE_PRIVATE)
-                            .edit {
-                                putString(App.SEARCH_ACTIVITY, App.SEARCH_ACTIVITY_TO_CATALOG)
-                            }
+                    setResult(RESULT_OK, Intent().putExtra("action", HomeFragment.NAVIGATE_TO_CATALOG))
                     finish()
                 }
             }

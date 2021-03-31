@@ -36,6 +36,10 @@ class Setting(ctx: Context) {
         get() = Gson().fromJson(pref.getString(Keys.FILTER_VARIANTS, null), JsonObject::class.java)
         set(value) = pref.edit { putString(Keys.FILTER_VARIANTS, Gson().toJson(value)) }
 
+    var tmpObj: HouseCatalogData?
+        get() = Gson().fromJson(pref.getString(Keys.TMP_OBJECT, null), HouseCatalogData::class.java)
+        set(value) = pref.edit { putString(Keys.TMP_OBJECT, Gson().toJson(value)) }
+
     fun getObjectById(id: Int): HouseCatalogData? =
         App.database?.eventsDao()?.getById(id)
 
@@ -43,6 +47,7 @@ class Setting(ctx: Context) {
         const val TOKEN = "TOKEN"
         const val FILTER = "FILTER"
         const val FILTER_VARIANTS = "FILTER_VARIANTS"
+        const val TMP_OBJECT = "TMP_OBJECT"
     }
 
 }

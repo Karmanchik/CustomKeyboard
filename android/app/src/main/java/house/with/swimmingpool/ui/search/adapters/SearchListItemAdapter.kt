@@ -42,11 +42,7 @@ class SearchListItemAdapter(
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(position: Int) {
             itemView.setOnClickListener {
-                ctx.getSharedPreferences(
-                        App.HOUSE_WITH_SWIMMING_POOL, Context.MODE_PRIVATE)
-                        .edit {
-                            putString(App.SEARCH_ACTIVITY, App.SEARCH_ACTIVITY_TO_OBJECT)
-                        }
+                App.setting.tmpObj = items[position]
                 parentView.closeActivity()
             }
             view.apply {

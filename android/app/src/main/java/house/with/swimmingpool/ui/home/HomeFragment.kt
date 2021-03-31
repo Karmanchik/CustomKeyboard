@@ -1,10 +1,10 @@
 package house.with.swimmingpool.ui.home
 
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,20 +23,24 @@ import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
+import house.with.swimmingpool.ui.search.SearchActivity
 
 
 class HomeFragment : Fragment() {
 
+    companion object {
+        const val NAVIGATE_TO_CATALOG = 1
+        const val NAVIGATE_TO_OBJECT = 2
+    }
+
     private var homeBinding: FragmentHomeBinding? = null
     private lateinit var homeViewModel: HomeViewModel
-    private var mainContainerLink: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
         homeBinding = FragmentHomeBinding.inflate(layoutInflater)
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
@@ -49,6 +53,21 @@ class HomeFragment : Fragment() {
         super.onDestroy()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK) {
+            data?.getIntExtra("action", 0)?.let { code ->
+                if (code == NAVIGATE_TO_CATALOG) {
+                    findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
+                } else if (code == NAVIGATE_TO_OBJECT) {
+                    val bundle = Bundle().apply { putString("home", Gson().toJson(App.setting.tmpObj)) }
+                    findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
+                }
+            }
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +78,7 @@ class HomeFragment : Fragment() {
         homeBinding?.apply {
 
             imageViewSearch.setOnClickListener {
-                findNavController().navigate(R.id.action_navigation_home_to_searchActivity)
+                startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
             }
 
             VideosServiceImpl().getVideos { data, e ->
