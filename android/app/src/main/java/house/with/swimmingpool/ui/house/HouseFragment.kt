@@ -1,15 +1,14 @@
 package house.with.swimmingpool.ui.house
 
 import android.annotation.SuppressLint
-import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.transaction
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
@@ -21,14 +20,12 @@ import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.mapview.MapView
-import house.with.swimmingpool.App
+import com.yandex.runtime.ui_view.ViewProvider
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentHouseBinding
 import house.with.swimmingpool.models.HouseExampleData
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
-import house.with.swimmingpool.ui.favourites.liked.binding
-import house.with.swimmingpool.ui.home.adapters.SeenHousesAdapter
 import house.with.swimmingpool.ui.house.adapters.*
 import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
 
@@ -72,6 +69,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 }
             } else {
                 houseObjectBinding?.apply {
+                    mainHeaderPlaceholder.visibility = View.VISIBLE
                     price.visibility = View.INVISIBLE
                     discount.visibility = View.INVISIBLE
                     textViewLocation.visibility = View.INVISIBLE
@@ -199,7 +197,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     .placeholder(R.drawable.placeholder)
                     .into(imageViewVideoPreloader)
 
-                if (singleHouseObject.video.isNotEmpty()) {
+                if (!singleHouseObject.video.isNullOrEmpty()) {
                     videoLayout.visibility = View.VISIBLE
                     youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                         override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
@@ -224,6 +222,14 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     videoLayout.visibility = View.GONE
                 }
 //                    }
+
+                if (singleHouseObject.geolocation?.latitude == null) {
+                    textViewLocationMap.visibility = View.GONE
+                    mapLayout.visibility = View.GONE
+                } else {
+                    textViewLocationMap.visibility = View.VISIBLE
+                    mapLayout.visibility = View.VISIBLE
+                }
 
                 if (singleHouseObject.type == "house" || singleHouseObject.type == "flat") {
                     housesListText.visibility = View.GONE
@@ -264,23 +270,20 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     showListHouse(false)
                 }
 
-                if (singleHouseObject.geolocation?.latitude == null
-                    || singleHouseObject.geolocation.longitude == null
-                ) {
-                    textViewLocationMap.visibility = View.GONE
-                    mapLayout.visibility = View.GONE
-                } else {
-                    textViewLocationMap.visibility = View.VISIBLE
-                    mapLayout.visibility = View.VISIBLE
-                }
-
                 try {
+                    val icon = ImageView(requireContext()).apply {
+                        setImageResource(R.drawable.ic_subtract)
+                        layoutParams = ViewGroup.LayoutParams(15, 15)
+                    }
+
                     val latitude = singleHouseObject.geolocation?.latitude ?: .0
                     val longitude = singleHouseObject.geolocation?.longitude ?: .0
 
-                    Log.e("test", "${latitude}:::${longitude}")
-
                     mapview = mapView
+                    mapView.map?.isRotateGesturesEnabled = false
+                    mapView.map?.isScrollGesturesEnabled = false
+                    mapView.map?.isZoomGesturesEnabled = false
+                    mapView.map?.isTiltGesturesEnabled = false
                     mapview?.map?.move(
                         CameraPosition(
                             Point(latitude, longitude), 11.0f, 0.0f, 0.0f
@@ -288,7 +291,10 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         Animation(Animation.Type.SMOOTH, 0F),
                         null
                     )
-                    mapview?.map?.mapObjects?.addPlacemark(Point(latitude, longitude))
+                    mapview?.map?.mapObjects?.addPlacemark(
+                        Point(latitude, longitude),
+                        ViewProvider(icon)
+                    )
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -299,26 +305,11 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 if (singleHouseObject.analogs != null) {
                     similarObjects.apply {
                         layoutManager = GridLayoutManager(context, 2)
-                        adapter = if (singleHouseObject.analogs.size > 1) {
-                            ChildrenHouseAdapter(
-                                requireContext(),
-                                listOf(singleHouseObject.analogs[0], singleHouseObject.analogs[1])
-                            ) { homeId ->
-                                val home = App.setting.houses.firstOrNull { it.id == homeId }
-                                val bundle =
-                                    Bundle().apply { putString("home", Gson().toJson(home)) }
-                                findNavController().navigate(R.id.action_houseFragment_self, bundle)
-                            }
-                        } else {
-                            ChildrenHouseAdapter(
-                                requireContext(),
-                                singleHouseObject.analogs
-                            ) { homeId ->
-                                val home = App.setting.houses.firstOrNull { it.id == homeId }
-                                val bundle =
-                                    Bundle().apply { putString("home", Gson().toJson(home)) }
-                                findNavController().navigate(R.id.action_houseFragment_self, bundle)
-                            }
+                        adapter = ChildrenHouseAdapter(singleHouseObject.analogs.take(2)) { homeId ->
+                            val home = singleHouseObject.analogs.firstOrNull { it.id == homeId }
+                            val bundle =
+                                Bundle().apply { putString("home", Gson().toJson(home)) }
+                            findNavController().navigate(R.id.action_houseFragment_self, bundle)
                         }
                         similarObjects.visibility = View.VISIBLE
                         textViewSimilarObject.visibility = View.VISIBLE

@@ -104,12 +104,9 @@ class NewsSingleFragment : Fragment() {
                         setAnalogsVisibility(View.VISIBLE)
                         analogsRV.apply {
                             layoutManager = GridLayoutManager(context, 2)
-                            adapter = if (data.linked_objects.size > 1) {
-                                ChildrenHouseAdapter(
-                                    requireContext(),
-                                    listOf(data.linked_objects[0], data.linked_objects[1])
-                                ) { homeId ->
-                                    val home = App.setting.houses.firstOrNull { it.id == homeId }
+                            adapter =
+                                ChildrenHouseAdapter(data.linked_objects.take(2)) { homeId ->
+                                    val home = data.linked_objects.firstOrNull { it.id == homeId }
                                     val bundle =
                                         Bundle().apply { putString("home", Gson().toJson(home)) }
                                     findNavController().navigate(
@@ -117,20 +114,6 @@ class NewsSingleFragment : Fragment() {
                                         bundle
                                     )
                                 }
-                            } else {
-                                ChildrenHouseAdapter(
-                                    requireContext(),
-                                    data.linked_objects
-                                ) { homeId ->
-                                    val home = App.setting.houses.firstOrNull { it.id == homeId }
-                                    val bundle =
-                                        Bundle().apply { putString("home", Gson().toJson(home)) }
-                                    findNavController().navigate(
-                                        R.id.action_newsSingleFragment_to_houseFragment,
-                                        bundle
-                                    )
-                                }
-                            }
                         }
                     } else {
                         setContentVisibility(View.GONE)
