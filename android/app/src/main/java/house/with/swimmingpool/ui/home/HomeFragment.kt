@@ -24,6 +24,9 @@ import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
 import house.with.swimmingpool.ui.search.SearchActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -61,8 +64,12 @@ class HomeFragment : Fragment() {
                 if (code == NAVIGATE_TO_CATALOG) {
                     findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
                 } else if (code == NAVIGATE_TO_OBJECT) {
-                    val bundle = Bundle().apply { putString("home", Gson().toJson(App.setting.tmpObj)) }
-                    findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
+                    val bundle =
+                        Bundle().apply { putString("home", Gson().toJson(App.setting.tmpObj)) }
+                    findNavController().navigate(
+                        R.id.action_navigation_home_to_houseFragment,
+                        bundle
+                    )
                 }
             }
         }
@@ -91,13 +98,17 @@ class HomeFragment : Fragment() {
             NewsServiceImpl().getNews { data, e ->
                 if (e == null && data != null) {
                     newsRV.adapter = NewsAdapter(
-                            if(data.size > 2) listOf(data[0], data[1]) else data,
-                            requireContext()) {
+                        if (data.size > 2) listOf(data[0], data[1]) else data,
+                        requireContext()
+                    ) {
                         val bundle = Bundle().apply {
                             putInt("id", it.id ?: 0)
                             putSerializable("house", it)
                         }
-                        findNavController().navigate(R.id.action_navigation_home_to_newsSingleFragment, bundle)
+                        findNavController().navigate(
+                            R.id.action_navigation_home_to_newsSingleFragment,
+                            bundle
+                        )
                     }
                 }
             }
@@ -106,9 +117,12 @@ class HomeFragment : Fragment() {
                 lastSeenRV.apply {
                     layoutManager = GridLayoutManager(context, 2)
                     adapter = SeenHousesAdapter(requireContext(), data ?: listOf(null)) { homeId ->
-                        val home = App.setting.houses.firstOrNull { it.id == homeId }
+                        val home = App.setting.getObjectById(homeId)
                         val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
+                        findNavController().navigate(
+                            R.id.action_navigation_home_to_houseFragment,
+                            bundle
+                        )
                     }
                 }
             }
@@ -131,20 +145,31 @@ class HomeFragment : Fragment() {
 
                         val splitLink = link.split("/")
 
-                        when(splitLink.first().toString()){
+                        when (splitLink.first().toString()) {
                             "objects" -> {
-                                val home = App.setting.houses.firstOrNull { it.id == splitLink.last().toInt() }
-                                val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                                findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
+                                val home = App.setting.houses.firstOrNull {
+                                    it.id == splitLink.last().toInt()
+                                }
+                                val bundle =
+                                    Bundle().apply { putString("home", Gson().toJson(home)) }
+                                findNavController().navigate(
+                                    R.id.action_navigation_home_to_houseFragment,
+                                    bundle
+                                )
                             }
-                            "news" -> {}
-                            "video" -> {}
+                            "news" -> {
+                            }
+                            "video" -> {
+                            }
                             "https:" -> {
                                 val browserIntent = Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse("http://www.google.com"
-                                        ))
-                                startActivity(browserIntent);}
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(
+                                        "http://www.google.com"
+                                    )
+                                )
+                                startActivity(browserIntent);
+                            }
                         }
 //                        val home = App.setting.houses.firstOrNull { it.id == link }
 //                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
@@ -154,7 +179,7 @@ class HomeFragment : Fragment() {
                 }
             }
 
-       BannersServiceImpl().getBanners { data, e ->
+            BannersServiceImpl().getBanners { data, e ->
                 Glide.with(this@HomeFragment)
                     .load(data?.get(0)?.bigBanner)
                     .error(R.drawable.placeholder)
@@ -173,11 +198,11 @@ class HomeFragment : Fragment() {
             }
 
             nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (shortCatalogRV.bottom in (oldScrollY + 1) until scrollY){
+                if (shortCatalogRV.bottom in (oldScrollY + 1) until scrollY) {
                     setShortCatalog(houseCatalogData)
                 }
 
-                if(textViewShortCatalog.top - coordinateLayout.height in (scrollY + 1) until oldScrollY){
+                if (textViewShortCatalog.top - coordinateLayout.height in (scrollY + 1) until oldScrollY) {
                     setShortCatalog(houseCatalogData)
                 }
             }
@@ -186,19 +211,19 @@ class HomeFragment : Fragment() {
             segmentedControl.addOnSegmentClickListener { svh ->
                 RealtyServiceImpl().getHouseCatalog { data, e ->
                     if (e == null && data != null) {
-                          houseCatalogData = when (svh.absolutePosition) {
-                                0 -> {
-                                    data.filter { it.type == "house" || it.type == "village" }
-                                }
-
-                                1 -> {
-                                    data.filter { it.type == "flat" }
-                                }
-
-                                else -> {
-                                    data.filter { it.type == "complex" }
-                                }
+                        houseCatalogData = when (svh.absolutePosition) {
+                            0 -> {
+                                data.filter { it.type == "house" || it.type == "village" }
                             }
+
+                            1 -> {
+                                data.filter { it.type == "flat" }
+                            }
+
+                            else -> {
+                                data.filter { it.type == "complex" }
+                            }
+                        }
                         setShortCatalog(houseCatalogData)
                     }
                 }
@@ -249,21 +274,21 @@ class HomeFragment : Fragment() {
     private fun setShortCatalog(data: List<HouseCatalogData>?) {
         homeBinding?.apply {
             if (data != null) {
-                App.setting.houses = data
-                textViewVideosCount.text = "${data.size} предложений"
-                shortCatalogRV.adapter = if (data.size > 2) {
-                    CatalogAdapter(listOf(data[0], data[1]), requireContext()) { homeId ->
-                        val home = App.setting.houses.firstOrNull { it.id == homeId }
-                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
-                    }
-                } else {
-                    CatalogAdapter(data, requireContext()) { homeId ->
-                        val home = App.setting.houses.firstOrNull { it.id == homeId }
-                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
-                    }
+                GlobalScope.launch(Dispatchers.IO) {
+                    App.setting.houses = data
                 }
+
+                textViewVideosCount.text = "${data.size} предложений"
+                shortCatalogRV.adapter =
+                    CatalogAdapter(data.take(2), requireContext()) { homeId ->
+                        val home = data.firstOrNull { it.id == homeId }
+                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                        findNavController().navigate(
+                            R.id.action_navigation_home_to_houseFragment,
+                            bundle
+                        )
+                    }
+
             }
         }
     }

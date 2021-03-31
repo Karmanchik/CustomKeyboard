@@ -15,7 +15,10 @@ import house.with.swimmingpool.databinding.FragmentCatalogBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
-import house.with.swimmingpool.ui.toast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+
 
 class CatalogFragment : Fragment() {
 
@@ -37,23 +40,30 @@ class CatalogFragment : Fragment() {
                 add(2, "big")
             } catch (e: Exception) {
             }
-        }, requireContext()) { homeId ->
+        }.take(50), requireContext()) { homeId ->
             val home = list.firstOrNull { it.id == homeId }
             val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
             findNavController().navigate(R.id.action_catalogViewModel_to_houseFragment, bundle)
         }
+        binding?.refresh?.isRefreshing = false
         binding?.conter?.text = "${list.size} предложений"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        try {
-            val list = App.setting.houses
-            showList(list.toMutableList())
-        } catch (e: Exception) {
-            toast(e.localizedMessage)
-            Log.e("test", "load catalog", e)
+        binding?.refresh?.isRefreshing = true
+        binding?.refresh?.setOnRefreshListener {  }
+
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val list = App.setting.houses
+                launch(Dispatchers.Main) {
+                    showList(list.toMutableList())
+                }
+            } catch (e: Exception) {
+                Log.e("test", "load catalog", e)
+            }
         }
 
         binding?.toFilter?.setOnClickListener {
