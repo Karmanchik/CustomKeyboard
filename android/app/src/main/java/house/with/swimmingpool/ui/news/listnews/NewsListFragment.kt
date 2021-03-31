@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.NewsServiceImpl
 import house.with.swimmingpool.databinding.FragmentNewsListBinding
 import house.with.swimmingpool.models.NewsData
@@ -52,7 +53,10 @@ class NewsListFragment : Fragment() {
                     Log.e("testNewsBannerException", e.toString())
                 }
             }, requireContext()) {
-//                findNavController().navigate(R.id.action_newsListFragment_to_newsSingleFragment)
+                val bundle = Bundle().apply {
+                    putInt("id", it.id ?: 0)
+                }
+                findNavController().navigate(R.id.action_newsListFragment_to_newsSingleFragment, bundle)
             }
         }
     }

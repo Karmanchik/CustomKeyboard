@@ -58,258 +58,278 @@ class HouseFragment : Fragment(), ISingleHouseView {
             findNavController().popBackStack()
         }
 
-        val singleHouseObject =
-            Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)
+        try {
+            val singleHouseObject =
+                Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)
 
-        if(singleHouseObject != null) {
-            showHome(singleHouseObject)
+            if (singleHouseObject != null) {
+                showHome(singleHouseObject)
 
-            RealtyServiceImpl().getHouseExample(
+                RealtyServiceImpl().getHouseExample(
                     singleHouseObject.id ?: 0
-            ) { data, e ->
-                data?.let { showHome(it) }
+                ) { data, e ->
+                    data?.let { showHome(it) }
+                }
+            } else {
+                houseObjectBinding?.apply {
+                    price.visibility = View.INVISIBLE
+                    discount.visibility = View.INVISIBLE
+                    textViewLocation.visibility = View.INVISIBLE
+                    textViewForMonth.visibility = View.INVISIBLE
+                    noteLayout.visibility = View.GONE
+                    textViewAboutObject.visibility = View.GONE
+                    description.visibility = View.GONE
+                    videoLayout.visibility = View.GONE
+                    textViewAdvantages.visibility = View.GONE
+                    textViewSimilarObject.visibility = View.GONE
+                    textViewMoneyInMonth.visibility = View.INVISIBLE
+                    textViewLocationMap.visibility = View.GONE
+                    mapLayout.visibility = View.GONE
+                    housesListText.visibility = View.GONE
+                    showListHouseBox.visibility = View.GONE
+                    consultationLayout.visibility = View.GONE
+                    collBackLayout.visibility = View.GONE
+                    paperwork.visibility = View.GONE
+                    dividerFirst.visibility = View.GONE
+                    dividerSecond.visibility = View.GONE
+                }
             }
-        }else{
-            houseObjectBinding?.apply{
-                price.visibility = View.INVISIBLE
-                discount.visibility = View.INVISIBLE
-                textViewLocation.visibility = View.INVISIBLE
-                textViewForMonth.visibility = View.INVISIBLE
-                noteLayout.visibility = View.GONE
-                textViewAboutObject.visibility = View.GONE
-                description.visibility = View.GONE
-                videoLayout.visibility = View.GONE
-                textViewAdvantages.visibility = View.GONE
-                textViewSimilarObject.visibility = View.GONE
-                textViewMoneyInMonth.visibility = View.INVISIBLE
-                textViewLocationMap.visibility = View.GONE
-                mapLayout.visibility = View.GONE
-                housesListText.visibility = View.GONE
-                showListHouseBox.visibility = View.GONE
-                consultationLayout.visibility = View.GONE
-                collBackLayout.visibility = View.GONE
-                paperwork.visibility = View.GONE
-                dividerFirst.visibility = View.GONE
-                dividerSecond.visibility = View.GONE
-            }
+        } catch (e: Exception) {
+            Log.e("test", e.localizedMessage, e)
         }
     }
 
     @SuppressLint("SetTextI18n")
     fun showHome(singleHouseObject: HouseExampleData) {
+        try {
+            houseObjectBinding?.apply {
 
-        houseObjectBinding?.apply {
+                houseExampleData = singleHouseObject
 
-            houseExampleData = singleHouseObject
+                singleHouseObject.getGallery().apply {
+                    whiteButtonGalleryRV.adapter =
+                        MainGalleryAndDateAdapter(
+                            requireContext(),
+                            this,
+                            this@HouseFragment
+                        )
 
-            singleHouseObject.getGallery().apply {
-                whiteButtonGalleryRV.adapter =
-                    MainGalleryAndDateAdapter(
-                        requireContext(),
-                        this,
-                        this@HouseFragment
-                    )
+                    val galleryNameList: ArrayList<String> = arrayListOf()
+                    val listImage: ArrayList<String> = arrayListOf()
 
-                val galleryNameList: ArrayList<String> = arrayListOf()
-                val listImage: ArrayList<String> = arrayListOf()
-
-                if (this.isNullOrEmpty() || this.size == 1) {
-                    whiteButtonGalleryRV.visibility = View.GONE
-                }else{
-                    whiteButtonGalleryRV.visibility = View.VISIBLE
-                }
-
-                if (!this.isNullOrEmpty()) {
-                    this.first().second.forEach { img ->
-                        listImage.add(img.url)
+                    if (this.isNullOrEmpty() || this.size == 1) {
+                        whiteButtonGalleryRV.visibility = View.GONE
+                    } else {
+                        whiteButtonGalleryRV.visibility = View.VISIBLE
                     }
 
-                    this.forEach {
-                        galleryNameList.add(it.first)
+                    if (!this.isNullOrEmpty()) {
+                        this.first().second.forEach { img ->
+                            listImage.add(img.url)
+                        }
+
+                        this.forEach {
+                            galleryNameList.add(it.first)
+                        }
                     }
+                    showHeaderGallery(listImage)
                 }
-                showHeaderGallery(listImage)
-            }
 
-            price.text = singleHouseObject.price + " руб."
-            if (singleHouseObject.priceHike != 0 && singleHouseObject.priceHike != null) {
-                discount.text = "+${singleHouseObject.priceHike}%"
-            } else {
-                discount.visibility = View.INVISIBLE
-                textViewForMonth.visibility = View.INVISIBLE
-            }
-            title.text = singleHouseObject.title
-            textViewLocation.text = singleHouseObject.location
-            hitsText.text = singleHouseObject.hits.toString()
+                price.text = singleHouseObject.price + " руб."
+                if (singleHouseObject.priceHike != 0 && singleHouseObject.priceHike != null) {
+                    discount.text = "+${singleHouseObject.priceHike}%"
+                } else {
+                    discount.visibility = View.INVISIBLE
+                    textViewForMonth.visibility = View.INVISIBLE
+                }
+                title.text = singleHouseObject.title
+                textViewLocation.text = singleHouseObject.location
+                hitsText.text = singleHouseObject.hits.toString()
 
-            if (singleHouseObject.mainTags != null) {
-                hashTagRV.adapter = TagAdapter(requireContext(), singleHouseObject.mainTags)
-            }
+                if (singleHouseObject.mainTags != null) {
+                    hashTagRV.adapter = TagAdapter(requireContext(), singleHouseObject.mainTags)
+                }
 
-            val note = null
-            if (note == null) {
-                noteLayout.visibility = View.GONE
-            } else {
+                val note = null
+                if (note == null) {
+                    noteLayout.visibility = View.GONE
+                } else {
 //                        noteText = note
-                noteLayout.visibility = View.VISIBLE
-            }
+                    noteLayout.visibility = View.VISIBLE
+                }
 
-            whiteButtonRV.adapter = WhiteButtonAdapter(
-                requireContext(), this@HouseFragment, listOf(
-                    "Общие",
-                    "Коммуникации",
-                    "Оформление",
-                    "Оплата"
+                whiteButtonRV.adapter = WhiteButtonAdapter(
+                    requireContext(), this@HouseFragment, listOf(
+                        "Общие",
+                        "Коммуникации",
+                        "Оформление",
+                        "Оплата"
+                    )
                 )
-            )
 
-            showInformation(0)
+                showInformation(0)
 
-            val descriptionText = Html.fromHtml(singleHouseObject.description)
 
-            if (singleHouseObject.description?.trim().isNullOrEmpty() || descriptionText.isEmpty()) {
-                description.visibility = View.GONE
-                textViewAboutObject.visibility = View.GONE
-                dividerFirst.visibility = View.GONE
-                dividerSecond.visibility = View.GONE
-                videoLayout.visibility = View.GONE
-            } else {
-                videoLayout.visibility = View.VISIBLE
-                description.visibility = View.VISIBLE
-                textViewAboutObject.visibility = View.VISIBLE
-                dividerFirst.visibility = View.VISIBLE
-                dividerSecond.visibility = View.VISIBLE
-                description.text = Html.fromHtml(singleHouseObject.description)
-            }
+                val descriptionText =
+                    if (singleHouseObject.description != null) Html.fromHtml(singleHouseObject.description) else ""
+
+                if (singleHouseObject.description?.trim()
+                        .isNullOrEmpty() || descriptionText.isEmpty()
+                ) {
+                    description.visibility = View.GONE
+                    textViewAboutObject.visibility = View.GONE
+                    dividerFirst.visibility = View.GONE
+                    dividerSecond.visibility = View.GONE
+                    videoLayout.visibility = View.GONE
+                } else {
+                    videoLayout.visibility = View.VISIBLE
+                    description.visibility = View.VISIBLE
+                    textViewAboutObject.visibility = View.VISIBLE
+                    dividerFirst.visibility = View.VISIBLE
+                    dividerSecond.visibility = View.VISIBLE
+                    description.text = Html.fromHtml(singleHouseObject.description)
+                }
 
 //                    if (data.video.isNullOrEmpty()) {
 
-            Glide.with(requireContext())
+                Glide.with(requireContext())
 //                            .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
-                .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
-                .error(R.drawable.error_placeholder_midle)
-                .placeholder(R.drawable.placeholder)
-                .into(imageViewVideoPreloader)
+                    .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
+                    .error(R.drawable.error_placeholder_midle)
+                    .placeholder(R.drawable.placeholder)
+                    .into(imageViewVideoPreloader)
 
-            if(singleHouseObject.video.isNotEmpty()) {
-                videoLayout.visibility = View.VISIBLE
-                youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
-                    override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                        val videoId =
+                if (singleHouseObject.video.isNotEmpty()) {
+                    videoLayout.visibility = View.VISIBLE
+                    youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+                        override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                            val videoId =
                                 "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
-                        youTubePlayer.loadVideo(videoId, 0f)
-                        youTubePlayer.pause()
+                            youTubePlayer.loadVideo(videoId, 0f)
+                            youTubePlayer.pause()
 
-                        youTubePlayerView.minimumHeight = imageViewVideoPreloader.height
+                            youTubePlayerView.minimumHeight = imageViewVideoPreloader.height
 
-                        imageViewVideoPreloader.setOnClickListener {
-                            it.visibility = View.INVISIBLE
-                            relativeLayout.visibility = View.INVISIBLE
-                            youTubePlayer.play()
-                            youTubePlayerView.enterFullScreen()
-                            youTubePlayerView.exitFullScreen()
-                            youTubePlayerView.enterFullScreen()
+                            imageViewVideoPreloader.setOnClickListener {
+                                it.visibility = View.INVISIBLE
+                                relativeLayout.visibility = View.INVISIBLE
+                                youTubePlayer.play()
+                                youTubePlayerView.enterFullScreen()
+                                youTubePlayerView.exitFullScreen()
+                                youTubePlayerView.enterFullScreen()
+                            }
                         }
-                    }
-                })
-            }else{
-                videoLayout.visibility = View.GONE
-            }
+                    })
+                } else {
+                    videoLayout.visibility = View.GONE
+                }
 //                    }
 
-            if (singleHouseObject.type == "house" || singleHouseObject.type == "flat") {
-                housesListText.visibility = View.GONE
-                listHouseBox.visibility = View.GONE
-            }else{
-                housesListText.visibility = View.VISIBLE
-                listHouseBox.visibility = View.VISIBLE
-            }
-
-            if (singleHouseObject.type == "complex") {
-                housesListText.text = "Список квартир"
-            }
-
-
-            if (singleHouseObject.advantages != null) {
-                textViewAdvantages.visibility = View.VISIBLE
-                whiteButtonAdvantagesRV.visibility = View.VISIBLE
-                advantagesDivider.visibility = View.VISIBLE
-                whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(
-                    requireContext(),
-                    singleHouseObject.advantages
-                )
-            } else {
-                textViewAdvantages.visibility = View.GONE
-                whiteButtonAdvantagesRV.visibility = View.GONE
-                advantagesDivider.visibility = View.GONE
-            }
-
-            listHouseBox.apply {
-                showListHouse(false)
-            }
-
-            showListHouseBox.setOnClickListener {
-                showListHouse(true)
-            }
-
-            collapseListHouseBox.setOnClickListener {
-                showListHouse(false)
-            }
-
-            if (singleHouseObject.geolocation?.latitude == null
-                    || singleHouseObject.geolocation.longitude == null){
-                textViewLocationMap.visibility = View.GONE
-                mapLayout.visibility = View.GONE
-            }else{
-                textViewLocationMap.visibility = View.VISIBLE
-                mapLayout.visibility = View.VISIBLE
-            }
-
-            try {
-                val latitude = singleHouseObject.geolocation?.latitude ?: .0
-                val longitude = singleHouseObject.geolocation?.longitude ?: .0
-
-                Log.e("test", "${latitude}:::${longitude}")
-
-                mapview = mapView
-                mapview?.map?.move(
-                    CameraPosition(
-                        Point(latitude, longitude), 11.0f, 0.0f, 0.0f
-                    ),
-                    Animation(Animation.Type.SMOOTH, 0F),
-                    null
-                )
-                mapview?.map?.mapObjects?.addPlacemark(Point(latitude, longitude))
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-
-            singleHouseObject.children
-
-            if (singleHouseObject.analogs != null) {
-                similarObjects.apply {
-                    layoutManager = GridLayoutManager(context, 2)
-                    adapter = if(singleHouseObject.analogs.size > 1) {
-                        ChildrenHouseAdapter(requireContext(), listOf(singleHouseObject.analogs[0], singleHouseObject.analogs[1])) { homeId ->
-                            val home = App.setting.houses.firstOrNull { it.id == homeId }
-                            val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                            findNavController().navigate(R.id.action_houseFragment_self, bundle)
-                        }
-                    }else{
-                        ChildrenHouseAdapter(requireContext(), singleHouseObject.analogs) { homeId ->
-                            val home = App.setting.houses.firstOrNull { it.id == homeId }
-                            val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                            findNavController().navigate(R.id.action_houseFragment_self, bundle)
-                        }
-                    }
-                    similarObjects.visibility = View.VISIBLE
-                    textViewSimilarObject.visibility = View.VISIBLE
+                if (singleHouseObject.type == "house" || singleHouseObject.type == "flat") {
+                    housesListText.visibility = View.GONE
+                    listHouseBox.visibility = View.GONE
+                } else {
+                    housesListText.visibility = View.VISIBLE
+                    listHouseBox.visibility = View.VISIBLE
                 }
-            }else{
-                similarObjects.visibility = View.GONE
-                textViewSimilarObject.visibility = View.GONE
+
+                if (singleHouseObject.type == "complex") {
+                    housesListText.text = "Список квартир"
+                }
+
+
+                if (singleHouseObject.advantages != null) {
+                    textViewAdvantages.visibility = View.VISIBLE
+                    whiteButtonAdvantagesRV.visibility = View.VISIBLE
+                    advantagesDivider.visibility = View.VISIBLE
+                    whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(
+                        requireContext(),
+                        singleHouseObject.advantages
+                    )
+                } else {
+                    textViewAdvantages.visibility = View.GONE
+                    whiteButtonAdvantagesRV.visibility = View.GONE
+                    advantagesDivider.visibility = View.GONE
+                }
+
+                listHouseBox.apply {
+                    showListHouse(false)
+                }
+
+                showListHouseBox.setOnClickListener {
+                    showListHouse(true)
+                }
+
+                collapseListHouseBox.setOnClickListener {
+                    showListHouse(false)
+                }
+
+                if (singleHouseObject.geolocation?.latitude == null
+                    || singleHouseObject.geolocation.longitude == null
+                ) {
+                    textViewLocationMap.visibility = View.GONE
+                    mapLayout.visibility = View.GONE
+                } else {
+                    textViewLocationMap.visibility = View.VISIBLE
+                    mapLayout.visibility = View.VISIBLE
+                }
+
+                try {
+                    val latitude = singleHouseObject.geolocation?.latitude ?: .0
+                    val longitude = singleHouseObject.geolocation?.longitude ?: .0
+
+                    Log.e("test", "${latitude}:::${longitude}")
+
+                    mapview = mapView
+                    mapview?.map?.move(
+                        CameraPosition(
+                            Point(latitude, longitude), 11.0f, 0.0f, 0.0f
+                        ),
+                        Animation(Animation.Type.SMOOTH, 0F),
+                        null
+                    )
+                    mapview?.map?.mapObjects?.addPlacemark(Point(latitude, longitude))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+
+                singleHouseObject.children
+
+                if (singleHouseObject.analogs != null) {
+                    similarObjects.apply {
+                        layoutManager = GridLayoutManager(context, 2)
+                        adapter = if (singleHouseObject.analogs.size > 1) {
+                            ChildrenHouseAdapter(
+                                requireContext(),
+                                listOf(singleHouseObject.analogs[0], singleHouseObject.analogs[1])
+                            ) { homeId ->
+                                val home = App.setting.houses.firstOrNull { it.id == homeId }
+                                val bundle =
+                                    Bundle().apply { putString("home", Gson().toJson(home)) }
+                                findNavController().navigate(R.id.action_houseFragment_self, bundle)
+                            }
+                        } else {
+                            ChildrenHouseAdapter(
+                                requireContext(),
+                                singleHouseObject.analogs
+                            ) { homeId ->
+                                val home = App.setting.houses.firstOrNull { it.id == homeId }
+                                val bundle =
+                                    Bundle().apply { putString("home", Gson().toJson(home)) }
+                                findNavController().navigate(R.id.action_houseFragment_self, bundle)
+                            }
+                        }
+                        similarObjects.visibility = View.VISIBLE
+                        textViewSimilarObject.visibility = View.VISIBLE
+                    }
+                } else {
+                    similarObjects.visibility = View.GONE
+                    textViewSimilarObject.visibility = View.GONE
+                }
             }
+        } catch (e: Exception) {
+            Log.e("test", "lol", e)
         }
     }
 
@@ -365,10 +385,10 @@ class HouseFragment : Fragment(), ISingleHouseView {
             Log.e("testing", list.toString())
             val vp = mainHousesContainer
             vp.adapter = HouseHeaderAdapter(list)
-            if(list.size < 2) {
+            if (list.size < 2) {
                 dotsIndicator.visibility = View.INVISIBLE
                 mainHeaderPlaceholder.visibility = View.VISIBLE
-            }else{
+            } else {
                 dotsIndicator.visibility = View.VISIBLE
                 mainHeaderPlaceholder.visibility = View.INVISIBLE
             }
@@ -417,9 +437,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 }
             }
 
-            childFragmentManager.transaction {
-                replace(R.id.informationFrame, fragment)
-            }
+            childFragmentManager.beginTransaction()
+                .replace(houseObjectBinding?.informationFrame?.id ?: 0, fragment)
+                .commit()
         }
     }
 }

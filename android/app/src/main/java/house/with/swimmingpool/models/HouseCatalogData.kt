@@ -25,7 +25,7 @@ data class HouseCatalogData(
     val isFavourite: Boolean?,
     val location: String?,
     val mainTags: List<MainTags>?,
-    val note: JsonArray?,//String?, //fix me!!!
+//    val note: JsonArray?,//String?, //fix me!!!
     val photos: List<String>?,
     val price: String?,
     val price_of_one_meter: String?,

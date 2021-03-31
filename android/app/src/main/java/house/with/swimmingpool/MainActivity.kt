@@ -33,8 +33,11 @@ class MainActivity : AppCompatActivity() {
         }
         navView.setupWithNavController(navController)
 
-        MapKitFactory.setApiKey("bb9c9bdc-48ad-4806-b55d-48c2e98b3b0d")
-        MapKitFactory.initialize(this)
+        try {
+            MapKitFactory.setApiKey("bb9c9bdc-48ad-4806-b55d-48c2e98b3b0d")
+            MapKitFactory.initialize(this)
+        } catch (e: Exception) {
+        }
     }
 
     override fun onResume() {

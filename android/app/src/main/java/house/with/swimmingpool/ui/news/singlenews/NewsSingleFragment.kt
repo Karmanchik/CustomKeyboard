@@ -23,7 +23,11 @@ class NewsSingleFragment : Fragment() {
 
     private var singleNewsBinding: FragmentNewsSingleBinding? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         singleNewsBinding = FragmentNewsSingleBinding.inflate(layoutInflater)
         return singleNewsBinding?.root
     }
@@ -37,7 +41,7 @@ class NewsSingleFragment : Fragment() {
                 findNavController().popBackStack()
             }
 
-            NewsServiceImpl().getSingleNews(3481) { data, e ->
+            NewsServiceImpl().getSingleNews(arguments?.getInt("id") ?: 0) { data, e ->
                 val vp = housesImageContainerNews
                 if (data != null) {
 
@@ -47,15 +51,15 @@ class NewsSingleFragment : Fragment() {
 
                     if (data.date != null && data.date.isNotEmpty()) {
                         dateTextView.text = data.date
-                       setDateVisibility(View.VISIBLE)
-                    }else{
+                        setDateVisibility(View.VISIBLE)
+                    } else {
                         setDateVisibility(View.GONE)
                     }
 
-                    if (data.reading_time != null && data.reading_time.isNotEmpty()){
+                    if (data.reading_time != null && data.reading_time.isNotEmpty()) {
                         timeTextView.text = data.reading_time
                         setTimeVisibility(View.VISIBLE)
-                    }else{
+                    } else {
                         setTimeVisibility(View.GONE)
                     }
 
@@ -101,16 +105,30 @@ class NewsSingleFragment : Fragment() {
                         analogsRV.apply {
                             layoutManager = GridLayoutManager(context, 2)
                             adapter = if (data.linked_objects.size > 1) {
-                                ChildrenHouseAdapter(requireContext(), listOf(data.linked_objects[0], data.linked_objects[1])) { homeId ->
+                                ChildrenHouseAdapter(
+                                    requireContext(),
+                                    listOf(data.linked_objects[0], data.linked_objects[1])
+                                ) { homeId ->
                                     val home = App.setting.houses.firstOrNull { it.id == homeId }
-                                    val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                                    findNavController().navigate(R.id.action_newsSingleFragment_to_houseFragment, bundle)
+                                    val bundle =
+                                        Bundle().apply { putString("home", Gson().toJson(home)) }
+                                    findNavController().navigate(
+                                        R.id.action_newsSingleFragment_to_houseFragment,
+                                        bundle
+                                    )
                                 }
                             } else {
-                                ChildrenHouseAdapter(requireContext(), data.linked_objects) { homeId ->
+                                ChildrenHouseAdapter(
+                                    requireContext(),
+                                    data.linked_objects
+                                ) { homeId ->
                                     val home = App.setting.houses.firstOrNull { it.id == homeId }
-                                    val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                                    findNavController().navigate(R.id.action_newsSingleFragment_to_houseFragment, bundle)
+                                    val bundle =
+                                        Bundle().apply { putString("home", Gson().toJson(home)) }
+                                    findNavController().navigate(
+                                        R.id.action_newsSingleFragment_to_houseFragment,
+                                        bundle
+                                    )
                                 }
                             }
                         }
@@ -144,19 +162,20 @@ class NewsSingleFragment : Fragment() {
         }
     }
 
-    private fun setDateVisibility(visibility: Int){
+    private fun setDateVisibility(visibility: Int) {
         singleNewsBinding?.apply {
             dateImageView.visibility = visibility
-            dateTextView.visibility =  visibility
+            dateTextView.visibility = visibility
         }
     }
 
-    private fun setTimeVisibility(visibility: Int){
+    private fun setTimeVisibility(visibility: Int) {
         singleNewsBinding?.apply {
             timeImageView.visibility = visibility
-            timeTextView.visibility =  visibility
+            timeTextView.visibility = visibility
         }
     }
+
     override fun onDestroy() {
         singleNewsBinding = null
         super.onDestroy()

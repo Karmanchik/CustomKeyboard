@@ -75,6 +75,7 @@ class HomeFragment : Fragment() {
                             if(data.size > 2) listOf(data[0], data[1]) else data,
                             requireContext()) {
                         val bundle = Bundle().apply {
+                            putInt("id", it.id ?: 0)
                             putSerializable("house", it)
                         }
                         findNavController().navigate(R.id.action_navigation_home_to_newsSingleFragment, bundle)
