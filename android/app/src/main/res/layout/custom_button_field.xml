@@ -43,8 +43,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="@id/field"
         android:id="@+id/imageView12"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="32dp"
+        android:padding="8dp"
+        android:layout_height="32dp"
         app:srcCompat="@drawable/ic_clear_field" />
 
     <View

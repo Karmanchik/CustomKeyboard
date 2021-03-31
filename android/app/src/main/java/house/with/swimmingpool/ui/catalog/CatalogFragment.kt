@@ -53,7 +53,9 @@ class CatalogFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.refresh?.isRefreshing = true
-        binding?.refresh?.setOnRefreshListener {  }
+        binding?.refresh?.setOnRefreshListener { binding?.refresh?.isRefreshing = false }
+
+        binding?.back?.setOnClickListener { findNavController().popBackStack() }
 
         GlobalScope.launch(Dispatchers.IO) {
             try {

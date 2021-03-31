@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import com.appyvet.materialrangebar.RangeBar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -54,6 +55,17 @@ class RangeDialogFragment(
 
             min.setText(selectedMinValue1.toString().addDividers())
             max.setText(selectedMaxInt1.toString().addDividers())
+
+            min.doOnTextChanged { text, _, _, _ ->
+
+            }
+
+//            max.doOnTextChanged { text, _, _, _ ->
+//                range.setRangePinsByIndices(
+//                    selectedMinValue1.toIndex()
+//                   text text.toString().toIntOrNull()?.toIndex() ?: 0
+//                )
+//            }
 
             try {
                 range.setOnRangeBarChangeListener(object : RangeBar.OnRangeBarChangeListener {

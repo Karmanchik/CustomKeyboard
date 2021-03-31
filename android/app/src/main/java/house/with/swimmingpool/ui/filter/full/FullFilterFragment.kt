@@ -144,6 +144,7 @@ class FullFilterFragment : Fragment() {
                     if (it.tag == "2") it.performClick()
                 }
                 App.setting.filterConfig = null
+                load()
             }
 
             area.setOnClickListener {
@@ -151,7 +152,7 @@ class FullFilterFragment : Fragment() {
                     districtsFilter = districtsVariants?.entries?.map { Pair(it.value, false) }
                 }
 
-                openVariants(districtsFilter!!) {
+                openVariants("Район", districtsFilter!!) {
                     districtsFilter = it
                     area.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
                     load()
@@ -164,7 +165,7 @@ class FullFilterFragment : Fragment() {
                         registrationTypeVariants?.entries?.map { Pair(it.value, false) }
                 }
 
-                openVariants(registrationTypeFilter!!) {
+                openVariants("Оформление", registrationTypeFilter!!) {
                     registrationTypeFilter = it
                     docType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
                     load()
@@ -176,7 +177,7 @@ class FullFilterFragment : Fragment() {
                     paymentTypeFilter = paymentTypeVariants?.entries?.map { Pair(it.value, false) }
                 }
 
-                openVariants(paymentTypeFilter!!) {
+                openVariants("Форма оплаты", paymentTypeFilter!!) {
                     paymentTypeFilter = it
                     moneyType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
                     load()
@@ -188,7 +189,7 @@ class FullFilterFragment : Fragment() {
                     interiorFilter = interiorVariants?.entries?.map { Pair(it.value, false) }
                 }
 
-                openVariants(interiorFilter!!) {
+                openVariants("Отделака", interiorFilter!!) {
                     interiorFilter = it
                     style.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
                     load()
@@ -201,7 +202,7 @@ class FullFilterFragment : Fragment() {
                         buildingClassVariants?.entries?.map { Pair(it.value, false) }
                 }
 
-                openVariants(buildingClassFilter!!) {
+                openVariants("Класс дома", buildingClassFilter!!) {
                     buildingClassFilter = it
                     houseType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
                     load()
@@ -241,6 +242,7 @@ class FullFilterFragment : Fragment() {
             segmentedControl.setSelectedSegment(0)
             segmentedControl.addOnSegmentClickListener { segmentId = it.absolutePosition }
         }
+        load()
 
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -269,10 +271,11 @@ class FullFilterFragment : Fragment() {
     }
 
     private fun openVariants(
+        title: String,
         list: List<Pair<String, Boolean>>,
         onItemsSelected: (List<Pair<String, Boolean>>) -> Unit
     ) {
-        VariantsFragment.newInstance(list, onItemsSelected)
+        VariantsFragment.newInstance(title, list, onItemsSelected)
             .show(parentFragmentManager, "VariantsFragment")
     }
 
