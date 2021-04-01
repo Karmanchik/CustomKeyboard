@@ -1,16 +1,11 @@
-package house.with.swimmingpool.ui.register
+package house.with.swimmingpool.ui.login
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentRegisterLoginBinding
-import house.with.swimmingpool.ui.favourites.liked.binding
 
 class RegisterLoginFragment: Fragment() {
 

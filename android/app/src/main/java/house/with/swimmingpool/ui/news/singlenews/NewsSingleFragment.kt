@@ -63,6 +63,20 @@ class NewsSingleFragment : Fragment() {
                         setTimeVisibility(View.GONE)
                     }
 
+                    if (data.date != null && data.date.isNotEmpty()) {
+                        dateTextView.text = data.date
+                       setDateVisibility(View.VISIBLE)
+                    }else{
+                        setDateVisibility(View.GONE)
+                    }
+
+                    if (data.reading_time != null && data.reading_time.isNotEmpty()){
+                        timeTextView.text = data.reading_time
+                        setTimeVisibility(View.VISIBLE)
+                    }else{
+                        setTimeVisibility(View.GONE)
+                    }
+
                     vp.adapter = when {
                         data.photos != null && data.photos.isNotEmpty() -> {
                             Log.e("photos", data.photos.size.toString())

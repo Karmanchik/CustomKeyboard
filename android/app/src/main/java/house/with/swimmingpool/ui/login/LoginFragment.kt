@@ -1,18 +1,5 @@
 package house.with.swimmingpool.ui.login
 
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import com.google.android.material.tabs.TabLayout
-import house.with.swimmingpool.R
-import house.with.swimmingpool.databinding.FragmentLoginBinding
-import house.with.swimmingpool.ui.register.RegisterLoginFragment
-import house.with.swimmingpool.ui.register.registration.RegisterRegistrationFragment
-
 class LoginFragment// : Fragment(R.layout.fragment_login) {
 
 //    private var loginBinding: FragmentLoginBinding? = null
