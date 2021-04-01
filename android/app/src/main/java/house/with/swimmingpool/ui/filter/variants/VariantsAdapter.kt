@@ -31,7 +31,7 @@ class VariantsAdapter(
             switch.text = item.first
             switch.isChecked = item.second
             switch.setOnCheckedChangeListener { _, b ->
-                items.replaceAll { if (item == it) Pair(it.first, b) else it }
+                items = items.map { if (item.first == it.first) Pair(item.first, b) else it }.toMutableList()
             }
         }
 

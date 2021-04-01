@@ -75,6 +75,33 @@ class ShortFilterFragment(
             closeIcon.setOnClickListener {
                 dismiss()
             }
+
+            min.doOnTextChanged { text, _, _, _ ->
+                try {
+                    if (min.isFocused) {
+                        range.setRangePinsByIndices(
+                            text.toString().replace(" ", "").toIntOrNull()?.toIndex() ?: 0,
+                            range.rightIndex
+                        )
+                    }
+                } catch (e: Exception) {
+                    Log.e("test", "2", e)
+                }
+            }
+
+            max.doOnTextChanged { text, _, _, _ ->
+                try {
+                    if (max.isFocused) {
+                        range.setRangePinsByIndices(
+                            range.leftIndex,
+                            text.toString().replace(" ", "").toIntOrNull()?.toIndex() ?: 0
+                        )
+                    }
+                } catch (e: Exception) {
+                    Log.e("test", "1", e)
+                }
+            }
+
         }
 
         GlobalScope.launch(Dispatchers.IO) {
@@ -82,6 +109,10 @@ class ShortFilterFragment(
                 RealtyServiceImpl().getParamsForFilter()?.data?.let {
                     launch(Dispatchers.Main) {
                         filterConfig = it
+
+                        binding.range.setOnDragListener { view, dragEvent ->
+                            binding.range.requestFocus()
+                        }
 
                         binding.range.setOnRangeBarChangeListener(object :
                             RangeBar.OnRangeBarChangeListener {
@@ -92,8 +123,14 @@ class ShortFilterFragment(
                                 leftPinValue: String?,
                                 rightPinValue: String?
                             ) {
-                                binding.min.setText(leftPinIndex.toValue().toString().addDividers())
-                                binding.max.setText(rightPinIndex.toValue().toString().addDividers())
+                                try {
+                                    if (!binding.min.isFocused && !binding.max.isFocused) {
+                                        binding.min.setText(leftPinIndex.toValue().toString().addDividers())
+                                        binding.max.setText(rightPinIndex.toValue().toString().addDividers())
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e("test", "3", e)
+                                }
                             }
 
                             override fun onTouchStarted(rangeBar: RangeBar?) = Unit
@@ -141,6 +178,8 @@ class ShortFilterFragment(
     }
 
     private fun Int.toValue(): Int = (this) * k + getPriceRange.first
+
+    private fun Int.toIndex(): Int = (this - getPriceRange.first) / k
 
     private val k get() = module / 100
 

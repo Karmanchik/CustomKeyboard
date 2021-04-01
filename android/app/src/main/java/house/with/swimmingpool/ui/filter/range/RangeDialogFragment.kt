@@ -57,17 +57,35 @@ class RangeDialogFragment(
             max.setText(selectedMaxInt1.toString().addDividers())
 
             min.doOnTextChanged { text, _, _, _ ->
-
+                try {
+                    if (min.isFocused) {
+                        range.setRangePinsByIndices(
+                            text.toString().replace(" ", "").toIntOrNull()?.toIndex() ?: 0,
+                            range.rightIndex
+                        )
+                    }
+                } catch (e: Exception) {
+                    Log.e("test", "2", e)
+                }
             }
 
-//            max.doOnTextChanged { text, _, _, _ ->
-//                range.setRangePinsByIndices(
-//                    selectedMinValue1.toIndex()
-//                   text text.toString().toIntOrNull()?.toIndex() ?: 0
-//                )
-//            }
+            max.doOnTextChanged { text, _, _, _ ->
+                try {
+                    if (max.isFocused) {
+                        range.setRangePinsByIndices(
+                            range.leftIndex,
+                            text.toString().replace(" ", "").toIntOrNull()?.toIndex() ?: 0
+                        )
+                    }
+                } catch (e: Exception) {
+                    Log.e("test", "1", e)
+                }
+            }
 
             try {
+                range.setOnDragListener { view, dragEvent ->
+                    range.requestFocus()
+                }
                 range.setOnRangeBarChangeListener(object : RangeBar.OnRangeBarChangeListener {
                     override fun onRangeChangeListener(
                         rangeBar: RangeBar?,
@@ -76,8 +94,14 @@ class RangeDialogFragment(
                         leftPinValue: String?,
                         rightPinValue: String?
                     ) {
-                        min.setText(leftPinIndex.toValue().toString().addDividers())
-                        max.setText(rightPinIndex.toValue().toString().addDividers())
+                        try {
+                            if (!min.isFocused && !max.isFocused) {
+                                min.setText(leftPinIndex.toValue().toString().addDividers())
+                                max.setText(rightPinIndex.toValue().toString().addDividers())
+                            }
+                        } catch (e: Exception) {
+                            Log.e("test", "3", e)
+                        }
                     }
 
                     override fun onTouchStarted(rangeBar: RangeBar?) = Unit

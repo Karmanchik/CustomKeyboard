@@ -220,7 +220,7 @@ class FullFilterFragment : Fragment() {
                     selectedSquareRange?.first ?: getSquareRange.first,
                     selectedSquareRange?.second ?: getSquareRange.second
                 ) { min, max ->
-                    square.value = "${min}m2. - ${max}m2."
+                    square.value = "от $min до $max м2."
                     selectedSquareRange = Pair(min, max)
                     load()
                 }
@@ -233,7 +233,7 @@ class FullFilterFragment : Fragment() {
                     selectedPriceRange?.first ?: getPriceRange.first,
                     selectedPriceRange?.second ?: getPriceRange.second
                 ) { min, max ->
-                    price.value = "${min}р. - ${max}р."
+                    price.value = "от ${min} до ${max} руб."
                     selectedPriceRange = Pair(min, max)
                     load()
                 }
@@ -295,12 +295,12 @@ class FullFilterFragment : Fragment() {
                 ?.mapNotNull { value -> districtsVariants?.entries?.firstOrNull { it.value == value }?.key },
 
             // цена
-            price_all_from = (selectedPriceRange?.first ?: getPriceRange.first).toString(),
-            price_all_to = (selectedPriceRange?.second ?: getPriceRange.second).toString(),
+            price_all_from = selectedPriceRange?.first?.toString(),
+            price_all_to = selectedPriceRange?.second?.toString(),
 
             // площадь
-            square_all_from = (selectedSquareRange?.first ?: getSquareRange.first).toString(),
-            square_all_to = (selectedSquareRange?.second ?: getSquareRange.second).toString(),
+            square_all_from = selectedSquareRange?.first?.toString(),
+            square_all_to = selectedSquareRange?.second?.toString(),
 
             // оформление
             registrationTypes = binding.docType.value?.split(", ")
