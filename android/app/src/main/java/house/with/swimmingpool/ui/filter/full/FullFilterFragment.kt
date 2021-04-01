@@ -233,14 +233,21 @@ class FullFilterFragment : Fragment() {
                     selectedPriceRange?.first ?: getPriceRange.first,
                     selectedPriceRange?.second ?: getPriceRange.second
                 ) { min, max ->
-                    price.value = "от ${min} до ${max} руб."
+                    price.value = "от $min до $max руб."
                     selectedPriceRange = Pair(min, max)
                     load()
                 }
             }
 
-            segmentedControl.setSelectedSegment(0)
-            segmentedControl.addOnSegmentClickListener { segmentId = it.absolutePosition }
+            segmentedControl.setSelectedSegment(when(App.setting.filterConfig?.types?:"house") {
+                "complex" -> 2
+                "flat" -> 1
+                else -> 0
+            })
+            segmentedControl.addOnSegmentClickListener {
+                segmentId = it.column
+                load()
+            }
         }
         load()
 
@@ -283,10 +290,11 @@ class FullFilterFragment : Fragment() {
 
     private fun load() {
 
-        val lol: String = if (segmentId == 0) "house" else if (segmentId == 1) "flat" else "complex"
-
-        Log.e("test", "load $lol")
-
+        val lol: String = when (segmentId) {
+            0 -> "house"
+            1 -> "flat"
+            else -> "complex"
+        }
         val filter = FilterObjectsRequest(
             types = listOf(lol),
 
@@ -327,6 +335,7 @@ class FullFilterFragment : Fragment() {
                 }.toList()
 
         )
+
         RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
             if (data != null) {
                 App.setting.filterConfig = filter
@@ -353,11 +362,13 @@ class FullFilterFragment : Fragment() {
 
     private fun showFilter(filter: FilterObjectsRequest) {
         Log.e("filter", filter.types?.joinToString(", ").toString())
-        binding.segmentedControl.setSelectedSegment(when (filter.types?.firstOrNull()) {
-            "house" -> 0
-            "flat" -> 1
-            else -> 2
-        })
+        binding.segmentedControl.setSelectedSegment(
+            when (filter.types?.firstOrNull()) {
+                "house" -> 0
+                "flat" -> 1
+                else -> 2
+            }
+        )
 
         binding.area.value = filter.districts
             ?.mapNotNull { districtsVariants?.get(it) }
