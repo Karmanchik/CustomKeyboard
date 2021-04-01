@@ -1,159 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
-    <LinearLayout
-        android:id="@+id/formEnter"
+
+    <br.com.sapereaude.maskedEditText.MaskedEditText
+        android:id="@+id/phone_input"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_marginBottom="9dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="33dp"
+        android:hint="0000000000"
+        android:inputType="phone"
+        android:textSize="24sp"
+        android:fontFamily="@font/lato"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:typeface="monospace"
+        app:allowed_chars="1234567890"
+        app:keep_hint="true"
+        app:mask="+7(###)###-##-##" />
+
+    <View
+        android:id="@+id/divider8"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:elevation="2dp"
-        android:visibility="visible"
-        android:orientation="vertical"
-        >
+        android:layout_height="1dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginStart="30dp"
+        android:background="?android:attr/listDivider" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/white"
-            tools:ignore="MissingClass">
+    <br.com.sapereaude.maskedEditText.MaskedEditText
+        android:id="@+id/password_input"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="8dp"
+        android:layout_gravity="center"
+        android:hint="Введите пароль"
+        android:inputType="text"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:fontFamily="@font/lato"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:typeface="monospace"
+        app:keep_hint="false"
+        app:mask="##############" />
 
-            <br.com.sapereaude.maskedEditText.MaskedEditText
-                android:id="@+id/phone_input"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:layout_marginBottom="9dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="33dp"
-                android:hint="0000000000"
-                android:inputType="phone"
-                android:textSize="24sp"
-                android:fontFamily="@font/lato"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
-                android:typeface="monospace"
-                app:allowed_chars="1234567890"
-                app:keep_hint="true"
-                app:mask="+7(###)###-##-##" />
+    <View
+        android:id="@+id/divider9"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginStart="30dp"
+        android:background="?android:attr/listDivider" />
 
-            <View
-                android:id="@+id/divider8"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginEnd="41dp"
-                android:layout_marginStart="18dp"
-                android:background="?android:attr/listDivider" />
+    <TextView
+        android:id="@+id/errorCodeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text="Неверный номер или пароль, попробуйте снова"
+        android:fontFamily="@font/lato"
+        android:textSize="13dp"
+        android:visibility="invisible"
+        android:textColor="#DB5249"/>
 
-            <br.com.sapereaude.maskedEditText.MaskedEditText
-                android:id="@+id/password_input"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginBottom="8dp"
-                android:layout_gravity="center"
-                android:hint="Введите пароль"
-                android:inputType="text"
-                android:textSize="24sp"
-                android:fontFamily="@font/lato"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
-                android:typeface="monospace"
-                app:keep_hint="false"
-                app:mask="##############" />
+    <TextView
+        android:id="@+id/enterButton"
+        style="@style/main_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="77dp"
+        android:layout_marginBottom="41dp"
+        android:layout_weight="0"
+        android:elevation="0dp"
+        android:enabled="true"
+        android:fontFamily="@font/lato"
+        android:text="Войти" />
 
-            <br.com.sapereaude.maskedEditText.MaskedEditText
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginTop="38dp"
-                android:layout_marginBottom="8dp"
-                android:layout_gravity="center"
-                app:keep_hint="true"
-                android:letterSpacing="2"
-                android:hint="****"
-                android:inputType="text"
-                android:textSize="24sp"
-                android:fontFamily="@font/lato"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
-                app:mask="####" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/lato"
+            android:text="Забыли пароль?"
+            android:textColor="#00A8FF"
+            android:textSize="17sp" />
 
-            <house.with.swimmingpool.views.CustomEditField
-                android:id="@+id/customEditField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="29dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/lato"
+            android:gravity="end"
+            android:text="Войти позже"
+            android:textColor="#00A8FF"
+            android:textSize="17sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <View
-                android:id="@+id/divider9"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginEnd="41dp"
-                android:layout_marginStart="18dp"
-                android:background="?android:attr/listDivider" />
-
-            <TextView
-                android:id="@+id/enterButton"
-                style="@style/main_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="88dp"
-                android:layout_marginBottom="41dp"
-                android:layout_weight="0"
-                android:elevation="0dp"
-                android:enabled="true"
-                android:fontFamily="@font/lato"
-                android:text="Войти" />
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="29dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lato"
-                    android:text="Забыли пароль?"
-                    android:textColor="#00A8FF"
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="29dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lato"
-                    android:gravity="end"
-                    android:text="Войти позже"
-                    android:textColor="#00A8FF"
-                    android:textSize="17sp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="29dp"
-                android:layout_marginTop="35dp"
-                android:layout_marginEnd="29dp"
-                android:layout_marginBottom="32dp"
-                android:layout_weight="0"
-                android:fontFamily="@font/lato"
-                android:gravity="center"
-                android:text="Подписываясь, вы принимаете условия пользовательского соглашения и политики конфедициальности"
-                android:textSize="10dp" />
-
-
-        </LinearLayout>
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="32dp"
+        android:layout_weight="0"
+        android:fontFamily="@font/lato"
+        android:gravity="center"
+        android:text="Подписываясь, вы принимаете условия пользовательского соглашения и политики конфедициальности"
+        android:textSize="10dp" />
+</LinearLayout>

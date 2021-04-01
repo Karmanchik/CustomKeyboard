@@ -10,27 +10,26 @@ import androidx.navigation.fragment.findNavController
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFavouritesContainerLikedBinding
-import house.with.swimmingpool.ui.favourites.searches.searchesBinding
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
 
-lateinit var binding: FragmentFavouritesContainerLikedBinding
+class LikedFragment : Fragment(){
 
-class LikedFragment : Fragment(R.layout.fragment_favourites_container_liked){
+    private var binding: FragmentFavouritesContainerLikedBinding? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?,
-    ): View {
+    ): View? {
 
         binding = FragmentFavouritesContainerLikedBinding.inflate(layoutInflater)
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.apply{
+        binding?.apply{
             showCatalogButton.setOnClickListener {
                 noObjectLayout.visibility = View.GONE
                 likedRV.visibility = View.VISIBLE
@@ -49,5 +48,10 @@ class LikedFragment : Fragment(R.layout.fragment_favourites_container_liked){
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        binding = null
+        super.onDestroy()
     }
 }
