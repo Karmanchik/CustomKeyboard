@@ -68,6 +68,14 @@ class CatalogFragment : Fragment() {
             }
         }
 
+        binding?.scroll?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (oldScrollY > scrollY) {
+                binding?.toFilter?.visibility = View.VISIBLE
+            } else {
+                binding?.toFilter?.visibility = View.GONE
+            }
+        }
+
         binding?.toFilter?.setOnClickListener {
             findNavController().navigate(R.id.action_catalogViewModel_to_fullFilterFragment)
         }
