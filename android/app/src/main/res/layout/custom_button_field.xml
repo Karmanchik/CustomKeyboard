@@ -28,6 +28,7 @@
         android:layout_height="0dp"
         android:background="@null"
         android:ems="10"
+        android:maxLines="1"
         android:fontFamily="@font/lato_regular"
         android:lineSpacingMultiplier="1.6"
         android:textColor="@color/black"
