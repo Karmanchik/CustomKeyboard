@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         }
     }
 
-    fun tabsVisibility(isVisible: Boolean) {
+    private fun tabsVisibility(isVisible: Boolean) {
         loginBinging.apply {
             if (isVisible) {
                 tabs.visibility = View.VISIBLE
@@ -72,14 +72,18 @@ class LoginActivity : AppCompatActivity(), ILoginView {
 
     private fun replaceFragmentWithoutTabs(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-                .replace(loginBinging.frameLoginWithoutTabs.id, fragment, fragment::class.java.simpleName)
-                .commit()
+            .add(
+                loginBinging.frameLoginWithoutTabs.id,
+                fragment,
+                fragment::class.java.simpleName
+            )
+            .commit()
     }
 
     private fun replaceFragmentByTabs(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-                .replace(loginBinging.frameLogin.id, fragment, fragment::class.java.simpleName)
-                .commit()
+            .replace(loginBinging.frameLogin.id, fragment, fragment::class.java.simpleName)
+            .commit()
     }
 
     override fun showSmsCodeFragment(phone: String) {

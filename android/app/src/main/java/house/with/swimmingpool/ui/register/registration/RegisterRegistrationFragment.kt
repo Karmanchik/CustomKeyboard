@@ -12,7 +12,8 @@ import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.login.ILoginView
 import house.with.swimmingpool.ui.login.LoginFragment
 
-class RegisterRegistrationFragment(val parentView: ILoginView): Fragment() {
+class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragment() {
+
     private var registerBinding: FragmentRegisterRegistrationBinding? = null
 
     override fun onCreateView(
@@ -30,13 +31,13 @@ class RegisterRegistrationFragment(val parentView: ILoginView): Fragment() {
         registerBinding?.apply {
             enterButton.setOnClickListener {
                 getCodeByPhone(
-                        phoneInput.text.toString()
+                    phoneInput.text.toString()
                 )
             }
         }
     }
 
-    private fun getCodeByPhone(number: String){
+    private fun getCodeByPhone(number: String) {
         Toast.makeText(requireContext(), number, Toast.LENGTH_SHORT).show()
         parentView.showSmsCodeFragment(number)
     }
