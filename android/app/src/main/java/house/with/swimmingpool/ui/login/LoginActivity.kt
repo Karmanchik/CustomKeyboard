@@ -102,7 +102,7 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         replaceFragmentWithoutTabs(RegisterSetPasswordFragment(this))
     }
 
-    override fun onLoginSuccess(name: String) {
+    override fun onLoginSuccess(name: String?) {
         replaceFragmentWithoutTabs(RegisterLoginSuccessFragment(name))
     }
 }

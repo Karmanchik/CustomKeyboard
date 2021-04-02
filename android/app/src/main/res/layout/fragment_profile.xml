@@ -17,13 +17,15 @@
         android:layout_gravity="center">
 
         <ImageView
-            android:id="@+id/avatar"
+            android:id="@+id/avatarImageView"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             app:srcCompat="@drawable/circle_placeholder"
             android:layout_gravity="center"/>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +53,7 @@
         android:paddingBottom="0dp"
         app:buttonMode="true"
         app:passwordMode="false"
-        android:id="@+id/variable_et"
+        android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -65,7 +67,7 @@
         app:buttonMode="true"
         app:passwordMode="false"
         android:textCursorDrawable="@null"
-        android:id="@+id/variable_et2"
+        android:id="@+id/surnameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -78,7 +80,7 @@
         app:buttonMode="true"
         app:passwordMode="false"
         android:textCursorDrawable="@null"
-        android:id="@+id/variable_et3"
+        android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -102,7 +104,7 @@
     app:layout_constraintTop_toTopOf="parent" />
 
     <br.com.sapereaude.maskedEditText.MaskedEditText
-        android:id="@+id/phone_input_consultation"
+        android:id="@+id/phoneEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"
@@ -129,7 +131,7 @@
         android:background="?android:attr/listDivider" />
 
     <TextView
-        android:id="@+id/textView38"
+        android:id="@+id/closeProfileButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"

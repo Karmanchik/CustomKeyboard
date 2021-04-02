@@ -41,23 +41,24 @@ class CabinetFragment : Fragment() {
             requireActivity().startActivity<LoginActivity> {  }
         }
 
-        binding?.tabs?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                val fragment = when (tab.position) {
-                    0 -> ProfileFragment()
-                    else -> PasswordFragment()
+        binding?.apply {
+            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    val fragment = when (tab.position) {
+                        0 -> ProfileFragment()
+                        else -> PasswordFragment()
+                    }
+                    childFragmentManager.transaction {
+                        replace(frameCabinet.id, fragment)
+                    }
                 }
-                childFragmentManager.transaction {
-                    replace(R.id.frame, fragment)
-                }
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+                override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
 
-            override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+                override fun onTabReselected(tab: TabLayout.Tab?) = Unit
 
-        })
-
+            })
+        }
     }
 
 }

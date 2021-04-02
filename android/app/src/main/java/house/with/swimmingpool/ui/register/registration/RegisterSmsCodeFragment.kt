@@ -3,11 +3,14 @@ package house.with.swimmingpool.ui.register.registration
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import house.with.swimmingpool.App
 import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentRegisterSmsCodeBinding
 import house.with.swimmingpool.ui.login.ILoginView
@@ -31,32 +34,94 @@ class RegisterSmsCodeFragment(
         return registerSmsCodeBinding?.root
     }
 
+    private var smsCodFromServer : String? = null
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerSmsCodeBinding?.apply {
             AuthServiceImpl().registerUserFirst(phone) { data, e ->
+
+                titleTextView.text = "Подтвердите номер телефона $phone, введите код из смс"
+
                 if (e == null && data != null) {
 
-                    titleTextView.text = "Подтвердите номер телефона $phone, введите код из смс"
+                    smsCodFromServer = data.data?.text
+
+                    Toast.makeText(
+                            requireContext(),
+                            "ваш код $smsCodFromServer",
+                            Toast.LENGTH_LONG)
+                            .show()
+
+                    Log.e("testingSmsCode", "phone is $phone")
+                    Log.e("testingSmsCode", "SMS code is $smsCodFromServer")
+
                     inputSmsCod.doOnTextChanged { text, start, before, count ->
+
                         setErrorText(isVisible = false)
-                        if (text?.noAsterisks()?.length == 4) {
-                            if (("Ваш код: ${text.noAsterisks()}") == data.data.text) {
-                                parentView.onSmsCodeCorrect()
+
+                        Log.e("testingSmsCode", "phone is $text")
+
+                        if (text?.noAsterisks()?.length == 5) {
+
+                            if ((text.noAsterisks()) == smsCodFromServer) {
+                                inputSmsCod.isEnabled = false
+                                confirmSmsCodeOnTheServer(text.noAsterisks())
                             } else {
                                 setErrorText("Неверный код, попробуйте снова")
                             }
+
+                        }else{
+//                            TODO("action if the sms code is not correct")
                         }
                     }
+
+                }else{
+//                    TODO("do something if the server have bug")
+                    Toast.makeText(requireContext(), "номер уже используется!", Toast.LENGTH_LONG).show()
+                    refresh(true)
+                    setErrorText("номер уже используется!")
+                    getNewSmsCodeButton.visibility = View.GONE
                 }
             }
-            refreshButton.setOnClickListener {
-                refresh(false)
+            getNewSmsCodeButton.setOnClickListener {
+                getNewSmsCode()
             }
         }
 
         setCountDownTimer()
+    }
+
+    private fun confirmSmsCodeOnTheServer(smsCode: String) {
+        AuthServiceImpl().confirmBySmsCode(phone, smsCode) { data, e ->
+
+            if (e == null && data != null) {
+                Log.e("RegisterSecond", "user id = ${data.user?.id}")
+                App.setting.user = data.user
+                parentView.onSmsCodeCorrect()
+            } else {
+//            TODO("do this, if the confirmation of the sms code via the server has failed")
+            }
+        }
+    }
+
+    private fun getNewSmsCode() {
+        AuthServiceImpl().getSmsCodeAgain(phone) { data, e ->
+
+            if (e == null && data != null) {
+                Toast.makeText(
+                        requireContext(),
+                        "ваш код ${data.text}",
+                        Toast.LENGTH_LONG)
+                        .show()
+                refresh(false)
+
+                smsCodFromServer = data.text
+            }else{
+                TODO( "if the sms code didn't gat from the server")
+            }
+        }
     }
 
     private fun refresh( isTimeUp: Boolean ){
@@ -64,13 +129,14 @@ class RegisterSmsCodeFragment(
             if(isTimeUp){
                 inputSmsCod.isEnabled = false
                 setErrorText("Срок действия кода истек")
-                refreshButton.visibility = View.VISIBLE
+                getNewSmsCodeButton.visibility = View.VISIBLE
                 timerTextView.visibility = View.GONE
             }else{
+
                 inputSmsCod.isEnabled = true
                 inputSmsCod.text?.clear()
                 setErrorText(isVisible = false)
-                refreshButton.visibility = View.GONE
+                getNewSmsCodeButton.visibility = View.GONE
                 timerTextView.visibility = View.VISIBLE
                 setCountDownTimer()
             }
@@ -86,7 +152,7 @@ class RegisterSmsCodeFragment(
                 }
 
                 override fun onFinish() {
-//                    refresh(true)
+                    refresh(true)
                 }
             }
             timer.start()

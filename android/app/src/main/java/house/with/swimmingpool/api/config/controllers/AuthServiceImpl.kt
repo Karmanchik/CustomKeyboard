@@ -49,4 +49,42 @@ class AuthServiceImpl {
                     }
                 })
     }
+
+    fun confirmBySmsCode(phone: String, code: String, onLoaded: (data: AuthRegisterSecondData?, e: Throwable?) -> Unit){
+        getRetrofit().create(IAuthLogin :: class.java)
+                .confirmBySmsCode(APIKEY ,phone, code)
+                .enqueue(object : Callback<AuthRegisterSecond> {
+                    override fun onResponse(call: Call<AuthRegisterSecond>, response: Response<AuthRegisterSecond>) {
+                        try{
+                            onLoaded.invoke(response.body()?.data, null)
+                        }catch (e:Exception){}
+                    }
+
+                    override fun onFailure(call: Call<AuthRegisterSecond>, t: Throwable) {
+                        try{
+                            onLoaded.invoke(null, t)
+                            Log.e("RegisterSecond", "Error:", t)
+                        }catch (e:Exception){}
+                    }
+                })
+    }
+
+    fun getSmsCodeAgain(phone: String, onLoaded: (data: CodeData?, e: Throwable?) -> Unit){
+        getRetrofit().create(IAuthLogin :: class.java)
+                .getSmsCodeAgain(APIKEY ,phone)
+                .enqueue(object : Callback<Code> {
+                    override fun onResponse(call: Call<Code>, response: Response<Code>) {
+                        try{
+                            onLoaded.invoke(response.body()?.data, null)
+                        }catch (e:Exception){}
+                    }
+
+                    override fun onFailure(call: Call<Code>, t: Throwable) {
+                        try{
+                            onLoaded.invoke(null, t)
+                            Log.e("registerTest", "SMSError:", t)
+                        }catch (e:Exception){}
+                    }
+                })
+    }
 }

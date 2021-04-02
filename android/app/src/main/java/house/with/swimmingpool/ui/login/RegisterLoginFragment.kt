@@ -53,7 +53,7 @@ class RegisterLoginFragment(
             if (e == null && data != null) {
                 App.setting.token = data.token
                 App.setting.user = data.user
-                parentView.onLoginSuccess(data.user.name)
+                parentView.onLoginSuccess(data.user?.name)
             } else {
                 Log.e("loginTest", "error", e)
                 setErrorNotification("Неверный номер или пароль, попробуйте снова")

@@ -39,6 +39,7 @@ class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragmen
     }
 
     private fun checkPhoneNumberForMatches(number: String) {
+//        TODO("check the phone number using the server ")
         if (number != "+7(000)000-00-00") {
             parentView.showSmsCodeFragment(number)
         } else {
