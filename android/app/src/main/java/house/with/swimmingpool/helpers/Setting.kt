@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.models.User
 import house.with.swimmingpool.models.request.FilterObjectsRequest
 
 class Setting(ctx: Context) {
@@ -15,6 +16,10 @@ class Setting(ctx: Context) {
     var token: String?
         get() = pref.getString(Keys.TOKEN, null)
         set(value) = pref.edit { putString(Keys.TOKEN, value) }
+
+    var user: User?
+        get() = Gson().fromJson(pref.getString(Keys.USER, null), User::class.java)
+        set(value) = pref.edit { putString(Keys.USER, Gson().toJson(value)) }
 
     val isAuth: Boolean
         get() = token != null
@@ -44,6 +49,7 @@ class Setting(ctx: Context) {
         App.database?.eventsDao()?.getById(id)
 
     object Keys {
+        const val USER = "USER"
         const val TOKEN = "TOKEN"
         const val FILTER = "FILTER"
         const val FILTER_VARIANTS = "FILTER_VARIANTS"

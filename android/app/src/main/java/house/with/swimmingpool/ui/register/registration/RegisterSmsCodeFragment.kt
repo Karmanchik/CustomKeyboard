@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentRegisterSmsCodeBinding
 import house.with.swimmingpool.ui.login.ILoginView
 import house.with.swimmingpool.ui.noAsterisks
 
 class RegisterSmsCodeFragment(
         private val phone: String,
-        private val smsCode: String,
         private val parentView: ILoginView
         ): Fragment() {
 
@@ -35,18 +35,22 @@ class RegisterSmsCodeFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerSmsCodeBinding?.apply {
-            titleTextView.text = "Подтвердите номер телефона $phone, введите код из смс"
-            inputSmsCod.doOnTextChanged { text, start, before, count ->
-                setErrorText(isVisible = false)
-                if (text?.noAsterisks()?.length == 4) {
-                    if (text.noAsterisks() == smsCode) {
-                        parentView.onSmsCodeCorrect()
-                    } else {
-                        setErrorText("Неверный код, попробуйте снова")
+            AuthServiceImpl().registerUserFirst(phone) { data, e ->
+                if (e == null && data != null) {
+
+                    titleTextView.text = "Подтвердите номер телефона $phone, введите код из смс"
+                    inputSmsCod.doOnTextChanged { text, start, before, count ->
+                        setErrorText(isVisible = false)
+                        if (text?.noAsterisks()?.length == 4) {
+                            if (("Ваш код: ${text.noAsterisks()}") == data.data.text) {
+                                parentView.onSmsCodeCorrect()
+                            } else {
+                                setErrorText("Неверный код, попробуйте снова")
+                            }
+                        }
                     }
                 }
             }
-
             refreshButton.setOnClickListener {
                 refresh(false)
             }
@@ -82,7 +86,7 @@ class RegisterSmsCodeFragment(
                 }
 
                 override fun onFinish() {
-                    refresh(true)
+//                    refresh(true)
                 }
             }
             timer.start()

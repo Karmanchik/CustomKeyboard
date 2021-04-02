@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.App
+import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentRegisterLoginBinding
 
 class RegisterLoginFragment(
@@ -46,12 +47,18 @@ class RegisterLoginFragment(
     }
 
     private fun loginUser(phone: String, password: String) {
-            if (phone == "+7(000)000-00-00" && password == "test") {
-                App.setting.token = "test"
-                parentView.onLoginSuccess("Алина")
-            }else{
+        AuthServiceImpl().loginUser(phone, password,)
+        { data, e ->
+            Log.e("loginTest", "data : $data")
+            if (e == null && data != null) {
+                App.setting.token = data.token
+                App.setting.user = data.user
+                parentView.onLoginSuccess(data.user.name)
+            } else {
+                Log.e("loginTest", "error", e)
                 setErrorNotification("Неверный номер или пароль, попробуйте снова")
             }
+        }
     }
 
     private fun setErrorNotification( text: String = "", isVisible: Boolean = true){

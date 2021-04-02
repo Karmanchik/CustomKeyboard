@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit
 
 val mainRetrofit by lazy { getRetrofit() }
 
+val APIKEY = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
+
 fun getRetrofit(): Retrofit {
         val baseUrl = "https://domsbasseinom.ru/app/"
         val interceptor = HttpLoggingInterceptor()

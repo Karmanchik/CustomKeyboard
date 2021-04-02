@@ -1,19 +1,14 @@
 package house.with.swimmingpool.ui.register.registration
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentRegisterRegistrationBinding
-import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.login.ILoginView
-import house.with.swimmingpool.ui.login.LoginFragment
 
 class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragment() {
 
@@ -34,7 +29,7 @@ class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragmen
         registerBinding?.apply {
             enterButton.setOnClickListener {
                 if (phoneInput.text?.length == 16) {
-                    getCodeByPhone(phoneInput.text.toString())
+                    checkPhoneNumberForMatches(phoneInput.text.toString())
                 }
                 phoneInput.doOnTextChanged { _, _, _, _ ->
                     setErrorText(isVisible = false)
@@ -43,8 +38,7 @@ class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragmen
         }
     }
 
-    private fun getCodeByPhone(number: String) {
-        Toast.makeText(requireContext(), "sms code is 0000", Toast.LENGTH_SHORT).show()
+    private fun checkPhoneNumberForMatches(number: String) {
         if (number != "+7(000)000-00-00") {
             parentView.showSmsCodeFragment(number)
         } else {

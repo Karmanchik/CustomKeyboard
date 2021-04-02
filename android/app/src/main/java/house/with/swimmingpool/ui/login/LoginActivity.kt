@@ -95,7 +95,7 @@ class LoginActivity : AppCompatActivity(), ILoginView {
     }
 
     override fun showSmsCodeFragment(phone: String) {
-        replaceFragmentWithoutTabs(RegisterSmsCodeFragment(phone, "0000", this@LoginActivity))
+        replaceFragmentWithoutTabs(RegisterSmsCodeFragment(phone, this@LoginActivity))
     }
 
     override fun onSmsCodeCorrect() {
