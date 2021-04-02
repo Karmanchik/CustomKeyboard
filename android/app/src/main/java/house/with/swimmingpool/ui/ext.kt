@@ -111,3 +111,13 @@ inline fun <reified A : Activity> Context.startActivity(configIntent: Intent.() 
 inline fun <reified A : Activity> Fragment.startActivity(configIntent: Intent.() -> Unit = {}) {
     startActivity(Intent(requireContext(), A::class.java).apply(configIntent))
 }
+
+fun CharSequence.noAsterisks(): String{
+    var textWithoutAsterisks = ""
+    this.forEach {
+        if (it != '*'){
+            textWithoutAsterisks += it
+        }
+    }
+    return textWithoutAsterisks
+}

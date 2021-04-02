@@ -10,26 +10,25 @@ import house.with.swimmingpool.databinding.FragmentFavouritesContainerSearchesBi
 import house.with.swimmingpool.models.HouseOptions
 import house.with.swimmingpool.ui.favourites.adapters.FavoritesContainerSearchesAdapter
 
-
-lateinit var searchesBinding: FragmentFavouritesContainerSearchesBinding
-
 class SearchesFragment : Fragment(R.layout.fragment_favourites_container_searches) {
+
+    private var searchesBinding: FragmentFavouritesContainerSearchesBinding? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?,
-    ): View {
+    ): View? {
 
         searchesBinding = FragmentFavouritesContainerSearchesBinding.inflate(layoutInflater)
 
-        return searchesBinding.root
+        return searchesBinding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchesBinding.apply {
+        searchesBinding?.apply {
             showCatalogButton.setOnClickListener {
 
                 noObjectLayout.visibility = View.GONE
@@ -42,6 +41,11 @@ class SearchesFragment : Fragment(R.layout.fragment_favourites_container_searche
             }
         }
 
+    }
+
+    override fun onDestroy() {
+        searchesBinding = null
+        super.onDestroy()
     }
 
 }
