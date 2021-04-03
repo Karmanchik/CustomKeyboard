@@ -99,9 +99,6 @@
         <action
             android:id="@+id/action_catalogViewModel_to_fullFilterFragment"
             app:destination="@id/fullFilterFragment" />
-        <action
-            android:id="@+id/action_catalogViewModel_to_saveFilterFragment"
-            app:destination="@id/saveFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/houseFragment"
@@ -158,10 +155,6 @@
         android:name="house.with.swimmingpool.ui.search.SearchActivity"
         android:label="activity_search"
         tools:layout="@layout/activity_search" />
-    <fragment
-        android:id="@+id/saveFilterFragment"
-        android:name="house.with.swimmingpool.ui.savefilter.SaveFilterFragment"
-        android:label="SaveFilterFragment" />
     <fragment
         android:id="@+id/collectionFragment"
         android:name="house.with.swimmingpool.ui.collection.CollectionFragment"
