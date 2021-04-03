@@ -1,6 +1,7 @@
 package house.with.swimmingpool.ui.house
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -21,6 +22,7 @@ import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.ui_view.ViewProvider
+import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentHouseBinding
@@ -28,6 +30,7 @@ import house.with.swimmingpool.models.HouseExampleData
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 import house.with.swimmingpool.ui.house.adapters.*
 import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
+import house.with.swimmingpool.ui.popups.PopupActivity
 
 class HouseFragment : Fragment(), ISingleHouseView {
 
@@ -101,6 +104,22 @@ class HouseFragment : Fragment(), ISingleHouseView {
     fun showHome(singleHouseObject: HouseExampleData) {
         try {
             houseObjectBinding?.apply {
+
+                sendRequestButton.setOnClickListener {
+                    startActivity(
+                        Intent(requireContext(), PopupActivity :: class.java).apply {
+                            putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
+                        }
+                    )
+                }
+
+                buttonCollMe.setOnClickListener {
+                    startActivity(
+                        Intent(requireContext(), PopupActivity :: class.java).apply {
+                            putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
+                        }
+                    )
+                }
 
                 houseExampleData = singleHouseObject
 
@@ -215,6 +234,16 @@ class HouseFragment : Fragment(), ISingleHouseView {
                                 youTubePlayerView.enterFullScreen()
                                 youTubePlayerView.exitFullScreen()
                                 youTubePlayerView.enterFullScreen()
+                            }
+
+                            nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                                if (videoLayout.bottom in (oldScrollY + 1) until scrollY) {
+                                    youTubePlayer.pause()
+                                }
+
+                                if (videoLayout.top - videoLayout.height in (scrollY + 1) until oldScrollY) {
+                                    youTubePlayer.pause()
+                                }
                             }
                         }
                     })
