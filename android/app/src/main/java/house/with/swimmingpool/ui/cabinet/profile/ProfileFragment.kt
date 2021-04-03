@@ -11,6 +11,7 @@ import android.widget.ImageView
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -46,7 +47,7 @@ class ProfileFragment : Fragment() {
 
             closeProfileButton.setOnClickListener {
                 App.setting.token = null
-                requireActivity().recreate()
+                findNavController().navigate(R.id.action_cabinetFragment_to_navigation_home)
             }
 
             avatarImageView.setOnClickListener {

@@ -54,14 +54,11 @@ class RegisterSmsCodeFragment(
                             Toast.LENGTH_LONG)
                             .show()
 
-                    Log.e("testingSmsCode", "phone is $phone")
-                    Log.e("testingSmsCode", "SMS code is $smsCodFromServer")
-
                     inputSmsCod.doOnTextChanged { text, start, before, count ->
 
                         setErrorText(isVisible = false)
 
-                        Log.e("testingSmsCode", "phone is $text")
+                        Log.e("testingSmsCode", "phone is ${inputSmsCod.text}")
 
                         if (text?.noAsterisks()?.length == 5) {
 
@@ -79,7 +76,6 @@ class RegisterSmsCodeFragment(
 
                 }else{
 //                    TODO("do something if the server have bug")
-                    Toast.makeText(requireContext(), "номер уже используется!", Toast.LENGTH_LONG).show()
                     refresh(true)
                     setErrorText("номер уже используется!")
                     getNewSmsCodeButton.visibility = View.GONE

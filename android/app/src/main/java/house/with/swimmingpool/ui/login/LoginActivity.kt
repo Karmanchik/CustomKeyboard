@@ -51,10 +51,28 @@ class LoginActivity : AppCompatActivity(), ILoginView {
                 override fun onTabReselected(tab: TabLayout.Tab?) = Unit
 
             })
+
+            loginBackIcon.setOnClickListener {
+                popBackStack()
+            }
         }
 
         loginBinging.tabs.getTabAt(1)?.select()
         loginBinging.tabs.getTabAt(0)?.select()
+    }
+
+    private fun popBackStack(){
+        when(supportFragmentManager.fragments.last()){
+            is RegisterLoginFragment -> {
+                finish()
+            }
+            is RegisterRegistrationFragment -> {
+                finish()
+            }
+            else -> {
+                replaceFragmentByTabs(RegisterLoginFragment(this))
+            }
+        }
     }
 
     private fun tabsVisibility(isVisible: Boolean) {

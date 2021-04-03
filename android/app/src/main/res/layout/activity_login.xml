@@ -19,6 +19,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_weight="0">
+            <ImageView
+
+                android:id="@+id/loginBackIcon"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="50dp"
+                android:adjustViewBounds="true"
+                android:elevation="2dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_back_arrow_white" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"

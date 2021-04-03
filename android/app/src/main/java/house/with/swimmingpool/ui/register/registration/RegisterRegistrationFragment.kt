@@ -1,6 +1,7 @@
 package house.with.swimmingpool.ui.register.registration
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,9 +29,9 @@ class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragmen
 
         registerBinding?.apply {
             enterButton.setOnClickListener {
-                if (phoneInput.text?.length == 16) {
-                    checkPhoneNumberForMatches(phoneInput.text.toString())
-                }
+
+                checkPhoneNumberForMatches(phoneInput.text.toString())
+
                 phoneInput.doOnTextChanged { _, _, _, _ ->
                     setErrorText(isVisible = false)
                 }
@@ -40,10 +41,17 @@ class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragmen
 
     private fun checkPhoneNumberForMatches(number: String) {
 //        TODO("check the phone number using the server ")
-        if (number != "+7(000)000-00-00") {
-            parentView.showSmsCodeFragment(number)
-        } else {
-            setErrorText("Этот телефон уже зарегистрирован. Попробуйте войти")
+        registerBinding?.apply {
+
+            if (phoneInput.rawText?.length == 10) {
+                if (number != "+7(000)000-00-00") {
+                    parentView.showSmsCodeFragment(number)
+                } else {
+                    setErrorText("Этот телефон уже зарегистрирован. Попробуйте войти")
+                }
+            } else {
+                setErrorText("Введите корректный номер телефона")
+            }
         }
     }
 
