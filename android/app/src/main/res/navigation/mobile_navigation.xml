@@ -99,6 +99,9 @@
         <action
             android:id="@+id/action_catalogViewModel_to_fullFilterFragment"
             app:destination="@id/fullFilterFragment" />
+        <action
+            android:id="@+id/action_catalogViewModel_to_saveFilterFragment"
+            app:destination="@id/saveFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/houseFragment"
@@ -123,6 +126,9 @@
         <action
             android:id="@+id/action_favouritesFragment_to_houseFragment"
             app:destination="@id/houseFragment" />
+        <action
+            android:id="@+id/action_favouritesFragment_to_collectionFragment"
+            app:destination="@id/collectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -152,4 +158,16 @@
         android:name="house.with.swimmingpool.ui.search.SearchActivity"
         android:label="activity_search"
         tools:layout="@layout/activity_search" />
+    <fragment
+        android:id="@+id/saveFilterFragment"
+        android:name="house.with.swimmingpool.ui.savefilter.SaveFilterFragment"
+        android:label="SaveFilterFragment" />
+    <fragment
+        android:id="@+id/collectionFragment"
+        android:name="house.with.swimmingpool.ui.collection.CollectionFragment"
+        android:label="CollectionFragment" >
+        <action
+            android:id="@+id/action_collectionFragment_to_houseFragment"
+            app:destination="@id/houseFragment" />
+    </fragment>
 </navigation>

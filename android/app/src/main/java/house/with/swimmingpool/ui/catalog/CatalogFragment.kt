@@ -15,6 +15,7 @@ import house.with.swimmingpool.databinding.FragmentCatalogBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
+import house.with.swimmingpool.ui.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -85,6 +86,14 @@ class CatalogFragment : Fragment() {
                 data?.let { list ->
                     showList(list.toMutableList())
                 }
+            }
+        }
+
+        binding?.addFilter?.setOnClickListener {
+            if (App.setting.filterConfig == null) {
+                toast("Установите фильтр для сохранения!")
+            } else {
+                findNavController().navigate(R.id.action_catalogViewModel_to_saveFilterFragment)
             }
         }
     }
