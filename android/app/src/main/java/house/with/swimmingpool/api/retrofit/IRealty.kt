@@ -34,21 +34,24 @@ interface IRealty {
     @GET("fav")
     fun getMyFavourites(
         @Header("Authorization") token: String? = App.setting.apiToken,
-        @Header("phone") phone: String? = App.setting.phone
+        @Header("phone") phone: String? = App.setting.phone,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<ListAnswer<HouseCatalogData>>
 
     @PUT("fav/{id}")
     fun addToFavourites(
         @Header("Authorization") token: String? = App.setting.apiToken,
         @Header("phone") phone: String? = App.setting.phone,
-        @Path("id") id: String
+        @Path("id") id: String,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<Stub>>
 
     @DELETE("fav/{id}")
     fun removeFromFavourites(
         @Header("Authorization") token: String? = App.setting.apiToken,
         @Header("phone") phone: String? = App.setting.phone,
-        @Path("id") id: String
+        @Path("id") id: String,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<Stub>>
 
 
@@ -57,21 +60,24 @@ interface IRealty {
     @GET("searches")
     fun getSearches(
         @Header("Authorization") token: String? = App.setting.apiToken,
-        @Header("phone") phone: String? = App.setting.phone
+        @Header("phone") phone: String? = App.setting.phone,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<List<Search>>>
 
     @GET("searches/{id}")
     fun getSearch(
         @Header("Authorization") token: String? = App.setting.apiToken,
         @Header("phone") phone: String? = App.setting.phone,
-        @Path("id") id: String
+        @Path("id") id: String,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<Search>>
 
     @DELETE("searches/{id}")
     fun deleteSearch(
         @Header("Authorization") token: String? = App.setting.apiToken,
         @Header("phone") phone: String? = App.setting.phone,
-        @Path("id") id: String
+        @Path("id") id: String,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<Stub>>
 
     @FormUrlEncoded
@@ -80,7 +86,8 @@ interface IRealty {
         @Header("Authorization") token: String? = App.setting.apiToken,
         @Header("phone") phone: String? = App.setting.phone,
         @Field("name") name: String,
-        @Field("config") filter: String?
+        @Field("config") filter: String?,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<Stub>>
 
     @PUT("searches/{id}")
@@ -89,7 +96,8 @@ interface IRealty {
         @Header("phone") phone: String? = App.setting.phone,
         @Path("id") id: String,
         @Field("name") name: String,
-        @Field("config") filter: String?
+        @Field("config") filter: String?,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<Stub>>
 
 
@@ -98,14 +106,16 @@ interface IRealty {
     @GET("collections")
     fun getCollections(
         @Header("Authorization") token: String? = App.setting.apiToken,
-        @Header("phone") phone: String? = App.setting.phone
+        @Header("phone") phone: String? = App.setting.phone,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<List<ShortCollection>>>
 
     @GET("collections/{id}")
     fun getCollection(
         @Header("Authorization") token: String? = App.setting.apiToken,
         @Header("phone") phone: String? = App.setting.phone,
-        @Path("id") id: String
+        @Path("id") id: String,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<Stub>> // todo
 
 

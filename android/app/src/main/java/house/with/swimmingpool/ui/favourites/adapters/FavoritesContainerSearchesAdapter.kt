@@ -1,15 +1,14 @@
 package house.with.swimmingpool.ui.favourites.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.databinding.ItemSearchedBinding
-import house.with.swimmingpool.models.HouseOptions
+import house.with.swimmingpool.models.Search
 
 class FavoritesContainerSearchesAdapter(
-    var ctx : Context,
-    var items: List<HouseOptions>
+    var items: List<Search>,
+    val openSearch: (Search) -> Unit
 ) : RecyclerView.Adapter<FavoritesContainerSearchesAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -25,7 +24,10 @@ class FavoritesContainerSearchesAdapter(
     inner class Holder(private val view: ItemSearchedBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun bind(position: Int) {
-            view.TagRV.adapter = SearchTagAdapter(ctx, items[position].options)
+            itemView.setOnClickListener {
+                openSearch.invoke(items[position])
+            }
+//            view.TagRV.adapter = SearchTagAdapter(ctx, items[position].)
         }
     }
 

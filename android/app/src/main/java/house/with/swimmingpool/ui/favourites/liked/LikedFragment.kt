@@ -7,19 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFavouritesContainerLikedBinding
+import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
 
-class LikedFragment : Fragment(){
+class LikedFragment : Fragment() {
 
     private var binding: FragmentFavouritesContainerLikedBinding? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
 
         binding = FragmentFavouritesContainerLikedBinding.inflate(layoutInflater)
@@ -29,24 +31,30 @@ class LikedFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.apply{
-            showCatalogButton.setOnClickListener {
-                noObjectLayout.visibility = View.GONE
-                likedRV.visibility = View.VISIBLE
-                RealtyServiceImpl().getHouseCatalog { data, e ->
-                    if (e == null && data != null) {
-                        likedRV.adapter =
-                            CatalogAdapter(data, requireContext()) {
-                                val bundle = Bundle().apply {
-                                    putInt("house", it)
-                                }
-                                findNavController().navigate(R.id.action_favouritesFragment_to_houseFragment, bundle)
-                            }
-                    } else {
-                        Log.e("taf", e.toString())
-                    }
+
+        binding?.showCatalogButton?.setOnClickListener {
+            findNavController().navigate(R.id.action_favouritesFragment_to_catalogViewModel)
+        }
+
+        RealtyServiceImpl().getMyFavourites { data, e ->
+            showData(data?.list ?: listOf())
+        }
+    }
+
+    private fun showData(list: List<HouseCatalogData>) {
+        binding?.apply {
+            noObjectLayout.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+            likedRV.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
+
+            likedRV.adapter =
+                CatalogAdapter(list.map { it as Any }, requireContext()) { homeId ->
+                    val home = list.firstOrNull { it.id == homeId }
+                    val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                    findNavController().navigate(
+                        R.id.action_favouritesFragment_to_houseFragment,
+                        bundle
+                    )
                 }
-            }
         }
     }
 

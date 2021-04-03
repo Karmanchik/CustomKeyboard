@@ -129,6 +129,9 @@
         <action
             android:id="@+id/action_favouritesFragment_to_collectionFragment"
             app:destination="@id/collectionFragment" />
+        <action
+            android:id="@+id/action_favouritesFragment_to_catalogViewModel"
+            app:destination="@id/catalogViewModel" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"

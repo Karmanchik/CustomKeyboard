@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import house.with.swimmingpool.R
+import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentCollectionsListBinding
-import house.with.swimmingpool.models.CollectionItem
+import house.with.swimmingpool.models.ShortCollection
 
 class CollectionsListFragment : Fragment() {
 
@@ -31,18 +32,30 @@ class CollectionsListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.apply {
-
-            listRV.adapter = CollectionsAdapter(
-                items = listOf(CollectionItem(), CollectionItem()),
-                onItemSearch = {
-                    val bundle = Bundle().apply { putString("id", "12") }
-                    findNavController().navigate(R.id.action_favouritesFragment_to_collectionFragment)
-                },
-                onOpenMenu = {}
-            )
-
+        binding?.showCatalogButton?.setOnClickListener {
+            findNavController().navigate(R.id.action_favouritesFragment_to_catalogViewModel)
         }
+
+        RealtyServiceImpl().getCollections { data, e ->
+            showData(data ?: listOf())
+        }
+    }
+
+    private fun showData(list: List<ShortCollection>) {
+
+        binding?.apply {
+            emptyStub.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+            content.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
+        }
+
+        binding?.listRV?.adapter = CollectionsAdapter(
+            items = list,
+            onItemSearch = {
+                val bundle = Bundle().apply { putInt("id", it.id ?: 0) }
+                findNavController().navigate(R.id.action_favouritesFragment_to_collectionFragment, bundle)
+            },
+            onOpenMenu = {}
+        )
     }
 
 }

@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import house.with.swimmingpool.App
 import house.with.swimmingpool.R
+import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.RangeSaveFilterBinding
+import house.with.swimmingpool.ui.toast
 
 class SaveFilterFragment : BottomSheetDialogFragment() {
 
@@ -37,6 +40,20 @@ class SaveFilterFragment : BottomSheetDialogFragment() {
             closeIcon.setOnClickListener { dismiss() }
             name.doOnTextChanged { text, _, _, _ ->
                 counter.text = "${text?.length} из 100"
+            }
+            send.setOnClickListener {
+                if (name.text.toString().trim().isEmpty()) {
+                    toast("Введите название")
+                    return@setOnClickListener
+                }
+
+                val filter = App.setting.filterConfig ?: return@setOnClickListener
+
+                RealtyServiceImpl().addSearch(name.text.toString(), filter) { data, e ->
+                    if (e == null) {
+                        dismiss()
+                    }
+                }
             }
         }
     }
