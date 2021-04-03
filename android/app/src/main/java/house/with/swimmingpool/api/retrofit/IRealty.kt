@@ -102,7 +102,7 @@ interface IRealty {
     ): Call<Answer<List<ShortCollection>>>
 
     @GET("collections/{id}")
-    fun getCollections(
+    fun getCollection(
         @Header("Authorization") token: String? = App.setting.apiToken,
         @Header("phone") phone: String? = App.setting.phone,
         @Path("id") id: String
