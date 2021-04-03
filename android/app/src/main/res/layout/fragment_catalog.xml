@@ -17,10 +17,10 @@
 
         <ImageView
             android:id="@+id/back"
-            android:padding="5dp"
             android:layout_width="30dp"
             android:layout_height="38dp"
             android:layout_marginStart="7dp"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -49,7 +49,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView17"
+            android:id="@+id/sort"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="20dp"
@@ -135,16 +135,24 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
-        android:layout_marginTop="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/sortMenu"
         android:layout_width="233dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="100dp"
+        android:background="@drawable/sort_background"
+        android:elevation="15dp"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
             android:orientation="horizontal">
 
             <TextView
@@ -152,19 +160,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Сортировка" />
+                android:fontFamily="@font/lato_regular"
+                android:text="Сортировка"
+                android:textColor="#808080"
+                android:textSize="10sp" />
 
             <ImageView
-                android:id="@+id/imageView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:id="@+id/closeSort"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 app:srcCompat="@drawable/ic_close_mono" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -172,90 +183,91 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="По возрастанию цены" />
+                android:fontFamily="@font/lato_regular"
+                android:text="По возрастанию цены"
+                android:textColor="#00A8FF"
+                android:textSize="15sp" />
 
             <ImageView
                 android:id="@+id/imageView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 app:srcCompat="@drawable/ic_close_mono" />
         </LinearLayout>
 
         <View
-            android:id="@+id/divider12"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
+            android:layout_marginEnd="3dp"
+            android:background="#E6E6E6" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="По снижению цены" />
+                android:fontFamily="@font/lato_regular"
+                android:text="По снижению цены"
+                android:textColor="#00A8FF"
+                android:textSize="15sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 app:srcCompat="@drawable/ic_close_mono" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
+            android:layout_marginEnd="3dp"
+            android:background="#E6E6E6" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="По популярности" />
+                android:fontFamily="@font/lato_regular"
+                android:text="По популярности"
+                android:textColor="#00A8FF"
+                android:textSize="15sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/ic_close_mono" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
+            android:layout_marginEnd="3dp"
+            android:background="#E6E6E6" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="По рейтингу" />
+                android:fontFamily="@font/lato_regular"
+                android:text="По рейтингу"
+                android:textColor="#00A8FF"
+                android:textSize="15sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/ic_close_mono" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
