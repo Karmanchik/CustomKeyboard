@@ -17,6 +17,8 @@ class App: Application() {
         const val HOUSE_WITH_SWIMMING_POOL = "HOUSE_WITH_SWIMMING_POOL"
         const val SEND_REQUEST_CONSULTATION = "SEND_REQUEST_CONSULTATION"
         const val TYPE_OF_POPUP = "TYPE_OF_POPUP"
+        const val SIGN_OUT = "SIGN_OUT"
+        const val IS_SIGN_OUT = "IS_SIGN_OUT"
     }
 
     override fun onCreate() {

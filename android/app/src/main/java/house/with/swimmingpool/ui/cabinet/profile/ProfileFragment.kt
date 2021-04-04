@@ -20,6 +20,7 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentPasswordBinding
 import house.with.swimmingpool.databinding.FragmentProfileBinding
+import house.with.swimmingpool.ui.popups.PopupActivity
 
 class ProfileFragment : Fragment() {
 
@@ -27,6 +28,7 @@ class ProfileFragment : Fragment() {
 
     companion object {
         private const val GALLERY_REQUEST = 1
+        private const val SIGN_OUT_REQUEST = 2
     }
 
     private val user = App.setting.user
@@ -47,8 +49,12 @@ class ProfileFragment : Fragment() {
         profileBinding?.apply {
 
             closeProfileButton.setOnClickListener {
-                App.setting.token = null
-                findNavController().navigate(R.id.action_cabinetFragment_to_navigation_home)
+                startActivityForResult(
+                        Intent(requireContext(), PopupActivity :: class.java).apply {
+                            putExtra(App.TYPE_OF_POPUP, App.SIGN_OUT)
+                        },
+                        SIGN_OUT_REQUEST
+                )
             }
 
             avatarImageView.setOnClickListener {
@@ -97,6 +103,12 @@ class ProfileFragment : Fragment() {
                             .load(result.uri)
                             .circleCrop()
                             .into(avatarImageView)
+                }
+            }
+            if (requestCode == SIGN_OUT_REQUEST) {
+                if (requireActivity().intent.getBooleanExtra(App.IS_SIGN_OUT, true)) {
+                    App.setting.token = null
+                    findNavController().navigate(R.id.action_cabinetFragment_to_navigation_home)
                 }
             }
         }
