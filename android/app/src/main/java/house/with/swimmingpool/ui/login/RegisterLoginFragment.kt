@@ -30,18 +30,30 @@ class RegisterLoginFragment(
         super.onViewCreated(view, savedInstanceState)
 
         loginBinding?.apply{
-            enterButton.setOnClickListener {
-                loginUser(
-                        phoneInput.text.toString(),
-                        passwordInput.text.toString()
-                )
-            }
             phoneInput.doOnTextChanged { text, start, before, count ->
                 setErrorNotification(isVisible = false)
+                isFieldsAreFilled()
             }
 
             passwordInput.doOnTextChanged { text, start, before, count ->
                 setErrorNotification(isVisible = false)
+                isFieldsAreFilled()
+            }
+        }
+    }
+
+    private fun isFieldsAreFilled(){
+        loginBinding?.apply {
+            if (phoneInput.rawText?.length == 10 && passwordInput.rawText != ""){
+                enterButton.isEnabled = true
+                enterButton.setOnClickListener {
+                    loginUser(
+                            phoneInput.text.toString(),
+                            passwordInput.text.toString()
+                    )
+                }
+            }else{
+                enterButton.isEnabled = false
             }
         }
     }

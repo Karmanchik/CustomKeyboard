@@ -42,7 +42,7 @@ class SearchTagAdapter(
 
         fun bind(position: Int) {
             view.apply {
-                itemView.setOnClickListener { parentView.showInformation(buttonWhite.text.toString()) }
+                itemView.setOnClickListener { parentView.showInformation(position.toString()) }
                 buttonWhite.text = items[position]
             }
         }

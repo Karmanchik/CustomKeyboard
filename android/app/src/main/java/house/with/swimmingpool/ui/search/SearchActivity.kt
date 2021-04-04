@@ -17,6 +17,7 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.ActivitySearchBinding
+import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.home.HomeFragment
 import house.with.swimmingpool.ui.onRightDrawableClicked
@@ -89,10 +90,11 @@ class SearchActivity : AppCompatActivity(), ISearchView {
 
                 Handler().postDelayed({
                     if (lastCountInputTextChar == count && count != 0) {
-                        showSearchedList(text.toString())
+                        showSearchedList(
+                                FilterObjectsRequest(search = text.toString())
+                        )
                     }
                 }, 1000)
-
             }
 
             GlobalScope.launch(Dispatchers.IO) {
@@ -133,7 +135,12 @@ class SearchActivity : AppCompatActivity(), ISearchView {
 
     override fun showInformation(text: String) {
         searchBinding.apply {
-            inputText.setText(text)
+            showCatalogButton.isEnabled = true
+            showCatalogButton.text = "Ищем..."
+            searchFrame.visibility = View.INVISIBLE
+            progressBar.visibility = View.VISIBLE
+
+            showSearchedList(FilterObjectsRequest(advantages = listOf(text)))
         }
     }
 
@@ -142,14 +149,11 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         finish()
     }
 
+
     @SuppressLint("SetTextI18n")
-    private fun showSearchedList(searchWord: String) {
+    private fun showSearchedList(filter : FilterObjectsRequest) {
 
         searchBinding.apply {
-
-            Log.e("testing", searchWord)
-            val filter = FilterObjectsRequest(dir = searchWord)
-
             RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
                 try {
                     progressBar.visibility = View.GONE
@@ -165,7 +169,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                     }
 
 
-                    if (data != null && inputText.text.toString() != "") {
+                    if (data != null && (inputText.text.toString() != "" || filter.advantages != listOf(""))) {
                         App.setting.filterConfig = filter
                         App.setting.houses = data
 

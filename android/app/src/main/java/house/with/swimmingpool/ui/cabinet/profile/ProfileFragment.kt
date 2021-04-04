@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,7 +68,7 @@ class ProfileFragment : Fragment() {
             user?.apply {
                 nameEditText.value = name
                 emailEditText.value = email
-
+                phoneTest.setText(phone)
                 Glide.with(this@ProfileFragment)
                         .load(avatar)
                         .circleCrop()

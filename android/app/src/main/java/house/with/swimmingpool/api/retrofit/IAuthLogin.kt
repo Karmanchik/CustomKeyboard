@@ -21,7 +21,8 @@ interface IAuthLogin {
     @POST("auth/first")
     fun registerUser(
             @Header("api-key") apikey: String,
-            @Field("phone") phone: String
+            @Field("phone") phone: String,
+            @Field("context") type: String = "client"
     ): Call<AuthRegisterFirst>
 
     @FormUrlEncoded

@@ -17,10 +17,6 @@ class LoginActivity : AppCompatActivity(), ILoginView {
 
     private lateinit var loginBinging: ActivityLoginBinding
 
-//    companion object {
-//        val tabsFragment = MutableLiveData<Fragment>(RegisterLoginFragment(this))
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinging = ActivityLoginBinding.inflate(layoutInflater)

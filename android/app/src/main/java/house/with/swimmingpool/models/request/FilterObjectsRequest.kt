@@ -22,5 +22,6 @@ data class FilterObjectsRequest(
     var square_all_from: String? = null,
     var square_all_to: String? = null,
     var start: Int = 0,
+    var search: String? = null,
     var types: List<String>? = null
 )
