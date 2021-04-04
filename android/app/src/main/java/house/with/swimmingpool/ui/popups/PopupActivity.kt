@@ -13,6 +13,7 @@ class PopupActivity : AppCompatActivity() {
     lateinit var popupBinding: ActivityPopupBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        TODO("on real device popup have black background")
         popupBinding = ActivityPopupBinding.inflate(layoutInflater)
         setContentView(popupBinding.root)
 

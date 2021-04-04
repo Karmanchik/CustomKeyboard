@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.databinding.ItemCollectionBinding
 import house.with.swimmingpool.models.CollectionItem
+import house.with.swimmingpool.models.ShortCollection
 
 class CollectionsAdapter(
-    var items: List<CollectionItem>,
-    var onItemSearch: (CollectionItem) -> Unit,
-    var onOpenMenu: (CollectionItem) -> Unit
+    var items: List<ShortCollection>,
+    var onItemSearch: (ShortCollection) -> Unit,
+    var onOpenMenu: (ShortCollection) -> Unit
 ) : RecyclerView.Adapter<CollectionsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,7 +25,7 @@ class CollectionsAdapter(
 
     inner class ViewHolder(private val view: ItemCollectionBinding) : RecyclerView.ViewHolder(view.root) {
 
-        fun bind(item: CollectionItem) {
+        fun bind(item: ShortCollection) {
             view.textView8.setOnClickListener { onItemSearch.invoke(item) }
         }
     }

@@ -74,7 +74,7 @@
             android:textColor="#A1A1A1" />
 
         <TextView
-            android:id="@+id/textView22"
+            android:id="@+id/send"
             style="@style/main_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

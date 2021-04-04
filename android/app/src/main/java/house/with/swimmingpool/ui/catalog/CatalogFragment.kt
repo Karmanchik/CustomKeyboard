@@ -59,6 +59,11 @@ class CatalogFragment : Fragment() {
 
         binding?.back?.setOnClickListener { findNavController().popBackStack() }
 
+        binding?.apply {
+            sort.setOnClickListener { sortMenu.visibility = View.VISIBLE }
+            closeSort.setOnClickListener { sortMenu.visibility = View.GONE }
+        }
+
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 val list = App.setting.houses

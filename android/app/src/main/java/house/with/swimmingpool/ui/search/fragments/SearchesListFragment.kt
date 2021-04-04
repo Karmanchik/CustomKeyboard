@@ -27,7 +27,6 @@ class SearchesListFragment(
         searchListBinding = FragmentSearchesListBinding.inflate(layoutInflater)
         searchListBinding?.searchListItemRv?.adapter =
             SearchListItemAdapter(requireContext(), parentView, data.take(5))
-
         searchListBinding?.objCounter?.text = "Все объкты (${data.size})"
 
         return searchListBinding?.root
@@ -37,5 +36,4 @@ class SearchesListFragment(
         searchListBinding = null
         super.onDestroy()
     }
-
 }
