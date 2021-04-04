@@ -1,7 +1,6 @@
 package house.with.swimmingpool.ui.search
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,9 +8,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.transaction
 import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
@@ -44,6 +41,11 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         super.onCreate(savedInstanceState)
         searchBinding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(searchBinding.root)
+
+        overridePendingTransition(
+                R.anim.search_enter_animation,
+                R.anim.nav_default_exit_anim
+        )
 
         searchBinding.apply {
             inputText.onRightDrawableClicked {
@@ -148,7 +150,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         searchBinding.apply {
 
             Log.e("testing", searchWord)
-            val filter = FilterObjectsRequest(dir = searchWord)
+            val filter = FilterObjectsRequest(search = searchWord)
 
             RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
                 try {
@@ -164,23 +166,22 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                         showCatalogButton.isEnabled = true
                     }
 
-
                     if (data != null && inputText.text.toString() != "") {
                         App.setting.filterConfig = filter
                         App.setting.houses = data
 
                         supportFragmentManager.beginTransaction()
-                            .replace(
-                                searchBinding.searchFrame.id,
-                                SearchesListFragment(data, this@SearchActivity)
-                            )
-                            .commit()
+                                .replace(
+                                        searchBinding.searchFrame.id,
+                                        SearchesListFragment(data, this@SearchActivity)
+                                )
+                                .commit()
                     }
 
                     searchBinding.showCatalogButton.setOnClickListener {
                         setResult(
-                            RESULT_OK,
-                            Intent().putExtra("action", HomeFragment.NAVIGATE_TO_CATALOG)
+                                RESULT_OK,
+                                Intent().putExtra("action", HomeFragment.NAVIGATE_TO_CATALOG)
                         )
                         finish()
                     }
