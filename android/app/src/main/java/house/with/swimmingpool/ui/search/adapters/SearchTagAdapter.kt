@@ -8,7 +8,6 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import house.with.swimmingpool.databinding.ItemAdvantagesBinding
 import house.with.swimmingpool.databinding.ItemSearchButtonBinding
 import house.with.swimmingpool.ui.search.ISearchView
 
@@ -42,7 +41,7 @@ class SearchTagAdapter(
 
         fun bind(position: Int) {
             view.apply {
-                itemView.setOnClickListener { parentView.showInformation(position.toString()) }
+                itemView.setOnClickListener { parentView.showByAdvantagesTag((position+1).toString(), items[position]) }
                 buttonWhite.text = items[position]
             }
         }

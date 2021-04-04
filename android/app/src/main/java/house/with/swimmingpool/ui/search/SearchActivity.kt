@@ -14,7 +14,6 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.ActivitySearchBinding
-import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.home.HomeFragment
 import house.with.swimmingpool.ui.onRightDrawableClicked
@@ -67,6 +66,8 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                     showCatalogButton.text = "Ищем..."
                     searchFrame.visibility = View.INVISIBLE
                     progressBar.visibility = View.VISIBLE
+
+                    SearchesListFragment.singleton?.deleteTag()
 
                     inputText.setCompoundDrawablesWithIntrinsicBounds(
                         null,
@@ -122,7 +123,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         }
     }
 
-    private fun showAdvantages() {
+    override fun showAdvantages() {
         val lisAdvantages = arrayListOf<String>()
 
         tagsVariants?.forEach {
@@ -136,16 +137,18 @@ class SearchActivity : AppCompatActivity(), ISearchView {
             .commit()
     }
 
-    override fun showInformation(text: String) {
+    override fun showByAdvantagesTag(text: String, tag: String) {
         searchBinding.apply {
             showCatalogButton.isEnabled = true
             showCatalogButton.text = "Ищем..."
             searchFrame.visibility = View.INVISIBLE
             progressBar.visibility = View.VISIBLE
 
-            showSearchedList(FilterObjectsRequest(advantages = listOf(text)))
+            showSearchedList(FilterObjectsRequest(advantages = listOf(text)), tag)
         }
     }
+
+
 
     override fun closeActivity() {
         setResult(RESULT_OK, Intent().putExtra("action", HomeFragment.NAVIGATE_TO_OBJECT))
@@ -153,7 +156,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showSearchedList(filter : FilterObjectsRequest) {
+    private fun showSearchedList(filter : FilterObjectsRequest, tag: String? = null) {
 
         searchBinding.apply {
             RealtyServiceImpl().getObjectsByFilter(filter) { data, e ->
@@ -178,7 +181,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                         supportFragmentManager.beginTransaction()
                                 .replace(
                                         searchBinding.searchFrame.id,
-                                        SearchesListFragment(data, this@SearchActivity)
+                                        SearchesListFragment(data, this@SearchActivity, tag)
                                 )
                                 .commit()
                     }
