@@ -26,7 +26,7 @@ data class HouseExampleData(
     val payment: JsonObject?,
     val price: String?,
     val price_of_one_meter: String?,
-    val priceHike: Int?,
+    val priceHike: Any?, // it was int then become Double. the field don't using
     val promo: String,
     val registration: JsonObject?,
     val statuses: List<String>?,
