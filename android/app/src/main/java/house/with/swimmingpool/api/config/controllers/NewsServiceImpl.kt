@@ -1,13 +1,16 @@
 package house.with.swimmingpool.api.config.controllers
 
-import android.util.Log
 import house.with.swimmingpool.api.config.interfaces.INewsService
 import house.with.swimmingpool.api.retrofit.INews
 import house.with.swimmingpool.api.retrofit.getRetrofit
-import house.with.swimmingpool.models.*
-import retrofit2.Callback
+import house.with.swimmingpool.models.NewsData
+import house.with.swimmingpool.models.NewsX
+import house.with.swimmingpool.models.SingleNews
+import house.with.swimmingpool.models.SingleNewsData
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.create
 
 class NewsServiceImpl : INewsService {
 
@@ -29,6 +32,14 @@ class NewsServiceImpl : INewsService {
                     }
                 }
             })
+    }
+
+    override suspend fun loadNews(): Pair<List<NewsData>?, Throwable?> {
+        return try {
+            Pair(getRetrofit().create<INews>().getNews().execute().body()!!.data, null)
+        } catch (e: Exception) {
+            Pair(null, e)
+        }
     }
 
     fun getSingleNews(id: Int, onLoaded: (data: SingleNewsData?, e: Throwable?) -> Unit) {

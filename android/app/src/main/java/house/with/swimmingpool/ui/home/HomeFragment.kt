@@ -5,16 +5,12 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import house.with.swimmingpool.App
@@ -24,6 +20,7 @@ import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
+import house.with.swimmingpool.ui.load
 import house.with.swimmingpool.ui.search.SearchActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -38,7 +35,6 @@ class HomeFragment : Fragment() {
     }
 
     private var homeBinding: FragmentHomeBinding? = null
-    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,9 +42,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         homeBinding = FragmentHomeBinding.inflate(layoutInflater)
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         return homeBinding?.root
     }
 
@@ -76,71 +69,42 @@ class HomeFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun updateData() {
+        // videos
+        // news
+        // stories
+        // header
+        // ads
 
-        var houseCatalogData: List<HouseCatalogData>? = null
+        homeBinding?.loader?.visibility = View.VISIBLE
 
-        homeBinding?.apply {
+        GlobalScope.launch(Dispatchers.IO) {
+            val videosInfo = VideosServiceImpl().loadVideos()
+            val newsInfo = NewsServiceImpl().loadNews()
+            val storiesInfo = StoriesServiceImpl().loadStories()
+            val headerInfo = BannersServiceImpl().loadHeader()
+            val ads = BannersServiceImpl().loadBanners()
 
-            imageViewSearch.setOnClickListener {
-                startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
-            }
+            launch(Dispatchers.Main) {
+                homeBinding?.loader?.visibility = View.GONE
 
-            VideosServiceImpl().getVideos { data, e ->
-                if (e == null && data != null)
-                    videosRV.adapter = VideosAdapter(false, requireContext(), data) {
-                        findNavController().navigate(R.id.action_navigation_home_to_videoFragment)
-                    }
-            }
-
-            NewsServiceImpl().getNews { data, e ->
-                if (e == null && data != null) {
-                    newsRV.adapter = NewsAdapter(
-                        if (data.size > 2) listOf(data[0], data[1]) else data,
-                        requireContext()
-                    ) {
-                        val bundle = Bundle().apply {
-                            putInt("id", it.id ?: 0)
-                            putSerializable("house", it)
-                        }
-                        findNavController().navigate(
-                            R.id.action_navigation_home_to_newsSingleFragment,
-                            bundle
-                        )
-                    }
-                }
-            }
-
-            RealtyServiceImpl().getHouseCatalog { data, e ->
-                lastSeenRV.apply {
-                    layoutManager = GridLayoutManager(context, 2)
-                    adapter = SeenHousesAdapter(requireContext(), data ?: listOf()) { homeId ->
-                        val home = data?.firstOrNull { it.id == homeId }
-                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                        findNavController().navigate(
-                            R.id.action_navigation_home_to_houseFragment,
-                            bundle
-                        )
-                    }
-                }
-            }
-
-            StoriesServiceImpl().getStories { data, e ->
-                storiesRV.apply {
+                homeBinding?.storiesRV?.apply {
+                    visibility = if (storiesInfo.first.isNullOrEmpty()) View.GONE else View.VISIBLE
                     layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    data?.let {
-                        adapter = StoriesAdapter(it)
-                    }
+                    adapter = StoriesAdapter(storiesInfo.first ?: listOf())
                 }
-            }
 
-            BannersServiceImpl().getMainBanners { data, e ->
-                if (e == null && data != null) {
+                homeBinding?.nestedScrollView?.visibility =
+                    if (headerInfo.first.isNullOrEmpty()) {
+                        View.GONE
+                    } else {
+                        View.VISIBLE
+                    }
+
+                homeBinding?.apply {
                     val vp = mainHousesContainer
-                    vp.adapter = HeaderAdapter(data)
+                    vp.adapter = HeaderAdapter(headerInfo.first ?: listOf())
                     { link ->
 
                         val splitLink = link.split("/")
@@ -171,33 +135,86 @@ class HomeFragment : Fragment() {
                                 startActivity(browserIntent);
                             }
                         }
-//                        val home = App.setting.houses.firstOrNull { it.id == link }
-//                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-//                        findNavController().navigate(R.id.action_navigation_home_to_houseFragment, bundle)
                     }
                     dotsIndicator.setViewPager2(vp)
+
+                }
+
+                if (!ads.first.isNullOrEmpty()) {
+                    homeBinding?.apply {
+                        bigAdBanner.load(ads.first?.get(0)?.bigBanner)
+                        firstAdBanner.load(ads.first?.get(1)?.smallBanner)
+                        secondAdBanner.load(ads.first?.get(2)?.smallBanner)
+
+                        bigBanner.visibility = View.VISIBLE
+                        adsLinear.visibility = View.VISIBLE
+                    }
+                } else {
+                    homeBinding?.bigBanner?.visibility = View.VISIBLE
+                    homeBinding?.adsLinear?.visibility = View.VISIBLE
+                }
+
+                if (videosInfo.second == null && videosInfo.first != null) {
+                    homeBinding?.videosRV?.adapter =
+                        VideosAdapter(false, requireContext(), videosInfo.first ?: listOf()) {
+                            findNavController().navigate(R.id.action_navigation_home_to_videoFragment)
+                        }
+                    homeBinding?.videosContainer?.visibility = View.VISIBLE
+                } else {
+                    homeBinding?.videosContainer?.visibility = View.GONE
+                }
+
+                if (newsInfo.second == null && newsInfo.first != null) {
+                    homeBinding?.newsRV?.adapter = NewsAdapter(
+                        newsInfo.first?.take(2) ?: listOf(),
+                        requireContext()
+                    ) {
+                        val bundle = Bundle().apply {
+                            putInt("id", it.id ?: 0)
+                            putSerializable("house", it)
+                        }
+                        findNavController().navigate(
+                            R.id.action_navigation_home_to_newsSingleFragment,
+                            bundle
+                        )
+                    }
+                    homeBinding?.newsContainer?.visibility = View.VISIBLE
+                } else {
+                    homeBinding?.newsContainer?.visibility = View.GONE
                 }
             }
+        }
 
-            BannersServiceImpl().getBanners { data, e ->
-                Glide.with(this@HomeFragment)
-                    .load(data?.get(0)?.bigBanner)
-                    .error(R.drawable.placeholder)
-                    .placeholder(R.drawable.placeholder)
-                    .into(bigAdBanner)
-                Glide.with(this@HomeFragment)
-                    .load(data?.get(1)?.smallBanner)
-                    .error(R.drawable.placeholder)
-                    .placeholder(R.drawable.placeholder)
-                    .into(firstAdBanner)
-                Glide.with(this@HomeFragment)
-                    .load(data?.get(2)?.smallBanner)
-                    .error(R.drawable.placeholder)
-                    .placeholder(R.drawable.placeholder)
-                    .into(secondAdBanner)
+//            RealtyServiceImpl().getHouseCatalog { data, e ->
+//                lastSeenRV.apply {
+//                    layoutManager = GridLayoutManager(context, 2)
+//                    adapter = SeenHousesAdapter(requireContext(), data ?: listOf()) { homeId ->
+//                        val home = data?.firstOrNull { it.id == homeId }
+//                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+//                        findNavController().navigate(
+//                            R.id.action_navigation_home_to_houseFragment,
+//                            bundle
+//                        )
+//                    }
+//                }
+//            }
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var houseCatalogData: List<HouseCatalogData>? = null
+
+        homeBinding?.apply {
+
+            imageViewSearch.setOnClickListener {
+                startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
             }
 
-            nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            updateData()
+
+            nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
                 if (shortCatalogRV.bottom in (oldScrollY + 1) until scrollY) {
                     setShortCatalog(houseCatalogData)
                 }
@@ -207,7 +224,6 @@ class HomeFragment : Fragment() {
                 }
             }
 
-
             segmentedControl.addOnSegmentClickListener { svh ->
                 RealtyServiceImpl().getHouseCatalog { data, e ->
                     if (e == null && data != null) {
@@ -215,11 +231,9 @@ class HomeFragment : Fragment() {
                             0 -> {
                                 data.filter { it.type == "house" || it.type == "village" }
                             }
-
                             1 -> {
                                 data.filter { it.type == "flat" }
                             }
-
                             else -> {
                                 data.filter { it.type == "complex" }
                             }
@@ -229,7 +243,6 @@ class HomeFragment : Fragment() {
                 }
             }
             segmentedControl.setSelectedSegment(0)
-
 
             shortFilterView.setOnClickListener {
                 val onClick =
@@ -259,8 +272,7 @@ class HomeFragment : Fragment() {
                     moveOnTabSelected(tab!!.position)
                 }
 
-                override fun onTabUnselected(tab: TabLayout.Tab?) {
-                }
+                override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                     moveOnTabSelected(tab!!.position)
@@ -295,20 +307,14 @@ class HomeFragment : Fragment() {
 
     private fun moveOnTabSelected(position: Int) {
         homeBinding?.apply {
-            when (position) {
-                0 -> {
-                    nestedScrollView.smoothScrollTo(0, fullFilterView.bottom, 1500)
-                }
-                1 -> {
-                    nestedScrollView.smoothScrollTo(0, adsLinear.bottom, 1500)
-                }
-                2 -> {
-                    nestedScrollView.smoothScrollTo(0, divider.bottom, 1500)
-                }
-                3 -> {
-                    nestedScrollView.smoothScrollTo(0, divider2.bottom, 1500)
-                }
+            val pos = when (position) {
+                0 -> fullFilterView.bottom
+                1 -> adsLinear.bottom
+                2 -> divider.bottom
+                3 -> divider2.bottom
+                else -> null
             }
+            pos?.let { nestedScrollView.smoothScrollTo(0, it, 1500) }
         }
     }
 }
