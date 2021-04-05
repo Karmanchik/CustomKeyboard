@@ -1,11 +1,14 @@
 package house.with.swimmingpool.ui.favourites.collectionslist
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.databinding.ItemCollectionBinding
-import house.with.swimmingpool.models.CollectionItem
 import house.with.swimmingpool.models.ShortCollection
+import house.with.swimmingpool.ui.SmallPhotosAdapter
 
 class CollectionsAdapter(
     var items: List<ShortCollection>,
@@ -23,10 +26,18 @@ class CollectionsAdapter(
 
     override fun getItemCount() = items.size
 
-    inner class ViewHolder(private val view: ItemCollectionBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class ViewHolder(private val view: ItemCollectionBinding) :
+        RecyclerView.ViewHolder(view.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: ShortCollection) {
             view.textView8.setOnClickListener { onItemSearch.invoke(item) }
+            view.name.text = item.name
+            view.counter.text = "${item.photos?.size ?: 0} объектов"
+            view.mediaRV.layoutManager =
+                LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+            view.mediaRV.adapter = SmallPhotosAdapter(item.photos?.take(4) ?: listOf())
+            view.mediaRV.visibility = if (item.photos.isNullOrEmpty()) View.GONE else View.VISIBLE
         }
     }
 

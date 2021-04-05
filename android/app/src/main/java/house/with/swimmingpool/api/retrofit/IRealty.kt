@@ -116,7 +116,7 @@ interface IRealty {
         @Header("phone") phone: String? = App.setting.phone,
         @Path("id") id: String,
         @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
-    ): Call<Answer<Stub>> // todo
+    ): Call<Answer<ShortCollection>>
 
 
     companion object {

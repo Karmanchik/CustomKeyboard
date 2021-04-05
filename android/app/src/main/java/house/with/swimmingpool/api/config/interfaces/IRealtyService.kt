@@ -25,5 +25,6 @@ interface IRealtyService {
 
     // подборки
     fun getCollections(onLoaded: (data: List<ShortCollection>?, e: Throwable?) -> Unit)
+    fun getCollection(id: String, onLoaded: (data: ShortCollection?, e: Throwable?) -> Unit)
 
 }

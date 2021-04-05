@@ -5,7 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
+import house.with.swimmingpool.R
+import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentCollectionBinding
+import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
 
 class CollectionFragment : Fragment() {
 
@@ -34,7 +40,22 @@ class CollectionFragment : Fragment() {
 
             closeNote.setOnClickListener { note.visibility = View.GONE }
 
+            RealtyServiceImpl().getCollection((arguments?.getInt("id") ?: 0).toString()) { data, e ->
+                showData(data?.objects ?: listOf())
+            }
+
         }
+    }
+
+    private fun showData(list: List<HouseCatalogData>) {
+        binding?.mainRV?.adapter = CatalogAdapter(list.map { it as Any }, requireContext()) { homeId ->
+                val home = list.firstOrNull { it.id == homeId }
+                val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                findNavController().navigate(
+                    R.id.action_favouritesFragment_to_houseFragment,
+                    bundle
+                )
+            }
     }
 
 }
