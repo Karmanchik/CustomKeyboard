@@ -7,8 +7,17 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yandex.mapkit.MapKitFactory
+import house.with.swimmingpool.ui.cabinet.CabinetFragment
+import house.with.swimmingpool.ui.catalog.CatalogFragment
+import house.with.swimmingpool.ui.favourites.FavouritesFragment
+import house.with.swimmingpool.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
+
+//    private val homeFragment by lazy { HomeFragment() }
+//    private val favouritesFragment by lazy { FavouritesFragment() }
+//    private val catalogFragment by lazy { CatalogFragment() }
+//    private val profileFragment by lazy { CabinetFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         navView.setOnNavigationItemSelectedListener {
+//            navController.
             navController.navigate(it.itemId)
             true
         }
