@@ -87,9 +87,11 @@ interface IRealty {
         @Header("phone") phone: String? = App.setting.phone,
         @Field("name") name: String,
         @Field("config") filter: String?,
+        @Field("push") push: Boolean = true,
         @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<Stub>>
 
+    @FormUrlEncoded
     @PUT("searches/{id}")
     fun updateSearch(
         @Header("Authorization") token: String? = App.setting.apiToken,
@@ -97,6 +99,7 @@ interface IRealty {
         @Path("id") id: String,
         @Field("name") name: String,
         @Field("config") filter: String?,
+        @Field("push") push: Boolean = true,
         @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<Stub>>
 

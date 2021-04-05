@@ -220,6 +220,7 @@ class RealtyServiceImpl : IRealtyService {
     override fun updateSearch(
         id: String,
         name: String,
+        push: Boolean,
         filter: FilterObjectsRequest,
         onLoaded: (data: Stub?, e: Throwable?) -> Unit
     ) {

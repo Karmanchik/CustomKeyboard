@@ -21,7 +21,7 @@ interface IRealtyService {
     fun getSearch(id: String, onLoaded: (data: Search?, e: Throwable?) -> Unit)
     fun deleteSearch(id: String, onLoaded: (data: Stub?, e: Throwable?) -> Unit)
     fun addSearch(name: String, filter: FilterObjectsRequest, onLoaded: (data: Stub?, e: Throwable?) -> Unit)
-    fun updateSearch(id: String, name: String, filter: FilterObjectsRequest, onLoaded: (data: Stub?, e: Throwable?) -> Unit)
+    fun updateSearch(id: String, name: String, push: Boolean, filter: FilterObjectsRequest, onLoaded: (data: Stub?, e: Throwable?) -> Unit)
 
     // подборки
     fun getCollections(onLoaded: (data: List<ShortCollection>?, e: Throwable?) -> Unit)
