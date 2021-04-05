@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#635F5F"
-    android:layout_height="570dp">
+    android:layout_height="570dp"
+    android:background="#635F5F">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -73,13 +73,31 @@
             android:text="12 из 100"
             android:textColor="#A1A1A1" />
 
-        <TextView
-            android:id="@+id/send"
-            style="@style/main_button"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
             android:layout_marginTop="124dp"
-            android:layout_marginBottom="252dp"
-            android:text="Сохранить" />
+            android:layout_marginBottom="252dp">
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/deleteNote"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/ic_delete_note" />
+
+            <TextView
+                android:id="@+id/send"
+                style="@style/main_button"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:elevation="0dp"
+                android:text="Сохранить" />
+
+        </LinearLayout>
+
     </LinearLayout>
+
 </RelativeLayout>

@@ -43,8 +43,12 @@ class CollectionFragment : Fragment() {
 
             RealtyServiceImpl().getCollection((arguments?.getInt("id") ?: 0).toString()) { data, e ->
                 showData(data?.objects ?: listOf())
-            }
+                note.setOnClickListener {
+                    DialogEditNoteFragment.newInstance(data?.description) {
 
+                    }.show(parentFragmentManager, "DialogEditNoteFragment")
+                }
+            }
         }
     }
 
