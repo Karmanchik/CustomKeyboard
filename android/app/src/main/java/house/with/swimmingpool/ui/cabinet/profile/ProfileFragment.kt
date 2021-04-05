@@ -158,7 +158,7 @@ class ProfileFragment : Fragment() {
                 }
             }
             if (requestCode == SIGN_OUT_REQUEST) {
-                if (requireActivity().intent.getBooleanExtra(App.IS_SIGN_OUT, true)) {
+                if (data?.getBooleanExtra(App.IS_SIGN_OUT, false) == true) {
                     App.setting.token = null
                     findNavController().navigate(R.id.action_cabinetFragment_to_navigation_home)
                 }

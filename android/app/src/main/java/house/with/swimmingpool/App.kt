@@ -19,6 +19,7 @@ class App: Application() {
         const val TYPE_OF_POPUP = "TYPE_OF_POPUP"
         const val SIGN_OUT = "SIGN_OUT"
         const val IS_SIGN_OUT = "IS_SIGN_OUT"
+        const val PASSWORD_SET_SUCCESSFULLY = "PASSWORD_SET_SUCCESSFULLY"
     }
 
     override fun onCreate() {

@@ -112,8 +112,8 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         replaceFragmentWithoutTabs(RegisterSmsCodeFragment(phone, this@LoginActivity))
     }
 
-    override fun onSmsCodeCorrect() {
-        replaceFragmentWithoutTabs(RegisterSetPasswordFragment(this))
+    override fun onSmsCodeCorrect(smsCode : String) {
+        replaceFragmentWithoutTabs(RegisterSetPasswordFragment(this, smsCode))
     }
 
     override fun onLoginSuccess(name: String?) {

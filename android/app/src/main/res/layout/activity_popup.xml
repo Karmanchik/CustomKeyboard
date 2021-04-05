@@ -142,59 +142,60 @@
             android:id="@+id/rad_button_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center"
-            android:visibility="visible">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/description_rad_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Выйти из аккаунта?"
-                android:fontFamily="@font/lato_medium"
-                android:layout_marginTop="65dp"
-                android:lineHeight="28dp"
                 android:layout_marginStart="33dp"
+                android:layout_marginTop="65dp"
                 android:layout_marginEnd="33dp"
+                android:fontFamily="@font/lato_medium"
                 android:gravity="center"
-                android:textSize="19dp"
-                android:textColor="@color/black" />
+                android:lineHeight="28dp"
+                android:text="Выйти из аккаунта?"
+                android:textColor="@color/black"
+                android:textSize="19dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="46dp"
-                android:layout_marginBottom="35dp"
                 android:layout_marginStart="22dp"
+                android:layout_marginTop="46dp"
                 android:layout_marginEnd="22dp"
+                android:layout_marginBottom="35dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/cancelBesideRadButton"
-                    android:background="@drawable/popup_botton_background"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="Отмена"
-                    android:textSize="18dp"
                     android:layout_margin="5dp"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    android:textColor="#A1A1A1"/>
+                    android:background="@drawable/popup_botton_background"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center"
+                    android:text="Отмена"
+                    android:textColor="#A1A1A1"
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/rad_button"
+                    style="@style/main_button"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
-                    style="@style/main_button"
+                    android:layout_margin="5dp"
+                    android:layout_weight="2"
+                    android:backgroundTint="#DB5249"
+                    android:elevation="0dp"
                     android:fontFamily="@font/lato_semibold"
+                    android:gravity="center"
                     android:text="Выйти"
                     android:textSize="18dp"
-                    android:layout_margin="5dp"
-                    android:backgroundTint="#DB5249"
-                    android:gravity="center"
-                    android:elevation="0dp"
-                    android:layout_weight="2" />
+                    android:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

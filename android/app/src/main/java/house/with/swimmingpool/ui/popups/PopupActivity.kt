@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import house.with.swimmingpool.App
 import house.with.swimmingpool.App.Companion.IS_SIGN_OUT
+import house.with.swimmingpool.App.Companion.PASSWORD_SET_SUCCESSFULLY
 import house.with.swimmingpool.App.Companion.SEND_REQUEST_CONSULTATION
 import house.with.swimmingpool.App.Companion.SIGN_OUT
 import house.with.swimmingpool.R
@@ -28,6 +29,10 @@ class PopupActivity : AppCompatActivity() {
             SIGN_OUT -> {
                 setPopupSignOut()
             }
+
+            PASSWORD_SET_SUCCESSFULLY -> {
+                setPopupPasswordChanged()
+            }
         }
     }
 
@@ -41,6 +46,19 @@ class PopupActivity : AppCompatActivity() {
         }
     }
 
+    private fun setPopupPasswordChanged(){
+        popupBinding.apply {
+            radButtonLayout.visibility = View.VISIBLE
+            descriptionRadButton.text = "Ваш пароль успешно изменен"
+            radButton.visibility = View.GONE
+            cancelBesideRadButton.text = "ОК"
+
+            cancelBesideRadButton.setOnClickListener {
+                finish()
+            }
+        }
+    }
+
     private fun setPopupSignOut(){
         popupBinding.apply {
             radButtonLayout.visibility = View.VISIBLE
@@ -49,14 +67,14 @@ class PopupActivity : AppCompatActivity() {
             cancelBesideRadButton.text = "Отмена"
 
             cancelBesideRadButton.setOnClickListener {
-                setResult(RESULT_OK)
-                Intent().putExtra(IS_SIGN_OUT, false)
+                setResult(RESULT_OK,
+                Intent().putExtra(IS_SIGN_OUT, false))
                 finish()
             }
 
             radButton.setOnClickListener {
-                setResult(RESULT_OK)
-                Intent().putExtra(IS_SIGN_OUT, true)
+                setResult(RESULT_OK,
+                Intent().putExtra(IS_SIGN_OUT, true))
                 finish()
             }
         }

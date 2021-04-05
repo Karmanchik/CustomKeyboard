@@ -94,8 +94,9 @@ class RegisterSmsCodeFragment(
 
             if (e == null && data != null) {
                 Log.e("RegisterSecond", "user id = ${data.user?.id}")
+                App.setting.token = data.token
                 App.setting.user = data.user
-                parentView.onSmsCodeCorrect()
+                parentView.onSmsCodeCorrect(smsCode)
             } else {
 //            TODO("do this, if the confirmation of the sms code via the server has failed")
             }

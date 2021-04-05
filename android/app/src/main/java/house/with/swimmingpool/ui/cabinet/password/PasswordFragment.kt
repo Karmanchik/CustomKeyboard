@@ -1,15 +1,18 @@
 package house.with.swimmingpool.ui.cabinet.password
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentPasswordBinding
+import house.with.swimmingpool.ui.popups.PopupActivity
 
 
 class PasswordFragment : Fragment(R.layout.fragment_password){
@@ -25,6 +28,10 @@ class PasswordFragment : Fragment(R.layout.fragment_password){
         passwordBinding = FragmentPasswordBinding.inflate(layoutInflater)
 
         passwordBinding?.apply {
+            oldPassword.getField()?.doOnTextChanged { text, start, before, count ->
+                oldPassword.clearError()
+            }
+
             checkPassword.getField()?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
                 checkPassword()
             }
@@ -40,7 +47,16 @@ class PasswordFragment : Fragment(R.layout.fragment_password){
                                 newPassword.value!!,
                                 oldPassword.value!!
                         ) { data, e ->
-                            App.setting.user = data
+                            if (data != null && e == null) {
+                                App.setting.user = data
+                                startActivity(
+                                        Intent(requireContext(), PopupActivity :: class.java).apply {
+                                            putExtra(App.TYPE_OF_POPUP, App.PASSWORD_SET_SUCCESSFULLY)
+                                        }
+                                )
+                            }else{
+                                oldPassword.setError()
+                            }
                         }
                     }
                 }

@@ -1,16 +1,23 @@
 package house.with.swimmingpool.ui.register.registration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.App
+import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentRegisterSetPasswordBinding
 import house.with.swimmingpool.ui.login.ILoginView
+import house.with.swimmingpool.ui.popups.PopupActivity
 
-class RegisterSetPasswordFragment(private val parentView: ILoginView): Fragment() {
+class RegisterSetPasswordFragment(
+        private val parentView: ILoginView,
+        private val smsCode: String
+): Fragment() {
 
     private var setPasswordFragmentBinding: FragmentRegisterSetPasswordBinding? = null
 
@@ -46,8 +53,18 @@ class RegisterSetPasswordFragment(private val parentView: ILoginView): Fragment(
                 errorPasswordTextView.visibility = View.VISIBLE
             }else{
                 errorPasswordTextView.visibility = View.INVISIBLE
-                App.setting.token = "test"
-                requireActivity().finish()
+
+                AuthServiceImpl().setPassword(
+                        passwordInputCheck.text.toString(),
+                        smsCode
+                ) { data, e ->
+                    if (data != null && e == null) {
+                        App.setting.user = data
+                        requireActivity().finish()
+                    }else{
+                        Toast.makeText(requireContext(), "set password ERROR!", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }

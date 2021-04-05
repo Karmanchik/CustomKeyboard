@@ -4,7 +4,7 @@ interface ILoginView {
 
     fun showSmsCodeFragment(phone: String)
 
-    fun onSmsCodeCorrect()
+    fun onSmsCodeCorrect(smsCode: String)
 
     fun onLoginSuccess(name: String?)
 }
