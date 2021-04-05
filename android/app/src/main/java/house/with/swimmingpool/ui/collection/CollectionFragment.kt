@@ -36,9 +36,10 @@ class CollectionFragment : Fragment() {
 
         binding?.apply {
 
-            openNote.setOnClickListener { note.visibility = View.VISIBLE }
-
-            closeNote.setOnClickListener { note.visibility = View.GONE }
+            openNote.setOnClickListener {
+                note.visibility = if (note.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                showNoteText.text = if (note.visibility == View.VISIBLE) "Скрыть заметку" else "Посмотреть заметку"
+            }
 
             RealtyServiceImpl().getCollection((arguments?.getInt("id") ?: 0).toString()) { data, e ->
                 showData(data?.objects ?: listOf())
