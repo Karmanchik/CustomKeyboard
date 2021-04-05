@@ -109,6 +109,8 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
         _onClickListener = listener
     }
 
+    fun getField() = fieldView
+
     private fun View.show() {
         visibility = View.VISIBLE
     }

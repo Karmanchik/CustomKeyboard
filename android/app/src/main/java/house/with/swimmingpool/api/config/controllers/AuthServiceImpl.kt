@@ -1,6 +1,7 @@
 package house.with.swimmingpool.api.config.controllers
 
 import android.util.Log
+import house.with.swimmingpool.api.config.interfaces.IAuthService
 import house.with.swimmingpool.api.retrofit.APIKEY
 import house.with.swimmingpool.api.retrofit.IAuthLogin
 import house.with.swimmingpool.api.retrofit.IVideos
@@ -10,9 +11,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AuthServiceImpl {
+class AuthServiceImpl : IAuthService {
 
-    fun loginUser(phone: String, code: String, onLoaded: (data: AuthLoginData?, e: Throwable?) -> Unit){
+    override fun loginUser(phone: String, code: String, onLoaded: (data: AuthLoginData?, e: Throwable?) -> Unit){
         getRetrofit().create(IAuthLogin :: class.java)
                 .loginUser(APIKEY ,phone, code)
                 .enqueue(object : Callback<AuthLogin> {
@@ -31,7 +32,7 @@ class AuthServiceImpl {
                 })
     }
 
-    fun registerUserFirst(phone: String, onLoaded: (data: AuthRegisterFirstData?, e: Throwable?) -> Unit){
+    override fun registerUserFirst(phone: String, onLoaded: (data: AuthRegisterFirstData?, e: Throwable?) -> Unit){
         getRetrofit().create(IAuthLogin :: class.java)
                 .registerUser(APIKEY ,phone)
                 .enqueue(object : Callback<AuthRegisterFirst> {
@@ -50,7 +51,7 @@ class AuthServiceImpl {
                 })
     }
 
-    fun confirmBySmsCode(phone: String, code: String, onLoaded: (data: AuthRegisterSecondData?, e: Throwable?) -> Unit){
+    override fun confirmBySmsCode(phone: String, code: String, onLoaded: (data: AuthRegisterSecondData?, e: Throwable?) -> Unit){
         getRetrofit().create(IAuthLogin :: class.java)
                 .confirmBySmsCode(APIKEY ,phone, code)
                 .enqueue(object : Callback<AuthRegisterSecond> {
@@ -69,7 +70,7 @@ class AuthServiceImpl {
                 })
     }
 
-    fun getSmsCodeAgain(phone: String, onLoaded: (data: CodeData?, e: Throwable?) -> Unit){
+    override fun getSmsCodeAgain(phone: String, onLoaded: (data: CodeData?, e: Throwable?) -> Unit){
         getRetrofit().create(IAuthLogin :: class.java)
                 .getSmsCodeAgain(APIKEY ,phone)
                 .enqueue(object : Callback<Code> {
@@ -85,6 +86,25 @@ class AuthServiceImpl {
                             Log.e("registerTest", "SMSError:", t)
                         }catch (e:Exception){}
                     }
+                })
+    }
+
+    override fun setPassword(newPassword: String, oldPassword: String, onLoaded: (data: User?, e: Throwable?) -> Unit){
+        getRetrofit().create(IAuthLogin :: class.java)
+                .setPassword(newPassword = newPassword, oldPassword = oldPassword)
+                .enqueue(object : Callback<UpdatedUser>{
+                    override fun onResponse(call: Call<UpdatedUser>, response: Response<UpdatedUser>) {
+                        try{
+                            onLoaded.invoke(response.body()?.data, null)
+                        }catch (e:java.lang.Exception){}
+                    }
+
+                    override fun onFailure(call: Call<UpdatedUser>, t: Throwable) {
+                        try{
+                            onLoaded.invoke(null, t)
+                        }catch (e: Exception){}
+                    }
+
                 })
     }
 }

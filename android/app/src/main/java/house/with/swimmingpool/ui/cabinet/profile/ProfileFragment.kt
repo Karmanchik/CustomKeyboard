@@ -4,13 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -18,8 +15,9 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
-import house.with.swimmingpool.databinding.FragmentPasswordBinding
+import house.with.swimmingpool.api.config.controllers.UpdateUserServiceImpl
 import house.with.swimmingpool.databinding.FragmentProfileBinding
+import house.with.swimmingpool.models.User
 import house.with.swimmingpool.ui.popups.PopupActivity
 
 class ProfileFragment : Fragment() {
@@ -30,8 +28,6 @@ class ProfileFragment : Fragment() {
         private const val GALLERY_REQUEST = 1
         private const val SIGN_OUT_REQUEST = 2
     }
-
-    private val user = App.setting.user
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -65,14 +61,70 @@ class ProfileFragment : Fragment() {
                 startActivityForResult(pickPhoto, GALLERY_REQUEST)
             }
 
+            surnameEditText.getField()?.setOnFocusChangeListener { v, hasFocus ->
+                if(!hasFocus){
+                    updateUserInfo()
+                    Log.e("onFocusChanged", "surnameEditText")
+                }
+            }
+
+            emailEditText.getField()?.setOnFocusChangeListener { v, hasFocus ->
+                if(!hasFocus) {
+                    updateUserInfo()
+                    Log.e("onFocusChanged", "emailEditText")
+                }
+            }
+
+            nameEditText.getField()?.setOnFocusChangeListener { v, hasFocus ->
+                if(!hasFocus){
+                    updateUserInfo()
+                    Log.e("onFocusChanged", "nameEditText")
+                }
+            }
+
+            phoneTest.setOnFocusChangeListener { v, hasFocus ->
+                if(!hasFocus){
+                    updateUserInfo()
+                    Log.e("onFocusChanged", "phoneTest")
+                }
+            }
+
             loadUser()
         }
     }
 
+    private fun updateUserInfo(){
+        profileBinding?.apply {
+            UpdateUserServiceImpl().updateUserInfo(
+                    User(
+                            avatar = App.setting.user?.avatar,
+                            context = App.setting.user?.context,
+                            email = emailEditText.value,
+                            id = App.setting.user?.id,
+                            surname = surnameEditText.value,
+                            login = App.setting.user?.login,
+                            name = nameEditText.value,
+                            phone = phoneTest.text.toString()
+                            ),
+            ){data, e ->
+                if(data != null && e == null) {
+                    App.setting.user = data
+                    loadUser()
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        loadUser()
+        super.onResume()
+    }
+
     private fun loadUser(){
         profileBinding?.apply {
-            user?.apply {
+            App.setting.user?.apply {
                 nameEditText.value = name
+                surnameEditText.value = surname
                 emailEditText.value = email
                 phoneTest.setText(phone)
                 Glide.with(this@ProfileFragment)

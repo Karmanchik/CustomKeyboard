@@ -5,6 +5,7 @@ data class User(
     val context: String?,
     val email: String?,
     val id: Int?,
+    val surname: String?,
     val login: String?,
     val name: String?,
     val phone: String?

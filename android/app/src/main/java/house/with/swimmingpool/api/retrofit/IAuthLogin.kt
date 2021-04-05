@@ -1,9 +1,7 @@
 package house.with.swimmingpool.api.retrofit
 
-import house.with.swimmingpool.models.AuthLogin
-import house.with.swimmingpool.models.AuthRegisterFirst
-import house.with.swimmingpool.models.AuthRegisterSecond
-import house.with.swimmingpool.models.Code
+import house.with.swimmingpool.App
+import house.with.swimmingpool.models.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -39,4 +37,14 @@ interface IAuthLogin {
             @Header("api-key") apikey: String,
             @Field("phone") phone: String
     ): Call<Code>
+
+    @FormUrlEncoded
+    @POST("auth/password")
+    fun setPassword(
+            @Header("Authorization") token: String? = App.setting.apiToken,
+            @Header("phone") phone: String? = App.setting.phone,
+            @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b",
+            @Field("new_password") newPassword: String,
+            @Field("old_password") oldPassword: String
+    ): Call<UpdatedUser>
 }

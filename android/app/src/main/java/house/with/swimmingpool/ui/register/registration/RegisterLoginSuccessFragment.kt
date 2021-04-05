@@ -27,7 +27,7 @@ class RegisterLoginSuccessFragment (val name : String?): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (name != null) {
+        if (name != null && name != "") {
             loginSuccessBinding?.greetingTextView?.text = "С возвращением, $name!"
         } else {
             loginSuccessBinding?.greetingTextView?.text = "С возвращением!"

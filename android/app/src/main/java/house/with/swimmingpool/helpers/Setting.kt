@@ -21,7 +21,7 @@ class Setting(ctx: Context) {
         get() = Gson().fromJson(pref.getString(Keys.USER, null), User::class.java)
         set(value) = pref.edit { putString(Keys.USER, Gson().toJson(value)) }
 
-    val phone get() = user?.phone
+    val phone get() = user?.login
 
     val apiToken: String? get() = token?.let { "Bearer $it" }
 

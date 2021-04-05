@@ -49,6 +49,8 @@ class PopupActivity : AppCompatActivity() {
             cancelBesideRadButton.text = "Отмена"
 
             cancelBesideRadButton.setOnClickListener {
+                setResult(RESULT_OK)
+                Intent().putExtra(IS_SIGN_OUT, false)
                 finish()
             }
 
