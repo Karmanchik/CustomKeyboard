@@ -77,7 +77,7 @@ class NewsSingleFragment : Fragment() {
                         setTimeVisibility(View.GONE)
                     }
 
-                    vp.adapter = when {
+                     var vpAdapter = when {
                         data.photos != null && data.photos.isNotEmpty() -> {
                             Log.e("photos", data.photos.size.toString())
                             MediaAdapter(data.photos, listOf("-cYOlHknhBU"), requireContext())
@@ -90,7 +90,14 @@ class NewsSingleFragment : Fragment() {
                             MediaAdapter(listOf(""), listOf("-cYOlHknhBU"), requireContext())
                         }
                     }
-                    dotsIndicatorSingle.setViewPager2(vp)
+                    vp.adapter = vpAdapter
+
+                    nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                        if (housesImageContainerNews.bottom in (oldScrollY + 1) until scrollY) {
+                            vp.adapter = vpAdapter
+                            dotsIndicatorSingle.setViewPager2(vp)
+                        }
+                    }
 
                     if (data.tags != null && data.tags.isNotEmpty()) {
                         tegRecyclerView.adapter = NewsTagAdapter(requireContext(), data.tags)
