@@ -41,6 +41,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="9dp"
         android:fontFamily="@font/lato"
         android:textSize="13dp"
         android:visibility="invisible"
@@ -72,7 +74,7 @@
         android:fontFamily="@font/lato"
         android:textSize="12dp"
         android:textColor="#80000000"
-        android:text="*на номер телефона прийдет код доступа для входа в приложение" />
+        android:text="на номер телефона прийдет код доступа для входа в приложение" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -93,6 +95,6 @@
         android:fontFamily="@font/lato"
         android:textSize="11dp"
         android:textColor="#66000000"
-        android:text="Подписываясь, вы принимаете условия пользовательского соглашения и политики конфедициальности" />
+        android:text="Регистрируясь, вы принимаете условия пользовательского соглашения и политики конфедициальности" />
 
 </LinearLayout>

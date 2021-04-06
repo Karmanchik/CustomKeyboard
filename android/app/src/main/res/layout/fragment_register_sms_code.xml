@@ -19,22 +19,42 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"/>
 
-    <br.com.sapereaude.maskedEditText.MaskedEditText
+<!--    <br.com.sapereaude.maskedEditText.MaskedEditText-->
+<!--        android:id="@+id/inputSmsCod"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="32dp"-->
+<!--        android:layout_marginTop="38dp"-->
+<!--        android:layout_marginBottom="8dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        app:keep_hint="true"-->
+<!--        android:letterSpacing="2"-->
+<!--        android:hint="*****"-->
+<!--        android:cursorVisible="false"-->
+<!--        android:inputType="number"-->
+<!--        android:textSize="24sp"-->
+<!--        android:fontFamily="@font/lato"-->
+<!--        android:background="@color/white"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        app:mask="#####" />-->
+
+    <EditText
         android:id="@+id/inputSmsCod"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
-        android:layout_marginBottom="8dp"
-        android:layout_gravity="center"
-        app:keep_hint="true"
-        android:letterSpacing="2"
-        android:hint="*****"
-        android:inputType="number"
-        android:textSize="24sp"
+        android:layout_marginBottom="23dp"
+        android:hint="•••••"
+        android:textColorHint="@color/black"
+        android:inputType="numberPassword"
+        android:cursorVisible="false"
+        android:gravity="center"
+        android:maxLength="5"
+        android:letterSpacing="1"
         android:fontFamily="@font/lato"
+        android:textSize="20dp"
         android:background="@color/white"
         android:backgroundTint="@color/white"
-        app:mask="#####" />
+        />
 
     <View
         android:id="@+id/divider8"

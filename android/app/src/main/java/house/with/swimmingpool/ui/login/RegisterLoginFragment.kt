@@ -1,19 +1,27 @@
 package house.with.swimmingpool.ui.login
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.App
+import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentRegisterLoginBinding
 
 class RegisterLoginFragment(
         private val parentView: ILoginView
         ): Fragment() {
+
+    private var isShowPassword = false
 
     private var loginBinding: FragmentRegisterLoginBinding? = null
     override fun onCreateView(
@@ -26,11 +34,23 @@ class RegisterLoginFragment(
         return loginBinding?.root
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getActivity()?.getWindow()?.setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
+        )
+
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         loginBinding?.apply{
+
+            if (LoginActivity.cashedPhone != null) {
+                phoneInput.setText(LoginActivity.cashedPhone)
+            }
+
             phoneInput.doOnTextChanged { text, start, before, count ->
+                LoginActivity.cashedPhone = phoneInput.rawText
                 setErrorNotification(isVisible = false)
                 isFieldsAreFilled()
             }
@@ -38,13 +58,35 @@ class RegisterLoginFragment(
             passwordInput.doOnTextChanged { text, start, before, count ->
                 setErrorNotification(isVisible = false)
                 isFieldsAreFilled()
+
+                if(text.toString() == ""){
+                    iconEye.visibility = View.INVISIBLE
+                }else{
+                    iconEye.visibility = View.VISIBLE
+                }
             }
+
+            iconEye.setOnClickListener {
+                isShowPassword = if (!isShowPassword){
+                    iconEye.setImageDrawable(requireActivity()
+                            .getDrawable(R.drawable.ic_open_eye_for_password))
+                    passwordInput.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    true
+                }else {
+                    iconEye.setImageDrawable(requireActivity()
+                            .getDrawable(R.drawable.ic_close_eye_for_password))
+                    passwordInput.inputType = 129
+                    false
+                }
+            }
+
+
         }
     }
 
     private fun isFieldsAreFilled(){
         loginBinding?.apply {
-            if (phoneInput.rawText?.length == 10 && passwordInput.rawText != ""){
+            if (phoneInput.rawText?.length == 10 && passwordInput.text.toString() != ""){
                 enterButton.isEnabled = true
                 enterButton.setOnClickListener {
                     loginUser(

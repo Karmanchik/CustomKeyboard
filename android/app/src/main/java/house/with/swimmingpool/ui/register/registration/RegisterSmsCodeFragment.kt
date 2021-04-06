@@ -66,6 +66,7 @@ class RegisterSmsCodeFragment(
                                 inputSmsCod.isEnabled = false
                                 confirmSmsCodeOnTheServer(text.noAsterisks())
                             } else {
+                                inputSmsCod.setText("")
                                 setErrorText("Неверный код, попробуйте снова")
                             }
 

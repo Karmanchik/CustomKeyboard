@@ -70,11 +70,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateData() {
-        // videos
-        // news
-        // stories
-        // header
-        // ads
 
         homeBinding?.loader?.visibility = View.VISIBLE
 
@@ -86,6 +81,16 @@ class HomeFragment : Fragment() {
             val ads = BannersServiceImpl().loadBanners()
 
             launch(Dispatchers.Main) {
+
+//                TODO("add popup")
+//                if (videosInfo.second != null && ) {
+//                    //show internet error popup
+//                    homeBinding?.nestedScrollView?.visibility = View.GONE
+//                } else {
+//                    homeBinding?.nestedScrollView?.visibility = View.VISIBLE
+//                }
+
+
                 homeBinding?.loader?.visibility = View.GONE
 
                 homeBinding?.storiesRV?.apply {

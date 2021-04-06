@@ -3,6 +3,7 @@ package house.with.swimmingpool.ui.login
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -17,10 +18,17 @@ class LoginActivity : AppCompatActivity(), ILoginView {
 
     private lateinit var loginBinging: ActivityLoginBinding
 
+    companion object {
+        var cashedPhone: String? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinging = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinging.root)
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE )
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
 //        tabsFragment.observe({ lifecycle }, ::replaceFragmentByTabs)
 
@@ -118,5 +126,10 @@ class LoginActivity : AppCompatActivity(), ILoginView {
 
     override fun onLoginSuccess(name: String?) {
         replaceFragmentWithoutTabs(RegisterLoginSuccessFragment(name))
+    }
+
+    override fun onDestroy() {
+        cashedPhone = null
+        super.onDestroy()
     }
 }

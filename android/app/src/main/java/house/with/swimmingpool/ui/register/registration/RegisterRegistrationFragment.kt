@@ -10,6 +10,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.databinding.FragmentRegisterRegistrationBinding
 import house.with.swimmingpool.ui.login.ILoginView
+import house.with.swimmingpool.ui.login.LoginActivity
 
 class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragment() {
 
@@ -28,11 +29,15 @@ class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragmen
         super.onViewCreated(view, savedInstanceState)
 
         registerBinding?.apply {
+            if (LoginActivity.cashedPhone != null) {
+                phoneInput.setText(LoginActivity.cashedPhone)
+            }
             enterButton.setOnClickListener {
 
                 checkPhoneNumberForMatches(phoneInput.text.toString())
 
-                phoneInput.doOnTextChanged { _, _, _, _ ->
+                phoneInput.doOnTextChanged { text, _, _, _ ->
+                    LoginActivity.cashedPhone = phoneInput.rawText
                     setErrorText(isVisible = false)
                 }
             }
