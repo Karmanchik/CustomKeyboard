@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.transaction
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.App
-import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentCabinetBinding
 import house.with.swimmingpool.ui.cabinet.password.PasswordFragment
 import house.with.swimmingpool.ui.cabinet.profile.ProfileFragment
 import house.with.swimmingpool.ui.login.LoginActivity
 import house.with.swimmingpool.ui.startActivity
 
-class CabinetFragment : Fragment() {
+class CabinetFragment : Fragment(), ICabinetView {
 
     private var binding: FragmentCabinetBinding? = null
 
@@ -46,7 +44,7 @@ class CabinetFragment : Fragment() {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     val fragment = when (tab.position) {
                         0 -> ProfileFragment()
-                        else -> PasswordFragment()
+                        else -> PasswordFragment(this@CabinetFragment)
                     }
                     childFragmentManager.transaction {
                         replace(frameCabinet.id, fragment)
@@ -59,6 +57,10 @@ class CabinetFragment : Fragment() {
 
             })
         }
+    }
+
+    override fun onPasswordSet() {
+            binding?.tabs?.getTabAt(0)?.select()
     }
 
 }

@@ -12,10 +12,13 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentPasswordBinding
+import house.with.swimmingpool.ui.cabinet.ICabinetView
 import house.with.swimmingpool.ui.popups.PopupActivity
 
 
-class PasswordFragment : Fragment(R.layout.fragment_password){
+class PasswordFragment(
+        private val parentView: ICabinetView
+        ) : Fragment(R.layout.fragment_password){
 
     private var passwordBinding: FragmentPasswordBinding? = null
 
@@ -54,6 +57,7 @@ class PasswordFragment : Fragment(R.layout.fragment_password){
                                             putExtra(App.TYPE_OF_POPUP, App.PASSWORD_SET_SUCCESSFULLY)
                                         }
                                 )
+                                parentView.onPasswordSet()
                             }else{
                                 oldPassword.setError()
                             }

@@ -64,7 +64,6 @@
         android:layout_marginEnd="12dp"
         android:layout_marginTop="5dp"
         app:title="Фамилия"
-        android:paddingBottom="0dp"
         app:buttonMode="true"
         app:passwordMode="false"
         android:textCursorDrawable="@null"
@@ -125,24 +124,33 @@
 <!--        android:layout_marginEnd="10dp"-->
 <!--        />-->
 
-    <EditText
-        android:id="@+id/phoneTest"
-        android:layout_width="match_parent"
+    <br.com.sapereaude.maskedEditText.MaskedEditText
+        android:id="@+id/phoneEditText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:padding="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="12dp"
+        android:hint="0000000000"
+        android:inputType="phone"
+        android:textSize="17sp"
+        android:enabled="false"
         android:textColor="@color/black"
-        android:layout_marginTop="3dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="12dp"
+        android:textColorHint="@color/black"
+        android:fontFamily="@font/lato"
         android:background="@color/white"
         android:backgroundTint="@color/white"
-        android:layout_marginEnd="10dp"/>
+        android:typeface="monospace"
+        app:allowed_chars="1234567890"
+        app:keep_hint="true"
+        app:mask="+7(###)###-##-##" />
 
     <View
         android:id="@+id/divider11"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="9dp"
         android:background="?android:attr/listDivider" />
 
     <TextView

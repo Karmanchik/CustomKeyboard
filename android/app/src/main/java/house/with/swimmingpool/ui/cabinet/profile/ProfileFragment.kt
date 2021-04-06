@@ -2,11 +2,14 @@ package house.with.swimmingpool.ui.cabinet.profile
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.content.pm.PackageManager
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -19,6 +22,13 @@ import house.with.swimmingpool.api.config.controllers.UpdateUserServiceImpl
 import house.with.swimmingpool.databinding.FragmentProfileBinding
 import house.with.swimmingpool.models.User
 import house.with.swimmingpool.ui.popups.PopupActivity
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 
 class ProfileFragment : Fragment() {
 
@@ -82,7 +92,7 @@ class ProfileFragment : Fragment() {
                 }
             }
 
-            phoneTest.setOnFocusChangeListener { v, hasFocus ->
+            phoneEditText.setOnFocusChangeListener { v, hasFocus ->
                 if(!hasFocus){
                     updateUserInfo()
                     Log.e("onFocusChanged", "phoneTest")
@@ -104,7 +114,7 @@ class ProfileFragment : Fragment() {
                             surname = surnameEditText.value,
                             login = App.setting.user?.login,
                             name = nameEditText.value,
-                            phone = phoneTest.text.toString()
+                            phone = phoneEditText.text.toString()
                             ),
             ){data, e ->
                 if(data != null && e == null) {
@@ -126,7 +136,7 @@ class ProfileFragment : Fragment() {
                 nameEditText.value = name
                 surnameEditText.value = surname
                 emailEditText.value = email
-                phoneTest.setText(phone)
+                phoneEditText.setText(phone)
                 Glide.with(this@ProfileFragment)
                         .load(avatar)
                         .circleCrop()
@@ -148,13 +158,46 @@ class ProfileFragment : Fragment() {
                         .start(requireContext(), this@ProfileFragment)
             }
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                val result = CropImage.getActivityResult(data)
+                val result = CropImage.getActivityResult(data).uri
                 if (resultCode == Activity.RESULT_OK) {
+                    val bitmap = BitmapFactory
+                            .decodeStream(requireActivity()
+                                    .contentResolver
+                                    .openInputStream(result))
 
-                    Glide.with(this@ProfileFragment)
-                            .load(result.uri)
-                            .circleCrop()
-                            .into(avatarImageView)
+                    val bos = ByteArrayOutputStream()
+
+                    val f = File(requireContext().cacheDir, "IMG_${System.currentTimeMillis()}" + ".jpg")
+                    val fos = FileOutputStream(f)
+
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)//.scaled.compressed
+                    fos.write(bos.toByteArray())
+                    fos.flush()
+                    fos.close()
+
+                    var filePart: MultipartBody.Part? = null
+                    try {
+                        filePart = MultipartBody.Part.createFormData(
+                                "file", f.name, RequestBody.create("image/*".toMediaTypeOrNull(), f))
+                    } catch (e: Exception) {
+                    }
+
+                    if (filePart != null) {
+                        UpdateUserServiceImpl().updateAvatar(
+                                filePart
+                        ) { data, e ->
+                            Log.e("testingUploadImage", "$data $e")
+                            data?.apply {
+                                App.setting.user?.avatar = this.data
+                            }
+                        }
+                    }
+//                    Glide.with(this@ProfileFragment)
+//                            .load(result.uri)
+//                            .circleCrop()
+//                            .placeholder(R.drawable.home_banner)
+//                            .error(R.drawable.error_placeholder_midle)
+//                            .into(avatarImageView)
                 }
             }
             if (requestCode == SIGN_OUT_REQUEST) {

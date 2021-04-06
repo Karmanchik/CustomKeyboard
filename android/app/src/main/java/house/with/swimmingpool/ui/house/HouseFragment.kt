@@ -113,6 +113,11 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     )
                 }
 
+                if(App.setting.user?.phone != ""){
+                    phoneInputConsultation.setText(App.setting.user?.phone)
+                    phoneInputCollBack.setText(App.setting.user?.phone)
+                }
+
                 buttonCollMe.setOnClickListener {
                     startActivity(
                         Intent(requireContext(), PopupActivity :: class.java).apply {
