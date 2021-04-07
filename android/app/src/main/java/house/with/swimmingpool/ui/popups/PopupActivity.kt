@@ -56,9 +56,10 @@ class PopupActivity : AppCompatActivity() {
 
     private fun setPopupConsultation(){
         popupBinding.apply {
-            singleVariantLayout.visibility = View.VISIBLE
-            descriptionSingleVariant.text = getString(R.string.popup_consultation_description)
-            buttonSingleVariant.text = "Продолжить"
+            radButtonLayout.visibility = View.VISIBLE
+            descriptionRadButton.text = getString(R.string.popup_consultation_description)
+            radButton.visibility = View.GONE
+            cancelBesideRadButton.text = "Продолжить"
 
             buttonSingleVariant.setOnClickListener { finish() }
         }

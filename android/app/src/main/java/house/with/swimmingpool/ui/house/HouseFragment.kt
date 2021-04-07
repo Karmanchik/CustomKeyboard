@@ -113,6 +113,14 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     )
                 }
 
+                buttonCollMe.setOnClickListener {
+                    startActivity(
+                            Intent(requireContext(), PopupActivity::class.java).apply {
+                                putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
+                            }
+                    )
+                }
+
                 singleHouseObject.apply {
                     if (isFavourite == true) {
                         favoriteImageView.setImageResource(R.drawable.ic_like_blue)
@@ -131,14 +139,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 if (App.setting.user?.phone != "") {
                     phoneInputConsultation.setText(App.setting.user?.phone)
                     phoneInputCollBack.setText(App.setting.user?.phone)
-                }
-
-                buttonCollMe.setOnClickListener {
-                    startActivity(
-                            Intent(requireContext(), PopupActivity::class.java).apply {
-                                putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
-                            }
-                    )
                 }
 
                 houseExampleData = singleHouseObject
