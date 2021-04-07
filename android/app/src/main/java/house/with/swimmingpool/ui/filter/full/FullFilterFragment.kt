@@ -148,6 +148,13 @@ class FullFilterFragment : Fragment() {
                     if (it.tag == "2") it.performClick()
                 }
                 App.setting.filterConfig = null
+                districtsFilter = null
+                registrationTypeFilter = null
+                paymentTypeFilter = null
+                interiorFilter = null
+                buildingClassFilter = null
+                selectedSquareRange = null
+                selectedPriceRange = null
                 load()
             }
 
@@ -253,7 +260,7 @@ class FullFilterFragment : Fragment() {
             price.setOnClickListener {
                 openRange(
                     getPriceRange,
-                    "Цена, р.",
+                    "Цена, руб.",
                     selectedPriceRange?.first ?: getPriceRange.first,
                     selectedPriceRange?.second ?: getPriceRange.second
                 ) { min, max ->
