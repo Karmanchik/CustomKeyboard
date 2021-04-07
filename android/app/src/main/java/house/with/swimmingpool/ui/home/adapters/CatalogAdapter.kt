@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.BannersServiceImpl
+import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.ItemBigBannerBinding
 import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
 import house.with.swimmingpool.databinding.ItemSmallBannerBinding
@@ -93,7 +94,7 @@ class CatalogAdapter(
 
             itemView.setOnClickListener { onItemSelected.invoke(item.id) }
             view.apply {
-            housesImageContainerLayout.setOnClickListener { onItemSelected.invoke(item.id) }
+                housesImageContainerLayout.setOnClickListener { onItemSelected.invoke(item.id) }
                 likeView.setImageResource(R.drawable.like_enabled)
 
                 item.apply {
@@ -102,37 +103,43 @@ class CatalogAdapter(
                     vp.adapter = when {
                         photos != null && photos.isNotEmpty() -> {
                             Log.e("photos", photos.size.toString())
-                             CatalogImageAdapter(photos, listOf("-cYOlHknhBU") , ctx, onItemSelected,
-                                 item.id
-                             )
+                            CatalogImageAdapter(photos, listOf("-cYOlHknhBU"), ctx, onItemSelected,
+                                    item.id
+                            )
                         }
-                        icon != null ->{
+                        icon != null -> {
                             Log.e("photos", icon.toString())
-                            CatalogImageAdapter(listOf(icon), listOf("-cYOlHknhBU") , ctx, onItemSelected,
-                                item.id
+                            CatalogImageAdapter(listOf(icon), listOf("-cYOlHknhBU"), ctx, onItemSelected,
+                                    item.id
                             )
                         }
                         else -> {
-                            CatalogImageAdapter(listOf(""), listOf("-cYOlHknhBU") , ctx, onItemSelected,
-                                item.id
+                            CatalogImageAdapter(listOf(""), listOf("-cYOlHknhBU"), ctx, onItemSelected,
+                                    item.id
                             )
                         }
                     }
                     dotsIndicatorCatalogItem.setViewPager2(vp)
+
+                    if (isFavourite == true) {
+                        likeView.setImageResource(R.drawable.like_enabled)
+                    }else{
+                        likeView.setImageResource(R.drawable.like_disabled)
+                    }
                 }
 
                 item.apply {
                     textViewTitle.text = title
                     textViewDescription.text = location
                     textViewPrice.text = price
-                    if(square != null && square.isNotEmpty() && square != "0" && square != "0.0" ) {
+                    if (square != null && square.isNotEmpty() && square != "0" && square != "0.0") {
                         textViewSquare.text = "$square м²"      //fix me!!!
-                    }else{
+                    } else {
                         textViewSquare.visibility = View.GONE
                     }
-                    if(square_area != null && square_area.isNotEmpty() && square_area != "0" && square_area != "0.0" ) {
+                    if (square_area != null && square_area.isNotEmpty() && square_area != "0" && square_area != "0.0") {
                         textViewSquareArea.text = "$square_area соток" //fix me!!!
-                    }else{
+                    } else {
                         textViewSquareArea.visibility = View.GONE
                     }
 
@@ -140,9 +147,27 @@ class CatalogAdapter(
                         hashTagRV.adapter = TagAdapter(ctx, mainTags)
                     }
                 }
+
+                item.apply {
+                    likeView.setOnClickListener {
+                        if (isFavourite == true) {
+                            likeView.setImageResource(R.drawable.like_disabled)
+                            RealtyServiceImpl().removeFromFavourites(id){ status, e ->
+                                Log.e("removeFromFavourites", "status $status EXCEPTION $e")
+                                isFavourite = false
+                            }
+                        }else{
+                            likeView.setImageResource(R.drawable.like_enabled)
+                            RealtyServiceImpl().addToFavourites(id){ status, e ->
+                                Log.e("addToFavourites", "status $status EXCEPTION $e")
+                                isFavourite = true
+                            }
+                        }
+                    }
+                }
+
             }
         }
-
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import house.with.swimmingpool.App
+import house.with.swimmingpool.App.Companion.INTERNET_ERROR
 import house.with.swimmingpool.App.Companion.IS_SIGN_OUT
 import house.with.swimmingpool.App.Companion.PASSWORD_SET_SUCCESSFULLY
 import house.with.swimmingpool.App.Companion.SEND_REQUEST_CONSULTATION
@@ -32,6 +33,23 @@ class PopupActivity : AppCompatActivity() {
 
             PASSWORD_SET_SUCCESSFULLY -> {
                 setPopupPasswordChanged()
+            }
+
+            INTERNET_ERROR ->{
+                setPopupInternetError()
+            }
+        }
+    }
+
+    private fun setPopupInternetError(){
+        popupBinding.apply {
+            singleVariantLayout.visibility = View.VISIBLE
+            descriptionSingleVariant.text = getString(R.string.popup_internet_error_description)
+            buttonSingleVariant.text = "Повторить"
+
+            buttonSingleVariant.setOnClickListener {
+                setResult(RESULT_OK)
+                finish()
             }
         }
     }

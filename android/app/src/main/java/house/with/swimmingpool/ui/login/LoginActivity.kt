@@ -6,9 +6,9 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.databinding.ActivityLoginBinding
+import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.register.registration.RegisterLoginSuccessFragment
 import house.with.swimmingpool.ui.register.registration.RegisterRegistrationFragment
 import house.with.swimmingpool.ui.register.registration.RegisterSetPasswordFragment
@@ -26,6 +26,8 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         super.onCreate(savedInstanceState)
         loginBinging = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinging.root)
+
+        CabinetFragment.isPopBackLoginActivity = true
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE )
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)

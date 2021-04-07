@@ -8,10 +8,10 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_background"
+        android:visibility="invisible"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         tools:context=".ui.home.HomeFragment"
         tools:ignore="HardcodedText">
@@ -248,16 +248,16 @@
                 android:layout_marginBottom="15dp"
                 android:fontFamily="@font/lato_semibold"
                 android:text="Вы смотрели"
-                android:visibility="gone"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lastSeenRV"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp" />
+                android:layout_marginStart="12dp"
+                android:visibility="gone" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/bigBanner"

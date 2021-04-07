@@ -11,21 +11,33 @@ import retrofit2.http.*
 interface IRealty {
 
     @GET("objects")
-    fun getHouses(): Call<HouseCatalog>
+    fun getHouses(
+            @Header("Authorization") token: String? = App.setting.apiToken,
+            @Header("phone") phone: String? = App.setting.phone,
+            @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
+    ): Call<HouseCatalog>
 
     @GET("objects/{id}")
     fun getHousesExample(
-        @Path("id") id: Int
+        @Path("id") id: Int,
+        @Header("Authorization") token: String? = App.setting.apiToken,
+        @Header("phone") phone: String? = App.setting.phone,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<HouseExample>
 
     @GET("params")
     fun getParamsForFilter(
+        @Header("Authorization") token: String? = App.setting.apiToken,
+        @Header("phone") phone: String? = App.setting.phone,
         @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<JsonObject>>
 
     @POST("objects")
     fun getObjectsWithFilter(
-        @Body request: FilterObjectsRequest
+        @Body request: FilterObjectsRequest,
+        @Header("Authorization") token: String? = App.setting.apiToken,
+        @Header("phone") phone: String? = App.setting.phone,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<CountList>>
 
 
@@ -42,17 +54,17 @@ interface IRealty {
     fun addToFavourites(
         @Header("Authorization") token: String? = App.setting.apiToken,
         @Header("phone") phone: String? = App.setting.phone,
-        @Path("id") id: String,
+        @Path("id") id: Int,
         @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
-    ): Call<Answer<Stub>>
+    ): Call<AddRemoweFavRequest>
 
     @DELETE("fav/{id}")
     fun removeFromFavourites(
         @Header("Authorization") token: String? = App.setting.apiToken,
         @Header("phone") phone: String? = App.setting.phone,
-        @Path("id") id: String,
+        @Path("id") id: Int,
         @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
-    ): Call<Answer<Stub>>
+    ): Call<AddRemoweFavRequest>
 
 
     // фильтры

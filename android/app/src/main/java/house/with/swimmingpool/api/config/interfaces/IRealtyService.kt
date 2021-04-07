@@ -13,8 +13,8 @@ interface IRealtyService {
 
     // избранное
     fun getMyFavourites(onLoaded: (data: ListAnswerData<HouseCatalogData>?, e: Throwable?) -> Unit)
-    fun addToFavourites(id: String, onLoaded: (data: Stub?, e: Throwable?) -> Unit)
-    fun removeFromFavourites(id: String, onLoaded: (data: Stub?, e: Throwable?) -> Unit)
+    fun addToFavourites(id: Int, onLoaded: (status: String?, e: Throwable?) -> Unit)
+    fun removeFromFavourites(id: Int, onLoaded: (status: String?, e: Throwable?) -> Unit)
 
     // фильтры
     fun getSearches(onLoaded: (data: List<Search>?, e: Throwable?) -> Unit)

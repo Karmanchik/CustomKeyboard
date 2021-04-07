@@ -20,6 +20,7 @@ class App: Application() {
         const val SIGN_OUT = "SIGN_OUT"
         const val IS_SIGN_OUT = "IS_SIGN_OUT"
         const val PASSWORD_SET_SUCCESSFULLY = "PASSWORD_SET_SUCCESSFULLY"
+        const val INTERNET_ERROR = "INTERNET_ERROR"
     }
 
     override fun onCreate() {

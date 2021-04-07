@@ -21,6 +21,7 @@ import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
 import house.with.swimmingpool.ui.load
+import house.with.swimmingpool.ui.popups.PopupActivity
 import house.with.swimmingpool.ui.search.SearchActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -32,6 +33,7 @@ class HomeFragment : Fragment() {
     companion object {
         const val NAVIGATE_TO_CATALOG = 1
         const val NAVIGATE_TO_OBJECT = 2
+        const val POPUP_WIFI_ERROR_REFRASH = 201
     }
 
     private var homeBinding: FragmentHomeBinding? = null
@@ -67,6 +69,10 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        if(requestCode == POPUP_WIFI_ERROR_REFRASH){
+            updateData()
+        }
     }
 
     private fun updateData() {
@@ -82,13 +88,21 @@ class HomeFragment : Fragment() {
 
             launch(Dispatchers.Main) {
 
-//                TODO("add popup")
-//                if (videosInfo.second != null && ) {
-//                    //show internet error popup
-//                    homeBinding?.nestedScrollView?.visibility = View.GONE
-//                } else {
-//                    homeBinding?.nestedScrollView?.visibility = View.VISIBLE
-//                }
+                if (videosInfo.second != null
+                        && newsInfo.second != null
+                        && storiesInfo.second != null
+                        && headerInfo.second != null
+                        && ads.second != null) {
+                    startActivityForResult(
+                            Intent(requireContext(), PopupActivity::class.java).apply {
+                                putExtra(App.TYPE_OF_POPUP, App.INTERNET_ERROR)
+                            },
+                            POPUP_WIFI_ERROR_REFRASH
+                    )
+                    homeBinding?.nestedScrollView?.visibility = View.GONE
+                } else {
+                    homeBinding?.nestedScrollView?.visibility = View.VISIBLE
+                }
 
 
                 homeBinding?.loader?.visibility = View.GONE
@@ -315,8 +329,8 @@ class HomeFragment : Fragment() {
             val pos = when (position) {
                 0 -> fullFilterView.bottom
                 1 -> adsLinear.bottom
-                2 -> divider.bottom
-                3 -> divider2.bottom
+                2 -> videosContainer.top
+                3 -> newsContainer.top
                 else -> null
             }
             pos?.let { nestedScrollView.smoothScrollTo(0, it, 1500) }

@@ -105,36 +105,36 @@ class RealtyServiceImpl : IRealtyService {
             })
     }
 
-    override fun addToFavourites(id: String, onLoaded: (data: Stub?, e: Throwable?) -> Unit) {
+    override fun addToFavourites(id: Int, onLoaded: (status: String?, e: Throwable?) -> Unit) {
         IRealty.api
             .addToFavourites(id = id)
-            .enqueue(object : Callback<Answer<Stub>> {
+            .enqueue(object : Callback<AddRemoweFavRequest> {
                 override fun onResponse(
-                    call: Call<Answer<Stub>>,
-                    response: Response<Answer<Stub>>
+                    call: Call<AddRemoweFavRequest>,
+                    response: Response<AddRemoweFavRequest>
                 ) {
-                    onLoaded.invoke(response.body()?.data, null)
+                    onLoaded.invoke(response.body()?.status, null)
                 }
 
-                override fun onFailure(call: Call<Answer<Stub>>, t: Throwable) {
+                override fun onFailure(call: Call<AddRemoweFavRequest>, t: Throwable) {
                     onLoaded.invoke(null, t)
                     Log.e("taskException", "error", t)
                 }
             })
     }
 
-    override fun removeFromFavourites(id: String, onLoaded: (data: Stub?, e: Throwable?) -> Unit) {
+    override fun removeFromFavourites(id: Int, onLoaded: (status: String?, e: Throwable?) -> Unit) {
         IRealty.api
             .removeFromFavourites(id = id)
-            .enqueue(object : Callback<Answer<Stub>> {
+            .enqueue(object : Callback<AddRemoweFavRequest> {
                 override fun onResponse(
-                    call: Call<Answer<Stub>>,
-                    response: Response<Answer<Stub>>
+                    call: Call<AddRemoweFavRequest>,
+                    response: Response<AddRemoweFavRequest>
                 ) {
-                    onLoaded.invoke(response.body()?.data, null)
+                    onLoaded.invoke(response.body()?.status, null)
                 }
 
-                override fun onFailure(call: Call<Answer<Stub>>, t: Throwable) {
+                override fun onFailure(call: Call<AddRemoweFavRequest>, t: Throwable) {
                     onLoaded.invoke(null, t)
                     Log.e("taskException", "error", t)
                 }

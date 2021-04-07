@@ -18,7 +18,7 @@
         android:layout_gravity="end"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
-        android:src="@drawable/like_enabled"
+        android:src="@drawable/like_disabled"
         android:elevation="5dp"
         />
 

@@ -41,9 +41,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
     private var houseExampleData: HouseExampleData? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View? {
         houseObjectBinding = FragmentHouseBinding.inflate(layoutInflater)
 
@@ -60,13 +60,13 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
         try {
             val singleHouseObject =
-                Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)
+                    Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)
 
             if (singleHouseObject != null) {
                 showHome(singleHouseObject)
 
                 RealtyServiceImpl().getHouseExample(
-                    singleHouseObject.id ?: 0
+                        singleHouseObject.id ?: 0
                 ) { data, e ->
                     data?.let { showHome(it) }
                 }
@@ -107,22 +107,37 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 sendRequestButton.setOnClickListener {
                     startActivity(
-                        Intent(requireContext(), PopupActivity :: class.java).apply {
-                            putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
-                        }
+                            Intent(requireContext(), PopupActivity::class.java).apply {
+                                putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
+                            }
                     )
                 }
 
-                if(App.setting.user?.phone != ""){
+                singleHouseObject.apply {
+                    if (isFavourite == true) {
+                        favoriteImageView.setImageResource(R.drawable.ic_like_blue)
+                    } else {
+                        favoriteImageView.setImageResource(R.drawable.ic_like_white_blue)
+                    }
+
+                    favoriteImageView.setOnClickListener {
+                        onClickButtonFavorite(this)
+                    }
+                    favoriteTextView.setOnClickListener {
+                        onClickButtonFavorite(this)
+                    }
+                }
+
+                if (App.setting.user?.phone != "") {
                     phoneInputConsultation.setText(App.setting.user?.phone)
                     phoneInputCollBack.setText(App.setting.user?.phone)
                 }
 
                 buttonCollMe.setOnClickListener {
                     startActivity(
-                        Intent(requireContext(), PopupActivity :: class.java).apply {
-                            putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
-                        }
+                            Intent(requireContext(), PopupActivity::class.java).apply {
+                                putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
+                            }
                     )
                 }
 
@@ -130,11 +145,11 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 singleHouseObject.getGallery().apply {
                     whiteButtonGalleryRV.adapter =
-                        MainGalleryAndDateAdapter(
-                            requireContext(),
-                            this,
-                            this@HouseFragment
-                        )
+                            MainGalleryAndDateAdapter(
+                                    requireContext(),
+                                    this,
+                                    this@HouseFragment
+                            )
 
                     val galleryNameList: ArrayList<String> = arrayListOf()
                     val listImage: ArrayList<String> = arrayListOf()
@@ -181,22 +196,22 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 }
 
                 whiteButtonRV.adapter = WhiteButtonAdapter(
-                    requireContext(), this@HouseFragment, listOf(
+                        requireContext(), this@HouseFragment, listOf(
                         "Общие",
                         "Коммуникации",
                         "Оформление",
                         "Оплата"
-                    )
+                )
                 )
 
                 showInformation(0)
 
 
                 val descriptionText =
-                    if (singleHouseObject.description != null) Html.fromHtml(singleHouseObject.description) else ""
+                        if (singleHouseObject.description != null) Html.fromHtml(singleHouseObject.description) else ""
 
                 if (singleHouseObject.description?.trim()
-                        .isNullOrEmpty() || descriptionText.isEmpty()
+                                .isNullOrEmpty() || descriptionText.isEmpty()
                 ) {
                     description.visibility = View.GONE
                     textViewAboutObject.visibility = View.GONE
@@ -216,17 +231,17 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 Glide.with(requireContext())
 //                            .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
-                    .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
-                    .error(R.drawable.error_placeholder_midle)
-                    .placeholder(R.drawable.placeholder)
-                    .into(imageViewVideoPreloader)
+                        .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
+                        .error(R.drawable.error_placeholder_midle)
+                        .placeholder(R.drawable.placeholder)
+                        .into(imageViewVideoPreloader)
 
                 if (!singleHouseObject.video.isNullOrEmpty()) {
                     videoLayout.visibility = View.VISIBLE
                     youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                         override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
                             val videoId =
-                                "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
+                                    "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
                             youTubePlayer.loadVideo(videoId, 0f)
                             youTubePlayer.pause()
 
@@ -283,8 +298,8 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     whiteButtonAdvantagesRV.visibility = View.VISIBLE
                     advantagesDivider.visibility = View.VISIBLE
                     whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(
-                        requireContext(),
-                        singleHouseObject.advantages
+                            requireContext(),
+                            singleHouseObject.advantages
                     )
                 } else {
                     textViewAdvantages.visibility = View.GONE
@@ -319,15 +334,15 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     mapView.map?.isZoomGesturesEnabled = false
                     mapView.map?.isTiltGesturesEnabled = false
                     mapview?.map?.move(
-                        CameraPosition(
-                            Point(latitude, longitude), 11.0f, 0.0f, 0.0f
-                        ),
-                        Animation(Animation.Type.SMOOTH, 0F),
-                        null
+                            CameraPosition(
+                                    Point(latitude, longitude), 11.0f, 0.0f, 0.0f
+                            ),
+                            Animation(Animation.Type.SMOOTH, 0F),
+                            null
                     )
                     mapview?.map?.mapObjects?.addPlacemark(
-                        Point(latitude, longitude),
-                        ViewProvider(icon)
+                            Point(latitude, longitude),
+                            ViewProvider(icon)
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -342,7 +357,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         adapter = ChildrenHouseAdapter(singleHouseObject.analogs.take(2)) { homeId ->
                             val home = singleHouseObject.analogs.firstOrNull { it.id == homeId }
                             val bundle =
-                                Bundle().apply { putString("home", Gson().toJson(home)) }
+                                    Bundle().apply { putString("home", Gson().toJson(home)) }
                             findNavController().navigate(R.id.action_houseFragment_self, bundle)
                         }
                         similarObjects.visibility = View.VISIBLE
@@ -355,6 +370,28 @@ class HouseFragment : Fragment(), ISingleHouseView {
             }
         } catch (e: Exception) {
             Log.e("test", "lol", e)
+        }
+    }
+
+    private fun onClickButtonFavorite(singleHouseObject: HouseExampleData){
+        houseObjectBinding?.apply {
+            singleHouseObject.apply {
+                if (id != null) {
+                    if (isFavourite == true) {
+                        favoriteImageView.setImageResource(R.drawable.ic_like_white_blue)
+                        RealtyServiceImpl().removeFromFavourites(id) { status, e ->
+                            Log.e("removeFromFavourites", "status $status EXCEPTION $e")
+                            isFavourite = false
+                        }
+                    } else {
+                        favoriteImageView.setImageResource(R.drawable.ic_like_blue)
+                        RealtyServiceImpl().addToFavourites(id) { status, e ->
+                            Log.e("addToFavourites", "status $status EXCEPTION $e")
+                            isFavourite = true
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -376,18 +413,18 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         if ((houseExampleData?.children?.size) ?: 0 <= 6) {
                             showListHouseBox.visibility = View.GONE
                             adapter = ListHouseBoxAdapter(
-                                requireContext(),
-                                houseExampleData?.children
+                                    requireContext(),
+                                    houseExampleData?.children
                             )
                         } else {
                             houseExampleData?.apply {
                                 showListHouseBox.visibility = View.VISIBLE
                                 adapter = ListHouseBoxAdapter(
-                                    requireContext(),
-                                    listOf(
-                                        children?.get(0), children?.get(1), children?.get(2),
-                                        children?.get(3), children?.get(4), children?.get(5),
-                                    )
+                                        requireContext(),
+                                        listOf(
+                                                children?.get(0), children?.get(1), children?.get(2),
+                                                children?.get(3), children?.get(4), children?.get(5),
+                                        )
                                 )
                             }
                         }
@@ -439,32 +476,32 @@ class HouseFragment : Fragment(), ISingleHouseView {
             val fragment = when (position) {
                 0 -> {
                     InformationFragment(
-                        houseExampleData?.formattedGeneral()
+                            houseExampleData?.formattedGeneral()
                     )
                 }
 
                 1 -> {
                     InformationFragment(
-                        houseExampleData?.formattedCommunications()
+                            houseExampleData?.formattedCommunications()
                     )
                 }
 
                 2 -> {
                     InformationFragment(
-                        houseExampleData?.formattedRegistration()
+                            houseExampleData?.formattedRegistration()
                     )
                 }
 
                 else -> {
                     InformationFragment(
-                        houseExampleData?.formattedPayment()
+                            houseExampleData?.formattedPayment()
                     )
                 }
             }
 
             childFragmentManager.beginTransaction()
-                .replace(houseObjectBinding?.informationFrame?.id ?: 0, fragment)
-                .commit()
+                    .replace(houseObjectBinding?.informationFrame?.id ?: 0, fragment)
+                    .commit()
         }
     }
 }

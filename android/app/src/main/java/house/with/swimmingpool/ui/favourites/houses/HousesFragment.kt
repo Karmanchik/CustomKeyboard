@@ -9,8 +9,6 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentFavouritesContainerHousesBinding
 import house.with.swimmingpool.ui.favourites.adapters.SelectionHouseAdapter
 
-
-
 class HousesFragment : Fragment(R.layout.fragment_favourites_container_houses){
 
     private var housesBinding: FragmentFavouritesContainerHousesBinding? = null

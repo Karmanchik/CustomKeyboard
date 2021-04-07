@@ -252,12 +252,14 @@
                     android:background="?android:attr/listDivider" />
 
                 <ImageView
+                    android:id="@+id/favoriteImageView"
                     android:layout_width="20dp"
                     android:layout_height="16dp"
                     android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_like_blue" />
+                    android:src="@drawable/ic_like_white_blue" />
 
                 <TextView
+                    android:id="@+id/favoriteTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato"

@@ -16,47 +16,47 @@
             android:id="@+id/singleVariantLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             android:visibility="gone">
 
             <ImageView
-            android:id="@+id/wifiImageView"
-            android:layout_width="46dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="60dp"
-            android:layout_centerHorizontal="true"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_rad_wifi"/>
+                android:id="@+id/wifiImageView"
+                android:layout_width="46dp"
+                android:layout_height="37dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_rad_wifi" />
 
             <TextView
                 android:id="@+id/descriptionSingleVariant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ваша заявка принята. \nСкоро с вами свяжется наш менеджер"
-            android:fontFamily="@font/lato_medium"
-            android:layout_marginTop="10dp"
-            android:lineHeight="28dp"
-            android:layout_marginStart="33dp"
-            android:layout_marginEnd="33dp"
-            android:gravity="center"
-            android:textSize="19dp"
-            android:textColor="@color/black" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="33dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="33dp"
+                android:fontFamily="@font/lato_medium"
+                android:gravity="center"
+                android:lineHeight="28dp"
+                android:text="Ваша заявка принята. \nСкоро с вами свяжется наш менеджер"
+                android:textColor="@color/black"
+                android:textSize="19dp" />
 
             <TextView
                 android:id="@+id/buttonSingleVariant"
-                android:background="@drawable/popup_botton_background"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginTop="46dp"
                 android:layout_marginStart="25dp"
+                android:layout_marginTop="46dp"
                 android:layout_marginEnd="25dp"
                 android:layout_marginBottom="35dp"
+                android:background="@drawable/popup_botton_background"
                 android:fontFamily="@font/lato_bold"
-                android:text="Продолжить"
-                android:textSize="18dp"
                 android:gravity="center"
-                android:textColor="#00A8FF"/>
+                android:text="Продолжить"
+                android:textColor="#00A8FF"
+                android:textSize="18dp" />
         </LinearLayout>
 
         <LinearLayout

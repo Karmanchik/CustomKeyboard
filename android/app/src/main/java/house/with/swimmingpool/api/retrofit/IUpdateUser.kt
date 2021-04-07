@@ -7,10 +7,7 @@ import house.with.swimmingpool.models.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface IUpdateUser {
 
@@ -22,9 +19,11 @@ interface IUpdateUser {
             @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<UpdatedUser>
 
+    @Multipart
     @POST("file")
     fun updateAvatar(
-            @Body image: MultipartBody.Part,
+            @Part("file") file: RequestBody?,
+            @Part("Content-Type") type: RequestBody?,
             @Header("Authorization") token: String? = App.setting.apiToken,
             @Header("phone") phone: String? = App.setting.phone,
             @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"

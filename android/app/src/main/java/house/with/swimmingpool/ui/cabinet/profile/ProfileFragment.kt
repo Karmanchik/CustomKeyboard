@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
     ): View? {
         profileBinding = FragmentProfileBinding.inflate(layoutInflater)
 
@@ -56,7 +56,7 @@ class ProfileFragment : Fragment() {
 
             closeProfileButton.setOnClickListener {
                 startActivityForResult(
-                        Intent(requireContext(), PopupActivity :: class.java).apply {
+                        Intent(requireContext(), PopupActivity::class.java).apply {
                             putExtra(App.TYPE_OF_POPUP, App.SIGN_OUT)
                         },
                         SIGN_OUT_REQUEST
@@ -72,28 +72,28 @@ class ProfileFragment : Fragment() {
             }
 
             surnameEditText.getField()?.setOnFocusChangeListener { v, hasFocus ->
-                if(!hasFocus){
+                if (!hasFocus) {
                     updateUserInfo()
                     Log.e("onFocusChanged", "surnameEditText")
                 }
             }
 
             emailEditText.getField()?.setOnFocusChangeListener { v, hasFocus ->
-                if(!hasFocus) {
+                if (!hasFocus) {
                     updateUserInfo()
                     Log.e("onFocusChanged", "emailEditText")
                 }
             }
 
             nameEditText.getField()?.setOnFocusChangeListener { v, hasFocus ->
-                if(!hasFocus){
+                if (!hasFocus) {
                     updateUserInfo()
                     Log.e("onFocusChanged", "nameEditText")
                 }
             }
 
             phoneEditText.setOnFocusChangeListener { v, hasFocus ->
-                if(!hasFocus){
+                if (!hasFocus) {
                     updateUserInfo()
                     Log.e("onFocusChanged", "phoneTest")
                 }
@@ -103,7 +103,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun updateUserInfo(){
+    private fun updateUserInfo() {
         profileBinding?.apply {
             UpdateUserServiceImpl().updateUserInfo(
                     User(
@@ -115,9 +115,9 @@ class ProfileFragment : Fragment() {
                             login = App.setting.user?.login,
                             name = nameEditText.value,
                             phone = phoneEditText.text.toString()
-                            ),
-            ){data, e ->
-                if(data != null && e == null) {
+                    ),
+            ) { data, e ->
+                if (data != null && e == null) {
                     App.setting.user = data
                     loadUser()
                 }
@@ -130,19 +130,14 @@ class ProfileFragment : Fragment() {
         super.onResume()
     }
 
-    private fun loadUser(){
+    private fun loadUser() {
         profileBinding?.apply {
             App.setting.user?.apply {
                 nameEditText.value = name
                 surnameEditText.value = surname
                 emailEditText.value = email
                 phoneEditText.setText(phone)
-                Glide.with(this@ProfileFragment)
-                        .load(avatar)
-                        .circleCrop()
-                        .placeholder(R.drawable.circle_placeholder)
-                        .error(R.drawable.circle_placeholder)
-                        .into(avatarImageView)
+
             }
         }
     }
@@ -165,6 +160,13 @@ class ProfileFragment : Fragment() {
                                     .contentResolver
                                     .openInputStream(result))
 
+                    Glide.with(this@ProfileFragment)
+                            .load(bitmap)
+                            .circleCrop()
+                            .placeholder(R.drawable.circle_placeholder)
+                            .error(R.drawable.circle_placeholder)
+                            .into(avatarImageView)
+
                     val bos = ByteArrayOutputStream()
 
                     val f = File(requireContext().cacheDir, "IMG_${System.currentTimeMillis()}" + ".jpg")
@@ -175,23 +177,13 @@ class ProfileFragment : Fragment() {
                     fos.flush()
                     fos.close()
 
-                    var filePart: MultipartBody.Part? = null
-                    try {
-                        filePart = MultipartBody.Part.createFormData(
-                                "file", f.name, RequestBody.create("image/*".toMediaTypeOrNull(), f))
-                    } catch (e: Exception) {
-                    }
-
-                    if (filePart != null) {
-                        UpdateUserServiceImpl().updateAvatar(
-                                filePart
-                        ) { data, e ->
-                            Log.e("testingUploadImage", "$data $e")
-                            data?.apply {
-                                App.setting.user?.avatar = this.data
-                            }
+                    UpdateUserServiceImpl().updateAvatar(f) { data, e ->
+                        Log.e("testingUploadImage", "$data $e")
+                        data?.apply {
+                            App.setting.user?.avatar = this.data
                         }
                     }
+
 //                    Glide.with(this@ProfileFragment)
 //                            .load(result.uri)
 //                            .circleCrop()
