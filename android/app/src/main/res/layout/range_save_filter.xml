@@ -70,7 +70,7 @@
             android:layout_marginEnd="14dp"
             android:fontFamily="@font/lato_regular"
             android:gravity="end"
-            android:text="12 из 100"
+            android:text="0 из 100"
             android:textColor="#A1A1A1" />
 
         <LinearLayout
@@ -80,17 +80,24 @@
             android:layout_marginBottom="252dp">
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/deleteNote"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="6dp"
-                android:src="@drawable/ic_delete_note" />
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_delete_note"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/send"
-                style="@style/main_button"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:background="@drawable/main_button_background"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/lato_semibold"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:elevation="0dp"

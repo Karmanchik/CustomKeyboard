@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class SearchesFragment : Fragment(R.layout.fragment_favourites_container_searches) {
+class SearchesFragment : Fragment() {
 
     private var filterConfig: JsonObject? = null
     private val filterCategories get() = filterConfig?.entrySet()?.map { Pair(it.key, it.value) }
@@ -94,6 +94,7 @@ class SearchesFragment : Fragment(R.layout.fragment_favourites_container_searche
                     }
                 }
             } catch (e: Exception) {
+                showData(listOf())
                 Log.e("test", "load", e)
             }
         }

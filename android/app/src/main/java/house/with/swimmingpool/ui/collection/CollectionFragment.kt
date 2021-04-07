@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.collection
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -55,11 +56,25 @@ class CollectionFragment : Fragment() {
                     ).show(parentFragmentManager, "DialogEditNoteFragment")
                 }
                 noteValue.text = data?.note
+
+                share.setOnClickListener {
+                    val share = Intent(Intent.ACTION_SEND)
+                    share.type = "text/plain"
+                    share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+                    share.putExtra(Intent.EXTRA_SUBJECT, "Подборка ${data?.name ?: ""}")
+                    share.putExtra(Intent.EXTRA_TEXT, "https://domsbasseinom.ru${data?.link ?: ""}")
+                    startActivity(Intent.createChooser(share, "Поделиться!"))
+                }
+
             }
 
             closeNote.setOnClickListener {
                 noteValue.text = ""
                 RealtyServiceImpl().changeNoteInCollection(id, "") { _, _ -> }
+            }
+
+            back.setOnClickListener {
+                findNavController().popBackStack()
             }
 
         }

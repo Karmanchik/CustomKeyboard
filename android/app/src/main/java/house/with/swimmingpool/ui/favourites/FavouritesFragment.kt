@@ -2,14 +2,12 @@ package house.with.swimmingpool.ui.favourites
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.transaction
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.ui.favourites.collectionslist.CollectionsListFragment
-import house.with.swimmingpool.ui.favourites.houses.HousesFragment
 import house.with.swimmingpool.ui.favourites.liked.LikedFragment
 import house.with.swimmingpool.ui.favourites.searches.SearchesFragment
 
