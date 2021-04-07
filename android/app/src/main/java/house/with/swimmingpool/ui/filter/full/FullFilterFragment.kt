@@ -205,7 +205,7 @@ class FullFilterFragment : Fragment() {
                     interiorFilter = interiorVariants?.entries?.map { Pair(it.value, false) }
                 }
 
-                openVariants("Отделака", interiorFilter!!) {
+                openVariants("Отделка", interiorFilter!!) {
                     interiorFilter = it
                     style.setSpannable(
                         it.filter { it.second }
@@ -240,7 +240,7 @@ class FullFilterFragment : Fragment() {
             square.setOnClickListener {
                 openRange(
                     getSquareRange,
-                    "Площадь",
+                    "Площадь, м2",
                     selectedSquareRange?.first ?: getSquareRange.first,
                     selectedSquareRange?.second ?: getSquareRange.second
                 ) { min, max ->
