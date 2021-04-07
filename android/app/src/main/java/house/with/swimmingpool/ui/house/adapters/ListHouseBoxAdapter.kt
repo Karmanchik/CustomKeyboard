@@ -35,18 +35,20 @@ class ListHouseBoxAdapter(
                     textViewTitle.text = title ?: ""
                     if (price != "") {
                         textViewPrice.text = ((price ?: "") + " руб.")
+                    }else{
+                        textViewPrice.visibility = View.INVISIBLE
                     }
                     textViewNumber.text = number
                     if (square != null) {
                         textViewSquare.text = "$square м²"
                     } else {
-                        textViewSquare.visibility = View.GONE
+                        textViewSquare.visibility = View.INVISIBLE
                     }
 
                     if (square_area != null) {
                         textViewSquareArea.text = "$square_area сот."
                     } else {
-                        textViewSquareArea.visibility = View.GONE
+                        textViewSquareArea.visibility = View.INVISIBLE
                     }
 //                dividerIndicator.setBackgroundColor(Color.parseColor(items?.get(position)?.status?.color))
                 }

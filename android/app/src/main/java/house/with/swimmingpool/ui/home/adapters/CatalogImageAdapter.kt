@@ -116,14 +116,13 @@ class CatalogImageAdapter(
         fun bind(position: Int) {
             Glide.with(ctx)
                     .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
-//                    .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
                     .error(R.drawable.error_placeholder_midle)
                     .placeholder(R.drawable.placeholder)
                     .into(view.imageViewVideoPreloader)
 
             view.youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                 override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                    val videoId = "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
+                    val videoId = videos?.get(adapterPosition - items.size) ?: ""
                     youTubePlayer.loadVideo(videoId, 0f)
                     youTubePlayer.pause()
 

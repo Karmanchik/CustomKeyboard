@@ -5,6 +5,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -133,27 +134,54 @@ class HomeFragment : Fragment() {
                                 val home = App.setting.houses.firstOrNull {
                                     it.id == splitLink.last().toInt()
                                 }
-                                val bundle =
-                                    Bundle().apply { putString("home", Gson().toJson(home)) }
-                                findNavController().navigate(
-                                    R.id.action_navigation_home_to_houseFragment,
-                                    bundle
-                                )
+
+                                if(home == null){
+                                    RealtyServiceImpl().getHouseExample(splitLink.last().toInt()){ data, e ->
+                                        val bundle =
+                                                Bundle().apply { putString("home", Gson().toJson(data)) }
+                                        findNavController().navigate(
+                                                R.id.action_navigation_home_to_houseFragment,
+                                                bundle
+                                        )
+                                    }
+                                }else {
+                                    val bundle =
+                                            Bundle().apply { putString("home", Gson().toJson(home)) }
+                                    findNavController().navigate(
+                                            R.id.action_navigation_home_to_houseFragment,
+                                            bundle
+                                    )
+                                }
                             }
                             "news" -> {
+                                val bundle = Bundle().apply {
+                                    putInt("id", splitLink.last().toInt())
+                                }
+                                findNavController().navigate(
+                                        R.id.action_navigation_home_to_newsSingleFragment,
+                                        bundle
+                                )
                             }
                             "video" -> {
+                                val bundel = Bundle().apply{
+                                    putInt("id", splitLink.last().toInt())
+                                }
+                                findNavController().navigate(
+                                        R.id.action_navigation_home_to_videoFragment, bundel
+                                )
                             }
                             "https:" -> {
                                 val browserIntent = Intent(
                                     Intent.ACTION_VIEW,
                                     Uri.parse(
-                                        "http://www.google.com"
+                                        link
                                     )
                                 )
                                 startActivity(browserIntent);
                             }
                         }
+
+                        Log.e("mainBannersTestLink", splitLink.toString())
                     }
                     dotsIndicator.setViewPager2(vp)
 
@@ -176,7 +204,12 @@ class HomeFragment : Fragment() {
                 if (videosInfo.second == null && videosInfo.first != null) {
                     homeBinding?.videosRV?.adapter =
                         VideosAdapter(false, requireContext(), videosInfo.first ?: listOf()) {
-                            findNavController().navigate(R.id.action_navigation_home_to_videoFragment)
+                            val bundel = Bundle().apply{
+                                putInt("id", it)
+                            }
+                            findNavController().navigate(
+                                    R.id.action_navigation_home_to_videoFragment, bundel
+                            )
                         }
                     homeBinding?.videosContainer?.visibility = View.VISIBLE
                 } else {

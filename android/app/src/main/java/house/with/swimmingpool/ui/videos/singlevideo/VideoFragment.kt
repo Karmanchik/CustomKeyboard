@@ -1,12 +1,19 @@
 package house.with.swimmingpool.ui.videos.singlevideo
 
 import android.os.Bundle
+import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
+import house.with.swimmingpool.api.config.controllers.VideosServiceImpl
 import house.with.swimmingpool.databinding.FragmentVideoSingleBinding
 
 class VideoFragment : Fragment(){
@@ -15,6 +22,87 @@ class VideoFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        videoBinding?.apply {
+
+            videoBackIcon.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            VideosServiceImpl().getSingleVideo(arguments?.getInt("id") ?: 0) { data, e ->
+                Log.e("testingSingleVideoImpl", data.toString())
+                Log.e("testingSingleVideoImpl", e.toString())
+
+                if (data != null && e == null) {
+                    val descriptionText =
+                            if (data.content != null) Html.fromHtml(data.content) else ""
+
+                    textViewTitle.text = data.title
+
+                    textViewIntroText.text = data.introtext
+
+                    if (data.content?.trim()
+                                    .isNullOrEmpty() || descriptionText.isEmpty()
+                    ) {
+                        contentTextView.visibility = View.GONE
+                        textViewAboutObject.visibility = View.GONE
+                    } else {
+                        contentTextView.visibility = View.VISIBLE
+                        textViewAboutObject.visibility = View.VISIBLE
+                        contentTextView.text = Html.fromHtml(data.content)
+                    }
+
+                    if(data.date != "") {
+                        dateTextView.text = data.date
+                        dateTextView.visibility = View.VISIBLE
+                    }else{
+                        dateTextView.visibility = View.GONE
+                    }
+
+                    Glide.with(requireContext())
+                            .load(data.icon)
+                            .error(R.drawable.error_placeholder_midle)
+                            .placeholder(R.drawable.placeholder)
+                            .into(imageViewVideoPreloader)
+
+                    if (!data.video.isNullOrEmpty()) {
+                        videoLayout.visibility = View.VISIBLE
+                        youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+                            override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                                val videoId =
+//                                        "-cYOlHknhBU"//
+                                        data.video
+                                youTubePlayer.loadVideo(videoId, 0f)
+                                youTubePlayer.pause()
+
+                                youTubePlayerView.minimumHeight = imageViewVideoPreloader.height
+
+                                imageViewVideoPreloader.setOnClickListener {
+                                    it.visibility = View.INVISIBLE
+                                    relativeLayout.visibility = View.INVISIBLE
+                                    youTubePlayer.play()
+                                    youTubePlayerView.enterFullScreen()
+                                    youTubePlayerView.exitFullScreen()
+                                    youTubePlayerView.enterFullScreen()
+                                }
+
+                                nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                                    if (videoLayout.bottom in (oldScrollY + 1) until scrollY) {
+                                        youTubePlayer.pause()
+                                    }
+
+                                    if (videoLayout.top - videoLayout.height in (scrollY + 1) until oldScrollY) {
+                                        youTubePlayer.pause()
+                                    }
+                                }
+                            }
+                        })
+                    } else {
+                        videoLayout.visibility = View.GONE
+                    }
+                }
+            }
+        }
 
         if(App.setting.user?.phone != ""){
             videoBinding?.phoneInputConsultation?.setText(App.setting.user?.phone)

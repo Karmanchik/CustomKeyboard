@@ -70,6 +70,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 ) { data, e ->
                     data?.let { showHome(it) }
                 }
+
             } else {
                 houseObjectBinding?.apply {
                     mainHeaderPlaceholder.visibility = View.VISIBLE
@@ -240,8 +241,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     videoLayout.visibility = View.VISIBLE
                     youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                         override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                            val videoId =
-                                    "-cYOlHknhBU"//videos?.get(adapterPosition - items.size) ?: ""
+                            val videoId = singleHouseObject.video.first() ?: ""
                             youTubePlayer.loadVideo(videoId, 0f)
                             youTubePlayer.pause()
 
@@ -421,10 +421,11 @@ class HouseFragment : Fragment(), ISingleHouseView {
                                 showListHouseBox.visibility = View.VISIBLE
                                 adapter = ListHouseBoxAdapter(
                                         requireContext(),
-                                        listOf(
-                                                children?.get(0), children?.get(1), children?.get(2),
-                                                children?.get(3), children?.get(4), children?.get(5),
-                                        )
+                                        children?.take(6)
+//                                        listOf(
+//                                                children?.get(0), children?.get(1), children?.get(2),
+//                                                children?.get(3), children?.get(4), children?.get(5),
+//                                        )
                                 )
                             }
                         }

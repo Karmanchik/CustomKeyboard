@@ -61,7 +61,9 @@ class PopupActivity : AppCompatActivity() {
             radButton.visibility = View.GONE
             cancelBesideRadButton.text = "Продолжить"
 
-            buttonSingleVariant.setOnClickListener { finish() }
+            closeIcon.setOnClickListener { finish() }
+
+            cancelBesideRadButton.setOnClickListener { finish() }
         }
     }
 

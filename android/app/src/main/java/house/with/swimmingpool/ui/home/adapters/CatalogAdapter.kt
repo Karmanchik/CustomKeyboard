@@ -103,18 +103,18 @@ class CatalogAdapter(
                     vp.adapter = when {
                         photos != null && photos.isNotEmpty() -> {
                             Log.e("photos", photos.size.toString())
-                            CatalogImageAdapter(photos, listOf("-cYOlHknhBU"), ctx, onItemSelected,
+                            CatalogImageAdapter(photos, video, ctx, onItemSelected,
                                     item.id
                             )
                         }
                         icon != null -> {
                             Log.e("photos", icon.toString())
-                            CatalogImageAdapter(listOf(icon), listOf("-cYOlHknhBU"), ctx, onItemSelected,
+                            CatalogImageAdapter(listOf(icon), video, ctx, onItemSelected,
                                     item.id
                             )
                         }
                         else -> {
-                            CatalogImageAdapter(listOf(""), listOf("-cYOlHknhBU"), ctx, onItemSelected,
+                            CatalogImageAdapter(listOf(""), video, ctx, onItemSelected,
                                     item.id
                             )
                         }
@@ -133,12 +133,12 @@ class CatalogAdapter(
                     textViewDescription.text = location
                     textViewPrice.text = price
                     if (square != null && square.isNotEmpty() && square != "0" && square != "0.0") {
-                        textViewSquare.text = "$square м²"      //fix me!!!
+                        textViewSquare.text = "$square м²"
                     } else {
                         textViewSquare.visibility = View.GONE
                     }
                     if (square_area != null && square_area.isNotEmpty() && square_area != "0" && square_area != "0.0") {
-                        textViewSquareArea.text = "$square_area соток" //fix me!!!
+                        textViewSquareArea.text = "$square_area соток"
                     } else {
                         textViewSquareArea.visibility = View.GONE
                     }
