@@ -21,7 +21,7 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
         val tabs = view.findViewById<TabLayout>(R.id.tabs)
 
         if (App.setting.user?.context != "agent") {
-            tabs.removeTabAt(2)
+//            tabs.removeTabAt(2)
         }
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

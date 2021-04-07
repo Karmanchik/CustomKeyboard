@@ -31,6 +31,8 @@ class CollectionFragment : Fragment() {
         super.onDestroy()
     }
 
+    val id: String get() = (arguments?.getInt("id") ?: 0).toString()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,14 +43,25 @@ class CollectionFragment : Fragment() {
                 showNoteText.text = if (note.visibility == View.VISIBLE) "Скрыть заметку" else "Посмотреть заметку"
             }
 
-            RealtyServiceImpl().getCollection((arguments?.getInt("id") ?: 0).toString()) { data, e ->
+            RealtyServiceImpl().getCollection(id) { data, e ->
                 showData(data?.objects ?: listOf())
                 note.setOnClickListener {
-                    DialogEditNoteFragment.newInstance(data?.description) {
-
-                    }.show(parentFragmentManager, "DialogEditNoteFragment")
+                    DialogEditNoteFragment.newInstance(
+                        text = noteValue.text.toString(),
+                        onEnterText = {
+                            noteValue.text = it
+                            RealtyServiceImpl().changeNoteInCollection(id, it) { _, _ -> }
+                        }
+                    ).show(parentFragmentManager, "DialogEditNoteFragment")
                 }
+                noteValue.text = data?.note
             }
+
+            closeNote.setOnClickListener {
+                noteValue.text = ""
+                RealtyServiceImpl().changeNoteInCollection(id, "") { _, _ -> }
+            }
+
         }
     }
 

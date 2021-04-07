@@ -54,6 +54,12 @@ class DialogEditNoteFragment(
                 onEnterText.invoke(name.text.toString())
                 dismiss()
             }
+            deleteNote.visibility = View.VISIBLE
+            deleteNote.setOnClickListener {
+                onEnterText.invoke("")
+                dismiss()
+            }
+            name.setText(text)
         }
     }
 

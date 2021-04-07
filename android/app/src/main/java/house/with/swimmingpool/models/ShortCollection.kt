@@ -5,6 +5,7 @@ class ShortCollection(
     val name: String? = null,
     val description: String? = null,
     val link: String? = null,
+    var note: String? = null,
     val photos: List<String>? = null,
     val objects: List<HouseCatalogData>? = null
 )

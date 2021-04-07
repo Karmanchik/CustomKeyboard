@@ -133,6 +133,16 @@ interface IRealty {
         @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<ShortCollection>>
 
+    @FormUrlEncoded
+    @PUT("collections/{id}")
+    fun changeNoteForCollection(
+        @Header("Authorization") token: String? = App.setting.apiToken,
+        @Header("phone") phone: String? = App.setting.phone,
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b",
+        @Path("id") id: String,
+        @Field("note") note: String
+    ): Call<Answer<Stub>>
+
 
     companion object {
         val api = mainRetrofit.create<IRealty>()
