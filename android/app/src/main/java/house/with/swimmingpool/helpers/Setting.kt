@@ -21,9 +21,10 @@ class Setting(ctx: Context) {
         get() = Gson().fromJson(pref.getString(Keys.USER, null), User::class.java)
         set(value) = pref.edit { putString(Keys.USER, Gson().toJson(value)) }
 
-    val phone get() = "88889998877" //user?.login
+    val phone get() = user?.login //"88889998877"
 
-    val apiToken: String? get() = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkb21zYmFzc2Vpbm9tLnJ1IiwiaWF0IjoxNjE3NDc0MzI1LCJleHAiOjE2MjAwNjYzMjUsImF1ZCI6ImRvbXNiYXNzZWlub20ucnUifQ.2fwqurWZvJtZ6xwSye7GZ1cOyE4Dno59QEWv3h-wD3w"//token?.let { "Bearer $it" }
+    val apiToken: String? get() = token?.let { "Bearer $it" }
+//    val apiToken: String? get() = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkb21zYmFzc2Vpbm9tLnJ1IiwiaWF0IjoxNjE3NDc0MzI1LCJleHAiOjE2MjAwNjYzMjUsImF1ZCI6ImRvbXNiYXNzZWlub20ucnUifQ.2fwqurWZvJtZ6xwSye7GZ1cOyE4Dno59QEWv3h-wD3w"
 
     val isAuth: Boolean
         get() = token != null
