@@ -308,6 +308,7 @@ class HomeFragment : Fragment() {
             }
 
             showCatalogButton.setOnClickListener {
+                App.setting.filterConfig = null
                 findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
             }
             showVideosButton.setOnClickListener {

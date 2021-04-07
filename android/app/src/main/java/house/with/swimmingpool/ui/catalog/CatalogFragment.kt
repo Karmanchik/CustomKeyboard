@@ -86,16 +86,16 @@ class CatalogFragment : Fragment() {
             }
         }
 
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                val list = App.setting.houses
-                launch(Dispatchers.Main) {
-                    showList(list.toMutableList())
-                }
-            } catch (e: Exception) {
-                Log.e("test", "load catalog", e)
-            }
-        }
+//        GlobalScope.launch(Dispatchers.IO) {
+//            try {
+//                val list = App.setting.houses
+//                launch(Dispatchers.Main) {
+//                    showList(list.toMutableList())
+//                }
+//            } catch (e: Exception) {
+//                Log.e("test", "load catalog", e)
+//            }
+//        }
 
         binding?.scroll?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (oldScrollY > scrollY) {
@@ -109,13 +109,6 @@ class CatalogFragment : Fragment() {
             findNavController().navigate(R.id.action_catalogViewModel_to_fullFilterFragment)
         }
         showFilter()
-        if (App.setting.filterConfig == null) {
-            RealtyServiceImpl().getHouseCatalog { data, e ->
-                data?.let { list ->
-                    showList(list.toMutableList())
-                }
-            }
-        }
 
         binding?.addFilter?.setOnClickListener {
             if (App.setting.filterConfig == null) {
