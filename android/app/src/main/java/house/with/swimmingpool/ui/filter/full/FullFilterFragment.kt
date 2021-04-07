@@ -1,6 +1,11 @@
 package house.with.swimmingpool.ui.filter.full
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
@@ -154,7 +158,11 @@ class FullFilterFragment : Fragment() {
 
                 openVariants("Район", districtsFilter!!) {
                     districtsFilter = it
-                    area.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    area.setSpannable(
+                        it.filter { it.second }
+                            .joinToString(", ") { it.first }
+                            .toSpannableString((requireActivity().windowManager.defaultDisplay.width - 76) / 21)
+                    )
                     load()
                 }
             }
@@ -167,7 +175,11 @@ class FullFilterFragment : Fragment() {
 
                 openVariants("Оформление", registrationTypeFilter!!) {
                     registrationTypeFilter = it
-                    docType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    docType.setSpannable(
+                        it.filter { it.second }
+                            .joinToString(", ") { it.first }
+                            .toSpannableString((requireActivity().windowManager.defaultDisplay.width - 76) / 21)
+                    )
                     load()
                 }
             }
@@ -179,7 +191,11 @@ class FullFilterFragment : Fragment() {
 
                 openVariants("Форма оплаты", paymentTypeFilter!!) {
                     paymentTypeFilter = it
-                    moneyType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    moneyType.setSpannable(
+                        it.filter { it.second }
+                            .joinToString(", ") { it.first }
+                            .toSpannableString((requireActivity().windowManager.defaultDisplay.width - 76) / 21)
+                    )
                     load()
                 }
             }
@@ -191,7 +207,11 @@ class FullFilterFragment : Fragment() {
 
                 openVariants("Отделака", interiorFilter!!) {
                     interiorFilter = it
-                    style.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    style.setSpannable(
+                        it.filter { it.second }
+                            .joinToString(", ") { it.first }
+                            .toSpannableString((requireActivity().windowManager.defaultDisplay.width - 76) / 21)
+                    )
                     load()
                 }
             }
@@ -204,7 +224,11 @@ class FullFilterFragment : Fragment() {
 
                 openVariants("Класс дома", buildingClassFilter!!) {
                     buildingClassFilter = it
-                    houseType.value = (it.filter { it.second }.map { it.first }.joinToString(", "))
+                    houseType.setSpannable(
+                        it.filter { it.second }
+                            .joinToString(", ") { it.first }
+                            .toSpannableString((requireActivity().windowManager.defaultDisplay.width - 76) / 21)
+                    )
                     load()
                 }
             }
@@ -239,11 +263,13 @@ class FullFilterFragment : Fragment() {
                 }
             }
 
-            segmentedControl.setSelectedSegment(when(App.setting.filterConfig?.types?:"house") {
-                "complex" -> 2
-                "flat" -> 1
-                else -> 0
-            })
+            segmentedControl.setSelectedSegment(
+                when (App.setting.filterConfig?.types ?: "house") {
+                    "complex" -> 2
+                    "flat" -> 1
+                    else -> 0
+                }
+            )
             segmentedControl.addOnSegmentClickListener {
                 segmentId = it.column
                 load()
@@ -263,6 +289,26 @@ class FullFilterFragment : Fragment() {
             } catch (e: Exception) {
                 Log.e("test", "load", e)
             }
+        }
+    }
+
+    private fun String.toSpannableString(count: Int): SpannableString {
+        if (length <= count) return SpannableString(this)
+
+        var text = this.take(count - 10)
+
+        val inputCount = filter { it == ',' }.length
+        val outputCount = text.filter { it == ',' }.length
+
+        text += "… + ${inputCount - outputCount + 1} еще"
+
+        return SpannableString(text).apply {
+            setSpan(
+                ForegroundColorSpan(Color.BLUE),
+                text.lastIndex - 8,
+                text.lastIndex + 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
         }
     }
 
@@ -288,6 +334,7 @@ class FullFilterFragment : Fragment() {
 
     var segmentId: Int = 0
 
+    @SuppressLint("SetTextI18n")
     private fun load() {
 
         val lol: String = when (segmentId) {

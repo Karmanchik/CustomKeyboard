@@ -2,12 +2,14 @@ package house.with.swimmingpool.views
 
 import android.content.Context
 import android.graphics.Color
+import android.text.InputFilter
 import android.text.InputType
+import android.text.SpannableString
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
+import android.view.View.OnFocusChangeListener
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -77,6 +79,11 @@ class CustomFieldButton(context: Context, attrs: AttributeSet) : ConstraintLayou
 
         titleView?.text = typedArray.getString(R.styleable.CustomFieldButton_titl)
 
+    }
+
+    fun setSpannable(spanString: SpannableString) {
+        Log.e("test", spanString.toString())
+        fieldView?.text = spanString
     }
 
     var value: String?
