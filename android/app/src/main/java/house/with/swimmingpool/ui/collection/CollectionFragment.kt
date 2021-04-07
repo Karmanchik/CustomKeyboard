@@ -66,6 +66,35 @@ class CollectionFragment : Fragment() {
                     startActivity(Intent.createChooser(share, "Поделиться!"))
                 }
 
+                deleteB.setOnClickListener {
+                    RealtyServiceImpl().deleteCollection(data?.id.toString()) { data, e ->
+                        sortMenu.visibility = View.GONE
+                        data?.let { findNavController().popBackStack() }
+                    }
+                }
+
+                shareB.setOnClickListener {
+                    sortMenu.visibility = View.GONE
+                    val share = Intent(Intent.ACTION_SEND)
+                    share.type = "text/plain"
+                    share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+                    share.putExtra(Intent.EXTRA_SUBJECT, "Подборка ${data?.name ?: ""}")
+                    share.putExtra(Intent.EXTRA_TEXT, "https://domsbasseinom.ru${data?.link ?: ""}")
+                    startActivity(Intent.createChooser(share, "Поделиться!"))
+                }
+
+                noteAdd.setOnClickListener {
+                    sortMenu.visibility = View.GONE
+                    DialogEditNoteFragment.newInstance(
+                        text = noteValue.text.toString(),
+                        onEnterText = {
+                            noteValue.text = it
+                            RealtyServiceImpl().changeNoteInCollection(id, it) { _, _ -> }
+                        }
+                    ).show(parentFragmentManager, "DialogEditNoteFragment")
+                }
+
+//                dateCreated.text = "Дата создания ${data?.}"
             }
 
             closeNote.setOnClickListener {
@@ -75,6 +104,15 @@ class CollectionFragment : Fragment() {
 
             back.setOnClickListener {
                 findNavController().popBackStack()
+            }
+
+
+            add.setOnClickListener {
+                sortMenu.visibility = View.VISIBLE
+            }
+
+            closeSort.setOnClickListener {
+                sortMenu.visibility = View.GONE
             }
 
         }

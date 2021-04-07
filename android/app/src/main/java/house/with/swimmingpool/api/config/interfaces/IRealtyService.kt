@@ -27,5 +27,6 @@ interface IRealtyService {
     fun getCollections(onLoaded: (data: List<ShortCollection>?, e: Throwable?) -> Unit)
     fun getCollection(id: String, onLoaded: (data: ShortCollection?, e: Throwable?) -> Unit)
     fun changeNoteInCollection(id: String, note: String, onLoaded: (data: Stub?, e: Throwable?) -> Unit)
+    fun deleteCollection(id: String, onLoaded: (data: Stub?, e: Throwable?) -> Unit)
 
 }

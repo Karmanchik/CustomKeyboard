@@ -302,6 +302,24 @@ class RealtyServiceImpl : IRealtyService {
             })
     }
 
+    override fun deleteCollection(id: String, onLoaded: (data: Stub?, e: Throwable?) -> Unit) {
+        IRealty.api
+            .deleteCollection(id = id)
+            .enqueue(object : Callback<Answer<Stub>> {
+                override fun onResponse(
+                    call: Call<Answer<Stub>>,
+                    response: Response<Answer<Stub>>
+                ) {
+                    onLoaded.invoke(response.body()?.data, null)
+                }
+
+                override fun onFailure(call: Call<Answer<Stub>>, t: Throwable) {
+                    onLoaded.invoke(null, t)
+                    Log.e("taskException", "error", t)
+                }
+            })
+    }
+
     fun getParams(onLoaded: (data: List<HouseCatalogData>?, e: Throwable?) -> Unit) {
         getRetrofit().create(IRealty::class.java)
             .getHouses()
