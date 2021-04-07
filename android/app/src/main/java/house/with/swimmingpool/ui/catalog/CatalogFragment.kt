@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.catalog
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -35,6 +36,7 @@ class CatalogFragment : Fragment() {
         return binding?.root
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showList(list: MutableList<HouseCatalogData>) {
         binding?.litRV?.adapter = CatalogAdapter(list.map { it as Any }.toMutableList().apply {
             try {
@@ -60,8 +62,28 @@ class CatalogFragment : Fragment() {
         binding?.back?.setOnClickListener { findNavController().popBackStack() }
 
         binding?.apply {
-            sort.setOnClickListener { sortMenu.visibility = View.VISIBLE }
+            sort.setOnClickListener {
+                sortMenu.visibility = if (sortMenu.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            }
             closeSort.setOnClickListener { sortMenu.visibility = View.GONE }
+
+
+            priceUp.setOnClickListener {
+                val request = App.setting.filterConfig ?: FilterObjectsRequest()
+                request.sort = "price"
+                request.dir = "asc"
+                App.setting.filterConfig = request
+                showFilter()
+                closeSort.performClick()
+            }
+            priceDown.setOnClickListener {
+                val request = App.setting.filterConfig ?: FilterObjectsRequest()
+                request.sort = "price"
+                request.dir = "desc"
+                App.setting.filterConfig = request
+                showFilter()
+                closeSort.performClick()
+            }
         }
 
         GlobalScope.launch(Dispatchers.IO) {
