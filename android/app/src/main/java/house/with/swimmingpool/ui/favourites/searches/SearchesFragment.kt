@@ -22,6 +22,10 @@ import kotlinx.coroutines.launch
 
 class SearchesFragment : Fragment() {
 
+    companion object{
+        var isPopBacLoginActivity = false
+    }
+
     private var filterConfig: JsonObject? = null
     private val filterCategories get() = filterConfig?.entrySet()?.map { Pair(it.key, it.value) }
 
@@ -75,11 +79,22 @@ class SearchesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if(!App.setting.isAuth){
+            findNavController().navigate(R.id.action_favouritesFragment_to_loginActivity)
+        }
+
         searchesBinding?.showCatalogButton?.setOnClickListener {
             findNavController().navigate(R.id.action_favouritesFragment_to_catalogViewModel)
         }
 
         update()
+    }
+
+    override fun onResume() {
+        if(isPopBacLoginActivity && !App.setting.isAuth){
+            findNavController().navigate(R.id.action_favouritesFragment_to_navigation_home)
+        }
+        super.onResume()
     }
 
     private fun update() {

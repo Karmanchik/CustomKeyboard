@@ -21,7 +21,7 @@ interface IAuthLogin {
             @Field("phone") phone: String,
             @Header("api-key") apikey: String = APIKEY,
             @Field("context") type: String = "client"
-    ): Call<Answer<Int?>>
+    ): Call<Answer<Int>>
 
     @FormUrlEncoded
     @POST("auth/first")

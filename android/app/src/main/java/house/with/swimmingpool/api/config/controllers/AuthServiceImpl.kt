@@ -32,6 +32,23 @@ class AuthServiceImpl : IAuthService {
                 })
     }
 
+    fun checkPhoneNumber(phone: String, onLoaded: (data: Int?, e: Throwable?) -> Unit){
+        getRetrofit().create(IAuthLogin ::class.java)
+                .checkPhoneNumber(phone)
+                .enqueue(object : Callback<Answer<Int>>{
+                    override fun onResponse(call: Call<Answer<Int>>, response: Response<Answer<Int>>) {
+                        onLoaded.invoke(response.body()?.data, null)
+                    }
+
+                    override fun onFailure(call: Call<Answer<Int>>, t: Throwable) {
+                        try{
+                            onLoaded.invoke(null, t)
+                            Log.e("phoneTesting", "Error:", t)
+                        }catch (e:Exception){}
+                    }
+                })
+    }
+
     override fun registerUserFirst(phone: String, onLoaded: (data: AuthRegisterFirstData?, e: Throwable?) -> Unit){
         getRetrofit().create(IAuthLogin :: class.java)
                 .registerUser(APIKEY ,phone)

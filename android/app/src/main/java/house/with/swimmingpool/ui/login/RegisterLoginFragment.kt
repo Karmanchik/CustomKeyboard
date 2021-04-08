@@ -43,6 +43,10 @@ class RegisterLoginFragment(
 
         loginBinding?.apply{
 
+            signInLater.setOnClickListener {
+                requireActivity().finish()
+            }
+
             if (LoginActivity.cashedPhone != null) {
                 phoneInput.setText(LoginActivity.cashedPhone)
             }

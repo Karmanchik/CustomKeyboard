@@ -132,6 +132,12 @@
         <action
             android:id="@+id/action_favouritesFragment_to_catalogViewModel"
             app:destination="@id/catalogViewModel" />
+        <action
+            android:id="@+id/action_favouritesFragment_to_loginActivity"
+            app:destination="@id/loginActivity" />
+        <action
+            android:id="@+id/action_favouritesFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
