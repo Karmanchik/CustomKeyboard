@@ -17,8 +17,8 @@ import house.with.swimmingpool.ui.popups.PopupActivity
 
 
 class PasswordFragment(
-        private val parentView: ICabinetView
-        ) : Fragment(R.layout.fragment_password){
+        private val parentView: ICabinetView,
+) : Fragment(R.layout.fragment_password) {
 
     private var passwordBinding: FragmentPasswordBinding? = null
 
@@ -35,30 +35,34 @@ class PasswordFragment(
                 oldPassword.clearError()
             }
 
-            checkPassword.getField()?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-                checkPassword()
+            checkPassword.getField()?.doOnTextChanged { text, start, before, count ->
+                buttonSave.isEnabled = checkPassword()
             }
 
-            newPassword.getField()?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-                checkPassword()
+            newPassword.getField()?.doOnTextChanged { text, start, before, count ->
+                buttonSave.isEnabled = checkPassword()
             }
 
             buttonSave.setOnClickListener {
                 if (newPassword.value != null && oldPassword.value != null) {
-                    if(checkPassword()) {
+                    if (checkPassword()) {
                         AuthServiceImpl().setPassword(
                                 newPassword.value!!,
                                 oldPassword.value!!
                         ) { data, e ->
                             if (data != null && e == null) {
-                                App.setting.user = data
-                                startActivity(
-                                        Intent(requireContext(), PopupActivity :: class.java).apply {
-                                            putExtra(App.TYPE_OF_POPUP, App.PASSWORD_SET_SUCCESSFULLY)
-                                        }
-                                )
-                                parentView.onPasswordSet()
-                            }else{
+                                if (data.error == null) {
+                                    App.setting.user = data.data
+                                    startActivity(
+                                            Intent(requireContext(), PopupActivity::class.java).apply {
+                                                putExtra(App.TYPE_OF_POPUP, App.PASSWORD_SET_SUCCESSFULLY)
+                                            }
+                                    )
+                                    parentView.onPasswordSet()
+                                } else if (data.error == 773) {
+                                    setErrorPassword("Пароль должен быть от 6 до 10 символов.")
+                                }
+                            } else {
                                 oldPassword.setError()
                             }
                         }
@@ -70,22 +74,39 @@ class PasswordFragment(
         return passwordBinding?.root
     }
 
-    private fun checkPassword(): Boolean{
+    private fun checkPassword(): Boolean {
         passwordBinding?.apply {
-            return if (checkPassword.value != "" && newPassword.value != ""){
-                if(checkPassword.value == newPassword.value){
+            if (oldPassword.value != "") {
+                oldPassword.clearError()
+                if (checkPassword.value != "" && newPassword.value != "") {
+                    if (checkPassword.value == newPassword.value) {
+                        checkPassword.clearError()
+                        return true
+                    } else {
+                        checkPassword.setError()
+                        return false
+                    }
+                } else {
                     checkPassword.clearError()
-                    true
-                }else{
-                    checkPassword.setError()
-                    false
+                    return false
                 }
             }else{
-                checkPassword.clearError()
-                false
+                oldPassword.setError()
+                return false
             }
         }
         return false
+    }
+
+    private fun setErrorPassword(text: String, isVisible: Boolean = true) {
+        passwordBinding?.errorPasswordTextView?.apply {
+            visibility = if (isVisible) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+            this.text = text
+        }
     }
 
     override fun onDestroy() {

@@ -11,5 +11,5 @@ interface IAuthService {
 
     fun getSmsCodeAgain(phone: String, onLoaded: (data: CodeData?, e: Throwable?) -> Unit)
 
-    fun setPassword(newPassword: String, oldPassword: String, onLoaded: (data: User?, e: Throwable?) -> Unit)
+    fun setPassword(newPassword: String, oldPassword: String, onLoaded: (data: UpdatedUser?, e: Throwable?) -> Unit)
 }

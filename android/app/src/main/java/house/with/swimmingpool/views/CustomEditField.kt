@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
 import house.with.swimmingpool.R
+import house.with.swimmingpool.ui.setMaxLength
 
 class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
@@ -44,6 +45,7 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
 
         if (isPassword) {
             fieldView?.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            fieldView?.setMaxLength(10)
         }
 
         fieldView?.onFocusChangeListener = OnFocusChangeListener { _, isFocused ->

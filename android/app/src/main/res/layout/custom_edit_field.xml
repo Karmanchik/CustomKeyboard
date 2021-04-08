@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="2dp"
         android:layout_height="wrap_content"
         android:alpha="0.5"
-        android:fontFamily="@font/lato"
+        android:fontFamily="@font/lato_regular"
         android:lineSpacingMultiplier="1.6"
         android:text="Заголовок"
         android:textColor="@color/black"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,14 +25,15 @@
     <EditText
         android:id="@+id/field"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@null"
         android:ems="10"
         android:fontFamily="@font/lato_regular"
         android:inputType="textPersonName"
         android:lineSpacingMultiplier="1.6"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="17sp"
+        android:layout_marginTop="2dp"
         app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,8 +52,9 @@
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="7dp"
         android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@id/field"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -39,7 +39,7 @@ class CabinetFragment : Fragment(), ICabinetView {
     }
 
     override fun onResume() {
-        if (!App.setting.isAuth && isPopBackLoginActivity) {
+        if (!(App.setting.isAuth) && isPopBackLoginActivity) {
             findNavController().navigate(R.id.action_cabinetFragment_to_navigation_home)
             isPopBackLoginActivity = false
         }
@@ -49,7 +49,7 @@ class CabinetFragment : Fragment(), ICabinetView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (!App.setting.isAuth) {
+        if (!(App.setting.isAuth)) {
             requireActivity().startActivity<LoginActivity> {  }
         }
 

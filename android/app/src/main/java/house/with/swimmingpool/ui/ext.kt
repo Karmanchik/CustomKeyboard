@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.text.InputFilter
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -137,4 +138,10 @@ fun ImageView.load(url: String?, @DrawableRes placeholder: Int, @DrawableRes err
         .dontAnimate()
         .placeholder(placeholder)
         .into(this)
+}
+
+fun EditText.setMaxLength(maxLength: Int){
+
+    filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
+
 }

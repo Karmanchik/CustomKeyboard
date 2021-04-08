@@ -15,14 +15,16 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentRegisterSetPasswordBinding
+import house.with.swimmingpool.ui.cabinet.CabinetFragment
+import house.with.swimmingpool.ui.favourites.searches.SearchesFragment
 import house.with.swimmingpool.ui.login.ILoginView
 import house.with.swimmingpool.ui.login.LoginActivity
 import house.with.swimmingpool.ui.popups.PopupActivity
 
 class RegisterSetPasswordFragment(
         private val parentView: ILoginView,
-        private val smsCode: String
-): Fragment() {
+        private val smsCode: String,
+) : Fragment() {
 
     private var setPasswordFragmentBinding: FragmentRegisterSetPasswordBinding? = null
 
@@ -31,7 +33,7 @@ class RegisterSetPasswordFragment(
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
     ): View? {
         setPasswordFragmentBinding = FragmentRegisterSetPasswordBinding.inflate(layoutInflater)
         return setPasswordFragmentBinding?.root
@@ -52,9 +54,9 @@ class RegisterSetPasswordFragment(
             passwordInput.doOnTextChanged { text, start, before, count ->
                 errorPasswordTextView.visibility = View.INVISIBLE
 
-                if(text.toString() == ""){
+                if (text.toString() == "") {
                     iconEye.visibility = View.INVISIBLE
-                }else{
+                } else {
                     iconEye.visibility = View.VISIBLE
                 }
             }
@@ -63,12 +65,12 @@ class RegisterSetPasswordFragment(
             }
 
             iconEye.setOnClickListener {
-                isShowPassword = if (!isShowPassword){
+                isShowPassword = if (!isShowPassword) {
                     iconEye.setImageDrawable(requireActivity()
                             .getDrawable(R.drawable.ic_open_eye_for_password))
                     passwordInput.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                     true
-                }else {
+                } else {
                     iconEye.setImageDrawable(requireActivity()
                             .getDrawable(R.drawable.ic_close_eye_for_password))
                     passwordInput.inputType = 129
@@ -80,24 +82,41 @@ class RegisterSetPasswordFragment(
 
     private fun checkPassword() {
         setPasswordFragmentBinding?.apply {
-            if(passwordInput.text.toString() != passwordInputCheck.text.toString()) {
+            if (passwordInput.text.toString() != passwordInputCheck.text.toString()) {
                 errorPasswordTextView.visibility = View.VISIBLE
-            }else{
+            } else {
                 errorPasswordTextView.visibility = View.INVISIBLE
-
                 AuthServiceImpl().setPassword(
                         passwordInputCheck.text.toString(),
                         smsCode
                 ) { data, e ->
                     if (data != null && e == null) {
-                        App.setting.user = data
-                        requireActivity().finish()
-                    }else{
+                        if (data.error == null) {
+                            App.setting.user = data.data
+                            CabinetFragment.isPopBackLoginActivity = false
+                            SearchesFragment.isPopBacLoginActivity = false
+                            requireActivity().finish()
+                        } else if (data.error == 773) {
+                            setErrorPassword("Пароль должен быть от 6 до 10 символов.")
+                        }
+                    } else {
                         Log.e("setPasswordError", "$data $e")
-                        Toast.makeText(requireContext(), "set password ERROR!", Toast.LENGTH_SHORT).show()
+//                        TODO("remove toast")
+                        Toast.makeText(requireContext(), "set password ERROR! data ${data?.error}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
+        }
+    }
+
+    private fun setErrorPassword(text: String, isVisible: Boolean = true) {
+        setPasswordFragmentBinding?.errorPasswordTextView?.apply {
+            visibility = if (isVisible) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+            this.text = text
         }
     }
 

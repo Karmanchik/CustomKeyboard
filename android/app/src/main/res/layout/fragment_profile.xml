@@ -93,12 +93,12 @@
     android:alpha="0.5"
     android:layout_marginStart="12dp"
     android:layout_marginEnd="12dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
     android:fontFamily="@font/lato"
     android:lineSpacingMultiplier="1.6"
     android:text="Телефон"
     android:textColor="@color/black"
-    android:textSize="10sp"
+    android:textSize="12sp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
@@ -128,7 +128,7 @@
         android:id="@+id/phoneEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:layout_marginStart="12dp"
         android:hint="0000000000"
         android:inputType="phone"
@@ -142,7 +142,7 @@
         android:typeface="monospace"
         app:allowed_chars="1234567890"
         app:keep_hint="true"
-        app:mask="+7(###)###-##-##" />
+        app:mask="+7 (###) ###-##-##" />
 
     <View
         android:id="@+id/divider11"

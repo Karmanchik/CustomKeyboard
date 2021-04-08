@@ -91,7 +91,7 @@ class SearchesFragment : Fragment() {
     }
 
     override fun onResume() {
-        if(isPopBacLoginActivity && !App.setting.isAuth){
+        if(isPopBacLoginActivity && !(App.setting.isAuth)){
             findNavController().navigate(R.id.action_favouritesFragment_to_navigation_home)
         }
         super.onResume()

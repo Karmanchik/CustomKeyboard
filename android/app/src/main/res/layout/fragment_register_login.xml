@@ -87,6 +87,7 @@
         android:background="@color/white"
         android:backgroundTint="@color/white"
         android:layout_weight="1"
+        android:maxLength="10"
         />
         
         <ImageView

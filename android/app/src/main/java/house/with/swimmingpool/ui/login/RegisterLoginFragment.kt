@@ -68,6 +68,8 @@ class RegisterLoginFragment(
                 }
             }
 
+            Log.e("testInputTipe", passwordInput.inputType.toString())
+
             iconEye.setOnClickListener {
                 isShowPassword = if (!isShowPassword){
                     iconEye.setImageDrawable(requireActivity()
@@ -78,6 +80,7 @@ class RegisterLoginFragment(
                     iconEye.setImageDrawable(requireActivity()
                             .getDrawable(R.drawable.ic_close_eye_for_password))
                     passwordInput.inputType = 129
+                    passwordInput.textSize = 23F
                     false
                 }
             }

@@ -107,13 +107,13 @@ class AuthServiceImpl : IAuthService {
                 })
     }
 
-    override fun setPassword(newPassword: String, oldPassword: String, onLoaded: (data: User?, e: Throwable?) -> Unit){
+    override fun setPassword(newPassword: String, oldPassword: String, onLoaded: (data: UpdatedUser?, e: Throwable?) -> Unit){
         getRetrofit().create(IAuthLogin :: class.java)
                 .setPassword(newPassword = newPassword, oldPassword = oldPassword)
                 .enqueue(object : Callback<UpdatedUser>{
                     override fun onResponse(call: Call<UpdatedUser>, response: Response<UpdatedUser>) {
                         try{
-                            onLoaded.invoke(response.body()?.data, null)
+                            onLoaded.invoke(response.body(), null)
                         }catch (e:java.lang.Exception){}
                     }
 
