@@ -14,7 +14,8 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentRegisterSmsCodeBinding
 import house.with.swimmingpool.ui.login.ILoginView
-import house.with.swimmingpool.ui.noAsterisks
+import house.with.swimmingpool.ui.noDots
+import java.lang.Exception
 
 class RegisterSmsCodeFragment(
         private val phone: String,
@@ -40,13 +41,16 @@ class RegisterSmsCodeFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerSmsCodeBinding?.apply {
+
+            inputSmsCod.requestFocus()
+
             AuthServiceImpl().registerUserFirst(phone) { data, e ->
 
                 titleTextView.text = "Подтвердите номер телефона $phone, введите код из смс"
 
                 if (e == null && data != null) {
 
-                    smsCodFromServer = data.data?.text
+                    smsCodFromServer = data.text
 
                     Toast.makeText(
                             requireContext(),
@@ -60,16 +64,23 @@ class RegisterSmsCodeFragment(
 
                         Log.e("testingSmsCode", "phone is ${inputSmsCod.text}")
 
-                        if (text?.noAsterisks()?.length == 5) {
-
-                            if ((text.noAsterisks()) == smsCodFromServer) {
+                        if (text?.noDots()?.length == 5) {
+                            if ((text.noDots()) == smsCodFromServer) {
                                 inputSmsCod.isEnabled = false
-                                confirmSmsCodeOnTheServer(text.noAsterisks())
+                                confirmSmsCodeOnTheServer(text.noDots())
                             } else {
-                                inputSmsCod.setText("")
-                                setErrorText("Неверный код, попробуйте снова")
+                                if (text.noDots() == text.toString()) {
+//                                inputSmsCod.setText("")
+                                    Log.e("testingSmsCode", inputSmsCod.text.toString())
+                                    Log.e("testingSmsCode", inputSmsCod.rawText)
+                                    try {
+                                        inputSmsCod.mask = "#####"
+                                    }catch (e:Exception){
+                                        Log.e("testingSmsCode", e.toString())
+                                    }
+                                    setErrorText("Неверный код, попробуйте снова")
+                                }
                             }
-
                         }else{
 //                            TODO("action if the sms code is not correct")
                         }
@@ -117,7 +128,12 @@ class RegisterSmsCodeFragment(
 
                 smsCodFromServer = data.text
             }else{
-                TODO( "if the sms code didn't gat from the server")
+//                TODO( "if the sms code didn't gat from the server")
+                Toast.makeText(
+                        requireContext(),
+                        "SMS SENDING ERROR!",
+                        Toast.LENGTH_LONG)
+                        .show()
             }
         }
     }
@@ -130,9 +146,8 @@ class RegisterSmsCodeFragment(
                 getNewSmsCodeButton.visibility = View.VISIBLE
                 timerTextView.visibility = View.GONE
             }else{
-
                 inputSmsCod.isEnabled = true
-                inputSmsCod.text?.clear()
+                inputSmsCod.mask = "#####"
                 setErrorText(isVisible = false)
                 getNewSmsCodeButton.visibility = View.GONE
                 timerTextView.visibility = View.VISIBLE

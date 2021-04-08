@@ -35,14 +35,15 @@ class AuthServiceImpl : IAuthService {
     override fun registerUserFirst(phone: String, onLoaded: (data: AuthRegisterFirstData?, e: Throwable?) -> Unit){
         getRetrofit().create(IAuthLogin :: class.java)
                 .registerUser(APIKEY ,phone)
-                .enqueue(object : Callback<AuthRegisterFirst> {
-                    override fun onResponse(call: Call<AuthRegisterFirst>, response: Response<AuthRegisterFirst>) {
+                .enqueue(object : Callback<Answer<AuthRegisterFirstData>> {
+                    override fun onResponse(call: Call<Answer<AuthRegisterFirstData>>, response: Response<Answer<AuthRegisterFirstData>>) {
                         try{
                             onLoaded.invoke(response.body()?.data, null)
+                            Log.e("OkH", response.body().toString())
                         }catch (e:Exception){}
                     }
 
-                    override fun onFailure(call: Call<AuthRegisterFirst>, t: Throwable) {
+                    override fun onFailure(call: Call<Answer<AuthRegisterFirstData>>, t: Throwable) {
                         try{
                             onLoaded.invoke(null, t)
                             Log.e("registerTest", "Error:", t)
@@ -72,7 +73,7 @@ class AuthServiceImpl : IAuthService {
 
     override fun getSmsCodeAgain(phone: String, onLoaded: (data: CodeData?, e: Throwable?) -> Unit){
         getRetrofit().create(IAuthLogin :: class.java)
-                .getSmsCodeAgain(APIKEY ,phone)
+                .getSmsCodeAgain(phone)
                 .enqueue(object : Callback<Code> {
                     override fun onResponse(call: Call<Code>, response: Response<Code>) {
                         try{

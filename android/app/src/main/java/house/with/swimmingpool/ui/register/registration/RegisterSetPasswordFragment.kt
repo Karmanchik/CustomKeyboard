@@ -43,6 +43,8 @@ class RegisterSetPasswordFragment(
 
         setPasswordFragmentBinding?.apply {
 
+            passwordInput.requestFocus()
+
             enterButton.setOnClickListener {
                 checkPassword()
             }

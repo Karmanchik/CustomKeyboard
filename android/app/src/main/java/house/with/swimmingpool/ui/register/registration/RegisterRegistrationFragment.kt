@@ -32,14 +32,14 @@ class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragmen
             if (LoginActivity.cashedPhone != null) {
                 phoneInput.setText(LoginActivity.cashedPhone)
             }
+
+            phoneInput.doOnTextChanged { text, _, _, _ ->
+                LoginActivity.cashedPhone = phoneInput.rawText
+                setErrorText(isVisible = false)
+            }
+
             enterButton.setOnClickListener {
-
                 checkPhoneNumberForMatches(phoneInput.text.toString())
-
-                phoneInput.doOnTextChanged { text, _, _, _ ->
-                    LoginActivity.cashedPhone = phoneInput.rawText
-                    setErrorText(isVisible = false)
-                }
             }
         }
     }

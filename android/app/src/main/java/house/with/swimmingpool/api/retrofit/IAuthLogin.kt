@@ -16,12 +16,20 @@ interface IAuthLogin {
     ): Call<AuthLogin>
 
     @FormUrlEncoded
+    @POST("auth/phone")
+    fun checkPhoneNumber(
+            @Field("phone") phone: String,
+            @Header("api-key") apikey: String = APIKEY,
+            @Field("context") type: String = "client"
+    ): Call<Answer<Int?>>
+
+    @FormUrlEncoded
     @POST("auth/first")
     fun registerUser(
             @Header("api-key") apikey: String,
             @Field("phone") phone: String,
             @Field("context") type: String = "client"
-    ): Call<AuthRegisterFirst>
+    ): Call<Answer<AuthRegisterFirstData>>
 
     @FormUrlEncoded
     @POST("auth/second")
@@ -34,8 +42,8 @@ interface IAuthLogin {
     @FormUrlEncoded
     @POST("auth/code")
     fun getSmsCodeAgain(
-            @Header("api-key") apikey: String,
-            @Field("phone") phone: String
+            @Field("phone") phone: String,
+            @Header("api-key") apikey: String = APIKEY
     ): Call<Code>
 
     @FormUrlEncoded

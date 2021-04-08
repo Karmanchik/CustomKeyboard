@@ -111,14 +111,14 @@ inline fun <reified A : Activity> Fragment.startActivity(configIntent: Intent.()
     startActivity(Intent(requireContext(), A::class.java).apply(configIntent))
 }
 
-fun CharSequence.noAsterisks(): String {
-    var textWithoutAsterisks = ""
+fun CharSequence.noDots(): String {
+    var textWithoutDots = ""
     this.forEach {
-        if (it != '*') {
-            textWithoutAsterisks += it
+        if (it != '•') {
+            textWithoutDots += it
         }
     }
-    return textWithoutAsterisks
+    return textWithoutDots
 }
 
 fun ImageView.load(url: String?, @DrawableRes stub: Int = R.drawable.placeholder) {
