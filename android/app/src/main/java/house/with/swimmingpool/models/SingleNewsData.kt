@@ -11,6 +11,6 @@ data class SingleNewsData(
     val photos: List<String>?,
     val tags: List<String>?,
     val title: String?,
-    val video: List<String>?,
+    val video: String?,
     val reading_time: String?
 )

@@ -29,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Коттеджные поселки в Сочи: плюсы, минусы, особенности выбора"
-            android:fontFamily="@font/lato"
-            android:textSize="14sp"
+            android:textSize="17sp"
             android:textColor="@color/black"
+            android:fontFamily="@font/lato_medium"
             android:gravity="center"
             android:layout_marginEnd="33dp"
             android:paddingEnd="10dp"
@@ -162,7 +162,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/mowToObject"
+                android:id="@+id/moveToObject"
                 android:layout_marginTop="20dp"
                 style="@style/main_button"
                 android:textSize="18dp"

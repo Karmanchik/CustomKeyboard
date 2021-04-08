@@ -43,6 +43,8 @@ class NewsSingleFragment : Fragment() {
 
             NewsServiceImpl().getSingleNews(arguments?.getInt("id") ?: 0) { data, e ->
                 val vp = housesImageContainerNews
+                Log.e("testSingleNewsFragment", e.toString())
+                Log.e("testSingleNewsFragment", data.toString())
                 if (data != null) {
 
                     headerTitleTextView.text = data.title

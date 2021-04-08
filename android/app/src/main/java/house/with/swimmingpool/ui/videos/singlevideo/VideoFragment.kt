@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
+import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.api.config.controllers.VideosServiceImpl
 import house.with.swimmingpool.databinding.FragmentVideoSingleBinding
 
@@ -34,6 +36,32 @@ class VideoFragment : Fragment(){
                 Log.e("testingSingleVideoImpl", e.toString())
 
                 if (data != null && e == null) {
+
+                    moveToObject.setOnClickListener {
+
+                        val home = App.setting.houses.firstOrNull {
+                            it.id == data.id
+                        }
+
+                        if(home == null){
+                            RealtyServiceImpl().getHouseExample(data.id?: 0){ data, e ->
+                                val bundle =
+                                        Bundle().apply { putString("home", Gson().toJson(data)) }
+                                findNavController().navigate(
+                                        R.id.action_navigation_home_to_houseFragment,
+                                        bundle
+                                )
+                            }
+                        }else {
+                            val bundle =
+                                    Bundle().apply { putString("home", Gson().toJson(home)) }
+                            findNavController().navigate(
+                                    R.id.action_navigation_home_to_houseFragment,
+                                    bundle
+                            )
+                        }
+                    }
+
                     val descriptionText =
                             if (data.content != null) Html.fromHtml(data.content) else ""
 
