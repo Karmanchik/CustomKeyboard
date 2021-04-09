@@ -2,6 +2,7 @@ package house.with.swimmingpool.ui.register.registration
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -45,6 +46,8 @@ class RegisterSetPasswordFragment(
 
         setPasswordFragmentBinding?.apply {
 
+            clearErrorPassword()
+
             passwordInput.requestFocus()
 
             enterButton.setOnClickListener {
@@ -52,7 +55,7 @@ class RegisterSetPasswordFragment(
             }
 
             passwordInput.doOnTextChanged { text, start, before, count ->
-                errorPasswordTextView.visibility = View.INVISIBLE
+                clearErrorPassword()
 
                 if (text.toString() == "") {
                     iconEye.visibility = View.INVISIBLE
@@ -61,7 +64,7 @@ class RegisterSetPasswordFragment(
                 }
             }
             passwordInputCheck.doOnTextChanged { text, start, before, count ->
-                errorPasswordTextView.visibility = View.INVISIBLE
+                clearErrorPassword()
             }
 
             iconEye.setOnClickListener {
@@ -83,21 +86,20 @@ class RegisterSetPasswordFragment(
     private fun checkPassword() {
         setPasswordFragmentBinding?.apply {
             if (passwordInput.text.toString() != passwordInputCheck.text.toString()) {
-                errorPasswordTextView.visibility = View.VISIBLE
+                setErrorPassword("Пароли не совпадают, попробуйте снова")
             } else {
-                errorPasswordTextView.visibility = View.INVISIBLE
+                clearErrorPassword()
                 AuthServiceImpl().setPassword(
                         passwordInputCheck.text.toString(),
                         smsCode
                 ) { data, e ->
                     if (data != null && e == null) {
                         if (data.error == null) {
-                            App.setting.user = data.data
                             CabinetFragment.isPopBackLoginActivity = false
                             SearchesFragment.isPopBacLoginActivity = false
                             requireActivity().finish()
                         } else if (data.error == 773) {
-                            setErrorPassword("Пароль должен быть от 6 до 10 символов.")
+                            setErrorPassword("Введите от 6 до 10 символов (кроме */-.\\”% )")
                         }
                     } else {
                         Log.e("setPasswordError", "$data $e")
@@ -109,14 +111,19 @@ class RegisterSetPasswordFragment(
         }
     }
 
-    private fun setErrorPassword(text: String, isVisible: Boolean = true) {
+    @SuppressLint("ResourceAsColor")
+    private fun setErrorPassword(text: String) {
         setPasswordFragmentBinding?.errorPasswordTextView?.apply {
-            visibility = if (isVisible) {
-                View.VISIBLE
-            } else {
-                View.INVISIBLE
-            }
+            setTextColor(Color.parseColor("#DB5249"))
             this.text = text
+        }
+    }
+
+    @SuppressLint("ResourceAsColor", "SetTextI18n")
+    private fun clearErrorPassword(){
+        setPasswordFragmentBinding?.errorPasswordTextView?.apply {
+            text = "Введите от 6 до 10 символов (кроме */-.\\”% )"
+            setTextColor(Color.parseColor("#788598"))
         }
     }
 

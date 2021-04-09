@@ -62,16 +62,15 @@ class RegisterSmsCodeFragment(
 
                         setErrorText(isVisible = false)
 
-                        Log.e("testingSmsCode", "phone is ${inputSmsCod.text}")
+//                        Log.e("testingSmsCode", "phone is ${inputSmsCod.text}")
 
-                        if (text?.noDots()?.length == 5) {
+                        if (text?.noDots()?.length == 5 && text.length == 5) {
                             if ((text.noDots()) == smsCodFromServer) {
                                 inputSmsCod.isEnabled = false
                                 confirmSmsCodeOnTheServer(text.noDots())
+                                Log.e("testingSmsCode", "phone is ${text.noDots()}")
                             } else {
                                 if (text.noDots() == text.toString()) {
-//                                inputSmsCod.setText("")
-                                    Log.e("testingSmsCode", inputSmsCod.text.toString())
                                     Log.e("testingSmsCode", inputSmsCod.rawText)
                                     try {
                                         inputSmsCod.mask = "#####"

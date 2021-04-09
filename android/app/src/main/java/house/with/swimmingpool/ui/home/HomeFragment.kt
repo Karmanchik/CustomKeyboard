@@ -136,7 +136,7 @@ class HomeFragment : Fragment() {
                                 }
 
                                 if(home == null){
-                                    RealtyServiceImpl().getHouseExample(splitLink.last().toInt()){ data, e ->
+                                    RealtyServiceImpl().getHouseExample(splitLink.last().toInt()){ data, e, _ ->
                                         val bundle =
                                                 Bundle().apply { putString("home", Gson().toJson(data)) }
                                         findNavController().navigate(

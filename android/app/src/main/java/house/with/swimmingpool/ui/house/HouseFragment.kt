@@ -67,7 +67,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 RealtyServiceImpl().getHouseExample(
                         singleHouseObject.id ?: 0
-                ) { data, e ->
+                ) { data, e, _ ->
                     data?.let { showHome(it) }
                 }
 

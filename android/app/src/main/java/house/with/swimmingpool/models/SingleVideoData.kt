@@ -10,5 +10,6 @@ data class SingleVideoData(
     val photos: List<String>?,
     val tags: List<Any>?,
     val title: String?,
-    val video: String?
+    val video: String?,
+    val linked_objects: List<HouseCatalogData>?
 )

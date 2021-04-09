@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -18,7 +19,7 @@ import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.api.config.controllers.VideosServiceImpl
 import house.with.swimmingpool.databinding.FragmentVideoSingleBinding
 
-class VideoFragment : Fragment(){
+class VideoFragment : Fragment() {
 
     private var videoBinding: FragmentVideoSingleBinding? = null
 
@@ -40,19 +41,28 @@ class VideoFragment : Fragment(){
                     moveToObject.setOnClickListener {
 
                         val home = App.setting.houses.firstOrNull {
-                            it.id == data.id
+                            it.id == data.linked_objects?.first()?.id
                         }
 
-                        if(home == null){
-                            RealtyServiceImpl().getHouseExample(data.id?: 0){ data, e ->
-                                val bundle =
-                                        Bundle().apply { putString("home", Gson().toJson(data)) }
-                                findNavController().navigate(
-                                        R.id.action_navigation_home_to_houseFragment,
-                                        bundle
-                                )
+                        if (home == null) {
+                            RealtyServiceImpl().getHouseExample(data.linked_objects?.first()?.id ?: 0) { data, e, error ->
+                                Log.e("OkH", "data $data exception $error")
+                                if (error == 751) {
+                                    Toast.makeText(
+                                            requireContext(),
+                                            "Объект с таким ID не найден",
+                                            Toast.LENGTH_SHORT
+                                    ).show()
+                                } else if (error == null) {
+                                    val bundle =
+                                            Bundle().apply { putString("home", Gson().toJson(data)) }
+                                    findNavController().navigate(
+                                            R.id.action_videoFragment_to_houseFragment,
+                                            bundle
+                                    )
+                                }
                             }
-                        }else {
+                        } else {
                             val bundle =
                                     Bundle().apply { putString("home", Gson().toJson(home)) }
                             findNavController().navigate(
@@ -80,10 +90,10 @@ class VideoFragment : Fragment(){
                         contentTextView.text = Html.fromHtml(data.content)
                     }
 
-                    if(data.date != "") {
+                    if (data.date != "") {
                         dateTextView.text = data.date
                         dateTextView.visibility = View.VISIBLE
-                    }else{
+                    } else {
                         dateTextView.visibility = View.GONE
                     }
 
@@ -132,7 +142,7 @@ class VideoFragment : Fragment(){
             }
         }
 
-        if(App.setting.user?.phone != ""){
+        if (App.setting.user?.phone != "") {
             videoBinding?.phoneInputConsultation?.setText(App.setting.user?.phone)
         }
     }
@@ -140,7 +150,8 @@ class VideoFragment : Fragment(){
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+            savedInstanceState: Bundle?,
+    ): View? {
         videoBinding = FragmentVideoSingleBinding.inflate(layoutInflater)
         return videoBinding?.root
     }

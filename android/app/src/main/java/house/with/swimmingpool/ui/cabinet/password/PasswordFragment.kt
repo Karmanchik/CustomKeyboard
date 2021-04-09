@@ -1,8 +1,9 @@
 package house.with.swimmingpool.ui.cabinet.password
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,8 @@ class PasswordFragment(
     ): View? {
 
         passwordBinding = FragmentPasswordBinding.inflate(layoutInflater)
+
+        clearErrorPassword()
 
         passwordBinding?.apply {
             oldPassword.getField()?.doOnTextChanged { text, start, before, count ->
@@ -60,7 +63,7 @@ class PasswordFragment(
                                     )
                                     parentView.onPasswordSet()
                                 } else if (data.error == 773) {
-                                    setErrorPassword("Пароль должен быть от 6 до 10 символов.")
+                                    setErrorPassword("Введите от 6 до 10 символов (кроме */-.\\”% )")
                                 }
                             } else {
                                 oldPassword.setError()
@@ -98,15 +101,21 @@ class PasswordFragment(
         return false
     }
 
-    private fun setErrorPassword(text: String, isVisible: Boolean = true) {
-        passwordBinding?.errorPasswordTextView?.apply {
-            visibility = if (isVisible) {
-                View.VISIBLE
-            } else {
-                View.INVISIBLE
-            }
+    @SuppressLint("ResourceAsColor")
+    private fun setErrorPassword(text: String) {
+        passwordBinding?.errorPasswordText?.apply {
             this.text = text
+            setTextColor(Color.parseColor("#DB5249"))
         }
+    }
+
+    @SuppressLint("ResourceAsColor", "SetTextI18n")
+    private fun clearErrorPassword(){
+        passwordBinding?.errorPasswordText?.apply {
+            text = "Введите от 6 до 10 символов (кроме */-.\\”% )"
+            setTextColor(Color.parseColor("#788598"))
+        }
+
     }
 
     override fun onDestroy() {

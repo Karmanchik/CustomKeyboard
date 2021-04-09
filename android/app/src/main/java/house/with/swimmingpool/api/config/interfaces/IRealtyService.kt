@@ -7,7 +7,7 @@ import house.with.swimmingpool.models.request.FilterObjectsRequest
 interface IRealtyService {
 
     fun getHouseCatalog(onLoaded: (data: List<HouseCatalogData>?, e: Throwable?) -> Unit)
-    fun getHouseExample(id: Int, onLoaded: (data: HouseExampleData?, e: Throwable?) -> Unit)
+    fun getHouseExample(id: Int, onLoaded: (data: HouseExampleData?, e: Throwable?, error: Int?) -> Unit)
     fun getParamsForFilter(): Answer<JsonObject>?
     fun getObjectsByFilter(filter: FilterObjectsRequest, onLoaded: (data: List<HouseCatalogData>?, e: Throwable?) -> Unit)
 

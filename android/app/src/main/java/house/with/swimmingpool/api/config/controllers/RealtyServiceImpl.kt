@@ -42,7 +42,7 @@ class RealtyServiceImpl : IRealtyService {
 
     override fun getHouseExample(
         id: Int,
-        onLoaded: (data: HouseExampleData?, e: Throwable?) -> Unit
+        onLoaded: (data: HouseExampleData?, e: Throwable?, error:Int?) -> Unit
     ) {
         getRetrofit().create(IRealty::class.java)
             .getHousesExample(id)
@@ -51,11 +51,11 @@ class RealtyServiceImpl : IRealtyService {
                     call: Call<HouseExample>,
                     response: Response<HouseExample>
                 ) {
-                    onLoaded.invoke(response.body()?.data, null)
+                    onLoaded.invoke(response.body()?.data, null, response.body()?.error)
                 }
 
                 override fun onFailure(call: Call<HouseExample>, t: Throwable) {
-                    onLoaded.invoke(null, t)
+                    onLoaded.invoke(null, t, null)
                     Log.e("taskException", "error", t)
                 }
             })
