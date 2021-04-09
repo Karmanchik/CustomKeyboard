@@ -175,4 +175,8 @@
             android:id="@+id/action_collectionFragment_to_houseFragment"
             app:destination="@id/houseFragment" />
     </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="house.with.swimmingpool.MainActivity"
+        android:label="MainActivity" />
 </navigation>

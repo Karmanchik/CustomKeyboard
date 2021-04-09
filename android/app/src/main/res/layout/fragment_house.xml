@@ -208,12 +208,14 @@
                 android:paddingBottom="11dp">
 
                 <ImageView
+                    android:id="@+id/shareLinkImageView"
                     android:layout_width="15dp"
                     android:layout_height="16dp"
                     android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_shear_blue" />
 
                 <TextView
+                    android:id="@+id/shareLinkTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato"

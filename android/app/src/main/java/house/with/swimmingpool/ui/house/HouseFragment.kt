@@ -1,6 +1,8 @@
 package house.with.swimmingpool.ui.house
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
@@ -9,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -31,6 +34,7 @@ import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 import house.with.swimmingpool.ui.house.adapters.*
 import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
 import house.with.swimmingpool.ui.popups.PopupActivity
+import house.with.swimmingpool.ui.toast
 
 class HouseFragment : Fragment(), ISingleHouseView {
 
@@ -114,6 +118,10 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     )
                 }
 
+                shareLinkImageView.setOnClickListener { shareLink(singleHouseObject.id ?: 0)}
+
+                shareLinkTextView.setOnClickListener { shareLink(singleHouseObject.id ?: 0) }
+
                 buttonCollMe.setOnClickListener {
                     startActivity(
                             Intent(requireContext(), PopupActivity::class.java).apply {
@@ -142,7 +150,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     phoneInputCollBack.setText(App.setting.user?.phone)
                 }
 
-                if(App.setting.user?.email != ""){
+                if (App.setting.user?.email != "") {
                     emailInputLayout.setText(App.setting.user?.email)
                 }
 
@@ -378,7 +386,16 @@ class HouseFragment : Fragment(), ISingleHouseView {
         }
     }
 
-    private fun onClickButtonFavorite(singleHouseObject: HouseExampleData){
+    private fun shareLink(id: Int) {
+        toast("Copied profile link")
+            val clipboard = requireActivity().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText(
+                    "label",
+                    "https://domsbasseinom.ru/app/testhouse/$id")
+            clipboard.setPrimaryClip(clip)
+    }
+
+    private fun onClickButtonFavorite(singleHouseObject: HouseExampleData) {
         houseObjectBinding?.apply {
             singleHouseObject.apply {
                 if (id != null) {

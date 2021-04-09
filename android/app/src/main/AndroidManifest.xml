@@ -19,6 +19,7 @@
         <activity
             android:name=".ui.popups.PopupActivity"
             android:theme="@style/AppThemeTranslucent.NoActionBarr" />
+
         <activity
             android:name=".ui.search.SearchActivity"
             android:screenOrientation="portrait"
@@ -37,6 +38,14 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="domsbasseinom.ru"
+                    android:pathPrefix="/app/testhouse"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
