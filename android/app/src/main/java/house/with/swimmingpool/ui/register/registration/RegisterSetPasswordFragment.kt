@@ -17,6 +17,7 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentRegisterSetPasswordBinding
 import house.with.swimmingpool.ui.cabinet.CabinetFragment
+import house.with.swimmingpool.ui.favourites.FavouritesFragment
 import house.with.swimmingpool.ui.favourites.searches.SearchesFragment
 import house.with.swimmingpool.ui.login.ILoginView
 import house.with.swimmingpool.ui.login.LoginActivity
@@ -96,7 +97,7 @@ class RegisterSetPasswordFragment(
                     if (data != null && e == null) {
                         if (data.error == null) {
                             CabinetFragment.isPopBackLoginActivity = false
-                            SearchesFragment.isPopBacLoginActivity = false
+                            FavouritesFragment.isPopBacLoginActivity = false
                             requireActivity().finish()
                         } else if (data.error == 773) {
                             setErrorPassword("Введите от 6 до 10 символов (кроме */-.\\”% )")

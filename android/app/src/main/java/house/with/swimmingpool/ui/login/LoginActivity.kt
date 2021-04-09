@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.databinding.ActivityLoginBinding
 import house.with.swimmingpool.ui.cabinet.CabinetFragment
+import house.with.swimmingpool.ui.favourites.FavouritesFragment
 import house.with.swimmingpool.ui.favourites.searches.SearchesFragment
 import house.with.swimmingpool.ui.register.registration.RegisterLoginSuccessFragment
 import house.with.swimmingpool.ui.register.registration.RegisterRegistrationFragment
@@ -29,7 +30,7 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         setContentView(loginBinging.root)
 
         CabinetFragment.isPopBackLoginActivity = true
-        SearchesFragment.isPopBacLoginActivity = true
+        FavouritesFragment.isPopBacLoginActivity = true
 
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE )

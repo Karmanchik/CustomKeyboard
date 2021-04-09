@@ -12,37 +12,39 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/lato"
             android:gravity="center"
-            android:lineHeight="27dp"
-            android:text="Добавляйте объекты в поиск"
-            android:textSize="17dp" />
+            android:fontFamily="@font/lato_medium"
+            android:textColor="@color/black"
+            android:textSize="19dp"
+            android:lineHeight="30dp"
+            android:text="Добавляйте объекты в поиск" />
 
         <TextView
-            android:layout_width="255dp"
+            android:layout_width="290dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="7dp"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/lato_regular"
             android:gravity="center"
             android:lineHeight="20dp"
             android:text="Отмечайте интересные объекты и следите за именением цены"
-            android:textSize="12dp" />
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/showCatalogButton"
             style="@style/main_button"
-            android:layout_width="match_parent"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="25dp"
             android:elevation="5dp"
+            android:layout_gravity="center"
             android:text="Каталог объектов"
             app:layout_constraintBottom_toBottomOf="parent" />
 

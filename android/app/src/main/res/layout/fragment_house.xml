@@ -533,7 +533,7 @@
                         android:background="@drawable/circle_corners6">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textFieldEmail"
+                            android:id="@+id/textFieldEmailLayout"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -548,6 +548,7 @@
                             app:hintTextColor="#808080">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/emailInputLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:defaultFocusHighlightEnabled="false"
@@ -698,8 +699,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="12dp"
                 android:elevation="10dp"
                 app:cardCornerRadius="6dp"

@@ -142,10 +142,15 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     phoneInputCollBack.setText(App.setting.user?.phone)
                 }
 
+                if(App.setting.user?.email != ""){
+                    emailInputLayout.setText(App.setting.user?.email)
+                }
+
                 houseExampleData = singleHouseObject
 
                 singleHouseObject.getGallery().apply {
                     whiteButtonGalleryRV.adapter =
+
                             MainGalleryAndDateAdapter(
                                     requireContext(),
                                     this,

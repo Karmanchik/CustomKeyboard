@@ -40,9 +40,9 @@ class HomeFragment : Fragment() {
     private var homeBinding: FragmentHomeBinding? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View? {
         homeBinding = FragmentHomeBinding.inflate(layoutInflater)
         return homeBinding?.root
@@ -62,16 +62,16 @@ class HomeFragment : Fragment() {
                     findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel)
                 } else if (code == NAVIGATE_TO_OBJECT) {
                     val bundle =
-                        Bundle().apply { putString("home", Gson().toJson(App.setting.tmpObj)) }
+                            Bundle().apply { putString("home", Gson().toJson(App.setting.tmpObj)) }
                     findNavController().navigate(
-                        R.id.action_navigation_home_to_houseFragment,
-                        bundle
+                            R.id.action_navigation_home_to_houseFragment,
+                            bundle
                     )
                 }
             }
         }
 
-        if(requestCode == POPUP_WIFI_ERROR_REFRASH){
+        if (requestCode == POPUP_WIFI_ERROR_REFRASH) {
             updateData()
         }
     }
@@ -111,16 +111,16 @@ class HomeFragment : Fragment() {
                 homeBinding?.storiesRV?.apply {
                     visibility = if (storiesInfo.first.isNullOrEmpty()) View.GONE else View.VISIBLE
                     layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter = StoriesAdapter(storiesInfo.first ?: listOf())
                 }
 
                 homeBinding?.nestedScrollView?.visibility =
-                    if (headerInfo.first.isNullOrEmpty()) {
-                        View.GONE
-                    } else {
-                        View.VISIBLE
-                    }
+                        if (headerInfo.first.isNullOrEmpty()) {
+                            View.GONE
+                        } else {
+                            View.VISIBLE
+                        }
 
                 homeBinding?.apply {
                     val vp = mainHousesContainer
@@ -135,8 +135,8 @@ class HomeFragment : Fragment() {
                                     it.id == splitLink.last().toInt()
                                 }
 
-                                if(home == null){
-                                    RealtyServiceImpl().getHouseExample(splitLink.last().toInt()){ data, e, _ ->
+                                if (home == null) {
+                                    RealtyServiceImpl().getHouseExample(splitLink.last().toInt()) { data, e, _ ->
                                         val bundle =
                                                 Bundle().apply { putString("home", Gson().toJson(data)) }
                                         findNavController().navigate(
@@ -144,7 +144,7 @@ class HomeFragment : Fragment() {
                                                 bundle
                                         )
                                     }
-                                }else {
+                                } else {
                                     val bundle =
                                             Bundle().apply { putString("home", Gson().toJson(home)) }
                                     findNavController().navigate(
@@ -163,7 +163,7 @@ class HomeFragment : Fragment() {
                                 )
                             }
                             "video" -> {
-                                val bundel = Bundle().apply{
+                                val bundel = Bundle().apply {
                                     putInt("id", splitLink.last().toInt())
                                 }
                                 findNavController().navigate(
@@ -172,10 +172,10 @@ class HomeFragment : Fragment() {
                             }
                             "https:" -> {
                                 val browserIntent = Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse(
-                                        link
-                                    )
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(
+                                                link
+                                        )
                                 )
                                 startActivity(browserIntent);
                             }
@@ -203,14 +203,14 @@ class HomeFragment : Fragment() {
 
                 if (videosInfo.second == null && videosInfo.first != null) {
                     homeBinding?.videosRV?.adapter =
-                        VideosAdapter(false, requireContext(), videosInfo.first ?: listOf()) {
-                            val bundel = Bundle().apply{
-                                putInt("id", it)
+                            VideosAdapter(false, requireContext(), videosInfo.first ?: listOf()) {
+                                val bundel = Bundle().apply {
+                                    putInt("id", it)
+                                }
+                                findNavController().navigate(
+                                        R.id.action_navigation_home_to_videoFragment, bundel
+                                )
                             }
-                            findNavController().navigate(
-                                    R.id.action_navigation_home_to_videoFragment, bundel
-                            )
-                        }
                     homeBinding?.videosContainer?.visibility = View.VISIBLE
                 } else {
                     homeBinding?.videosContainer?.visibility = View.GONE
@@ -218,16 +218,16 @@ class HomeFragment : Fragment() {
 
                 if (newsInfo.second == null && newsInfo.first != null) {
                     homeBinding?.newsRV?.adapter = NewsAdapter(
-                        newsInfo.first?.take(2) ?: listOf(),
-                        requireContext()
+                            newsInfo.first?.take(2) ?: listOf(),
+                            requireContext()
                     ) {
                         val bundle = Bundle().apply {
                             putInt("id", it.id ?: 0)
                             putSerializable("house", it)
                         }
                         findNavController().navigate(
-                            R.id.action_navigation_home_to_newsSingleFragment,
-                            bundle
+                                R.id.action_navigation_home_to_newsSingleFragment,
+                                bundle
                         )
                     }
                     homeBinding?.newsContainer?.visibility = View.VISIBLE
@@ -298,9 +298,9 @@ class HomeFragment : Fragment() {
 
             shortFilterView.setOnClickListener {
                 val onClick =
-                    { findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel) }
+                        { findNavController().navigate(R.id.action_navigation_home_to_catalogViewModel) }
                 ShortFilterFragment(onClick).newInstance(onClick).show(
-                    parentFragmentManager, "shortFilter"
+                        parentFragmentManager, "shortFilter"
                 )
             }
             fullFilterView.setOnClickListener {
@@ -345,15 +345,14 @@ class HomeFragment : Fragment() {
 
                 textViewVideosCount.text = "${data.size} предложений"
                 shortCatalogRV.adapter =
-                    CatalogAdapter(data.take(2), requireContext()) { homeId ->
-                        val home = data.firstOrNull { it.id == homeId }
-                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                        findNavController().navigate(
-                            R.id.action_navigation_home_to_houseFragment,
-                            bundle
-                        )
-                    }
-
+                        CatalogAdapter(data.take(2), requireContext()) { homeId ->
+                            val home = data.firstOrNull { it.id == homeId }
+                            val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                            findNavController().navigate(
+                                    R.id.action_navigation_home_to_houseFragment,
+                                    bundle
+                            )
+                        }
             }
         }
     }

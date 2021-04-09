@@ -61,8 +61,6 @@ class PopupActivity : AppCompatActivity() {
             radButton.visibility = View.GONE
             cancelBesideRadButton.text = "Продолжить"
 
-            closeIcon.setOnClickListener { finish() }
-
             cancelBesideRadButton.setOnClickListener { finish() }
         }
     }
@@ -86,7 +84,6 @@ class PopupActivity : AppCompatActivity() {
             descriptionRadButton.text = "Выйти из аккаунта?"
             radButton.text =  "Выйти"
             cancelBesideRadButton.text = "Отмена"
-            closeIcon.visibility = View.INVISIBLE
 
             cancelBesideRadButton.setOnClickListener {
                 setResult(RESULT_OK,
