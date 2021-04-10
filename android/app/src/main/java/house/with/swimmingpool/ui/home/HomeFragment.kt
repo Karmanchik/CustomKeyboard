@@ -89,14 +89,13 @@ class HomeFragment : Fragment() {
         homeBinding?.loader?.visibility = View.VISIBLE
 
         AuthServiceImpl().getSettings { data, e ->
-            Log.e("testingGetService", "test")
             if(data != null && e == null) {
-                Log.e("testingGetService", "test")
-               Log.e("testingGetService", data.getAsJsonObject("data")
+                App.setting.registerImageLink = data
                         .getAsJsonArray("SiteSettings")
                         .firstOrNull { it.asJsonObject["key"].asString == "app_mobile_welcome_pic" }
                         ?.asJsonObject?.get("value")?.asString.toString()
-               )
+            }else{
+                App.setting.registerImageLink = null
             }
         }
 

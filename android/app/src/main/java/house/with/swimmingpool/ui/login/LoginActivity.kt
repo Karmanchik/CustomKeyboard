@@ -6,7 +6,10 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
+import house.with.swimmingpool.App
+import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ActivityLoginBinding
 import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.favourites.FavouritesFragment
@@ -32,6 +35,12 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         CabinetFragment.isPopBackLoginActivity = true
         FavouritesFragment.isPopBacLoginActivity = true
 
+        val registerMainImageLink = App.setting.registerImageLink
+        Glide.with(this)
+                .load(registerMainImageLink)
+                .placeholder(R.drawable.registration_top_image)
+                .error(R.drawable.registration_top_image)
+                .into(loginBinging.registerMainImageView)
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE )
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
