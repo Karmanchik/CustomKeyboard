@@ -1,5 +1,6 @@
 package house.with.swimmingpool.api.retrofit
 
+import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.models.*
 import retrofit2.Call
@@ -55,4 +56,9 @@ interface IAuthLogin {
             @Field("new_password") newPassword: String,
             @Field("old_password") oldPassword: String
     ): Call<UpdatedUser>
+
+    @GET("settings")
+    fun getSettings(
+            @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
+    ) : Call<Answer<JsonObject>>
 }

@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.*
@@ -77,9 +78,27 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+
+    }
+
     private fun updateData() {
 
         homeBinding?.loader?.visibility = View.VISIBLE
+
+        AuthServiceImpl().getSettings { data, e ->
+            Log.e("testingGetService", "test")
+            if(data != null && e == null) {
+                Log.e("testingGetService", "test")
+               Log.e("testingGetService", data.getAsJsonObject("data")
+                        .getAsJsonArray("SiteSettings")
+                        .firstOrNull { it.asJsonObject["key"].asString == "app_mobile_welcome_pic" }
+                        ?.asJsonObject?.get("value")?.asString.toString()
+               )
+            }
+        }
 
         GlobalScope.launch(Dispatchers.IO) {
             val videosInfo = VideosServiceImpl().loadVideos()

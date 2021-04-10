@@ -1,6 +1,7 @@
 package house.with.swimmingpool.api.config.controllers
 
 import android.util.Log
+import com.google.gson.JsonObject
 import house.with.swimmingpool.api.config.interfaces.IAuthService
 import house.with.swimmingpool.api.retrofit.APIKEY
 import house.with.swimmingpool.api.retrofit.IAuthLogin
@@ -46,6 +47,25 @@ class AuthServiceImpl : IAuthService {
                             Log.e("phoneTesting", "Error:", t)
                         }catch (e:Exception){}
                     }
+                })
+    }
+
+    fun getSettings(onLoaded: (data: JsonObject?, e: Throwable?) -> Unit){
+        getRetrofit().create(IAuthLogin :: class.java)
+                .getSettings()
+                .enqueue(object : Callback<Answer<JsonObject>>{
+                    override fun onResponse(call: Call<Answer<JsonObject>>, response: Response<Answer<JsonObject>>) {
+                        try{
+                            onLoaded.invoke(response.body()?.data, null)
+                            Log.e("OkH", response.body().toString())
+                        }catch (e:Exception){}
+                    }
+
+                    override fun onFailure(call: Call<Answer<JsonObject>>, t: Throwable) {
+                        onLoaded.invoke(null, t)
+                        Log.e("getSettings", "Error:", t)
+                    }
+
                 })
     }
 

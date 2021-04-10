@@ -39,6 +39,13 @@ class CabinetFragment : Fragment(), ICabinetView {
         super.onDestroy()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (!(App.setting.isAuth)) {
+            requireActivity().startActivity<LoginActivity> {  }
+        }
+    }
+
     override fun onResume() {
         if (!(App.setting.isAuth) && isPopBackLoginActivity) {
             findNavController().navigate(R.id.action_cabinetFragment_to_navigation_home)
@@ -49,10 +56,6 @@ class CabinetFragment : Fragment(), ICabinetView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (!(App.setting.isAuth)) {
-            requireActivity().startActivity<LoginActivity> {  }
-        }
 
         binding?.apply {
             tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

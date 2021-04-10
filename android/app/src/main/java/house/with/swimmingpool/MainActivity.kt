@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 fab.visibility = View.GONE
             }
+
         }
         navView.setOnNavigationItemSelectedListener {
 //            navController.

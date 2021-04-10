@@ -204,31 +204,46 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
                 android:paddingTop="9dp"
                 android:paddingBottom="11dp">
 
-                <ImageView
-                    android:id="@+id/shareLinkImageView"
-                    android:layout_width="15dp"
-                    android:layout_height="16dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_shear_blue" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/shareLinkTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:text="Поделиться"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:textStyle="normal" />
+                    <ImageView
+                        android:id="@+id/shareLinkImageView"
+                        android:layout_width="15dp"
+                        android:layout_height="16dp"
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/ic_shear_blue" />
+
+                    <TextView
+                        android:id="@+id/shareLinkTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="15sp"
+                        android:fontFamily="@font/lato"
+                        android:text="Поделиться"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
                     android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"></LinearLayout>
 
                 <ImageView
                     android:layout_width="16dp"
@@ -243,6 +258,7 @@
                     android:layout_marginEnd="25dp"
                     android:fontFamily="@font/lato"
                     android:text="Заметка"
+                    android:autoSizeMaxTextSize="15sp"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="normal" />
@@ -264,11 +280,13 @@
                     android:id="@+id/favoriteTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:autoSizeMaxTextSize="15sp"
                     android:fontFamily="@font/lato"
                     android:text="Избранное"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    tools:ignore="UnusedAttribute" />
 
             </LinearLayout>
 

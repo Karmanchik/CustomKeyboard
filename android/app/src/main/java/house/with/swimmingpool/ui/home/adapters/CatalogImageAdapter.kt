@@ -79,7 +79,7 @@ class CatalogImageAdapter(
             is CatalogLastImageHolder -> {
                 holder.bind()
             }
-            is CatalogListVideoHolder ->{
+            is CatalogListVideoHolder -> {
                 holder.bind(position - items.size)
             }
         }
@@ -95,6 +95,7 @@ class CatalogImageAdapter(
             Glide.with(ctx)
                 .load(items[position])
                 .error(R.drawable.error_placeholder_midle)
+                    .dontAnimate()
                 .placeholder(R.drawable.placeholder)
                 .into(view.imageView2)
         }
