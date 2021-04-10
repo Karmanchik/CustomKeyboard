@@ -41,11 +41,11 @@ class VideoFragment : Fragment() {
                     moveToObject.setOnClickListener {
 
                         val home = App.setting.houses.firstOrNull {
-                            it.id == data.linked_objects?.first()?.id
+                            it.id == id
                         }
 
                         if (home == null) {
-                            RealtyServiceImpl().getHouseExample(data.linked_objects?.first()?.id ?: 0) { data, e, error ->
+                            RealtyServiceImpl().getHouseExample(data.linked_objects ?: 0) { data, e, error ->
                                 Log.e("OkH", "data $data exception $error")
                                 if (error == 751) {
                                     Toast.makeText(
@@ -56,6 +56,7 @@ class VideoFragment : Fragment() {
                                 } else if (error == null) {
                                     val bundle =
                                             Bundle().apply { putString("home", Gson().toJson(data)) }
+
                                     findNavController().navigate(
                                             R.id.action_videoFragment_to_houseFragment,
                                             bundle
