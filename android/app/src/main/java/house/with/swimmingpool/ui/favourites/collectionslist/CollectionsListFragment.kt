@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentCollectionsListBinding
 import house.with.swimmingpool.models.ShortCollection
+import house.with.swimmingpool.ui.catalog.CatalogFragment
+import house.with.swimmingpool.ui.collection.CollectionFragment
+import house.with.swimmingpool.ui.navigate
 
 class CollectionsListFragment : Fragment() {
 
@@ -33,7 +34,7 @@ class CollectionsListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.showCatalogButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_favouritesFragment_to_catalogViewModel)
+            navigate(CatalogFragment())
         }
 
         binding?.apply {
@@ -65,14 +66,11 @@ class CollectionsListFragment : Fragment() {
             items = list,
             onItemSearch = {
                 val bundle = Bundle().apply { putInt("id", it.id ?: 0) }
-                findNavController().navigate(
-                    R.id.action_favouritesFragment_to_collectionFragment,
-                    bundle
-                )
+                navigate(CollectionFragment(), bundle)
             },
             onOpenMenu = {},
             openCatalog = {
-                findNavController().navigate(R.id.action_favouritesFragment_to_catalogViewModel)
+                navigate(CatalogFragment())
             }
         )
     }

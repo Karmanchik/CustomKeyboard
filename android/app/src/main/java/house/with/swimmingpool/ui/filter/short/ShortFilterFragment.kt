@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.fragment.findNavController
 import com.appyvet.materialrangebar.RangeBar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.JsonObject
@@ -17,9 +16,8 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFilterShortBinding
 import house.with.swimmingpool.models.request.FilterObjectsRequest
-import house.with.swimmingpool.ui.onRightDrawableClicked
-import house.with.swimmingpool.ui.removeRightIcon
-import house.with.swimmingpool.ui.setRightIcon
+import house.with.swimmingpool.ui.catalog.CatalogFragment
+import house.with.swimmingpool.ui.navigate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -125,8 +123,12 @@ class ShortFilterFragment(
                             ) {
                                 try {
                                     if (!binding.min.isFocused && !binding.max.isFocused) {
-                                        binding.min.setText(leftPinIndex.toValue().toString().addDividers())
-                                        binding.max.setText(rightPinIndex.toValue().toString().addDividers())
+                                        binding.min.setText(
+                                            leftPinIndex.toValue().toString().addDividers()
+                                        )
+                                        binding.max.setText(
+                                            rightPinIndex.toValue().toString().addDividers()
+                                        )
                                     }
                                 } catch (e: Exception) {
                                     Log.e("test", "3", e)
@@ -134,6 +136,7 @@ class ShortFilterFragment(
                             }
 
                             override fun onTouchStarted(rangeBar: RangeBar?) = Unit
+
                             @SuppressLint("SetTextI18n")
                             override fun onTouchEnded(rangeBar: RangeBar?) {
                                 val filter = FilterObjectsRequest(
@@ -145,7 +148,8 @@ class ShortFilterFragment(
                                         App.setting.filterConfig = filter
 
                                         if (data.isNotEmpty()) {
-                                            binding.showButton.text = "Показать ${data.size} предложений"
+                                            binding.showButton.text =
+                                                "Показать ${data.size} предложений"
                                             binding.showButton.isEnabled = true
                                         } else {
                                             binding.showButton.text = "Ничего не найдено"
@@ -154,7 +158,7 @@ class ShortFilterFragment(
 
                                         binding.showButton.setOnClickListener {
                                             App.setting.houses = data
-                                            findNavController().navigate(R.id.action_shortFilterFragment_to_catalogViewModel)
+                                            navigate(CatalogFragment())
                                         }
                                     } else {
                                         binding.showButton.isEnabled = false

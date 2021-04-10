@@ -7,16 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.Gson
-import house.with.swimmingpool.App
-import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.NewsServiceImpl
 import house.with.swimmingpool.databinding.FragmentNewsSingleBinding
+import house.with.swimmingpool.ui.back
 import house.with.swimmingpool.ui.home.adapters.MediaAdapter
+import house.with.swimmingpool.ui.house.HouseFragment
 import house.with.swimmingpool.ui.house.adapters.ChildrenHouseAdapter
+import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.news.NewsTagAdapter
 
 class NewsSingleFragment : Fragment() {
@@ -38,7 +37,7 @@ class NewsSingleFragment : Fragment() {
         singleNewsBinding?.apply {
 
             houseBackIcon.setOnClickListener {
-                findNavController().popBackStack()
+                back()
             }
 
             NewsServiceImpl().getSingleNews(arguments?.getInt("id") ?: 0) { data, e ->
@@ -67,19 +66,19 @@ class NewsSingleFragment : Fragment() {
 
                     if (data.date != null && data.date.isNotEmpty()) {
                         dateTextView.text = data.date
-                       setDateVisibility(View.VISIBLE)
-                    }else{
+                        setDateVisibility(View.VISIBLE)
+                    } else {
                         setDateVisibility(View.GONE)
                     }
 
-                    if (data.reading_time != null && data.reading_time.isNotEmpty()){
+                    if (data.reading_time != null && data.reading_time.isNotEmpty()) {
                         timeTextView.text = data.reading_time
                         setTimeVisibility(View.VISIBLE)
-                    }else{
+                    } else {
                         setTimeVisibility(View.GONE)
                     }
 
-                     var vpAdapter = when {
+                    val vpAdapter = when {
                         data.photos != null && data.photos.isNotEmpty() -> {
                             Log.e("photos", data.photos.size.toString())
                             MediaAdapter(data.photos, listOf("-cYOlHknhBU"), requireContext())
@@ -94,7 +93,7 @@ class NewsSingleFragment : Fragment() {
                     }
                     vp.adapter = vpAdapter
 
-                    nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                    nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
                         if (housesImageContainerNews.bottom in (oldScrollY + 1) until scrollY) {
                             vp.adapter = vpAdapter
                             dotsIndicatorSingle.setViewPager2(vp)
@@ -109,7 +108,6 @@ class NewsSingleFragment : Fragment() {
                     }
 
                     if (data.introtext != null && data.introtext.isNotEmpty()) {
-
                         introText.text = Html.fromHtml(data.introtext)
                         introText.visibility = View.VISIBLE
                     } else {
@@ -132,8 +130,8 @@ class NewsSingleFragment : Fragment() {
                                     val home = data.linked_objects.firstOrNull { it.id == homeId }
                                     val bundle =
                                         Bundle().apply { putString("home", Gson().toJson(home)) }
-                                    findNavController().navigate(
-                                        R.id.action_newsSingleFragment_to_houseFragment,
+                                    navigate(
+                                        HouseFragment(),
                                         bundle
                                     )
                                 }

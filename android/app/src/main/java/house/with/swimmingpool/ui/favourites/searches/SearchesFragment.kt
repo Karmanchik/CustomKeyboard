@@ -6,16 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.gson.JsonObject
 import house.with.swimmingpool.App
-import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFavouritesContainerSearchesBinding
 import house.with.swimmingpool.models.Search
 import house.with.swimmingpool.models.request.FilterObjectsRequest
+import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.catalog.Label
 import house.with.swimmingpool.ui.favourites.adapters.FavoritesContainerSearchesAdapter
+import house.with.swimmingpool.ui.login.LoginActivity
+import house.with.swimmingpool.ui.navigate
+import house.with.swimmingpool.ui.startActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -64,9 +66,9 @@ class SearchesFragment : Fragment() {
     private var searchesBinding: FragmentFavouritesContainerSearchesBinding? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         searchesBinding = FragmentFavouritesContainerSearchesBinding.inflate(layoutInflater)
         return searchesBinding?.root
@@ -75,16 +77,17 @@ class SearchesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(!App.setting.isAuth){
-            findNavController().navigate(R.id.action_favouritesFragment_to_loginActivity)
+        if (!App.setting.isAuth) {
+            startActivity<LoginActivity>()
         }
 
         searchesBinding?.showCatalogButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_favouritesFragment_to_catalogViewModel)
+            navigate(CatalogFragment())
         }
 
         update()
     }
+
     private fun update() {
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -165,11 +168,16 @@ class SearchesFragment : Fragment() {
                 },
                 openSearch = {
                     App.setting.filterConfig = it.config
-                    findNavController().navigate(R.id.action_favouritesFragment_to_catalogViewModel)
+                    navigate(CatalogFragment())
                 },
                 push = {
-                    it.config?:return@FavoritesContainerSearchesAdapter
-                    RealtyServiceImpl().updateSearch(it.id.toString(), it.name ?: "", it.push?.not() ?: false, it.config) { _, _ ->
+                    it.config ?: return@FavoritesContainerSearchesAdapter
+                    RealtyServiceImpl().updateSearch(
+                        it.id.toString(),
+                        it.name ?: "",
+                        it.push?.not() ?: false,
+                        it.config
+                    ) { _, _ ->
                         update()
                     }
                 }

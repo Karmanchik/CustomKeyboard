@@ -2,25 +2,23 @@ package house.with.swimmingpool.ui.catalog
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import house.with.swimmingpool.App
-import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentCatalogBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.models.request.FilterObjectsRequest
+import house.with.swimmingpool.ui.back
+import house.with.swimmingpool.ui.filter.full.FullFilterFragment
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
+import house.with.swimmingpool.ui.house.HouseFragment
+import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.savefilter.SaveFilterFragment
 import house.with.swimmingpool.ui.toast
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 class CatalogFragment : Fragment() {
@@ -47,7 +45,7 @@ class CatalogFragment : Fragment() {
         }.take(50), requireContext()) { homeId ->
             val home = list.firstOrNull { it.id == homeId }
             val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-            findNavController().navigate(R.id.action_catalogViewModel_to_houseFragment, bundle)
+            navigate(HouseFragment(), bundle)
         }
         binding?.refresh?.isRefreshing = false
         binding?.conter?.text = "${list.size} предложений"
@@ -59,11 +57,12 @@ class CatalogFragment : Fragment() {
         binding?.refresh?.isRefreshing = true
         binding?.refresh?.setOnRefreshListener { binding?.refresh?.isRefreshing = false }
 
-        binding?.back?.setOnClickListener { findNavController().popBackStack() }
+        binding?.back?.setOnClickListener { back() }
 
         binding?.apply {
             sort.setOnClickListener {
-                sortMenu.visibility = if (sortMenu.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                sortMenu.visibility =
+                    if (sortMenu.visibility == View.VISIBLE) View.GONE else View.VISIBLE
             }
             closeSort.setOnClickListener { sortMenu.visibility = View.GONE }
 
@@ -106,7 +105,7 @@ class CatalogFragment : Fragment() {
         }
 
         binding?.toFilter?.setOnClickListener {
-            findNavController().navigate(R.id.action_catalogViewModel_to_fullFilterFragment)
+            navigate(FullFilterFragment())
         }
         showFilter()
 
@@ -114,7 +113,8 @@ class CatalogFragment : Fragment() {
             if (App.setting.filterConfig == null) {
                 toast("Установите фильтр для сохранения!")
             } else {
-                SaveFilterFragment.newInstance().show(parentFragmentManager, SaveFilterFragment::class.java.simpleName)
+                SaveFilterFragment.newInstance()
+                    .show(parentFragmentManager, SaveFilterFragment::class.java.simpleName)
             }
         }
     }

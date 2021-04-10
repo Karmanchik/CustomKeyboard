@@ -14,15 +14,17 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFilterFullBinding
 import house.with.swimmingpool.models.request.FilterObjectsRequest
+import house.with.swimmingpool.ui.back
+import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.filter.range.RangeDialogFragment
 import house.with.swimmingpool.ui.filter.variants.VariantsFragment
+import house.with.swimmingpool.ui.navigate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -104,10 +106,10 @@ class FullFilterFragment : Fragment() {
 
         binding.apply {
             closeIcon.setOnClickListener {
-                findNavController().popBackStack()
+                back()
             }
             showCatalogButton.setOnClickListener {
-                findNavController().navigate(R.id.action_fullFilterFragment_to_catalogViewModel)
+                navigate(CatalogFragment())
             }
 
             chip1.setOnClickListener { onChipClicked(it) }
@@ -240,9 +242,7 @@ class FullFilterFragment : Fragment() {
                 }
             }
 
-            sea.setOnClickListener {
-//                openRange()
-            }
+            sea.setOnClickListener {}
 
             square.setOnClickListener {
                 openRange(
@@ -404,7 +404,7 @@ class FullFilterFragment : Fragment() {
 
                 binding.showCatalogButton.setOnClickListener {
                     App.setting.houses = data
-                    findNavController().navigate(R.id.action_fullFilterFragment_to_catalogViewModel)
+                    navigate(CatalogFragment())
                 }
             } else {
                 binding.showCatalogButton.isEnabled = false

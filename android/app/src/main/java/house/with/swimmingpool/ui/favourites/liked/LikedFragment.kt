@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
-import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFavouritesContainerLikedBinding
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
+import house.with.swimmingpool.ui.house.HouseFragment
+import house.with.swimmingpool.ui.navigate
 
 class LikedFragment : Fragment() {
 
@@ -32,7 +33,7 @@ class LikedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.showCatalogButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_favouritesFragment_to_catalogViewModel)
+            navigate(CatalogFragment())
         }
 
         RealtyServiceImpl().getMyFavourites { data, e ->
@@ -49,10 +50,7 @@ class LikedFragment : Fragment() {
                 CatalogAdapter(list.map { it as Any }, requireContext()) { homeId ->
                     val home = list.firstOrNull { it.id == homeId }
                     val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                    findNavController().navigate(
-                        R.id.action_favouritesFragment_to_houseFragment,
-                        bundle
-                    )
+                    navigate(HouseFragment(), bundle)
                 }
         }
     }

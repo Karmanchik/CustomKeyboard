@@ -1,27 +1,26 @@
 package house.with.swimmingpool.ui.cabinet
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.transaction
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.App
-import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.FragmentCabinetBinding
 import house.with.swimmingpool.ui.cabinet.password.PasswordFragment
 import house.with.swimmingpool.ui.cabinet.profile.ProfileFragment
+import house.with.swimmingpool.ui.home.HomeFragment
 import house.with.swimmingpool.ui.login.LoginActivity
+import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.startActivity
 
 class CabinetFragment : Fragment(), ICabinetView {
 
     private var binding: FragmentCabinetBinding? = null
 
-    companion object{
+    companion object {
         var isPopBackLoginActivity = false //fix me
     }
 
@@ -42,13 +41,13 @@ class CabinetFragment : Fragment(), ICabinetView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!(App.setting.isAuth)) {
-            requireActivity().startActivity<LoginActivity> {  }
+            requireActivity().startActivity<LoginActivity> { }
         }
     }
 
     override fun onResume() {
         if (!(App.setting.isAuth) && isPopBackLoginActivity) {
-            findNavController().navigate(R.id.action_cabinetFragment_to_navigation_home)
+            navigate(HomeFragment())
             isPopBackLoginActivity = false
         }
         super.onResume()
@@ -78,7 +77,7 @@ class CabinetFragment : Fragment(), ICabinetView {
     }
 
     override fun onPasswordSet() {
-            binding?.tabs?.getTabAt(0)?.select()
+        binding?.tabs?.getTabAt(0)?.select()
     }
 
 }

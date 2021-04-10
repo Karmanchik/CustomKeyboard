@@ -9,10 +9,8 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.content.pm.PackageManager
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -21,11 +19,9 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.UpdateUserServiceImpl
 import house.with.swimmingpool.databinding.FragmentProfileBinding
 import house.with.swimmingpool.models.User
+import house.with.swimmingpool.ui.home.HomeFragment
+import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.popups.PopupActivity
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -40,12 +36,11 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         profileBinding = FragmentProfileBinding.inflate(layoutInflater)
-
         return profileBinding?.root
     }
 
@@ -56,17 +51,17 @@ class ProfileFragment : Fragment() {
 
             closeProfileButton.setOnClickListener {
                 startActivityForResult(
-                        Intent(requireContext(), PopupActivity::class.java).apply {
-                            putExtra(App.TYPE_OF_POPUP, App.SIGN_OUT)
-                        },
-                        SIGN_OUT_REQUEST
+                    Intent(requireContext(), PopupActivity::class.java).apply {
+                        putExtra(App.TYPE_OF_POPUP, App.SIGN_OUT)
+                    },
+                    SIGN_OUT_REQUEST
                 )
             }
 
             avatarImageView.setOnClickListener {
                 val pickPhoto = Intent(
-                        Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    Intent.ACTION_PICK,
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                 )
                 startActivityForResult(pickPhoto, GALLERY_REQUEST)
             }
@@ -106,16 +101,16 @@ class ProfileFragment : Fragment() {
     private fun updateUserInfo() {
         profileBinding?.apply {
             UpdateUserServiceImpl().updateUserInfo(
-                    User(
-                            avatar = App.setting.user?.avatar,
-                            context = App.setting.user?.context,
-                            email = emailEditText.value,
-                            id = App.setting.user?.id,
-                            surname = surnameEditText.value,
-                            login = App.setting.user?.login,
-                            name = nameEditText.value,
-                            phone = phoneEditText.text.toString()
-                    ),
+                User(
+                    avatar = App.setting.user?.avatar,
+                    context = App.setting.user?.context,
+                    email = emailEditText.value,
+                    id = App.setting.user?.id,
+                    surname = surnameEditText.value,
+                    login = App.setting.user?.login,
+                    name = nameEditText.value,
+                    phone = phoneEditText.text.toString()
+                ),
             ) { data, e ->
                 if (data != null && e == null) {
                     App.setting.user = data
@@ -148,28 +143,33 @@ class ProfileFragment : Fragment() {
         profileBinding?.apply {
             if (requestCode == GALLERY_REQUEST && resultCode == Activity.RESULT_OK) {
                 CropImage.activity(data?.data)
-                        .setAspectRatio(1, 1)
-                        .setCropShape(CropImageView.CropShape.OVAL)
-                        .start(requireContext(), this@ProfileFragment)
+                    .setAspectRatio(1, 1)
+                    .setCropShape(CropImageView.CropShape.OVAL)
+                    .start(requireContext(), this@ProfileFragment)
             }
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 val result = CropImage.getActivityResult(data).uri
                 if (resultCode == Activity.RESULT_OK) {
                     val bitmap = BitmapFactory
-                            .decodeStream(requireActivity()
-                                    .contentResolver
-                                    .openInputStream(result))
+                        .decodeStream(
+                            requireActivity()
+                                .contentResolver
+                                .openInputStream(result)
+                        )
 
                     Glide.with(this@ProfileFragment)
-                            .load(bitmap)
-                            .circleCrop()
-                            .placeholder(R.drawable.circle_placeholder)
-                            .error(R.drawable.circle_placeholder)
-                            .into(avatarImageView)
+                        .load(bitmap)
+                        .circleCrop()
+                        .placeholder(R.drawable.circle_placeholder)
+                        .error(R.drawable.circle_placeholder)
+                        .into(avatarImageView)
 
                     val bos = ByteArrayOutputStream()
 
-                    val f = File(requireContext().cacheDir, "IMG_${System.currentTimeMillis()}" + ".jpg")
+                    val f = File(
+                        requireContext().cacheDir,
+                        "IMG_${System.currentTimeMillis()}" + ".jpg"
+                    )
                     val fos = FileOutputStream(f)
 
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)//.scaled.compressed
@@ -195,7 +195,7 @@ class ProfileFragment : Fragment() {
             if (requestCode == SIGN_OUT_REQUEST) {
                 if (data?.getBooleanExtra(App.IS_SIGN_OUT, false) == true) {
                     App.setting.token = null
-                    findNavController().navigate(R.id.action_cabinetFragment_to_navigation_home)
+                    navigate(HomeFragment())
                 }
             }
         }

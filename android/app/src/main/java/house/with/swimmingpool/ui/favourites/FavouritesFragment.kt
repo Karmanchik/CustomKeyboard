@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.transaction
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.ui.favourites.collectionslist.CollectionsListFragment
 import house.with.swimmingpool.ui.favourites.liked.LikedFragment
 import house.with.swimmingpool.ui.favourites.searches.SearchesFragment
+import house.with.swimmingpool.ui.home.HomeFragment
+import house.with.swimmingpool.ui.navigate
 
 class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
 
-    companion object{
+    companion object {
         var isPopBacLoginActivity = false
         private var lastTabPosition = 0
     }
@@ -25,7 +26,7 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
         val tabs = view.findViewById<TabLayout>(R.id.tabs)
 
         if (App.setting.user?.context != "agent") {
-//            tabs.removeTabAt(2)
+            tabs.removeTabAt(2)
         }
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -53,8 +54,8 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
     }
 
     override fun onResume() {
-        if(isPopBacLoginActivity && !(App.setting.isAuth)){
-            findNavController().navigate(R.id.action_favouritesFragment_to_navigation_home)
+        if (isPopBacLoginActivity && !(App.setting.isAuth)) {
+            navigate(HomeFragment())
         }
 
         val tabs = view?.findViewById<TabLayout>(R.id.tabs)
