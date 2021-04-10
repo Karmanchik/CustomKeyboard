@@ -17,6 +17,10 @@ class Setting(ctx: Context) {
         get() = pref.getString(Keys.TOKEN, null)
         set(value) = pref.edit { putString(Keys.TOKEN, value) }
 
+    var registerImageLink: String?
+        get() = pref.getString("REGISTER_IMAGE", null)
+        set(value) = pref.edit { putString("REGISTER_IMAGE", value) }
+
     var user: User?
         get() = Gson().fromJson(pref.getString(Keys.USER, null), User::class.java)
         set(value) = pref.edit { putString(Keys.USER, Gson().toJson(value)) }
