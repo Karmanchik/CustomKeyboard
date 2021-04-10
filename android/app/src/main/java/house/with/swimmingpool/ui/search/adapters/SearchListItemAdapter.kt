@@ -2,8 +2,10 @@ package house.with.swimmingpool.ui.search.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +14,7 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemOfSearchesListBinding
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.ui.home.HomeFragment
 import house.with.swimmingpool.ui.search.ISearchView
 
 class SearchListItemAdapter(
@@ -43,7 +46,8 @@ class SearchListItemAdapter(
         fun bind(position: Int) {
             itemView.setOnClickListener {
                 App.setting.tmpObj = items[position]
-                parentView.closeActivity()
+                App.setting.isSearchActivityOpen = true
+                parentView.closeActivityByObject()
             }
             view.apply {
                 items[position].apply {

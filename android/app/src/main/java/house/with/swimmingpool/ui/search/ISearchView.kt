@@ -3,7 +3,7 @@ package house.with.swimmingpool.ui.search
 interface ISearchView {
     fun showByAdvantagesTag(text: String, tag: String)
 
-    fun closeActivity()
+    fun closeActivityByObject()
 
     fun showAdvantages()
 }

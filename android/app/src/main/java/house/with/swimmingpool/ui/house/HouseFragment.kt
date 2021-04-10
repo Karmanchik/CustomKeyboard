@@ -35,6 +35,7 @@ import house.with.swimmingpool.ui.house.adapters.*
 import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
 import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.popups.PopupActivity
+import house.with.swimmingpool.ui.search.SearchActivity
 import house.with.swimmingpool.ui.toast
 
 class HouseFragment : Fragment(), ISingleHouseView {
@@ -60,7 +61,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
         super.onViewCreated(view, savedInstanceState)
 
         houseObjectBinding?.houseBackIcon?.setOnClickListener {
-            back()
+
+                back()
+
         }
 
         try {
@@ -466,6 +469,10 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
     override fun onDestroy() {
         houseObjectBinding = null
+        if(App.setting.isSearchActivityOpen) {
+            startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
+            App.setting.isSearchActivityOpen = false
+        }
         super.onDestroy()
     }
 

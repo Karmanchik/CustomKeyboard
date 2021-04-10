@@ -42,6 +42,10 @@ class Setting(ctx: Context) {
             }
         }
 
+    var isSearchActivityOpen: Boolean
+        get() = pref.getBoolean("ACTIVITY_SEARCH", false)
+        set(value) = pref.edit { putBoolean("ACTIVITY_SEARCH", value) }
+
     var filterConfig: FilterObjectsRequest?
         get() = Gson().fromJson(pref.getString(Keys.FILTER, null), FilterObjectsRequest::class.java)
         set(value) = pref.edit { putString(Keys.FILTER, Gson().toJson(value)) }

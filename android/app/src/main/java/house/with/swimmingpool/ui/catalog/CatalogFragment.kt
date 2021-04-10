@@ -1,6 +1,7 @@
 package house.with.swimmingpool.ui.catalog
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
 import house.with.swimmingpool.ui.house.HouseFragment
 import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.savefilter.SaveFilterFragment
+import house.with.swimmingpool.ui.search.SearchActivity
 import house.with.swimmingpool.ui.toast
 
 
@@ -130,6 +132,10 @@ class CatalogFragment : Fragment() {
 
     override fun onDestroy() {
         binding = null
+        if(App.setting.isSearchActivityOpen) {
+            startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
+            App.setting.isSearchActivityOpen = false
+        }
         super.onDestroy()
     }
 

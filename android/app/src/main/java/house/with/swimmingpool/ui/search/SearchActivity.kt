@@ -150,7 +150,12 @@ class SearchActivity : AppCompatActivity(), ISearchView {
 
 
 
-    override fun closeActivity() {
+//    override fun closeActivity() {
+////        setResult(RESULT_OK, Intent().putExtra("action", HomeFragment.NAVIGATE_TO_OBJECT))
+//        finish()
+//    }
+
+    override fun closeActivityByObject() {
         setResult(RESULT_OK, Intent().putExtra("action", HomeFragment.NAVIGATE_TO_OBJECT))
         finish()
     }
@@ -187,6 +192,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                     }
 
                     searchBinding.showCatalogButton.setOnClickListener {
+                        App.setting.isSearchActivityOpen = true
                         setResult(
                                 RESULT_OK,
                                 Intent().putExtra("action", HomeFragment.NAVIGATE_TO_CATALOG)
@@ -197,6 +203,5 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                 }
             }
         }
-
     }
 }
