@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
@@ -48,6 +49,10 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         profileBinding?.apply {
+
+//            Log.e("testInputType", testInputType.inputType.toString())
+
+            emailEditText.getField()?.inputType = 129
 
             closeProfileButton.setOnClickListener {
                 startActivityForResult(
