@@ -61,9 +61,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
         super.onViewCreated(view, savedInstanceState)
 
         houseObjectBinding?.houseBackIcon?.setOnClickListener {
-
                 back()
-
         }
 
         try {

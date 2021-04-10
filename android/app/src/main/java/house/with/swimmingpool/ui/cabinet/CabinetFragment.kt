@@ -1,6 +1,7 @@
 package house.with.swimmingpool.ui.cabinet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.transaction
 import com.google.android.material.tabs.TabLayout
 import house.with.swimmingpool.App
 import house.with.swimmingpool.databinding.FragmentCabinetBinding
+import house.with.swimmingpool.ui.back
 import house.with.swimmingpool.ui.cabinet.password.PasswordFragment
 import house.with.swimmingpool.ui.cabinet.profile.ProfileFragment
 import house.with.swimmingpool.ui.home.HomeFragment
@@ -40,15 +42,19 @@ class CabinetFragment : Fragment(), ICabinetView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e("testIsLogin", App.setting.isAuth.toString())
         if (!(App.setting.isAuth)) {
             requireActivity().startActivity<LoginActivity> { }
+            childFragmentManager.fragments.remove(this)
         }
     }
 
     override fun onResume() {
+        Log.e("testIsLogin", isPopBackLoginActivity.toString())
         if (!(App.setting.isAuth) && isPopBackLoginActivity) {
             navigate(HomeFragment())
             isPopBackLoginActivity = false
+            childFragmentManager.fragments.remove(this)
         }
         super.onResume()
     }
