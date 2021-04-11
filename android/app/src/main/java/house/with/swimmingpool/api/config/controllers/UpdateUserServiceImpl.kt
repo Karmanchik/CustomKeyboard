@@ -45,24 +45,24 @@ class UpdateUserServiceImpl {
 
     fun updateAvatar(
             file: File,
-            onLoaded: (data: UploadAvatarRequest?, e: Throwable?) -> Unit,
+            onLoaded: (data: User?, e: Throwable?) -> Unit,
     ) {
         val filePart = MultipartBody.Part
                 .createFormData("file", file.name, RequestBody.create("image/*".toMediaTypeOrNull(), file))
 
         getRetrofit().create<IUpdateUser>()
                 .updateAvatar(filePart)
-        .enqueue(object : Callback<UploadAvatarRequest> {
-            override fun onResponse(call: Call<UploadAvatarRequest>, response: Response<UploadAvatarRequest>) {
-                onLoaded.invoke(response.body(), null)
-            }
+                .enqueue(object : Callback<Answer<User>> {
+                    override fun onResponse(call: Call<Answer<User>>, response: Response<Answer<User>>) {
+                        onLoaded.invoke(response.body()?.data, null)
+                    }
 
-            override fun onFailure(call: Call<UploadAvatarRequest>, t: Throwable) {
-                onLoaded.invoke(null, t)
-                Log.e("updateAvatar", "error", t)
-            }
+                    override fun onFailure(call: Call<Answer<User>>, t: Throwable) {
+                        onLoaded.invoke(null, t)
+                        Log.e("updateAvatar", "error", t)
+                    }
 
-        })
+                })
     }
 
     fun getUser(onLoaded: (data: User?, e: Throwable?) -> Unit) {

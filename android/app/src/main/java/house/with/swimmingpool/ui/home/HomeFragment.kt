@@ -108,9 +108,9 @@ class HomeFragment : Fragment() {
             val storiesInfo = StoriesServiceImpl().loadStories()
             val headerInfo = BannersServiceImpl().loadHeader()
             val ads = BannersServiceImpl().loadBanners()
-
+            Log.e("testingCorutinsMain", "start")
             launch(Dispatchers.Main) {
-
+                Log.e("testingCorutinsMain", "second")
                 if (videosInfo.second != null
                         && newsInfo.second != null
                         && storiesInfo.second != null

@@ -42,6 +42,14 @@ class VideosServiceImpl : IVideosService {
         }
     }
 
+    suspend fun loadSingleVideos(id: Int): Pair<SingleVideoData?, Throwable?> {
+        return try {
+            Pair(getRetrofit().create<IVideos>().getSingleVideo(id).execute().body()?.data, null)
+        } catch (e: Exception) {
+            Pair(null, e)
+        }
+    }
+
     fun getSingleVideo(id: Int, onLoaded: (data: SingleVideoData?, e: Throwable?) -> Unit) {
         getRetrofit().create(IVideos::class.java)
                 .getSingleVideo(id)
@@ -61,5 +69,6 @@ class VideosServiceImpl : IVideosService {
                     }
                 })
     }
+
 
 }
