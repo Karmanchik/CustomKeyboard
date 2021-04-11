@@ -1,7 +1,7 @@
 package house.with.swimmingpool.models
 
 data class User(
-        var avatar: String?,
+        val avatar: String?,
         val context: String?,
         val email: String?,
         val id: Int?,

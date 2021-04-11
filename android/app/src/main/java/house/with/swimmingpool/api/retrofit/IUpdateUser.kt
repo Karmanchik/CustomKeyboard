@@ -22,10 +22,17 @@ interface IUpdateUser {
     @Multipart
     @POST("file")
     fun updateAvatar(
-            @Part("file") file: RequestBody?,
-            @Part("Content-Type") type: RequestBody?,
+            @Part file: MultipartBody.Part?,
+//            @Part("Content-Type") type: RequestBody?,
             @Header("Authorization") token: String? = App.setting.apiToken,
             @Header("phone") phone: String? = App.setting.phone,
             @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ):Call<UploadAvatarRequest>
+
+    @GET("user")
+    fun getUserInfo(
+            @Header("Authorization") token: String? = App.setting.apiToken,
+            @Header("phone") phone: String? = App.setting.phone,
+            @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
+    ): Call<UpdatedUser>
 }

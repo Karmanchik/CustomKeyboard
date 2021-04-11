@@ -19,6 +19,7 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.UpdateUserServiceImpl
 import house.with.swimmingpool.databinding.FragmentProfileBinding
+import house.with.swimmingpool.models.UpdatedUser
 import house.with.swimmingpool.models.User
 import house.with.swimmingpool.ui.home.HomeFragment
 import house.with.swimmingpool.ui.navigate
@@ -51,6 +52,11 @@ class ProfileFragment : Fragment() {
         profileBinding?.apply {
 
 //            Log.e("testInputType", testInputType.inputType.toString())
+
+            UpdateUserServiceImpl().getUser(){data, e ->
+                App.setting.user = data
+                loadUser(data)
+            }
 
             emailEditText.getField()?.inputType = 129
 
@@ -98,8 +104,6 @@ class ProfileFragment : Fragment() {
                     Log.e("onFocusChanged", "phoneTest")
                 }
             }
-
-            loadUser()
         }
     }
 
@@ -119,25 +123,32 @@ class ProfileFragment : Fragment() {
             ) { data, e ->
                 if (data != null && e == null) {
                     App.setting.user = data
-                    loadUser()
+                    loadUser(data)
                 }
             }
         }
     }
 
     override fun onResume() {
-        loadUser()
+        loadUser(App.setting.user)
         super.onResume()
     }
 
-    private fun loadUser() {
+    private fun loadUser(user: User?) {
         profileBinding?.apply {
-            App.setting.user?.apply {
+            user?.apply {
                 nameEditText.value = name
                 surnameEditText.value = surname
                 emailEditText.value = email
                 phoneEditText.setText(phone)
 
+                Glide.with(this@ProfileFragment)
+                        .load(avatar)
+                        .circleCrop()
+                        .dontAnimate()
+                        .placeholder(R.drawable.circle_placeholder)
+                        .error(R.drawable.circle_placeholder)
+                        .into(avatarImageView)
             }
         }
     }
@@ -162,12 +173,12 @@ class ProfileFragment : Fragment() {
                                 .openInputStream(result)
                         )
 
-                    Glide.with(this@ProfileFragment)
-                        .load(bitmap)
-                        .circleCrop()
-                        .placeholder(R.drawable.circle_placeholder)
-                        .error(R.drawable.circle_placeholder)
-                        .into(avatarImageView)
+//                    Glide.with(this@ProfileFragment)
+//                        .load(bitmap)
+//                        .circleCrop()
+//                        .placeholder(R.drawable.circle_placeholder)
+//                        .error(R.drawable.circle_placeholder)
+//                        .into(avatarImageView)
 
                     val bos = ByteArrayOutputStream()
 
@@ -184,17 +195,11 @@ class ProfileFragment : Fragment() {
 
                     UpdateUserServiceImpl().updateAvatar(f) { data, e ->
                         Log.e("testingUploadImage", "$data $e")
-                        data?.apply {
-                            App.setting.user?.avatar = this.data
+                        UpdateUserServiceImpl().getUser(){data, e ->
+                            App.setting.user = data
+                            loadUser(data)
                         }
                     }
-
-//                    Glide.with(this@ProfileFragment)
-//                            .load(result.uri)
-//                            .circleCrop()
-//                            .placeholder(R.drawable.home_banner)
-//                            .error(R.drawable.error_placeholder_midle)
-//                            .into(avatarImageView)
                 }
             }
             if (requestCode == SIGN_OUT_REQUEST) {
