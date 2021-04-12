@@ -90,7 +90,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     videoLayout.visibility = View.GONE
                     textViewAdvantages.visibility = View.GONE
                     textViewSimilarObject.visibility = View.GONE
-                    textViewMoneyInMonth.visibility = View.INVISIBLE
+                    textViewPricePerMeter.visibility = View.INVISIBLE
                     textViewLocationMap.visibility = View.GONE
                     mapLayout.visibility = View.GONE
                     housesListText.visibility = View.GONE
@@ -189,6 +189,13 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 }
 
                 price.text = singleHouseObject.price + " руб."
+
+                if (singleHouseObject.price_of_one_meter !== null) {
+                    textViewPricePerMeter.text = singleHouseObject.price_of_one_meter + " руб/м²"
+                } else {
+                    textViewPricePerMeter.visibility = View.INVISIBLE
+                }
+
                 if (singleHouseObject.priceHike != 0 && singleHouseObject.priceHike != null) {
                     discount.text = "+${singleHouseObject.priceHike}%"
                 } else {
