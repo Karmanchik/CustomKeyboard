@@ -11,11 +11,11 @@ import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.catalog.Label
 
 class FavoritesContainerSearchesAdapter(
-    var items: List<Search>,
-    val openSearch: (Search) -> Unit,
-    val getLabels: (FilterObjectsRequest) -> List<Label>,
-    val delete: (Search) -> Unit,
-    val push: (Search) -> Unit
+        var items: List<Search>,
+        val openSearch: (Search) -> Unit,
+        val getLabels: (FilterObjectsRequest) -> List<Label>,
+        val delete: (Search) -> Unit,
+        val push: (Search) -> Unit,
 ) : RecyclerView.Adapter<FavoritesContainerSearchesAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -24,7 +24,7 @@ class FavoritesContainerSearchesAdapter(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
-        holder.bind(position)
+            holder.bind(position)
 
     override fun getItemCount() = items.size
 
@@ -32,13 +32,25 @@ class FavoritesContainerSearchesAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
+
+            val startPrice = items[position].config?.price_all_from?.addDividers()
+            val endPrice = items[position].config?.price_all_to?.addDividers()
+
             itemView.setOnClickListener {
                 openSearch.invoke(items[position])
             }
-            view.price.text = "от ${items[position].config?.price_all_from?.addDividers()} до ${items[position].config?.price_all_to?.addDividers()} руб."
+
+            view.textView10.text = items[position].name?: ""
+
+            view.price.text = when{
+                startPrice != null && endPrice != null -> "от $startPrice до $endPrice руб."
+                startPrice != null -> "от $startPrice руб."
+                endPrice != null -> "до $endPrice руб."
+                else -> "от до"
+            }
 
             view.TagRV.adapter = SearchTagAdapter(itemView.context,
-                items[position].config?.let { getLabels(it) }?.map { it.title } ?: listOf())
+                    items[position].config?.let { getLabels(it) }?.map { it.title } ?: listOf())
             view.delete.setOnClickListener { delete.invoke(items[position]) }
 
             val item = items[position]
@@ -49,11 +61,11 @@ class FavoritesContainerSearchesAdapter(
 
     private fun String.addDividers(): String {
         return reversed()
-            .toList()
-            .chunked(3)
-            .map { it.joinToString("") }
-            .joinToString(" ")
-            .reversed()
+                .toList()
+                .chunked(3)
+                .map { it.joinToString("") }
+                .joinToString(" ")
+                .reversed()
     }
 
 }

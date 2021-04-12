@@ -15,6 +15,7 @@ import house.with.swimmingpool.databinding.FragmentCatalogBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.models.request.FilterObjectsRequest
 import house.with.swimmingpool.ui.back
+import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.filter.full.FullFilterFragment
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
 import house.with.swimmingpool.ui.house.HouseFragment
@@ -112,11 +113,15 @@ class CatalogFragment : Fragment() {
         showFilter()
 
         binding?.addFilter?.setOnClickListener {
-            if (App.setting.filterConfig == null) {
-                toast("Установите фильтр для сохранения!")
-            } else {
-                SaveFilterFragment.newInstance()
-                        .show(parentFragmentManager, SaveFilterFragment::class.java.simpleName)
+            if(App.setting.isAuth) {
+                if (App.setting.filterConfig == null) {
+                    toast("Установите фильтр для сохранения!")
+                } else {
+                    SaveFilterFragment.newInstance()
+                            .show(parentFragmentManager, SaveFilterFragment::class.java.simpleName)
+                }
+            }else{
+                navigate(CabinetFragment())
             }
         }
     }
