@@ -93,7 +93,7 @@ class PasswordFragment(
                     checkPassword.clearError()
                     return false
                 }
-            }else{
+            } else {
                 oldPassword.setError()
                 return false
             }
@@ -110,12 +110,26 @@ class PasswordFragment(
     }
 
     @SuppressLint("ResourceAsColor", "SetTextI18n")
-    private fun clearErrorPassword(){
+    private fun clearErrorPassword() {
         passwordBinding?.errorPasswordText?.apply {
             text = "Введите от 6 до 10 символов (кроме */-.\\”% )"
             setTextColor(Color.parseColor("#788598"))
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        passwordBinding?.apply {
+            oldPassword.value = ""
+            newPassword.value = ""
+            checkPassword.value = ""
+
+            oldPassword.clearError()
+            newPassword.clearError()
+            checkPassword.clearError()
+            clearErrorPassword()
+        }
     }
 
     override fun onDestroy() {

@@ -8,7 +8,7 @@ import house.with.swimmingpool.ui.favourites.collectionslist.CollectionsListFrag
 import house.with.swimmingpool.ui.favourites.liked.LikedFragment
 import house.with.swimmingpool.ui.favourites.searches.SearchesFragment
 
-class MainFavoritesAdapter(
+class FavoritesMainViewPagerAdapter(
         ctx: FragmentActivity,
 ) : FragmentStateAdapter(ctx) {
 

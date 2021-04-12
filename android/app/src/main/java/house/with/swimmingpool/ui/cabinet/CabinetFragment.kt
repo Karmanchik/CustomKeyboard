@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.transaction
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import house.with.swimmingpool.App
 import house.with.swimmingpool.databinding.FragmentCabinetBinding
 import house.with.swimmingpool.ui.back
+import house.with.swimmingpool.ui.cabinet.adapters.CabinetMainViewPagerAdapter
 import house.with.swimmingpool.ui.cabinet.password.PasswordFragment
 import house.with.swimmingpool.ui.cabinet.profile.ProfileFragment
 import house.with.swimmingpool.ui.home.HomeFragment
@@ -63,22 +65,34 @@ class CabinetFragment : Fragment(), ICabinetView {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
-            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    val fragment = when (tab.position) {
-                        0 -> ProfileFragment()
-                        else -> PasswordFragment(this@CabinetFragment)
-                    }
-                    childFragmentManager.transaction {
-                        replace(frameCabinet.id, fragment)
-                    }
+
+            cabinetViewPager.adapter = CabinetMainViewPagerAdapter(
+                    requireActivity(), this@CabinetFragment)
+
+            TabLayoutMediator(tabs, cabinetViewPager) { tab, position ->
+                tab.text = when(position){
+                    0 -> "ПОИСКИ"
+                    1 -> "ИЗБРАННОЕ"
+                    else -> "ПОДБОРКИ"
                 }
+            }.attach()
 
-                override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
-
-                override fun onTabReselected(tab: TabLayout.Tab?) = Unit
-
-            })
+//            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+//                override fun onTabSelected(tab: TabLayout.Tab) {
+//                    val fragment = when (tab.position) {
+//                        0 -> ProfileFragment()
+//                        else -> PasswordFragment(this@CabinetFragment)
+//                    }
+//                    childFragmentManager.transaction {
+//                        replace(frameCabinet.id, fragment)
+//                    }
+//                }
+//
+//                override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+//
+//                override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+//
+//            })
         }
     }
 
