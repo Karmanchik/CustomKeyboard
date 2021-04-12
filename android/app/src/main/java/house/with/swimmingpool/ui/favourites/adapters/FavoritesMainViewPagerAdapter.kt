@@ -12,7 +12,7 @@ class FavoritesMainViewPagerAdapter(
         ctx: FragmentActivity,
 ) : FragmentStateAdapter(ctx) {
 
-    override fun getItemCount(): Int = if (App.setting.user?.context == "agent") 3 else 3
+    override fun getItemCount(): Int = if (App.setting.user?.context == "agent") 3 else 2
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {

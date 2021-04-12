@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +28,6 @@ class StoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -115,5 +115,4 @@ class StoryActivity : AppCompatActivity() {
             }
         }
     }
-
 }

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="96dp"
         android:background="@color/white"
-        android:paddingTop="44dp"
+        android:paddingTop="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -147,6 +147,7 @@
         android:paddingEnd="10dp"
         android:paddingBottom="15dp"
         android:visibility="gone"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -170,7 +171,7 @@
                 android:id="@+id/closeSort"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                app:srcCompat="@drawable/ic_close_mono" />
+                app:srcCompat="@drawable/ic_gray_cross" />
         </LinearLayout>
 
         <LinearLayout
