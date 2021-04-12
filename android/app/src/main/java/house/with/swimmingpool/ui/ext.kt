@@ -11,6 +11,7 @@ import android.view.MotionEvent
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.AnimRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -76,15 +77,19 @@ fun ImageView.load(url: String?, @DrawableRes placeholder: Int, @DrawableRes err
         .into(this)
 }
 
-fun EditText.setMaxLength(maxLength: Int){
+fun EditText.setMaxLength(maxLength: Int) {
 
     filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
 
 }
 
-fun Fragment.navigate(fragment: Fragment, bundle: Bundle? = null) {
+fun Fragment.navigate(
+    fragment: Fragment, bundle: Bundle? = null,
+    @AnimRes inAnim: Int? = null,
+    @AnimRes outAnim: Int? = null
+) {
     try {
-        (requireActivity() as MainActivity).showFragment(fragment, bundle)
+        (requireActivity() as MainActivity).showFragment(fragment, bundle, inAnim, outAnim)
     } catch (e: Exception) {
         Log.e("navigation", "error", e)
     }

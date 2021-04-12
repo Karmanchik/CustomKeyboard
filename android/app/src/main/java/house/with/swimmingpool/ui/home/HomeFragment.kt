@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import house.with.swimmingpool.App
+import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.*
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.HouseCatalogData
@@ -227,7 +228,7 @@ class HomeFragment : Fragment() {
                                 val bundle = Bundle().apply {
                                     putInt("id", it)
                                 }
-                                navigate(VideoFragment(), bundle)
+                                navigate(VideoFragment(), bundle, R.anim.slide_in_left, R.anim.slide_out_right)
                             }
                     homeBinding?.videosContainer?.visibility = View.VISIBLE
                 } else {

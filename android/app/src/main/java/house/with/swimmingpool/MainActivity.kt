@@ -3,6 +3,7 @@ package house.with.swimmingpool
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
+import androidx.annotation.AnimRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -20,11 +21,19 @@ class MainActivity : AppCompatActivity() {
     private val profileFragment by lazy { CabinetFragment() }
 
 
-    fun showFragment(fragment: Fragment, bundle: Bundle? = null) {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.mainFrame, fragment.apply { arguments = bundle  })
-            .addToBackStack(null)
-            .commit()
+    fun showFragment(
+        fragment: Fragment,
+        bundle: Bundle? = null,
+        @AnimRes inAnim: Int? = null,
+        @AnimRes outAnim: Int? = null
+    ) {
+        val transaction = supportFragmentManager.beginTransaction()
+        if (inAnim != null && outAnim != null) {
+            transaction.setCustomAnimations(inAnim, outAnim)
+        }
+        transaction.add(R.id.mainFrame, fragment.apply { arguments = bundle })
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     fun back() {
