@@ -119,6 +119,7 @@ class CatalogImageAdapter(
                     .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
                     .error(R.drawable.error_placeholder_midle)
                     .placeholder(R.drawable.placeholder)
+                    .dontAnimate()
                     .into(view.imageViewVideoPreloader)
 
             view.youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {

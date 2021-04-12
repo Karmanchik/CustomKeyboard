@@ -228,7 +228,7 @@ class HomeFragment : Fragment() {
                                 val bundle = Bundle().apply {
                                     putInt("id", it)
                                 }
-                                navigate(VideoFragment(), bundle, R.anim.slide_in_left, R.anim.slide_out_right)
+                                navigate(VideoFragment(), bundle, inAnim = R.anim.slide_in_left, outAnim = R.anim.slide_out_right)
                             }
                     homeBinding?.videosContainer?.visibility = View.VISIBLE
                 } else {

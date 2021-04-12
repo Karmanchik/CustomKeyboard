@@ -33,6 +33,7 @@ class HeaderAdapter(
                                 .load(items[position].banner)
                                 .error(R.drawable.error_placeholder_big)
                                 .placeholder(R.drawable.gradient_placeholder_big)
+                                .dontAnimate()
                                 .into(imageView3)
                     }
                     textView17.text = name

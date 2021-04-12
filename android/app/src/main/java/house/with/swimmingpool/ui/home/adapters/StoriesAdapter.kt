@@ -12,7 +12,7 @@ import house.with.swimmingpool.ui.startActivity
 import house.with.swimmingpool.ui.story.StoryActivity
 
 class StoriesAdapter(
-        var items: List<StoriesData>
+        var items: List<StoriesData>,
 ) : RecyclerView.Adapter<StoriesAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -21,7 +21,7 @@ class StoriesAdapter(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
-        holder.bind(items[position])
+            holder.bind(items[position])
 
     override fun getItemCount() = items.size
 
@@ -29,10 +29,11 @@ class StoriesAdapter(
 
         fun bind(item: StoriesData) {
             Glide.with(itemView.context)
-                .load(item.icon)
-                .error(R.drawable.error_placeholder_big)
-                .placeholder(R.drawable.gradient_placeholder_midle)
-                .into(view.imageViewStories)
+                    .load(item.icon)
+                    .error(R.drawable.error_placeholder_big)
+                    .placeholder(R.drawable.gradient_placeholder_midle)
+                    .dontAnimate()
+                    .into(view.imageViewStories)
 
             view.textViewTitle.text = item.title
             itemView.setOnClickListener {

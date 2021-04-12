@@ -18,8 +18,8 @@ class VideosAdapter(
         private val isFull: Boolean = false,
         val ctx: Context,
         val items: List<Any?>,
-        var onItemSelected: (Int) -> Unit
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        var onItemSelected: (Int) -> Unit,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val obj = 1
@@ -45,33 +45,35 @@ class VideosAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
         is VideosAdapter.Holder -> holder.bind(items[position] as VideosData)
         is VideosAdapter.BigAd -> holder.bind()
-        else -> {}
+        else -> {
+        }
     }
 
-    override fun getItemCount() = if(isFull) items.size else if(items.size > 2) 2 else items.size
+    override fun getItemCount() = if (isFull) items.size else if (items.size > 2) 2 else items.size
 
-    inner class Holder(private val view: ItemVideoBinding): RecyclerView.ViewHolder(view.root) {
+    inner class Holder(private val view: ItemVideoBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun bind(item: VideosData) {
             itemView.setOnClickListener { onItemSelected.invoke(item.id) }
             Glide.with(ctx)
-                .load(item.icon)
-                .error(R.drawable.error_placeholder_midle)
-                .placeholder(R.drawable.gradient_placeholder_small)
-                .into(view.imageViewVideo)
+                    .load(item.icon)
+                    .error(R.drawable.error_placeholder_midle)
+                    .placeholder(R.drawable.gradient_placeholder_small)
+                    .dontAnimate()
+                    .into(view.imageViewVideo)
 
             view.textViewTitle.text = item.title
         }
     }
 
-    inner class BigAd(private val view: ItemBigBannerBinding): RecyclerView.ViewHolder(view.root) {
+    inner class BigAd(private val view: ItemBigBannerBinding) : RecyclerView.ViewHolder(view.root) {
         fun bind() {
             BannersServiceImpl().getBanners { data, e ->
                 Glide.with(itemView.context)
                         .load(data?.get(0)?.bigBanner)
                         .error(R.drawable.placeholder)
-                        .dontAnimate()
                         .placeholder(R.drawable.placeholder)
+                        .dontAnimate()
                         .into(view.bigAdBanner)
             }
         }

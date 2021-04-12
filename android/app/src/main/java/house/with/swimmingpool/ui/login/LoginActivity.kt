@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity(), ILoginView {
                 .load(registerMainImageLink)
                 .placeholder(R.drawable.registration_top_image)
                 .error(R.drawable.registration_top_image)
+                .dontAnimate()
                 .into(loginBinging.registerMainImageView)
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE )

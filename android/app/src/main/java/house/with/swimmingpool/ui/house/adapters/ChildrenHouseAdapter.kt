@@ -12,8 +12,8 @@ import house.with.swimmingpool.databinding.ItemHouseGridBinding
 import house.with.swimmingpool.models.HouseCatalogData
 
 class ChildrenHouseAdapter(
-    var items: List<HouseCatalogData>,
-    var onItemSelected: (Int) -> Unit
+        var items: List<HouseCatalogData>,
+        var onItemSelected: (Int) -> Unit,
 ) : RecyclerView.Adapter<ChildrenHouseAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -22,36 +22,37 @@ class ChildrenHouseAdapter(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
-        holder.bind(position)
+            holder.bind(position)
 
     override fun getItemCount() = if (items.size > 4) 4 else items.size
 
     inner class Holder(private val view: ItemHouseGridBinding) :
-        RecyclerView.ViewHolder(view.root) {
+            RecyclerView.ViewHolder(view.root) {
 
         @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
             itemView.setOnClickListener { onItemSelected.invoke(items[position].id) }
 
             view.apply {
-
+//                TODO("refactor glide below")
                 Glide.with(itemView.context)
-                    .load(
-                        when {
-                            items[position].icon != "" -> {
-                                items[position].icon
-                            }
-                            items[position].photos?.get(0) != "" -> {
-                                items[position].photos?.get(0)
-                            }
-                            else -> {
-                                ""
-                            }
-                        }
-                    )
-                    .error(R.drawable.error_placeholder_midle)
-                    .placeholder(R.drawable.placeholder)
-                    .into(imageViewSeen)
+                        .load(
+                                when {
+                                    items[position].icon != "" -> {
+                                        items[position].icon
+                                    }
+                                    items[position].photos?.get(0) != "" -> {
+                                        items[position].photos?.get(0)
+                                    }
+                                    else -> {
+                                        ""
+                                    }
+                                }
+                        )
+                        .error(R.drawable.error_placeholder_midle)
+                        .placeholder(R.drawable.placeholder)
+                        .dontAnimate()
+                        .into(imageViewSeen)
                 items[position].apply {
                     textViewTitle.text = title
 //                    textViewLocation.text = location

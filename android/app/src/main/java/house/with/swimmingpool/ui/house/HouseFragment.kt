@@ -47,9 +47,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
     private var houseExampleData: HouseExampleData? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View? {
         houseObjectBinding = FragmentHouseBinding.inflate(layoutInflater)
 
@@ -61,18 +61,18 @@ class HouseFragment : Fragment(), ISingleHouseView {
         super.onViewCreated(view, savedInstanceState)
 
         houseObjectBinding?.houseBackIcon?.setOnClickListener {
-                back()
+            back()
         }
 
         try {
             val singleHouseObject =
-                Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)
+                    Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)
 
             if (singleHouseObject != null) {
                 showHome(singleHouseObject)
 
                 RealtyServiceImpl().getHouseExample(
-                    singleHouseObject.id ?: 0
+                        singleHouseObject.id ?: 0
                 ) { data, e, _ ->
                     data?.let { showHome(it) }
                 }
@@ -114,9 +114,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 sendRequestButton.setOnClickListener {
                     startActivity(
-                        Intent(requireContext(), PopupActivity::class.java).apply {
-                            putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
-                        }
+                            Intent(requireContext(), PopupActivity::class.java).apply {
+                                putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
+                            }
                     )
                 }
 
@@ -126,9 +126,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 buttonCollMe.setOnClickListener {
                     startActivity(
-                        Intent(requireContext(), PopupActivity::class.java).apply {
-                            putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
-                        }
+                            Intent(requireContext(), PopupActivity::class.java).apply {
+                                putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
+                            }
                     )
                 }
 
@@ -161,11 +161,11 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 singleHouseObject.getGallery().apply {
                     whiteButtonGalleryRV.adapter =
 
-                        MainGalleryAndDateAdapter(
-                            requireContext(),
-                            this,
-                            this@HouseFragment
-                        )
+                            MainGalleryAndDateAdapter(
+                                    requireContext(),
+                                    this,
+                                    this@HouseFragment
+                            )
 
                     val galleryNameList: ArrayList<String> = arrayListOf()
                     val listImage: ArrayList<String> = arrayListOf()
@@ -212,22 +212,22 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 }
 
                 whiteButtonRV.adapter = WhiteButtonAdapter(
-                    requireContext(), this@HouseFragment, listOf(
+                        requireContext(), this@HouseFragment, listOf(
                         "Общие",
                         "Коммуникации",
                         "Оформление",
                         "Оплата"
-                    )
+                )
                 )
 
                 showInformation(0)
 
 
                 val descriptionText =
-                    if (singleHouseObject.description != null) Html.fromHtml(singleHouseObject.description) else ""
+                        if (singleHouseObject.description != null) Html.fromHtml(singleHouseObject.description) else ""
 
                 if (singleHouseObject.description?.trim()
-                        .isNullOrEmpty() || descriptionText.isEmpty()
+                                .isNullOrEmpty() || descriptionText.isEmpty()
                 ) {
                     description.visibility = View.GONE
                     textViewAboutObject.visibility = View.GONE
@@ -247,10 +247,11 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 Glide.with(requireContext())
 //                            .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
-                    .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
-                    .error(R.drawable.error_placeholder_midle)
-                    .placeholder(R.drawable.placeholder)
-                    .into(imageViewVideoPreloader)
+                        .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
+                        .error(R.drawable.error_placeholder_midle)
+                        .placeholder(R.drawable.placeholder)
+                        .dontAnimate()
+                        .into(imageViewVideoPreloader)
 
                 if (!singleHouseObject.video.isNullOrEmpty()) {
                     videoLayout.visibility = View.VISIBLE
@@ -313,8 +314,8 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     whiteButtonAdvantagesRV.visibility = View.VISIBLE
                     advantagesDivider.visibility = View.VISIBLE
                     whiteButtonAdvantagesRV.adapter = AdvantagesAdapter(
-                        requireContext(),
-                        singleHouseObject.advantages
+                            requireContext(),
+                            singleHouseObject.advantages
                     )
                 } else {
                     textViewAdvantages.visibility = View.GONE
@@ -349,15 +350,15 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     mapView.map?.isZoomGesturesEnabled = false
                     mapView.map?.isTiltGesturesEnabled = false
                     mapview?.map?.move(
-                        CameraPosition(
-                            Point(latitude, longitude), 11.0f, 0.0f, 0.0f
-                        ),
-                        Animation(Animation.Type.SMOOTH, 0F),
-                        null
+                            CameraPosition(
+                                    Point(latitude, longitude), 11.0f, 0.0f, 0.0f
+                            ),
+                            Animation(Animation.Type.SMOOTH, 0F),
+                            null
                     )
                     mapview?.map?.mapObjects?.addPlacemark(
-                        Point(latitude, longitude),
-                        ViewProvider(icon)
+                            Point(latitude, longitude),
+                            ViewProvider(icon)
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -370,12 +371,12 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     similarObjects.apply {
                         layoutManager = GridLayoutManager(context, 2)
                         adapter =
-                            ChildrenHouseAdapter(singleHouseObject.analogs.take(2)) { homeId ->
-                                val home = singleHouseObject.analogs.firstOrNull { it.id == homeId }
-                                val bundle =
-                                    Bundle().apply { putString("home", Gson().toJson(home)) }
-                                navigate(HouseFragment(), bundle)
-                            }
+                                ChildrenHouseAdapter(singleHouseObject.analogs.take(2)) { homeId ->
+                                    val home = singleHouseObject.analogs.firstOrNull { it.id == homeId }
+                                    val bundle =
+                                            Bundle().apply { putString("home", Gson().toJson(home)) }
+                                    navigate(HouseFragment(), bundle)
+                                }
                         similarObjects.visibility = View.VISIBLE
                         textViewSimilarObject.visibility = View.VISIBLE
                     }
@@ -392,10 +393,10 @@ class HouseFragment : Fragment(), ISingleHouseView {
     private fun shareLink(id: Int) {
         toast("Copied profile link")
         val clipboard =
-            requireActivity().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager
+                requireActivity().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText(
-            "label",
-            "https://domsbasseinom.ru/app/testhouse/$id"
+                "label",
+                "https://domsbasseinom.ru/app/testhouse/$id"
         )
         clipboard.setPrimaryClip(clip)
     }
@@ -440,15 +441,15 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         if ((houseExampleData?.children?.size) ?: 0 <= 6) {
                             showListHouseBox.visibility = View.GONE
                             adapter = ListHouseBoxAdapter(
-                                requireContext(),
-                                houseExampleData?.children
+                                    requireContext(),
+                                    houseExampleData?.children
                             )
                         } else {
                             houseExampleData?.apply {
                                 showListHouseBox.visibility = View.VISIBLE
                                 adapter = ListHouseBoxAdapter(
-                                    requireContext(),
-                                    children?.take(6)
+                                        requireContext(),
+                                        children?.take(6)
 //                                        listOf(
 //                                                children?.get(0), children?.get(1), children?.get(2),
 //                                                children?.get(3), children?.get(4), children?.get(5),
@@ -467,7 +468,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
     override fun onDestroy() {
         houseObjectBinding = null
-        if(App.setting.isSearchActivityOpen) {
+        if (App.setting.isSearchActivityOpen) {
             startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
             App.setting.isSearchActivityOpen = false
         }
@@ -508,32 +509,32 @@ class HouseFragment : Fragment(), ISingleHouseView {
             val fragment = when (position) {
                 0 -> {
                     InformationFragment(
-                        houseExampleData?.formattedGeneral()
+                            houseExampleData?.formattedGeneral()
                     )
                 }
 
                 1 -> {
                     InformationFragment(
-                        houseExampleData?.formattedCommunications()
+                            houseExampleData?.formattedCommunications()
                     )
                 }
 
                 2 -> {
                     InformationFragment(
-                        houseExampleData?.formattedRegistration()
+                            houseExampleData?.formattedRegistration()
                     )
                 }
 
                 else -> {
                     InformationFragment(
-                        houseExampleData?.formattedPayment()
+                            houseExampleData?.formattedPayment()
                     )
                 }
             }
 
             childFragmentManager.beginTransaction()
-                .replace(houseObjectBinding?.informationFrame?.id ?: 0, fragment)
-                .commit()
+                    .replace(houseObjectBinding?.informationFrame?.id ?: 0, fragment)
+                    .commit()
         }
     }
 }

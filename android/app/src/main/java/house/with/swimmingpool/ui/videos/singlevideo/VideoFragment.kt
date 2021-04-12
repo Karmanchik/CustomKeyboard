@@ -112,6 +112,7 @@ class VideoFragment : Fragment() {
                                 .load(dataVideo.first?.icon)
                                 .error(R.drawable.error_placeholder_midle)
                                 .placeholder(R.drawable.placeholder)
+                                .dontAnimate()
                                 .into(imageViewVideoPreloader)
 
                         if (!dataVideo.first?.video.isNullOrEmpty()) {

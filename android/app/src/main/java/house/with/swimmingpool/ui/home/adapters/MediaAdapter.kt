@@ -93,6 +93,7 @@ class MediaAdapter(
                     .load(items?.get(position))
                     .error(R.drawable.error_placeholder_midle)
                     .placeholder(R.drawable.placeholder)
+                    .dontAnimate()
                     .into(view.imageView2)
         }
     }
@@ -116,6 +117,7 @@ class MediaAdapter(
                     .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
                     .error(R.drawable.error_placeholder_midle)
                     .placeholder(R.drawable.placeholder)
+                    .dontAnimate()
                     .into(view.imageViewVideoPreloader)
 
             view.youTubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {

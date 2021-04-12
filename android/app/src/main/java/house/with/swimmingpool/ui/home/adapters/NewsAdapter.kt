@@ -15,8 +15,8 @@ import house.with.swimmingpool.models.NewsData
 class NewsAdapter(
         var items: List<Any?>,
         var ctx: Context,
-        var onItemSelected: (NewsData) -> Unit
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        var onItemSelected: (NewsData) -> Unit,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val obj = 1
@@ -26,14 +26,14 @@ class NewsAdapter(
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         recyclerView.layoutManager = GridLayoutManager(
-            ctx, 2, GridLayoutManager.VERTICAL, false
+                ctx, 2, GridLayoutManager.VERTICAL, false
         )
     }
 
     override fun getItemViewType(position: Int): Int = when (items[position]) {
         is NewsData -> obj
         else -> {
-           big
+            big
         }
     }
 
@@ -41,7 +41,7 @@ class NewsAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             obj ->
-            Holder(ItemNewsBinding.inflate(layoutInflater, parent, false))
+                Holder(ItemNewsBinding.inflate(layoutInflater, parent, false))
             else -> BigAd(ItemBigBannerBinding.inflate(layoutInflater, parent, false))
         }
     }
@@ -49,26 +49,28 @@ class NewsAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
         is NewsAdapter.Holder -> holder.bind(items[position] as NewsData)
         is NewsAdapter.BigAd -> holder.bind()
-        else -> {}
+        else -> {
+        }
     }
 
     override fun getItemCount() = items.size
 
-    inner class Holder(private val view: ItemNewsBinding): RecyclerView.ViewHolder(view.root) {
+    inner class Holder(private val view: ItemNewsBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun bind(item: NewsData) {
             itemView.setOnClickListener { onItemSelected.invoke(item) }
             Glide.with(itemView.context)
-                .load(item.icon)
-                .error(R.drawable.error_placeholder_big)
-                .placeholder(R.drawable.gradient_placeholder_small)
-                .into(view.imageViewNews)
+                    .load(item.icon)
+                    .error(R.drawable.error_placeholder_big)
+                    .placeholder(R.drawable.gradient_placeholder_small)
+                    .dontAnimate()
+                    .into(view.imageViewNews)
 
             view.textViewTitle.text = item.title
         }
     }
 
-    inner class BigAd(private val view: ItemBigBannerBinding): RecyclerView.ViewHolder(view.root) {
+    inner class BigAd(private val view: ItemBigBannerBinding) : RecyclerView.ViewHolder(view.root) {
         fun bind() {
             BannersServiceImpl().getBanners { data, e ->
                 Glide.with(itemView.context)

@@ -20,7 +20,7 @@ import house.with.swimmingpool.ui.search.ISearchView
 class SearchListItemAdapter(
         var ctx: Context,
         var parentView: ISearchView,
-        var items: List<HouseCatalogData>
+        var items: List<HouseCatalogData>,
 ) : RecyclerView.Adapter<SearchListItemAdapter.Holder>() {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -56,12 +56,14 @@ class SearchListItemAdapter(
                                 .load(icon)
                                 .error(R.drawable.error_placeholder_midle)
                                 .placeholder(R.drawable.placeholder)
+                                .dontAnimate()
                                 .into(view.photo)
                     } else {
                         Glide.with(ctx)
                                 .load(photos?.first())
                                 .error(R.drawable.error_placeholder_midle)
                                 .placeholder(R.drawable.placeholder)
+                                .dontAnimate()
                                 .into(view.photo)
                     }
                     textViewTitle.text = title

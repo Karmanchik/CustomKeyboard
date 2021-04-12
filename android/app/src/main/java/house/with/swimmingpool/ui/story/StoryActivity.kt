@@ -40,9 +40,10 @@ class StoryActivity : AppCompatActivity() {
         story = Gson().fromJson(intent.getStringExtra("item"), StoriesData::class.java)
         story?.items?.forEach {
             Glide.with(this)
-                .load(it.poster)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .submit()
+                    .load(it.poster)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .dontAnimate()
+                    .submit()
         }
     }
 
@@ -53,10 +54,10 @@ class StoryActivity : AppCompatActivity() {
         binding.timersRV.apply {
             layoutManager = GridLayoutManager(context, items.size)
             adapter = StoryTimersAdapter(
-                items,
-                false,
-                close = { finish() },
-                onStoryOpen = { setInfo(it) }
+                    items,
+                    false,
+                    close = { finish() },
+                    onStoryOpen = { setInfo(it) }
             )
         }
         binding.closeIcon.setOnClickListener { finish() }
@@ -73,9 +74,10 @@ class StoryActivity : AppCompatActivity() {
             title.text = item.title
             description.text = item.title
             Glide.with(this@StoryActivity)
-                .load(item.poster)
-                .centerCrop()
-                .into(container)
+                    .load(item.poster)
+                    .centerCrop()
+                    .dontAnimate()
+                    .into(container)
 
             var isLongClick = false
             container.setOnTouchListener { view, event ->
