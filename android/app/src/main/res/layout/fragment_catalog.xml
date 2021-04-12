@@ -42,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_medium"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:text="предложения"
                 android:textColor="@color/black"
                 android:textSize="17sp" />
@@ -100,10 +101,12 @@
                     tools:listitem="@layout/item_house_catalog" />
 
                 <ImageView
+                    android:id="@+id/bigBanner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:src="@drawable/paperwork"
+                    android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/litRV" />
 
@@ -178,11 +181,13 @@
             android:id="@+id/priceUp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:clickable="false"
+            android:saveEnabled="false"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView29"
+                android:id="@+id/textViewPriceUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -212,6 +217,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textViewPriceDown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

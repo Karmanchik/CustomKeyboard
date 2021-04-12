@@ -2,6 +2,7 @@ package house.with.swimmingpool.ui.catalog
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,10 +28,12 @@ class CatalogFragment : Fragment() {
 
     private var binding: FragmentCatalogBinding? = null
 
+    private var lastDir = ""
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentCatalogBinding.inflate(layoutInflater)
         return binding?.root
@@ -55,35 +58,32 @@ class CatalogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding?.refresh?.isRefreshing = true
-        binding?.refresh?.setOnRefreshListener { binding?.refresh?.isRefreshing = false }
-
-        binding?.back?.setOnClickListener { back() }
-
         binding?.apply {
+
+            refresh.isRefreshing = true
+            refresh.setOnRefreshListener { binding?.refresh?.isRefreshing = false }
+
+            back.setOnClickListener { back() }
+
             sort.setOnClickListener {
                 sortMenu.visibility =
-                    if (sortMenu.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                        if (sortMenu.visibility == View.VISIBLE) View.GONE else View.VISIBLE
             }
-            closeSort.setOnClickListener { sortMenu.visibility = View.GONE }
 
+            closeSort.setOnClickListener {
+                sortMenu.visibility = View.GONE
+            }
 
             priceUp.setOnClickListener {
-                val request = App.setting.filterConfig ?: FilterObjectsRequest()
-                request.sort = "price"
-                request.dir = "asc"
-                App.setting.filterConfig = request
-                showFilter()
-                closeSort.performClick()
+                sortByPriseDir("asc")
+                textViewPriceUp.setTextColor(Color.parseColor("#A0AABA"))
+                textViewPriceDown.setTextColor(Color.parseColor("#00A8FF"))
             }
+
             priceDown.setOnClickListener {
-                val request = App.setting.filterConfig ?: FilterObjectsRequest()
-                request.sort = "price"
-                request.dir = "desc"
-                App.setting.filterConfig = request
-                showFilter()
-                closeSort.performClick()
+                sortByPriseDir("desc")
+                textViewPriceUp.setTextColor(Color.parseColor("#00A8FF"))
+                textViewPriceDown.setTextColor(Color.parseColor("#A0AABA"))
             }
         }
 
@@ -116,23 +116,39 @@ class CatalogFragment : Fragment() {
                 toast("Установите фильтр для сохранения!")
             } else {
                 SaveFilterFragment.newInstance()
-                    .show(parentFragmentManager, SaveFilterFragment::class.java.simpleName)
+                        .show(parentFragmentManager, SaveFilterFragment::class.java.simpleName)
             }
+        }
+    }
+
+    private fun sortByPriseDir(dir: String) {
+        if(dir != lastDir) {
+            val request = App.setting.filterConfig ?: FilterObjectsRequest()
+            lastDir = dir
+            request.sort = "price"
+            request.dir = dir
+            App.setting.filterConfig = request
+            showFilter()
+            binding?.sortMenu?.visibility = View.GONE
         }
     }
 
     private fun showFilter() {
         RealtyServiceImpl().getObjectsByFilter(
-            App.setting.filterConfig ?: FilterObjectsRequest()
+                App.setting.filterConfig ?: FilterObjectsRequest()
         ) { data, e ->
             val list = data ?: listOf()
             showList(list.toMutableList())
+            binding?.apply{
+                conter.visibility = View.VISIBLE
+                bigBanner.visibility = View.VISIBLE
+            }
         }
     }
 
     override fun onDestroy() {
         binding = null
-        if(App.setting.isSearchActivityOpen) {
+        if (App.setting.isSearchActivityOpen) {
             startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
             App.setting.isSearchActivityOpen = false
         }
