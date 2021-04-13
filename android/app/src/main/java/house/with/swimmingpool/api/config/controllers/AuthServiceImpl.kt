@@ -91,7 +91,7 @@ class AuthServiceImpl : IAuthService {
 
     override fun confirmBySmsCode(phone: String, code: String, onLoaded: (data: AuthRegisterSecondData?, e: Throwable?) -> Unit){
         getRetrofit().create(IAuthLogin :: class.java)
-                .confirmBySmsCode(APIKEY ,phone, code)
+                .confirmBySmsCode(phone, code)
                 .enqueue(object : Callback<AuthRegisterSecond> {
                     override fun onResponse(call: Call<AuthRegisterSecond>, response: Response<AuthRegisterSecond>) {
                         try{

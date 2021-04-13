@@ -58,6 +58,8 @@ class RegisterSmsCodeFragment(
                             Toast.LENGTH_LONG)
                             .show()
 
+                    App.setting.token = data.token
+
                     inputSmsCod.doOnTextChanged { text, start, before, count ->
 
                         setErrorText(isVisible = false)
