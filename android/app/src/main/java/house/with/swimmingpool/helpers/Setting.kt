@@ -19,14 +19,18 @@ class Setting(ctx: Context) {
         set(value) = pref.edit { putString(Keys.TOKEN, value) }
 
     var registerImageLink: String?
-        get() = pref.getString("REGISTER_IMAGE", null)
-        set(value) = pref.edit { putString("REGISTER_IMAGE", value) }
+        get() = pref.getString(Keys.REGISTER_IMAGE, null)
+        set(value) = pref.edit { putString(Keys.REGISTER_IMAGE, value) }
 
     var user: User?
         get() = Gson().fromJson(pref.getString(Keys.USER, null), User::class.java)
         set(value) = pref.edit { putString(Keys.USER, Gson().toJson(value)) }
 
     val phone get() = user?.login //"88889998877"
+
+    var settingPhone: String?
+        get() = pref.getString(Keys.SETTINGS_PHONE, null)
+        set(value) = pref.edit { putString(Keys.SETTINGS_PHONE, value) }
 
     val apiToken: String? get() = token?.let { "Bearer $it" }
 //    val apiToken: String? get() = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkb21zYmFzc2Vpbm9tLnJ1IiwiaWF0IjoxNjE3NDc0MzI1LCJleHAiOjE2MjAwNjYzMjUsImF1ZCI6ImRvbXNiYXNzZWlub20ucnUifQ.2fwqurWZvJtZ6xwSye7GZ1cOyE4Dno59QEWv3h-wD3w"
@@ -42,17 +46,17 @@ class Setting(ctx: Context) {
                 value.forEach { db.insert(it) }
             }
         }
-
-    var savedStories: List<StoriesData>
-        get() = pref.getStringSet(Keys.SAVED_STORIES, setOf())!!
-            .map { Gson().fromJson(it, StoriesData::class.java) }
-        set(value) {
-            pref.edit { putStringSet(Keys.SAVED_STORIES, value.map { Gson().toJson(it) }.toSet()) }
-        }
+//
+//    var savedStories: List<StoriesData>
+//        get() = pref.getStringSet(Keys.SAVED_STORIES, setOf())!!
+//            .map { Gson().fromJson(it, StoriesData::class.java) }
+//        set(value) {
+//            pref.edit { putStringSet(Keys.SAVED_STORIES, value.map { Gson().toJson(it) }.toSet()) }
+//        }
 
     var isSearchActivityOpen: Boolean
-        get() = pref.getBoolean("ACTIVITY_SEARCH", false)
-        set(value) = pref.edit { putBoolean("ACTIVITY_SEARCH", value) }
+        get() = pref.getBoolean(Keys.ACTIVITY_SEARCH, false)
+        set(value) = pref.edit { putBoolean(Keys.ACTIVITY_SEARCH, value) }
 
     var filterConfig: FilterObjectsRequest?
         get() = Gson().fromJson(pref.getString(Keys.FILTER, null), FilterObjectsRequest::class.java)
@@ -76,6 +80,9 @@ class Setting(ctx: Context) {
         const val FILTER_VARIANTS = "FILTER_VARIANTS"
         const val TMP_OBJECT = "TMP_OBJECT"
         const val SAVED_STORIES = "SAVED_STORIES"
+        const val SETTINGS_PHONE = "SETTINGS_PHONE"
+        const val REGISTER_IMAGE = "REGISTER_IMAGE"
+        const val ACTIVITY_SEARCH = "ACTIVITY_SEARCH"
     }
 
 }

@@ -1,10 +1,13 @@
 package house.with.swimmingpool
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.AnimRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yandex.mapkit.MapKitFactory
@@ -69,6 +72,13 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val fab = findViewById<View>(R.id.call)
+        fab.setOnClickListener {
+            ContextCompat.startActivity(
+                this,
+                Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + App.setting.settingPhone)),
+                null
+            )
+        }
         val navController = findViewById<FrameLayout>(R.id.mainFrame)
 //        val navController = indNavController(R.id.nav_host_fragment)
 //        navController.addOnDestinationChangedListener { f, destination, l ->

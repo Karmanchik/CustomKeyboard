@@ -48,9 +48,9 @@ class HomeFragment : Fragment() {
     private var homeBinding: FragmentHomeBinding? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         homeBinding = FragmentHomeBinding.inflate(layoutInflater)
         return homeBinding?.root
@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
                     navigate(CatalogFragment())
                 } else if (code == NAVIGATE_TO_OBJECT) {
                     val bundle =
-                            Bundle().apply { putString("home", Gson().toJson(App.setting.tmpObj)) }
+                        Bundle().apply { putString("home", Gson().toJson(App.setting.tmpObj)) }
                     navigate(HouseFragment(), bundle)
                 }
             }
@@ -95,12 +95,16 @@ class HomeFragment : Fragment() {
         AuthServiceImpl().getSettings { data, e ->
             if (data != null && e == null) {
                 App.setting.registerImageLink = data
-                        .getAsJsonArray("SiteSettings")
-                        .firstOrNull { it.asJsonObject["key"].asString == "app_mobile_welcome_pic" }
-                        ?.asJsonObject?.get("value")?.asString.toString()
+                    .getAsJsonArray("SiteSettings")
+                    .firstOrNull { it.asJsonObject["key"].asString == "app_mobile_welcome_pic" }
+                    ?.asJsonObject?.get("value")?.asString.toString()
             } else {
                 App.setting.registerImageLink = null
             }
+        }
+
+        AuthServiceImpl().getSettingsPhone { data, e ->
+            App.setting.settingPhone = data
         }
 
         GlobalScope.launch(Dispatchers.IO) {
@@ -113,16 +117,16 @@ class HomeFragment : Fragment() {
             launch(Dispatchers.Main) {
                 Log.e("testingCorutinsMain", "second")
                 if (videosInfo.second != null
-                        && newsInfo.second != null
-                        && storiesInfo.second != null
-                        && headerInfo.second != null
-                        && ads.second != null
+                    && newsInfo.second != null
+                    && storiesInfo.second != null
+                    && headerInfo.second != null
+                    && ads.second != null
                 ) {
                     startActivityForResult(
-                            Intent(requireContext(), PopupActivity::class.java).apply {
-                                putExtra(App.TYPE_OF_POPUP, App.INTERNET_ERROR)
-                            },
-                            POPUP_WIFI_ERROR_REFRASH
+                        Intent(requireContext(), PopupActivity::class.java).apply {
+                            putExtra(App.TYPE_OF_POPUP, App.INTERNET_ERROR)
+                        },
+                        POPUP_WIFI_ERROR_REFRASH
                     )
                     homeBinding?.nestedScrollView?.visibility = View.GONE
                 } else {
@@ -136,16 +140,16 @@ class HomeFragment : Fragment() {
                 homeBinding?.storiesRV?.apply {
                     visibility = if (storiesInfo.first.isNullOrEmpty()) View.GONE else View.VISIBLE
                     layoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter = StoriesAdapter(storiesInfo.first ?: listOf())
                 }
 
                 homeBinding?.nestedScrollView?.visibility =
-                        if (headerInfo.first.isNullOrEmpty()) {
-                            View.GONE
-                        } else {
-                            View.VISIBLE
-                        }
+                    if (headerInfo.first.isNullOrEmpty()) {
+                        View.GONE
+                    } else {
+                        View.VISIBLE
+                    }
 
                 homeBinding?.apply {
                     val vp = mainHousesContainer
@@ -162,20 +166,20 @@ class HomeFragment : Fragment() {
 
                                 if (home == null) {
                                     RealtyServiceImpl().getHouseExample(
-                                            splitLink.last().toInt()
+                                        splitLink.last().toInt()
                                     ) { data, e, _ ->
                                         val bundle =
-                                                Bundle().apply {
-                                                    putString(
-                                                            "home",
-                                                            Gson().toJson(data)
-                                                    )
-                                                }
+                                            Bundle().apply {
+                                                putString(
+                                                    "home",
+                                                    Gson().toJson(data)
+                                                )
+                                            }
                                         navigate(HouseFragment(), bundle)
                                     }
                                 } else {
                                     val bundle =
-                                            Bundle().apply { putString("home", Gson().toJson(home)) }
+                                        Bundle().apply { putString("home", Gson().toJson(home)) }
                                     navigate(HouseFragment(), bundle)
                                 }
                             }
@@ -193,10 +197,10 @@ class HomeFragment : Fragment() {
                             }
                             "https:" -> {
                                 val browserIntent = Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse(
-                                                link
-                                        )
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(
+                                        link
+                                    )
                                 )
                                 startActivity(browserIntent);
                             }
@@ -224,12 +228,17 @@ class HomeFragment : Fragment() {
 
                 if (videosInfo.second == null && videosInfo.first != null) {
                     homeBinding?.videosRV?.adapter =
-                            VideosAdapter(false, requireContext(), videosInfo.first ?: listOf()) {
-                                val bundle = Bundle().apply {
-                                    putInt("id", it)
-                                }
-                                navigate(VideoFragment(), bundle, inAnim = R.anim.slide_in_left, outAnim = R.anim.slide_out_right)
+                        VideosAdapter(false, requireContext(), videosInfo.first ?: listOf()) {
+                            val bundle = Bundle().apply {
+                                putInt("id", it)
                             }
+                            navigate(
+                                VideoFragment(),
+                                bundle,
+                                inAnim = R.anim.slide_in_left,
+                                outAnim = R.anim.slide_out_right
+                            )
+                        }
                     homeBinding?.videosContainer?.visibility = View.VISIBLE
                 } else {
                     homeBinding?.videosContainer?.visibility = View.GONE
@@ -237,8 +246,8 @@ class HomeFragment : Fragment() {
 
                 if (newsInfo.second == null && newsInfo.first != null) {
                     homeBinding?.newsRV?.adapter = NewsAdapter(
-                            newsInfo.first?.take(2) ?: listOf(),
-                            requireContext()
+                        newsInfo.first?.take(2) ?: listOf(),
+                        requireContext()
                     ) {
                         val bundle = Bundle().apply {
                             putInt("id", it.id ?: 0)
@@ -315,7 +324,7 @@ class HomeFragment : Fragment() {
             shortFilterView.setOnClickListener {
                 val onClick = { navigate(CatalogFragment()) }
                 ShortFilterFragment(onClick).newInstance(onClick).show(
-                        parentFragmentManager, "shortFilter"
+                    parentFragmentManager, "shortFilter"
                 )
             }
             fullFilterView.setOnClickListener {
@@ -359,11 +368,11 @@ class HomeFragment : Fragment() {
 
                 textViewVideosCount.text = "${data.size} предложений"
                 shortCatalogRV.adapter =
-                        CatalogAdapter(data.take(2), requireContext()) { homeId ->
-                            val home = data.firstOrNull { it.id == homeId }
-                            val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
-                            navigate(HouseFragment(), bundle)
-                        }
+                    CatalogAdapter(data.take(2), requireContext()) { homeId ->
+                        val home = data.firstOrNull { it.id == homeId }
+                        val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
+                        navigate(HouseFragment(), bundle)
+                    }
             }
         }
     }

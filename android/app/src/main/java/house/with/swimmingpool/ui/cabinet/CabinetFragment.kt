@@ -71,9 +71,8 @@ class CabinetFragment : Fragment(), ICabinetView {
 
             TabLayoutMediator(tabs, cabinetViewPager) { tab, position ->
                 tab.text = when(position){
-                    0 -> "ПОИСКИ"
-                    1 -> "ИЗБРАННОЕ"
-                    else -> "ПОДБОРКИ"
+                    0 -> "ЛИЧНЫЕ ДАННЫЕ"
+                    else -> "СМЕНИТЬ ПАРОЛЬ"
                 }
             }.attach()
 

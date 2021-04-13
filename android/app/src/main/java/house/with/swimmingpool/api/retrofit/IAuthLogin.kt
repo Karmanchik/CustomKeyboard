@@ -42,7 +42,7 @@ interface IAuthLogin {
     ): Call<AuthRegisterSecond>
 
     @FormUrlEncoded
-    @POST("auth/code")
+    @POST("auth/reset")
     fun getSmsCodeAgain(
         @Field("phone") phone: String,
         @Header("api-key") apikey: String = APIKEY
@@ -62,4 +62,9 @@ interface IAuthLogin {
     fun getSettings(
         @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<JsonObject>>
+
+    @GET("settings/phone")
+    fun getSettingsPhone(
+        @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
+    ): Call<Answer<String>>
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
+import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseCatalogLastImageCallHolderBinding
 import house.with.swimmingpool.databinding.ItemHouseCatalogListVideoBinding
@@ -103,7 +104,7 @@ class CatalogImageAdapter(
         fun bind(){
             view.collLayout.setOnClickListener {
                 val intent =
-                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "+7977999999"))
+                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + App.setting.settingPhone))
                 startActivity(ctx, intent, null)
             }
         }

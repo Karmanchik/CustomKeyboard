@@ -69,6 +69,25 @@ class AuthServiceImpl : IAuthService {
                 })
     }
 
+    fun getSettingsPhone(onLoaded: (data: String?, e: Throwable?) -> Unit){
+        getRetrofit().create(IAuthLogin :: class.java)
+            .getSettingsPhone()
+            .enqueue(object : Callback<Answer<String>>{
+                override fun onResponse(call: Call<Answer<String>>, response: Response<Answer<String>>) {
+                    try{
+                        onLoaded.invoke(response.body()?.data, null)
+                        Log.e("OkH", response.body().toString())
+                    }catch (e:Exception){}
+                }
+
+                override fun onFailure(call: Call<Answer<String>>, t: Throwable) {
+                    onLoaded.invoke(null, t)
+                    Log.e("getSettingsPhone", "Error:", t)
+                }
+
+            })
+    }
+
     override fun registerUserFirst(phone: String, onLoaded: (data: AuthRegisterFirstData?, e: Throwable?) -> Unit){
         getRetrofit().create(IAuthLogin :: class.java)
                 .registerUser(APIKEY ,phone)
