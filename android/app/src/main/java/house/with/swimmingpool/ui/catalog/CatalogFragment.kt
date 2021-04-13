@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,9 +58,27 @@ class CatalogFragment : Fragment() {
         binding?.conter?.text = "${list.size} предложений"
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
+
+            scroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                Log.e("testTuch", "ok")
+            }
+            litRV.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                Log.e("testTuch", scrollY.toString())
+            }
+            litRV.setOnClickListener { Log.e("testTuch", "ok") }
+
+            litRV.setOnFocusChangeListener { v, hasFocus ->
+                Log.e("testTuch", hasFocus.toString())
+            }
+
+            litRV.setOnTouchListener { v, event ->
+                Log.e("testTouch", "okk")
+                true
+            }
 
             refresh.isRefreshing = true
             refresh.setOnRefreshListener { binding?.refresh?.isRefreshing = false }
@@ -85,6 +104,14 @@ class CatalogFragment : Fragment() {
                 sortByPriseDir("desc")
                 textViewPriceUp.setTextColor(Color.parseColor("#00A8FF"))
                 textViewPriceDown.setTextColor(Color.parseColor("#A0AABA"))
+            }
+
+            popular.setOnClickListener {
+                sortByPriseDir("hits")
+            }
+
+            rating.setOnClickListener {
+                sortByPriseDir("rank")
             }
         }
 
@@ -128,13 +155,28 @@ class CatalogFragment : Fragment() {
 
     private fun sortByPriseDir(dir: String) {
         if(dir != lastDir) {
-            val request = App.setting.filterConfig ?: FilterObjectsRequest()
-            lastDir = dir
-            request.sort = "price"
-            request.dir = dir
-            App.setting.filterConfig = request
-            showFilter()
-            binding?.sortMenu?.visibility = View.GONE
+            binding?.apply {
+
+                textViewPriceUp.setTextColor(Color.parseColor("#00A8FF"))
+                textViewPriceDown.setTextColor(Color.parseColor("#00A8FF"))
+                textViewPopular.setTextColor(Color.parseColor("#00A8FF"))
+                textViewRating.setTextColor(Color.parseColor("#00A8FF"))
+
+                val request = App.setting.filterConfig ?: FilterObjectsRequest()
+                lastDir = dir
+                request.sort = "price"
+                request.dir = dir
+                App.setting.filterConfig = request
+                showFilter()
+                binding?.sortMenu?.visibility = View.GONE
+
+                when(dir){
+                    "asc" ->{textViewPriceUp.setTextColor(Color.parseColor("#A0AABA"))}
+                    "desc" ->{textViewPriceDown.setTextColor(Color.parseColor("#A0AABA"))}
+                    "hits" ->{textViewPopular.setTextColor(Color.parseColor("#A0AABA"))}
+                    "rank" ->{textViewRating.setTextColor(Color.parseColor("#A0AABA"))}
+                }
+            }
         }
     }
 
