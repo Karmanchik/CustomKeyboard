@@ -27,8 +27,10 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_edit_field, this)
 
-        val typedArray = context.theme.obtainStyledAttributes(attrs,
-            R.styleable.CustomEditField, 0, 0)
+        val typedArray = context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.CustomEditField, 0, 0
+        )
 
         fieldView = findViewById(R.id.field)
         titleView = findViewById(R.id.title)
@@ -44,7 +46,8 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
             typedArray.getBoolean(R.styleable.CustomEditField_passwordMode, false)
 
         if (isPassword) {
-            fieldView?.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            fieldView?.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             fieldView?.setMaxLength(10)
         }
 
@@ -85,7 +88,9 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
 
     var value: String?
         get() = fieldView?.text?.toString()
-        set(value) { fieldView?.setText(value) }
+        set(value) {
+            fieldView?.setText(value)
+        }
 
     var title: String?
         get() = titleView?.text?.toString()
@@ -101,9 +106,20 @@ class CustomEditField(context: Context, attrs: AttributeSet) : ConstraintLayout(
         dividerView?.setBackgroundColor(Color.parseColor("#DB5249"))
     }
 
+    fun isNotNullOrEmpty() = if (fieldView?.text != null && fieldView?.text.toString() != "") {
+        clearError()
+        true
+    } else {
+        setError()
+        false
+    }
+
+
     var isPasswordMode
         get() = fieldView?.inputType
-        set(value) { fieldView?.inputType }
+        set(value) {
+            fieldView?.inputType
+        }
 
     private var _onClickListener: (() -> Unit)? = null
 

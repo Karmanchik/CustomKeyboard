@@ -13,20 +13,21 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.AuthServiceImpl
 import house.with.swimmingpool.databinding.FragmentPasswordBinding
+import house.with.swimmingpool.models.User
 import house.with.swimmingpool.ui.cabinet.ICabinetView
 import house.with.swimmingpool.ui.popups.PopupActivity
 
 
 class PasswordFragment(
-        private val parentView: ICabinetView,
+    private val parentView: ICabinetView,
 ) : Fragment(R.layout.fragment_password) {
 
     private var passwordBinding: FragmentPasswordBinding? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
 
         passwordBinding = FragmentPasswordBinding.inflate(layoutInflater)
@@ -35,10 +36,10 @@ class PasswordFragment(
 
         passwordBinding?.apply {
             oldPassword.getField()?.doOnTextChanged { text, start, before, count ->
-                oldPassword.clearError()
+                buttonSave.isEnabled = checkPassword()
             }
 
-            checkPassword.getField()?.doOnTextChanged { text, start, before, count ->
+            newPasswordConfirmation.getField()?.doOnTextChanged { text, start, before, count ->
                 buttonSave.isEnabled = checkPassword()
             }
 
@@ -47,30 +48,7 @@ class PasswordFragment(
             }
 
             buttonSave.setOnClickListener {
-                if (newPassword.value != null && oldPassword.value != null) {
-                    if (checkPassword()) {
-                        AuthServiceImpl().setPassword(
-                                newPassword.value!!,
-                                oldPassword.value!!
-                        ) { data, e ->
-                            if (data != null && e == null) {
-                                if (data.error == null) {
-                                    App.setting.user = data.data
-                                    startActivity(
-                                            Intent(requireContext(), PopupActivity::class.java).apply {
-                                                putExtra(App.TYPE_OF_POPUP, App.PASSWORD_SET_SUCCESSFULLY)
-                                            }
-                                    )
-                                    parentView.onPasswordSet()
-                                } else if (data.error == 773) {
-                                    setErrorPassword("Введите от 6 до 10 символов (кроме */-.\\”% )")
-                                }
-                            } else {
-                                oldPassword.setError()
-                            }
-                        }
-                    }
-                }
+                setPassword()
             }
         }
 
@@ -79,26 +57,65 @@ class PasswordFragment(
 
     private fun checkPassword(): Boolean {
         passwordBinding?.apply {
-            if (oldPassword.value != "") {
-                oldPassword.clearError()
-                if (checkPassword.value != "" && newPassword.value != "") {
-                    if (checkPassword.value == newPassword.value) {
-                        checkPassword.clearError()
-                        return true
-                    } else {
-                        checkPassword.setError()
-                        return false
-                    }
-                } else {
-                    checkPassword.clearError()
-                    return false
-                }
+            clearErrorPassword()
+            return (oldPassword.isNotNullOrEmpty()
+                && newPassword.isNotNullOrEmpty()
+                && newPasswordConfirmation.isNotNullOrEmpty()
+                && checkPasswordOnMatches()
+            )
+        }
+        return false
+    }
+
+    private fun checkPasswordOnMatches(): Boolean {
+        passwordBinding?.apply {
+            return if (newPasswordConfirmation.value == newPassword.value) {
+                true
             } else {
-                oldPassword.setError()
-                return false
+                newPasswordConfirmation.setError()
+                false
             }
         }
         return false
+    }
+
+    private fun setPassword() {
+        passwordBinding?.apply {
+            AuthServiceImpl().setPassword(
+                newPassword.value!!,
+                oldPassword.value!!
+            ) { data, e ->
+                if (data != null && e == null) {
+                    when (data.error) {
+                        null -> {
+                            onPasswordSated(data.data)
+                        }
+                        773 -> {
+                            setErrorPassword("Введите от 6 до 10 символов (кроме */-.\\”% )")
+                        }
+                        772 -> {
+                            setErrorPassword("Не верный пароль")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onPasswordSated(user: User) {
+        App.setting.user = user
+        startActivity(
+            Intent(
+                requireContext(),
+                PopupActivity::class.java
+            ).apply {
+                putExtra(
+                    App.TYPE_OF_POPUP,
+                    App.PASSWORD_SET_SUCCESSFULLY
+                )
+            }
+        )
+        parentView.onPasswordSet()
     }
 
     @SuppressLint("ResourceAsColor")
@@ -107,6 +124,7 @@ class PasswordFragment(
             this.text = text
             setTextColor(Color.parseColor("#DB5249"))
         }
+        passwordBinding?.buttonSave?.isEnabled = false
     }
 
     @SuppressLint("ResourceAsColor", "SetTextI18n")
@@ -115,7 +133,6 @@ class PasswordFragment(
             text = "Введите от 6 до 10 символов (кроме */-.\\”% )"
             setTextColor(Color.parseColor("#788598"))
         }
-
     }
 
     override fun onPause() {
@@ -123,11 +140,11 @@ class PasswordFragment(
         passwordBinding?.apply {
             oldPassword.value = ""
             newPassword.value = ""
-            checkPassword.value = ""
+            newPasswordConfirmation.value = ""
 
             oldPassword.clearError()
             newPassword.clearError()
-            checkPassword.clearError()
+            newPasswordConfirmation.clearError()
             clearErrorPassword()
         }
     }
