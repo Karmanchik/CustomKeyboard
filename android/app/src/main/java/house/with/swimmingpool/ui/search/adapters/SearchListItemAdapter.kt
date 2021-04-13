@@ -2,11 +2,8 @@ package house.with.swimmingpool.ui.search.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,7 +11,6 @@ import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemOfSearchesListBinding
 import house.with.swimmingpool.models.HouseCatalogData
-import house.with.swimmingpool.ui.home.HomeFragment
 import house.with.swimmingpool.ui.search.ISearchView
 
 class SearchListItemAdapter(
@@ -54,14 +50,14 @@ class SearchListItemAdapter(
                     if (icon != null && icon.isNullOrEmpty()) {
                         Glide.with(ctx)
                                 .load(icon)
-                                .error(R.drawable.error_placeholder_midle)
+                                .error(R.drawable.error_placeholder_midl)
                                 .placeholder(R.drawable.placeholder)
                                 .dontAnimate()
                                 .into(view.photo)
                     } else {
                         Glide.with(ctx)
                                 .load(photos?.first())
-                                .error(R.drawable.error_placeholder_midle)
+                                .error(R.drawable.error_placeholder_midl)
                                 .placeholder(R.drawable.placeholder)
                                 .dontAnimate()
                                 .into(view.photo)

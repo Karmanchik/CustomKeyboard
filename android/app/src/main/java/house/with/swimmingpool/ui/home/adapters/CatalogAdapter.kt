@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import house.with.swimmingpool.App
+import house.with.swimmingpool.MainActivity
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.BannersServiceImpl
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
@@ -15,6 +17,7 @@ import house.with.swimmingpool.databinding.ItemBigBannerBinding
 import house.with.swimmingpool.databinding.ItemHouseCatalogBinding
 import house.with.swimmingpool.databinding.ItemSmallBannerBinding
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 
 class CatalogAdapter(
@@ -95,7 +98,7 @@ class CatalogAdapter(
             itemView.setOnClickListener { onItemSelected.invoke(item.id) }
             view.apply {
                 housesImageContainerLayout.setOnClickListener { onItemSelected.invoke(item.id) }
-                likeView.setImageResource(R.drawable.like_enabled)
+//                likeView.setImageResource(R.drawable.ic_like_is_favorite_false)
 
                 item.apply {
                     val vp = housesImageContainer
@@ -122,9 +125,9 @@ class CatalogAdapter(
                     dotsIndicatorCatalogItem.setViewPager2(vp)
 
                     if (isFavourite == true) {
-                        likeView.setImageResource(R.drawable.like_enabled)
+                        likeView.setImageResource(R.drawable.ic_like_is_favorite_true)
                     }else{
-                        likeView.setImageResource(R.drawable.like_disabled)
+                        likeView.setImageResource(R.drawable.ic_like_is_favorite_false)
                     }
                 }
 
@@ -150,18 +153,22 @@ class CatalogAdapter(
 
                 item.apply {
                     likeView.setOnClickListener {
-                        if (isFavourite == true) {
-                            likeView.setImageResource(R.drawable.like_disabled)
-                            RealtyServiceImpl().removeFromFavourites(id){ status, e ->
-                                Log.e("removeFromFavourites", "status $status EXCEPTION $e")
-                                isFavourite = false
+                        if(App.setting.isAuth) {
+                            if (isFavourite == true) {
+                                likeView.setImageResource(R.drawable.ic_like_is_favorite_false)
+                                RealtyServiceImpl().removeFromFavourites(id) { status, e ->
+                                    Log.e("removeFromFavourites", "status $status EXCEPTION $e")
+                                    isFavourite = false
+                                }
+                            } else {
+                                likeView.setImageResource(R.drawable.ic_like_is_favorite_true)
+                                RealtyServiceImpl().addToFavourites(id) { status, e ->
+                                    Log.e("addToFavourites", "status $status EXCEPTION $e")
+                                    isFavourite = true
+                                }
                             }
                         }else{
-                            likeView.setImageResource(R.drawable.like_enabled)
-                            RealtyServiceImpl().addToFavourites(id){ status, e ->
-                                Log.e("addToFavourites", "status $status EXCEPTION $e")
-                                isFavourite = true
-                            }
+                           (ctx as MainActivity).showFragment(CabinetFragment())
                         }
                     }
                 }

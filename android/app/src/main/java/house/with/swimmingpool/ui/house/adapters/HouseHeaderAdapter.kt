@@ -28,7 +28,7 @@ class HouseHeaderAdapter(
             Glide.with(itemView.context)
                     .load(items[position])
                     .error(R.drawable.error_placeholder_big)
-                    .placeholder(R.drawable.gradient_placeholder_big)
+                    .placeholder(R.drawable.gradient_placeholder_midle)
                     .dontAnimate()
                     .into(view.imageView3)
 

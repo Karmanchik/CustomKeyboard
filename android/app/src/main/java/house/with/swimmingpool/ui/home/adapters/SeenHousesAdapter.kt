@@ -53,7 +53,7 @@ class SeenHousesAdapter(
                                     }
                                 }
                         )
-                        .error(R.drawable.error_placeholder_midle)
+                        .error(R.drawable.error_placeholder_midl)
                         .placeholder(R.drawable.placeholder)
                         .dontAnimate()
                         .into(imageViewSeen)

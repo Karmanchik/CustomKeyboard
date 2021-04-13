@@ -17,7 +17,6 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.api.config.controllers.VideosServiceImpl
 import house.with.swimmingpool.databinding.FragmentVideoSingleBinding
-import house.with.swimmingpool.models.SingleVideoData
 import house.with.swimmingpool.ui.back
 import house.with.swimmingpool.ui.house.HouseFragment
 import house.with.swimmingpool.ui.navigate
@@ -110,7 +109,7 @@ class VideoFragment : Fragment() {
 
                         Glide.with(requireContext())
                                 .load(dataVideo.first?.icon)
-                                .error(R.drawable.error_placeholder_midle)
+                                .error(R.drawable.error_placeholder_midl)
                                 .placeholder(R.drawable.placeholder)
                                 .dontAnimate()
                                 .into(imageViewVideoPreloader)

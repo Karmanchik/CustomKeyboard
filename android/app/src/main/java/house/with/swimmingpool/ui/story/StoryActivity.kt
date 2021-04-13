@@ -12,9 +12,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
+import house.with.swimmingpool.App
 import house.with.swimmingpool.databinding.ActivityStoryBinding
 import house.with.swimmingpool.models.StoriesData
 import house.with.swimmingpool.models.StoriesItem
+import house.with.swimmingpool.ui.home.adapters.StoriesAdapter
+import house.with.swimmingpool.ui.startActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -26,41 +29,76 @@ class StoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStoryBinding
     private var story: StoriesData? = null
 
+    private var storyPosition = 0
+    private var listStories = listOf<StoriesData>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        listStories = StoriesAdapter.companionItems ?: listOf<StoriesData>()
+        storyPosition = intent.getIntExtra("itemPosition", 0)
+        story = listStories[storyPosition]
+
+        nextStory()
+    }
+
+    private fun nextStory(){
+        Log.e("position", story.toString())
         val decorView: View = window.decorView
         val uiOptions: Int = View.SYSTEM_UI_FLAG_FULLSCREEN
         decorView.systemUiVisibility = uiOptions
         val actionBar = actionBar
         actionBar?.hide()
 
-        story = Gson().fromJson(intent.getStringExtra("item"), StoriesData::class.java)
+//        story = Gson().fromJson(intent.getStringExtra("item"), StoriesData::class.java)
         story?.items?.forEach {
             Glide.with(this)
-                    .load(it.poster)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontAnimate()
-                    .submit()
+                .load(it.poster)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()
+                .submit()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
 
         val items = story?.items ?: listOf()
         binding.timersRV.apply {
             layoutManager = GridLayoutManager(context, items.size)
             adapter = StoryTimersAdapter(
-                    items,
-                    false,
-                    close = { finish() },
-                    onStoryOpen = { setInfo(it) }
+                items,
+                false,
+                close = { openNextStory() },
+                onStoryOpen = { setInfo(it) }
             )
         }
         binding.closeIcon.setOnClickListener { finish() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+//        val items = story?.items ?: listOf()
+//        binding.timersRV.apply {
+//            layoutManager = GridLayoutManager(context, items.size)
+//            adapter = StoryTimersAdapter(
+//                items,
+//                false,
+//                close = { openNextStory() },
+//                onStoryOpen = { setInfo(it) }
+//            )
+//        }
+//        binding.closeIcon.setOnClickListener { finish() }
+    }
+
+    private fun openNextStory() {
+
+        if (storyPosition < (listStories.lastIndex)) {
+            storyPosition++
+            story = listStories[storyPosition]
+            nextStory()
+        }else{
+            finish()
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -74,10 +112,10 @@ class StoryActivity : AppCompatActivity() {
             title.text = item.title
             description.text = item.title
             Glide.with(this@StoryActivity)
-                    .load(item.poster)
-                    .centerCrop()
-                    .dontAnimate()
-                    .into(container)
+                .load(item.poster)
+                .centerCrop()
+                .dontAnimate()
+                .into(container)
 
             var isLongClick = false
             container.setOnTouchListener { view, event ->
@@ -94,7 +132,7 @@ class StoryActivity : AppCompatActivity() {
                         if (!isBackClick) {
                             val isNotNeedClose = adapter?.next() ?: true
                             if (!isNotNeedClose) {
-                                finish()
+                                openNextStory()
                             }
                         } else {
                             adapter?.previous()

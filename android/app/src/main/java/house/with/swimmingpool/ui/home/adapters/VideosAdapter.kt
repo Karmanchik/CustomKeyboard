@@ -8,10 +8,7 @@ import com.bumptech.glide.Glide
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.BannersServiceImpl
 import house.with.swimmingpool.databinding.ItemBigBannerBinding
-import house.with.swimmingpool.databinding.ItemNewsBinding
 import house.with.swimmingpool.databinding.ItemVideoBinding
-import house.with.swimmingpool.models.NewsData
-import house.with.swimmingpool.models.Video
 import house.with.swimmingpool.models.VideosData
 
 class VideosAdapter(
@@ -57,7 +54,7 @@ class VideosAdapter(
             itemView.setOnClickListener { onItemSelected.invoke(item.id) }
             Glide.with(ctx)
                     .load(item.icon)
-                    .error(R.drawable.error_placeholder_midle)
+                    .error(R.drawable.error_placeholder_midl)
                     .placeholder(R.drawable.gradient_placeholder_small)
                     .dontAnimate()
                     .into(view.imageViewVideo)

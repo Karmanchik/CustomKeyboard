@@ -34,7 +34,7 @@ class SmallPhotosAdapter(
         fun bind(item: String) {
             Glide.with(itemView.context)
                 .load(item)
-                .error(R.drawable.error_placeholder_midle)
+                .error(R.drawable.error_placeholder_midl)
                 .placeholder(R.drawable.placeholder)
                 .dontAnimate()
                 .into(view.photo)

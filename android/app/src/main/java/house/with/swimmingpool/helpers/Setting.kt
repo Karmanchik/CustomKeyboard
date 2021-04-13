@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.models.StoriesData
 import house.with.swimmingpool.models.User
 import house.with.swimmingpool.models.request.FilterObjectsRequest
 
@@ -42,6 +43,13 @@ class Setting(ctx: Context) {
             }
         }
 
+    var savedStories: List<StoriesData>
+        get() = pref.getStringSet(Keys.SAVED_STORIES, setOf())!!
+            .map { Gson().fromJson(it, StoriesData::class.java) }
+        set(value) {
+            pref.edit { putStringSet(Keys.SAVED_STORIES, value.map { Gson().toJson(it) }.toSet()) }
+        }
+
     var isSearchActivityOpen: Boolean
         get() = pref.getBoolean("ACTIVITY_SEARCH", false)
         set(value) = pref.edit { putBoolean("ACTIVITY_SEARCH", value) }
@@ -67,6 +75,7 @@ class Setting(ctx: Context) {
         const val FILTER = "FILTER"
         const val FILTER_VARIANTS = "FILTER_VARIANTS"
         const val TMP_OBJECT = "TMP_OBJECT"
+        const val SAVED_STORIES = "SAVED_STORIES"
     }
 
 }

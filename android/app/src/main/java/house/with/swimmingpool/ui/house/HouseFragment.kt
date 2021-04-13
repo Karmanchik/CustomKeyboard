@@ -134,9 +134,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 singleHouseObject.apply {
                     if (isFavourite == true) {
-                        favoriteImageView.setImageResource(R.drawable.ic_like_blue)
+                        favoriteImageView.setImageResource(R.drawable.ic_like_is_favorite_true)
                     } else {
-                        favoriteImageView.setImageResource(R.drawable.ic_like_white_blue)
+                        favoriteImageView.setImageResource(R.drawable.ic_like_is_favorite_false)
                     }
 
                     favoriteImageView.setOnClickListener {
@@ -255,7 +255,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 Glide.with(requireContext())
 //                            .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
                         .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
-                        .error(R.drawable.error_placeholder_midle)
+                        .error(R.drawable.error_placeholder_midl)
                         .placeholder(R.drawable.placeholder)
                         .dontAnimate()
                         .into(imageViewVideoPreloader)
@@ -413,13 +413,13 @@ class HouseFragment : Fragment(), ISingleHouseView {
             singleHouseObject.apply {
                 if (id != null) {
                     if (isFavourite == true) {
-                        favoriteImageView.setImageResource(R.drawable.ic_like_white_blue)
+                        favoriteImageView.setImageResource(R.drawable.ic_like_is_favorite_false)
                         RealtyServiceImpl().removeFromFavourites(id) { status, e ->
                             Log.e("removeFromFavourites", "status $status EXCEPTION $e")
                             isFavourite = false
                         }
                     } else {
-                        favoriteImageView.setImageResource(R.drawable.ic_like_blue)
+                        favoriteImageView.setImageResource(R.drawable.ic_like_is_favorite_true)
                         RealtyServiceImpl().addToFavourites(id) { status, e ->
                             Log.e("addToFavourites", "status $status EXCEPTION $e")
                             isFavourite = true

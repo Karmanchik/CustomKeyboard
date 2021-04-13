@@ -15,7 +15,7 @@ class StoryTimersAdapter(
     var isStop: Boolean,
     val close: () -> Unit,
     val onStoryOpen: (StoriesItem) -> Unit
-): RecyclerView.Adapter<StoryTimersAdapter.CatalogImageHolder>() {
+) : RecyclerView.Adapter<StoryTimersAdapter.CatalogImageHolder>() {
 
     private var currentPosition = 0
 
@@ -44,7 +44,7 @@ class StoryTimersAdapter(
 
     override fun getItemCount() = items.size
 
-    inner class CatalogImageHolder(view: View): RecyclerView.ViewHolder(view) {
+    inner class CatalogImageHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val progressBar = view as ProgressBar
 
 
@@ -59,17 +59,21 @@ class StoryTimersAdapter(
 
             if (adapterPosition == currentPosition) {
                 onStoryOpen.invoke(item)
-
+                var isClose = false
                 GlobalScope.launch {
                     (0 until 10000).forEach {
                         delay(50)
                         if (!isStop) {
                             launch(Dispatchers.Main) {
-                                if (currentPosition == adapterPosition && progressBar.progress in (it-1..it+1)) {
+                                if (currentPosition == adapterPosition && progressBar.progress in (it - 1..it + 1)) {
                                     progressBar.progress = it + 1
                                     if (progressBar.progress == progressBar.max) {
                                         if (currentPosition == items.lastIndex) {
-                                            close.invoke()
+                                            if (!isClose) {
+                                                isClose = true
+                                                close.invoke()
+                                                return@launch
+                                            }
                                         } else {
                                             currentPosition = adapterPosition + 1
                                             notifyDataSetChanged()

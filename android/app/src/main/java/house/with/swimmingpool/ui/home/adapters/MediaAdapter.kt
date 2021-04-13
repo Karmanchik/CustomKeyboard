@@ -1,18 +1,14 @@
 package house.with.swimmingpool.ui.home.adapters
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import house.with.swimmingpool.R
-import house.with.swimmingpool.databinding.ItemHouseCatalogLastImageCallHolderBinding
 import house.with.swimmingpool.databinding.ItemHouseCatalogListVideoBinding
 import house.with.swimmingpool.databinding.ItemHouseCotalogImageBinding
 
@@ -91,7 +87,7 @@ class MediaAdapter(
 //            itemView.setOnClickListener { onItemSelected.invoke(id) }
             Glide.with(ctx)
                     .load(items?.get(position))
-                    .error(R.drawable.error_placeholder_midle)
+                    .error(R.drawable.error_placeholder_midl)
                     .placeholder(R.drawable.placeholder)
                     .dontAnimate()
                     .into(view.imageView2)
@@ -115,7 +111,7 @@ class MediaAdapter(
             Glide.with(ctx)
 //                    .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
                     .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
-                    .error(R.drawable.error_placeholder_midle)
+                    .error(R.drawable.error_placeholder_midl)
                     .placeholder(R.drawable.placeholder)
                     .dontAnimate()
                     .into(view.imageViewVideoPreloader)

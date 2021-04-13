@@ -51,7 +51,7 @@
                     android:layout_height="460dp"
                     android:adjustViewBounds="true"
                     android:scaleType="center"
-                    android:src="@drawable/error_placeholder_big" />
+                    android:src="@drawable/gradient_placeholder_midle" />
 
                 <TextView
                     android:id="@+id/title"
@@ -283,7 +283,7 @@
                         android:layout_width="20dp"
                         android:layout_height="16dp"
                         android:layout_marginEnd="5dp"
-                        android:src="@drawable/ic_like_white_blue" />
+                        android:src="@drawable/ic_like_is_favorite_false" />
 
                     <TextView
                         android:id="@+id/favoriteTextView"
@@ -448,7 +448,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:visibility="visible"
-                    app:srcCompat="@drawable/error_placeholder_midle" />
+                    app:srcCompat="@drawable/gradient_placeholder_midle" />
 
                 <RelativeLayout
                     android:id="@+id/relativeLayout"

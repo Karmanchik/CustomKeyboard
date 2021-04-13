@@ -137,7 +137,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:visibility="visible"
-                    app:srcCompat="@drawable/error_placeholder_midle" />
+                    app:srcCompat="@drawable/error_placeholder_midl" />
 
                 <RelativeLayout
                     android:id="@+id/relativeLayout"
