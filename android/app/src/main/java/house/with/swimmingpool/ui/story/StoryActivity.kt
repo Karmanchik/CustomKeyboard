@@ -112,7 +112,8 @@ class StoryActivity : AppCompatActivity() {
             description.text = item.title
             Glide.with(this@StoryActivity)
                 .load(item.poster)
-                .transition(GenericTransitionOptions.with(R.anim.slide_left))
+                .dontAnimate()
+//                .transition(GenericTransitionOptions.with(R.anim.slide_left))
                 .centerCrop()
                 .into(container)
 
