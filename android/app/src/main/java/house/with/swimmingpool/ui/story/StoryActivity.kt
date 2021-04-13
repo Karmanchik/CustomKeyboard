@@ -9,15 +9,14 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.gson.Gson
-import house.with.swimmingpool.App
+import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ActivityStoryBinding
 import house.with.swimmingpool.models.StoriesData
 import house.with.swimmingpool.models.StoriesItem
 import house.with.swimmingpool.ui.home.adapters.StoriesAdapter
-import house.with.swimmingpool.ui.startActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -44,7 +43,7 @@ class StoryActivity : AppCompatActivity() {
         nextStory()
     }
 
-    private fun nextStory(){
+    private fun nextStory() {
         Log.e("position", story.toString())
         val decorView: View = window.decorView
         val uiOptions: Int = View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -96,7 +95,7 @@ class StoryActivity : AppCompatActivity() {
             storyPosition++
             story = listStories[storyPosition]
             nextStory()
-        }else{
+        } else {
             finish()
         }
     }
@@ -113,8 +112,8 @@ class StoryActivity : AppCompatActivity() {
             description.text = item.title
             Glide.with(this@StoryActivity)
                 .load(item.poster)
+                .transition(GenericTransitionOptions.with(R.anim.slide_left))
                 .centerCrop()
-                .dontAnimate()
                 .into(container)
 
             var isLongClick = false
