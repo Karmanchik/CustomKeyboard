@@ -31,19 +31,22 @@ class MainActivity : AppCompatActivity() {
         @AnimRes inAnim: Int? = null,
         @AnimRes outAnim: Int? = null
     ) {
-        if (!(App.setting.isAuth) && (fragment is CabinetFragment || fragment is FavouritesFragment)) {
-            startActivity<LoginActivity> { }
-            fragmentIntent = fragment
-            return
-        }
+        try {
+            if (!(App.setting.isAuth) && (fragment is CabinetFragment || fragment is FavouritesFragment)) {
+                startActivity<LoginActivity> { }
+                fragmentIntent = fragment
+                return
+            }
 
-        val transaction = supportFragmentManager.beginTransaction()
-        if (inAnim != null && outAnim != null) {
-            transaction.setCustomAnimations(inAnim, outAnim)
+            val transaction = supportFragmentManager.beginTransaction()
+            if (inAnim != null && outAnim != null) {
+                transaction.setCustomAnimations(inAnim, outAnim)
+            }
+            transaction.add(R.id.mainFrame, fragment.apply { arguments = bundle })
+            transaction.addToBackStack(null)
+            transaction.commit()
+        } catch (e: Exception) {
         }
-        transaction.add(R.id.mainFrame, fragment.apply { arguments = bundle })
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 
     override fun onRestart() {
