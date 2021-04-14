@@ -42,15 +42,6 @@ class CabinetFragment : Fragment(), ICabinetView {
         super.onDestroy()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.e("testIsLogin", App.setting.isAuth.toString())
-        if (!(App.setting.isAuth)) {
-            requireActivity().startActivity<LoginActivity> { }
-            childFragmentManager.fragments.remove(this)
-        }
-    }
-
     override fun onResume() {
         Log.e("testIsLogin", isPopBackLoginActivity.toString())
         if (!(App.setting.isAuth) && isPopBackLoginActivity) {

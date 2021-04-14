@@ -14,14 +14,17 @@ import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.favourites.FavouritesFragment
 import house.with.swimmingpool.ui.home.HomeFragment
+import house.with.swimmingpool.ui.login.LoginActivity
+import house.with.swimmingpool.ui.startActivity
 
 class MainActivity : AppCompatActivity() {
+
+    private var fragmentIntent: Fragment? = null
 
     private val homeFragment by lazy { HomeFragment() }
     private val favouritesFragment by lazy { FavouritesFragment() }
     private val catalogFragment by lazy { CatalogFragment() }
     private val profileFragment by lazy { CabinetFragment() }
-
 
     fun showFragment(
         fragment: Fragment,
@@ -29,6 +32,12 @@ class MainActivity : AppCompatActivity() {
         @AnimRes inAnim: Int? = null,
         @AnimRes outAnim: Int? = null
     ) {
+        if (!(App.setting.isAuth) && (fragment is CabinetFragment || fragment is FavouritesFragment)) {
+            startActivity<LoginActivity> { }
+            fragmentIntent = fragment
+            return
+        }
+
         val transaction = supportFragmentManager.beginTransaction()
         if (inAnim != null && outAnim != null) {
             transaction.setCustomAnimations(inAnim, outAnim)
@@ -36,6 +45,12 @@ class MainActivity : AppCompatActivity() {
         transaction.add(R.id.mainFrame, fragment.apply { arguments = bundle })
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        if (App.setting.isAuth && fragmentIntent != null)
+            showFragment(fragmentIntent!!)
     }
 
     fun back() {
@@ -92,17 +107,13 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
         navView.setOnNavigationItemSelectedListener {
-            supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.mainFrame,
-                    when (it.itemId) {
-                        R.id.navigation_home -> homeFragment
-                        R.id.favouritesFragment -> favouritesFragment
-                        R.id.catalogViewModel -> catalogFragment
-                        else -> profileFragment
-                    }
-                )
-                .commit()
+            val tmp = when (it.itemId) {
+                R.id.navigation_home -> homeFragment
+                R.id.favouritesFragment -> favouritesFragment
+                R.id.catalogViewModel -> catalogFragment
+                else -> profileFragment
+            }
+            showFragment(tmp)
             true
         }
 
