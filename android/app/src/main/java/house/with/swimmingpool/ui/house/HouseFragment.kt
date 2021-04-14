@@ -164,10 +164,8 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 singleHouseObject.getGallery().apply {
                     whiteButtonGalleryRV.adapter =
-
                         MainGalleryAndDateAdapter(
-                            requireContext(),
-                            this,
+                            this?.filter { it.second.isNotEmpty() } ?: listOf(),
                             this@HouseFragment
                         )
 
@@ -218,7 +216,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 if (note == null) {
                     noteLayout.visibility = View.GONE
                 } else {
-//                        noteText = note
                     noteLayout.visibility = View.VISIBLE
                 }
 
@@ -254,10 +251,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     description.text = Html.fromHtml(singleHouseObject.description)
                 }
 
-//                    if (data.video.isNullOrEmpty()) {
-
                 Glide.with(requireContext())
-//                            .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
                     .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
                     .error(R.drawable.error_placeholder_midl)
                     .placeholder(R.drawable.placeholder)
@@ -297,7 +291,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 } else {
                     videoLayout.visibility = View.GONE
                 }
-//                    }
 
                 if (singleHouseObject.geolocation?.latitude == null) {
                     textViewLocationMap.visibility = View.GONE
@@ -318,7 +311,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 if (singleHouseObject.type == "complex") {
                     housesListText.text = "Список квартир"
                 }
-
 
                 if (singleHouseObject.advantages != null) {
                     textViewAdvantages.visibility = View.VISIBLE
@@ -397,7 +389,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 }
             }
         } catch (e: Exception) {
-            Log.e("test", "lol", e)
         }
     }
 
@@ -418,14 +409,12 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 if (id != null) {
                     if (isFavourite == true) {
                         favoriteImageView.setImageResource(R.drawable.ic_like_is_favorite_false)
-                        RealtyServiceImpl().removeFromFavourites(id) { status, e ->
-                            Log.e("removeFromFavourites", "status $status EXCEPTION $e")
+                        RealtyServiceImpl().removeFromFavourites(id) { _, _ ->
                             isFavourite = false
                         }
                     } else {
                         favoriteImageView.setImageResource(R.drawable.ic_like_is_favorite_true)
-                        RealtyServiceImpl().addToFavourites(id) { status, e ->
-                            Log.e("addToFavourites", "status $status EXCEPTION $e")
+                        RealtyServiceImpl().addToFavourites(id) { _, _ ->
                             isFavourite = true
                         }
                     }
@@ -458,14 +447,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         } else {
                             houseExampleData?.apply {
                                 showListHouseBox.visibility = View.VISIBLE
-                                adapter = ListHouseBoxAdapter(
-                                    requireContext(),
-                                    children?.take(6)
-//                                        listOf(
-//                                                children?.get(0), children?.get(1), children?.get(2),
-//                                                children?.get(3), children?.get(4), children?.get(5),
-//                                        )
-                                )
+                                adapter = ListHouseBoxAdapter(requireContext(), children?.take(6))
                             }
                         }
                     }
@@ -488,9 +470,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
     override fun showHeaderGallery(list: ArrayList<String>) {
         houseObjectBinding?.apply {
-            Log.e("testing", list.toString())
-            val vp = mainHousesContainer
-            vp.adapter = HouseHeaderAdapter(list)
+            mainHousesContainer.adapter = HouseHeaderAdapter(list)
             if (list.size < 2) {
                 dotsIndicator.visibility = View.INVISIBLE
                 mainHeaderPlaceholder.visibility = View.VISIBLE
@@ -498,7 +478,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 dotsIndicator.visibility = View.VISIBLE
                 mainHeaderPlaceholder.visibility = View.INVISIBLE
             }
-            dotsIndicator.setViewPager2(vp)
+            dotsIndicator.setViewPager2(mainHousesContainer)
         }
     }
 
