@@ -3,12 +3,14 @@ package house.with.swimmingpool.ui.home
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -29,6 +31,8 @@ import house.with.swimmingpool.ui.news.listnews.NewsListFragment
 import house.with.swimmingpool.ui.news.singlenews.NewsSingleFragment
 import house.with.swimmingpool.ui.popups.PopupActivity
 import house.with.swimmingpool.ui.search.SearchActivity
+import house.with.swimmingpool.ui.showModeBottomMenu
+import house.with.swimmingpool.ui.showModeFab
 import house.with.swimmingpool.ui.videos.listvideos.VideosListFragment
 import house.with.swimmingpool.ui.videos.singlevideo.VideoFragment
 import kotlinx.coroutines.Dispatchers
@@ -83,10 +87,10 @@ class HomeFragment : Fragment() {
 
     private fun updateData() {
 
-        Log.e("FirstLoaded", isFirstLoad.toString())
-
         if (isFirstLoad) {
             homeBinding?.firstLoad?.visibility = View.VISIBLE
+            showModeFab(false)
+            showModeBottomMenu(false)
             isFirstLoad = false
         } else {
             homeBinding?.loader?.visibility = View.VISIBLE
@@ -113,9 +117,11 @@ class HomeFragment : Fragment() {
             val storiesInfo = StoriesServiceImpl().loadStories()
             val headerInfo = BannersServiceImpl().loadHeader()
             val ads = BannersServiceImpl().loadBanners()
-            Log.e("testingCorutinsMain", "start")
+
             launch(Dispatchers.Main) {
-                Log.e("testingCorutinsMain", "second")
+                showModeFab(true)
+                showModeBottomMenu(true)
+
                 if (videosInfo.second != null
                     && newsInfo.second != null
                     && storiesInfo.second != null
@@ -319,6 +325,11 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+
+            segmentedControl.setTypeFace(
+                ResourcesCompat.getFont(requireContext().applicationContext, R.font.lato_regular)
+            )
+
             segmentedControl.setSelectedSegment(0)
 
             shortFilterView.setOnClickListener {

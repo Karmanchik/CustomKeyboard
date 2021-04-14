@@ -3,7 +3,6 @@ package house.with.swimmingpool.ui.house.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,10 +12,9 @@ import house.with.swimmingpool.databinding.ItemWhiteButtonBinding
 import house.with.swimmingpool.models.Img
 import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
 
-class MainGalleryAndDateAdapter (
-        var ctx: Context,
-        var items: List<Pair<String, List<Img>>>?,
-        var parentView: ISingleHouseView
+class MainGalleryAndDateAdapter(
+    var items: List<Pair<String, List<Img>>>,
+    var parentView: ISingleHouseView
 ) : RecyclerView.Adapter<MainGalleryAndDateAdapter.Holder>() {
 
     private var lastCheckedPosition = 0
@@ -24,7 +22,7 @@ class MainGalleryAndDateAdapter (
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         recyclerView.layoutManager =
-                LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(recyclerView.context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -32,46 +30,34 @@ class MainGalleryAndDateAdapter (
         return Holder(ItemWhiteButtonBinding.inflate(layoutInflater, parent, false))
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) =
-            holder.bind(position)
+    override fun onBindViewHolder(holder: Holder, position: Int) = holder.bind(items[position])
 
-    override fun getItemCount() = items?.size ?: 0
+    override fun getItemCount() = items.size
 
     inner class Holder(private val view: ItemWhiteButtonBinding) :
             RecyclerView.ViewHolder(view.root) {
 
-        @SuppressLint("UseCompatLoadingForDrawables", "ResourceAsColor")
-        fun bind(position: Int) {
-            view.apply {
-                var key = ""
-                val listOfImages: ArrayList<String> = arrayListOf()
+        @SuppressLint("UseCompatLoadingForDrawables")
+        fun bind(item: Pair<String, List<Img>>) {
+            view.buttonWhite.apply {
+                text = item.first
 
-                items?.get(position)?.let {
-                    Log.e("listOfImages", it.first)
-                    key = it.first
-                    it.second.forEach { im ->
-                        listOfImages.add(im.url)
-                    }
-                }
-                buttonWhite.text = key
-
-                if (position != lastCheckedPosition) {
-                    view.buttonWhite.background = ctx.getDrawable(R.drawable.white_button_with_corner4)
-                    view.buttonWhite.setTextColor(Color.parseColor("#000000"))
+                if (adapterPosition != lastCheckedPosition) {
+                    background = context.getDrawable(R.drawable.white_button_with_corner4)
+                    setTextColor(Color.parseColor("#000000"))
                 } else {
-                    view.buttonWhite.background = ctx.getDrawable(R.drawable.blue_button_with_corner4)
-                    view.buttonWhite.setTextColor(Color.parseColor("#FFFFFF"))
+                    background = context.getDrawable(R.drawable.blue_button_with_corner4)
+                    setTextColor(Color.parseColor("#FFFFFF"))
                 }
 
-                buttonWhite.setOnClickListener {
-
-                    if (lastCheckedPosition != position) {
+                setOnClickListener {
+                    if (lastCheckedPosition != adapterPosition) {
                         notifyItemChanged(lastCheckedPosition)
-                        lastCheckedPosition = position
-                        view.buttonWhite.background = ctx.getDrawable(R.drawable.blue_button_with_corner4)
-                        view.buttonWhite.setTextColor(Color.parseColor("#FFFFFF"))
+                        lastCheckedPosition = adapterPosition
+                        background = context.getDrawable(R.drawable.blue_button_with_corner4)
+                        setTextColor(Color.parseColor("#FFFFFF"))
                     }
-                    parentView.showHeaderGallery(listOfImages)
+                    parentView.showHeaderGallery(ArrayList(item.second.map { it.url }))
                 }
             }
         }

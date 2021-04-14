@@ -1,9 +1,7 @@
 package house.with.swimmingpool.ui.login
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
-import android.text.Editable
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +18,12 @@ import house.with.swimmingpool.databinding.FragmentRegisterLoginBinding
 class RegisterLoginFragment(
         private val parentView: ILoginView
         ): Fragment() {
+
+    constructor() : this(object : ILoginView {
+        override fun showSmsCodeFragment(phone: String) = Unit
+        override fun onSmsCodeCorrect(smsCode: String) = Unit
+        override fun onLoginSuccess(name: String?) = Unit
+    })
 
     private var isShowPassword = false
 

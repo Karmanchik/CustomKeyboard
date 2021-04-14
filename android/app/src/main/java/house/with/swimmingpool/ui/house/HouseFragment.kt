@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Html
@@ -13,38 +14,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.model.*
 import com.google.gson.Gson
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
-import com.yandex.mapkit.Animation
-import com.yandex.mapkit.MapKitFactory
-import com.yandex.mapkit.geometry.Point
-import com.yandex.mapkit.map.CameraPosition
-import com.yandex.mapkit.mapview.MapView
-import com.yandex.runtime.ui_view.ViewProvider
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentHouseBinding
 import house.with.swimmingpool.models.HouseExampleData
-import house.with.swimmingpool.ui.back
+import house.with.swimmingpool.ui.*
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 import house.with.swimmingpool.ui.house.adapters.*
 import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
-import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.popups.PopupActivity
 import house.with.swimmingpool.ui.search.SearchActivity
-import house.with.swimmingpool.ui.toast
+
 
 class HouseFragment : Fragment(), ISingleHouseView {
 
     private var houseObjectBinding: FragmentHouseBinding? = null
-
-    private var mapview: MapView? = null
-
     private var houseExampleData: HouseExampleData? = null
 
     override fun onCreateView(
@@ -53,7 +49,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
         savedInstanceState: Bundle?,
     ): View? {
         houseObjectBinding = FragmentHouseBinding.inflate(layoutInflater)
-
+        houseObjectBinding?.mapView2?.onCreate(savedInstanceState)
         return houseObjectBinding?.root
     }
 
@@ -61,8 +57,20 @@ class HouseFragment : Fragment(), ISingleHouseView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        try {
+            MapsInitializer.initialize(activity)
+        } catch (e: GooglePlayServicesNotAvailableException) {
+            e.printStackTrace()
+        }
+
         houseObjectBinding?.houseBackIcon?.setOnClickListener {
             back()
+        }
+
+        houseObjectBinding?.apply {
+            val size = shareLinkTextView.textSize
+            noteLabel2.textSize = size
+            favoriteTextView.textSize = size
         }
 
         try {
@@ -157,10 +165,8 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 singleHouseObject.getGallery().apply {
                     whiteButtonGalleryRV.adapter =
-
                         MainGalleryAndDateAdapter(
-                            requireContext(),
-                            this,
+                            this?.filter { it.second.isNotEmpty() } ?: listOf(),
                             this@HouseFragment
                         )
 
@@ -211,7 +217,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 if (note == null) {
                     noteLayout.visibility = View.GONE
                 } else {
-//                        noteText = note
                     noteLayout.visibility = View.VISIBLE
                 }
 
@@ -247,10 +252,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     description.text = Html.fromHtml(singleHouseObject.description)
                 }
 
-//                    if (data.video.isNullOrEmpty()) {
-
                 Glide.with(requireContext())
-//                            .load("https://i.ytimg.com/vi/${videos?.get(position)}/maxresdefault.jpg")
                     .load("https://i.ytimg.com/vi/-cYOlHknhBU/maxresdefault.jpg")
                     .error(R.drawable.error_placeholder_midl)
                     .placeholder(R.drawable.placeholder)
@@ -290,7 +292,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 } else {
                     videoLayout.visibility = View.GONE
                 }
-//                    }
 
                 if (singleHouseObject.geolocation?.latitude == null) {
                     textViewLocationMap.visibility = View.GONE
@@ -311,7 +312,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 if (singleHouseObject.type == "complex") {
                     housesListText.text = "Список квартир"
                 }
-
 
                 if (singleHouseObject.advantages != null) {
                     textViewAdvantages.visibility = View.VISIBLE
@@ -348,22 +348,20 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     val latitude = singleHouseObject.geolocation?.latitude ?: .0
                     val longitude = singleHouseObject.geolocation?.longitude ?: .0
 
-                    mapview = mapView
-                    mapView.map?.isRotateGesturesEnabled = false
-                    mapView.map?.isScrollGesturesEnabled = false
-                    mapView.map?.isZoomGesturesEnabled = false
-                    mapView.map?.isTiltGesturesEnabled = false
-                    mapview?.map?.move(
-                        CameraPosition(
-                            Point(latitude, longitude), 11.0f, 0.0f, 0.0f
-                        ),
-                        Animation(Animation.Type.SMOOTH, 0F),
-                        null
-                    )
-                    mapview?.map?.mapObjects?.addPlacemark(
-                        Point(latitude, longitude),
-                        ViewProvider(icon)
-                    )
+                    mapView2.getMapAsync {
+                        it.uiSettings.isRotateGesturesEnabled = false
+                        it.uiSettings.isScrollGesturesEnabled = false
+                        it.uiSettings.isZoomGesturesEnabled = false
+                        it.uiSettings.isTiltGesturesEnabled = false
+
+                        val marker = MarkerOptions().position(LatLng(latitude, longitude))
+                        marker.icon(BitmapDescriptorFactory.fromBitmap(icon.drawable.toBitmap()))
+                        it.addMarker(marker)
+                        val cameraUpdate =
+                            CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 10f)
+                        it.moveCamera(cameraUpdate)
+                    }
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -390,7 +388,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 }
             }
         } catch (e: Exception) {
-            Log.e("test", "lol", e)
         }
     }
 
@@ -481,14 +478,12 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 if (id != null) {
                     if (isFavourite == true) {
                         favoriteImageView.setImageResource(R.drawable.ic_like_is_favorite_false)
-                        RealtyServiceImpl().removeFromFavourites(id) { status, e ->
-                            Log.e("removeFromFavourites", "status $status EXCEPTION $e")
+                        RealtyServiceImpl().removeFromFavourites(id) { _, _ ->
                             isFavourite = false
                         }
                     } else {
                         favoriteImageView.setImageResource(R.drawable.ic_like_is_favorite_true)
-                        RealtyServiceImpl().addToFavourites(id) { status, e ->
-                            Log.e("addToFavourites", "status $status EXCEPTION $e")
+                        RealtyServiceImpl().addToFavourites(id) { _, _ ->
                             isFavourite = true
                         }
                     }
@@ -521,14 +516,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         } else {
                             houseExampleData?.apply {
                                 showListHouseBox.visibility = View.VISIBLE
-                                adapter = ListHouseBoxAdapter(
-                                    requireContext(),
-                                    children?.take(6)
-//                                        listOf(
-//                                                children?.get(0), children?.get(1), children?.get(2),
-//                                                children?.get(3), children?.get(4), children?.get(5),
-//                                        )
-                                )
+                                adapter = ListHouseBoxAdapter(requireContext(), children?.take(6))
                             }
                         }
                     }
@@ -541,6 +529,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
     }
 
     override fun onDestroy() {
+        houseObjectBinding?.mapView2?.onDestroy()
         houseObjectBinding = null
         if (App.setting.isSearchActivityOpen) {
             startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
@@ -551,9 +540,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
     override fun showHeaderGallery(list: ArrayList<String>) {
         houseObjectBinding?.apply {
-            Log.e("testing", list.toString())
-            val vp = mainHousesContainer
-            vp.adapter = HouseHeaderAdapter(list)
+            mainHousesContainer.adapter = HouseHeaderAdapter(list)
             if (list.size < 2) {
                 dotsIndicator.visibility = View.INVISIBLE
                 mainHeaderPlaceholder.visibility = View.VISIBLE
@@ -561,20 +548,8 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 dotsIndicator.visibility = View.VISIBLE
                 mainHeaderPlaceholder.visibility = View.INVISIBLE
             }
-            dotsIndicator.setViewPager2(vp)
+            dotsIndicator.setViewPager2(mainHousesContainer)
         }
-    }
-
-    override fun onStop() {
-        mapview?.onStop()
-        MapKitFactory.getInstance().onStop()
-        super.onStop()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        MapKitFactory.getInstance().onStart()
-        mapview?.onStart()
     }
 
     override fun showInformation(position: Int) {
@@ -611,4 +586,15 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 .commit()
         }
     }
+
+    override fun onResume() {
+        houseObjectBinding?.mapView2?.onResume()
+        super.onResume()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        houseObjectBinding?.mapView2?.onLowMemory()
+    }
+
 }

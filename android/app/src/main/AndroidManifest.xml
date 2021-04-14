@@ -33,19 +33,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-
-<!--                <action android:name="android.intent.action.VIEW" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <data-->
-<!--                    android:host="domsbasseinom.ru"-->
-<!--                    android:pathPrefix="/app/testhouse"-->
-<!--                    android:scheme="https" />-->
             </intent-filter>
         </activity>
         <activity
@@ -56,6 +48,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDsDqoWDVA-bUANEg8oFkiBQ0YFOyTacmY"/>
+
     </application>
 
 </manifest>

@@ -4,25 +4,26 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
 import androidx.annotation.AnimRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.yandex.mapkit.MapKitFactory
 import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.favourites.FavouritesFragment
 import house.with.swimmingpool.ui.home.HomeFragment
+import house.with.swimmingpool.ui.login.LoginActivity
+import house.with.swimmingpool.ui.startActivity
 
 class MainActivity : AppCompatActivity() {
+
+    private var fragmentIntent: Fragment? = null
 
     private val homeFragment by lazy { HomeFragment() }
     private val favouritesFragment by lazy { FavouritesFragment() }
     private val catalogFragment by lazy { CatalogFragment() }
     private val profileFragment by lazy { CabinetFragment() }
-
 
     fun showFragment(
         fragment: Fragment,
@@ -30,6 +31,12 @@ class MainActivity : AppCompatActivity() {
         @AnimRes inAnim: Int? = null,
         @AnimRes outAnim: Int? = null
     ) {
+        if (!(App.setting.isAuth) && (fragment is CabinetFragment || fragment is FavouritesFragment)) {
+            startActivity<LoginActivity> { }
+            fragmentIntent = fragment
+            return
+        }
+
         val transaction = supportFragmentManager.beginTransaction()
         if (inAnim != null && outAnim != null) {
             transaction.setCustomAnimations(inAnim, outAnim)
@@ -39,8 +46,22 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        if (App.setting.isAuth && fragmentIntent != null)
+            showFragment(fragmentIntent!!)
+    }
+
     fun back() {
         onBackPressed()
+    }
+
+    fun showModeFab(isShow: Boolean) {
+        findViewById<View>(R.id.call).visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+    fun showModeBottomMenu(isShow: Boolean) {
+        findViewById<View>(R.id.nav_view).visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,40 +100,20 @@ class MainActivity : AppCompatActivity() {
                 null
             )
         }
-        val navController = findViewById<FrameLayout>(R.id.mainFrame)
-//        val navController = indNavController(R.id.nav_host_fragment)
-//        navController.addOnDestinationChangedListener { f, destination, l ->
-//            if (destination.label.toString() in listOf("Home", "CatalogViewModel")) {
-//                fab.visibility = View.VISIBLE
-//            } else {
-//                fab.visibility = View.GONE
-//            }
-
-//        }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainFrame, homeFragment)
             .commit()
 
         navView.setOnNavigationItemSelectedListener {
-            supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.mainFrame,
-                    when (it.itemId) {
-                        R.id.navigation_home -> homeFragment
-                        R.id.favouritesFragment -> favouritesFragment
-                        R.id.catalogViewModel -> catalogFragment
-                        else -> profileFragment
-                    }
-                )
-                .commit()
+            val tmp = when (it.itemId) {
+                R.id.navigation_home -> homeFragment
+                R.id.favouritesFragment -> favouritesFragment
+                R.id.catalogViewModel -> catalogFragment
+                else -> profileFragment
+            }
+            showFragment(tmp)
             true
-        }
-
-        try {
-            MapKitFactory.setApiKey("bb9c9bdc-48ad-4806-b55d-48c2e98b3b0d")
-            MapKitFactory.initialize(this)
-        } catch (e: Exception) {
         }
     }
 }

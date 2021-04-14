@@ -1,7 +1,6 @@
 package house.with.swimmingpool
 
 import android.app.Application
-import android.hardware.SensorDirectChannel
 import androidx.room.Room
 import house.with.swimmingpool.helpers.RoomDataBase
 import house.with.swimmingpool.helpers.Setting

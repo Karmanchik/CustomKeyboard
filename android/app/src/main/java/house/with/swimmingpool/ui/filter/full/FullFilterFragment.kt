@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.google.gson.JsonObject
@@ -105,6 +106,11 @@ class FullFilterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+
+            segmentedControl.setTypeFace(
+                ResourcesCompat.getFont(requireContext().applicationContext, R.font.lato_regular)
+            )
+
             closeIcon.setOnClickListener {
                 back()
             }
