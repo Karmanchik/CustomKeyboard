@@ -51,7 +51,6 @@
                     android:layout_height="460dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-
                     android:src="@drawable/gradient_placeholder_midle" />
 
                 <TextView
@@ -203,7 +202,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="41dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:gravity="center"
@@ -212,6 +211,7 @@
                 android:paddingBottom="11dp">
 
                 <LinearLayout
+                    android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -224,25 +224,31 @@
                         android:layout_marginEnd="5dp"
                         android:src="@drawable/ic_shear_blue" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:gravity="center_vertical"
                         android:id="@+id/shareLinkTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="15sp"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="9sp"
+                        app:autoSizeMaxTextSize="15sp"
+                        android:maxLines="1"
+                        app:autoSizeStepGranularity="1sp"
                         android:fontFamily="@font/lato"
                         android:text="Поделиться"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
                         android:textStyle="normal" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="?android:attr/listDivider" />
 
                 <LinearLayout
+                    android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -251,29 +257,33 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:layout_marginStart="25dp"
                         android:layout_marginEnd="5dp"
                         android:src="@drawable/ic_notes_blue" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/noteLabel2"
+                        android:gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="25dp"
-                        android:autoSizeMaxTextSize="15sp"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="9sp"
+                        app:autoSizeMaxTextSize="15sp"
+                        android:maxLines="1"
+                        app:autoSizeStepGranularity="1sp"
                         android:fontFamily="@font/lato"
                         android:text="Заметка"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="normal" />
+                        android:textColor="@color/black" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="?android:attr/listDivider" />
 
                 <LinearLayout
+                    android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -286,15 +296,19 @@
                         android:layout_marginEnd="5dp"
                         android:src="@drawable/ic_like_is_favorite_false" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:gravity="center_vertical"
                         android:id="@+id/favoriteTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="15sp"
+                        android:maxLines="1"
                         android:fontFamily="@font/lato"
                         android:text="Избранное"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="9sp"
+                        app:autoSizeMaxTextSize="15sp"
+                        app:autoSizeStepGranularity="1sp"
                         android:textStyle="normal"
                         tools:ignore="UnusedAttribute" />
 

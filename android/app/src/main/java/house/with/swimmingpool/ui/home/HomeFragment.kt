@@ -3,12 +3,14 @@ package house.with.swimmingpool.ui.home
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -319,6 +321,11 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+
+            segmentedControl.setTypeFace(
+                ResourcesCompat.getFont(requireContext().applicationContext, R.font.lato_regular)
+            )
+
             segmentedControl.setSelectedSegment(0)
 
             shortFilterView.setOnClickListener {

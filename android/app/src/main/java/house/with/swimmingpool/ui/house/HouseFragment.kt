@@ -64,6 +64,12 @@ class HouseFragment : Fragment(), ISingleHouseView {
             back()
         }
 
+        houseObjectBinding?.apply {
+            val size = shareLinkTextView.textSize
+            noteLabel2.textSize = size
+            favoriteTextView.textSize = size
+        }
+
         try {
             val singleHouseObject =
                 Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)

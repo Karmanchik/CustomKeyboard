@@ -160,7 +160,7 @@
                 app:segments="@array/main_segment_control_variants"
                 app:selectedBackgroundColor="@color/main_blue"
                 app:selectedStrokeColor="@color/main_blue"
-                app:strokeWidth="1dp"
+                app:strokeWidth="1px"
                 app:textSize="14sp"
                 app:textVerticalPadding="6dp"
                 app:unSelectedStrokeColor="#E6E6E6"
