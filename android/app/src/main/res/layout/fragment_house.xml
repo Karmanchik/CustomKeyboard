@@ -735,9 +735,10 @@
                 android:elevation="10dp"
                 app:cardCornerRadius="6dp">
 
-                <com.yandex.mapkit.mapview.MapView
-                    android:id="@+id/mapView"
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapView2"
                     android:layout_width="match_parent"
+                    android:clickable="false"
                     android:layout_height="245dp" />
 
             </androidx.cardview.widget.CardView>

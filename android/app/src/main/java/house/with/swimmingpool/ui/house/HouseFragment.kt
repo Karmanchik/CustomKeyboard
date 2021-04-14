@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -12,18 +13,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.model.*
 import com.google.gson.Gson
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
-import com.yandex.mapkit.Animation
-import com.yandex.mapkit.MapKitFactory
-import com.yandex.mapkit.geometry.Point
-import com.yandex.mapkit.map.CameraPosition
-import com.yandex.mapkit.mapview.MapView
-import com.yandex.runtime.ui_view.ViewProvider
 import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
@@ -36,12 +36,10 @@ import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
 import house.with.swimmingpool.ui.popups.PopupActivity
 import house.with.swimmingpool.ui.search.SearchActivity
 
+
 class HouseFragment : Fragment(), ISingleHouseView {
 
     private var houseObjectBinding: FragmentHouseBinding? = null
-
-    private var mapview: MapView? = null
-
     private var houseExampleData: HouseExampleData? = null
 
     override fun onCreateView(
@@ -50,13 +48,19 @@ class HouseFragment : Fragment(), ISingleHouseView {
         savedInstanceState: Bundle?,
     ): View? {
         houseObjectBinding = FragmentHouseBinding.inflate(layoutInflater)
-
+        houseObjectBinding?.mapView2?.onCreate(savedInstanceState)
         return houseObjectBinding?.root
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        try {
+            MapsInitializer.initialize(activity)
+        } catch (e: GooglePlayServicesNotAvailableException) {
+            e.printStackTrace()
+        }
 
         houseObjectBinding?.houseBackIcon?.setOnClickListener {
             back()
@@ -347,22 +351,20 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     val latitude = singleHouseObject.geolocation?.latitude ?: .0
                     val longitude = singleHouseObject.geolocation?.longitude ?: .0
 
-                    mapview = mapView
-                    mapView.map?.isRotateGesturesEnabled = false
-                    mapView.map?.isScrollGesturesEnabled = false
-                    mapView.map?.isZoomGesturesEnabled = false
-                    mapView.map?.isTiltGesturesEnabled = false
-                    mapview?.map?.move(
-                        CameraPosition(
-                            Point(latitude, longitude), 11.0f, 0.0f, 0.0f
-                        ),
-                        Animation(Animation.Type.SMOOTH, 0F),
-                        null
-                    )
-                    mapview?.map?.mapObjects?.addPlacemark(
-                        Point(latitude, longitude),
-                        ViewProvider(icon)
-                    )
+                    mapView2.getMapAsync {
+                        it.uiSettings.isRotateGesturesEnabled = false
+                        it.uiSettings.isScrollGesturesEnabled = false
+                        it.uiSettings.isZoomGesturesEnabled = false
+                        it.uiSettings.isTiltGesturesEnabled = false
+
+                        val marker = MarkerOptions().position(LatLng(latitude, longitude))
+                        marker.icon(BitmapDescriptorFactory.fromBitmap(icon.drawable.toBitmap()))
+                        it.addMarker(marker)
+                        val cameraUpdate =
+                            CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 10f)
+                        it.moveCamera(cameraUpdate)
+                    }
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -460,6 +462,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
     }
 
     override fun onDestroy() {
+        houseObjectBinding?.mapView2?.onDestroy()
         houseObjectBinding = null
         if (App.setting.isSearchActivityOpen) {
             startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
@@ -479,22 +482,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 mainHeaderPlaceholder.visibility = View.INVISIBLE
             }
             dotsIndicator.setViewPager2(mainHousesContainer)
-        }
-    }
-
-    override fun onStop() {
-        mapview?.onStop()
-        MapKitFactory.getInstance().onStop()
-        super.onStop()
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        try {
-            MapKitFactory.getInstance().onStart()
-            mapview?.onStart()
-        } catch (e: Exception) {
         }
     }
 
@@ -532,4 +519,15 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 .commit()
         }
     }
+
+    override fun onResume() {
+        houseObjectBinding?.mapView2?.onResume()
+        super.onResume()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        houseObjectBinding?.mapView2?.onLowMemory()
+    }
+
 }

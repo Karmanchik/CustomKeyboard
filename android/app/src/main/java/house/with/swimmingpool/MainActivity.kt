@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.yandex.mapkit.MapKitFactory
 import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.favourites.FavouritesFragment
@@ -115,11 +114,6 @@ class MainActivity : AppCompatActivity() {
             }
             showFragment(tmp)
             true
-        }
-
-        try {
-            MapKitFactory.initialize(this)
-        } catch (e: Exception) {
         }
     }
 }
