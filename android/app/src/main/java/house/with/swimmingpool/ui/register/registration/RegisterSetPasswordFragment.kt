@@ -21,6 +21,7 @@ import house.with.swimmingpool.ui.favourites.FavouritesFragment
 import house.with.swimmingpool.ui.favourites.searches.SearchesFragment
 import house.with.swimmingpool.ui.login.ILoginView
 import house.with.swimmingpool.ui.login.LoginActivity
+import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.popups.PopupActivity
 
 class RegisterSetPasswordFragment(

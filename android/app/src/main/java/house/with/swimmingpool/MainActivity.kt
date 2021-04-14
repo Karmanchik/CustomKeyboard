@@ -3,6 +3,7 @@ package house.with.swimmingpool
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.AnimRes
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +19,7 @@ import house.with.swimmingpool.ui.startActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private var fragmentIntent: Fragment? = null
+    private var fragmentIntent: Fragment? = CabinetFragment()
 
     private val homeFragment by lazy { HomeFragment() }
     private val favouritesFragment by lazy { FavouritesFragment() }
@@ -38,21 +39,36 @@ class MainActivity : AppCompatActivity() {
                 return
             }
 
-            val transaction = supportFragmentManager.beginTransaction()
-            if (inAnim != null && outAnim != null) {
-                transaction.setCustomAnimations(inAnim, outAnim)
+
+            if (fragment.isAdded ){
+                val transaction = supportFragmentManager.beginTransaction()
+                if (inAnim != null && outAnim != null) {
+                    transaction.setCustomAnimations(inAnim, outAnim)
+                }
+
+                transaction.replace(R.id.mainFrame, fragment.apply { arguments = bundle })
+//                transaction.addToBackStack(null)
+                transaction.commit()
+            }else {
+                val transaction = supportFragmentManager.beginTransaction()
+                if (inAnim != null && outAnim != null) {
+                    transaction.setCustomAnimations(inAnim, outAnim)
+                }
+
+                transaction.add(R.id.mainFrame, fragment.apply { arguments = bundle })
+//                transaction.addToBackStack(null)
+                transaction.commit()
             }
-            transaction.add(R.id.mainFrame, fragment.apply { arguments = bundle })
-            transaction.addToBackStack(null)
-            transaction.commit()
         } catch (e: Exception) {
+            Log.e("testingRestart", "lol", e)
         }
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        if (App.setting.isAuth && fragmentIntent != null)
-            showFragment(fragmentIntent!!)
+    override fun onResume() {
+        super.onResume()
+        if (App.setting.isAuth && fragmentIntent != null) {
+            showFragment(CabinetFragment())
+        }
     }
 
     fun back() {

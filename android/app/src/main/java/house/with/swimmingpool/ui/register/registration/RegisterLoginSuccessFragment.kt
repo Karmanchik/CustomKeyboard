@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import house.with.swimmingpool.databinding.FragmentRegisterLoginSuccessBinding
+import house.with.swimmingpool.ui.cabinet.CabinetFragment
+import house.with.swimmingpool.ui.navigate
 
 class RegisterLoginSuccessFragment (val name : String?): Fragment() {
 
