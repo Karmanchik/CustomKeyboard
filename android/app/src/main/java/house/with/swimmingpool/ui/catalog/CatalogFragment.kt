@@ -63,22 +63,22 @@ class CatalogFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
 
-            scroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                Log.e("testTuch", "ok")
-            }
-            litRV.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                Log.e("testTuch", scrollY.toString())
-            }
-            litRV.setOnClickListener { Log.e("testTuch", "ok") }
-
-            litRV.setOnFocusChangeListener { v, hasFocus ->
-                Log.e("testTuch", hasFocus.toString())
-            }
-
-            litRV.setOnTouchListener { v, event ->
-                Log.e("testTouch", "okk")
-                true
-            }
+//            scroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+//                Log.e("testTuch", "ok")
+//            }
+//            litRV.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+//                Log.e("testTuch", scrollY.toString())
+//            }
+//            litRV.setOnClickListener { Log.e("testTuch", "ok") }
+//
+//            litRV.setOnFocusChangeListener { v, hasFocus ->
+//                Log.e("testTuch", hasFocus.toString())
+//            }
+//
+//            litRV.setOnTouchListener { v, event ->
+//                Log.e("testTouch", "okk")
+//                true
+//            }
 
             refresh.isRefreshing = true
             refresh.setOnRefreshListener { binding?.refresh?.isRefreshing = false }
