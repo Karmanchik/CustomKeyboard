@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -100,5 +101,21 @@ fun Fragment.back() {
         (requireActivity() as MainActivity).back()
     } catch (e: Exception) {
         Log.e("navigation", "error", e)
+    }
+}
+
+fun Fragment.showModeFab(isShow: Boolean) {
+    try {
+        (requireActivity() as MainActivity).showModeFab(isShow)
+    } catch (e: Exception) {
+        Log.e("navigation", "showModeFab error", e)
+    }
+}
+
+fun Fragment.showModeBottomMenu(isShow: Boolean) {
+    try {
+        (requireActivity() as MainActivity).showModeBottomMenu(isShow)
+    } catch (e: Exception) {
+        Log.e("navigation", "showModeBottomMenu error", e)
     }
 }

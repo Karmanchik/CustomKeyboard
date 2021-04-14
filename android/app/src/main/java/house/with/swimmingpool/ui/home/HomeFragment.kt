@@ -31,6 +31,8 @@ import house.with.swimmingpool.ui.news.listnews.NewsListFragment
 import house.with.swimmingpool.ui.news.singlenews.NewsSingleFragment
 import house.with.swimmingpool.ui.popups.PopupActivity
 import house.with.swimmingpool.ui.search.SearchActivity
+import house.with.swimmingpool.ui.showModeBottomMenu
+import house.with.swimmingpool.ui.showModeFab
 import house.with.swimmingpool.ui.videos.listvideos.VideosListFragment
 import house.with.swimmingpool.ui.videos.singlevideo.VideoFragment
 import kotlinx.coroutines.Dispatchers
@@ -85,8 +87,6 @@ class HomeFragment : Fragment() {
 
     private fun updateData() {
 
-        Log.e("FirstLoaded", isFirstLoad.toString())
-
         if (isFirstLoad) {
             homeBinding?.firstLoad?.visibility = View.VISIBLE
             isFirstLoad = false
@@ -109,15 +109,19 @@ class HomeFragment : Fragment() {
             App.setting.settingPhone = data
         }
 
+        showModeFab(false)
+        showModeBottomMenu(false)
         GlobalScope.launch(Dispatchers.IO) {
             val videosInfo = VideosServiceImpl().loadVideos()
             val newsInfo = NewsServiceImpl().loadNews()
             val storiesInfo = StoriesServiceImpl().loadStories()
             val headerInfo = BannersServiceImpl().loadHeader()
             val ads = BannersServiceImpl().loadBanners()
-            Log.e("testingCorutinsMain", "start")
+
             launch(Dispatchers.Main) {
-                Log.e("testingCorutinsMain", "second")
+                showModeFab(true)
+                showModeBottomMenu(true)
+
                 if (videosInfo.second != null
                     && newsInfo.second != null
                     && storiesInfo.second != null

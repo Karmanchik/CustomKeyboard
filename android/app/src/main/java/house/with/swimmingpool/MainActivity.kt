@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
 import androidx.annotation.AnimRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -43,6 +42,14 @@ class MainActivity : AppCompatActivity() {
         onBackPressed()
     }
 
+    fun showModeFab(isShow: Boolean) {
+        findViewById<View>(R.id.call).visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+    fun showModeBottomMenu(isShow: Boolean) {
+        findViewById<View>(R.id.nav_view).visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -79,16 +86,6 @@ class MainActivity : AppCompatActivity() {
                 null
             )
         }
-        val navController = findViewById<FrameLayout>(R.id.mainFrame)
-//        val navController = indNavController(R.id.nav_host_fragment)
-//        navController.addOnDestinationChangedListener { f, destination, l ->
-//            if (destination.label.toString() in listOf("Home", "CatalogViewModel")) {
-//                fab.visibility = View.VISIBLE
-//            } else {
-//                fab.visibility = View.GONE
-//            }
-
-//        }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainFrame, homeFragment)
@@ -110,7 +107,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         try {
-            MapKitFactory.setApiKey("bb9c9bdc-48ad-4806-b55d-48c2e98b3b0d")
             MapKitFactory.initialize(this)
         } catch (e: Exception) {
         }

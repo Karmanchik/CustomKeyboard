@@ -29,14 +29,12 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentHouseBinding
 import house.with.swimmingpool.models.HouseExampleData
-import house.with.swimmingpool.ui.back
+import house.with.swimmingpool.ui.*
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
 import house.with.swimmingpool.ui.house.adapters.*
 import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
-import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.popups.PopupActivity
 import house.with.swimmingpool.ui.search.SearchActivity
-import house.with.swimmingpool.ui.toast
 
 class HouseFragment : Fragment(), ISingleHouseView {
 
@@ -512,8 +510,12 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
     override fun onStart() {
         super.onStart()
-        MapKitFactory.getInstance().onStart()
-        mapview?.onStart()
+
+        try {
+            MapKitFactory.getInstance().onStart()
+            mapview?.onStart()
+        } catch (e: Exception) {
+        }
     }
 
     override fun showInformation(position: Int) {
