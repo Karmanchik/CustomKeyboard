@@ -43,6 +43,7 @@ class CabinetFragment : Fragment(), ICabinetView {
     }
 
     override fun onResume() {
+        App.setting.filterConfig = null
         Log.e("testIsLogin", isPopBackLoginActivity.toString())
         if (!(App.setting.isAuth) && isPopBackLoginActivity) {
             navigate(HomeFragment())

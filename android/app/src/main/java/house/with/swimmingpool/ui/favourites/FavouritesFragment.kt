@@ -39,8 +39,8 @@ class FavouritesFragment : Fragment() {
 
             TabLayoutMediator(tabs, favoritesViewPager) { tab, position ->
                 tab.text = when(position){
-                    0 -> "ПОИСКИ"
-                    1 -> "ИЗБРАННОЕ"
+                    0 -> "ИЗБРАННОЕ"
+                    1 -> "ПОИСКИ"
                     else -> "ПОДБОРКИ"
                 }
             }.attach()
@@ -59,13 +59,14 @@ class FavouritesFragment : Fragment() {
     }
 
     override fun onResume() {
-        if (isPopBacLoginActivity && !(App.setting.isAuth)) {
-            navigate(HomeFragment())
-        }
+        App.setting.filterConfig = null
+//        if (isPopBacLoginActivity && !(App.setting.isAuth)) {
+//            navigate(HomeFragment())
+//        }
 
-        favoritesBinding?.apply {
-            tabs.getTabAt(lastTabPosition)?.select()
-        }
+//        favoritesBinding?.apply {
+//            tabs.getTabAt(lastTabPosition)?.select()
+//        }
         super.onResume()
     }
 

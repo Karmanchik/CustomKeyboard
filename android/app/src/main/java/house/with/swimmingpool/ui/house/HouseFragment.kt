@@ -55,6 +55,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
         return houseObjectBinding?.root
     }
 
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -124,13 +125,31 @@ class HouseFragment : Fragment(), ISingleHouseView {
             houseObjectBinding?.apply {
 
                 sendRequestButton.setOnClickListener {
-                    if (isPhoneConsultationFieldNotEmpty() && isMessageFieldNotEmpty()) {
-                        sendRequest(true)
+                    val isPhoneNotEmpty = isPhoneConsultationFieldNotEmpty()
+                    val isMessageNotEmpty = isMessageFieldNotEmpty()
+                    if (isPhoneNotEmpty && isMessageNotEmpty) {
+                        startActivity(
+                            Intent(requireContext(), PopupActivity::class.java).apply {
+                                putExtra(
+                                    App.TYPE_OF_POPUP,
+                                    App.SEND_REQUEST_CONSULTATION
+                                )
+                            }
+                        )
+                        sendRequest()
                     }
                 }
 
                 buttonCollMe.setOnClickListener {
                     if (isPhoneCollBackFieldNotEmpty()) {
+                        startActivity(
+                            Intent(requireContext(), PopupActivity::class.java).apply {
+                                putExtra(
+                                    App.TYPE_OF_POPUP,
+                                    App.SEND_REQUEST_CONSULTATION
+                                )
+                            }
+                        )
                         sendRequest()
                     }
                 }
@@ -399,26 +418,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 if (isConsultation) emailInput.text.toString() else null,
                 phoneInputConsultation.text.toString(),
                 if (isConsultation) editTextMessage.text.toString() else null
-            ) { errorCode, e ->
-                when {
-                    errorCode == null && e == null -> {
-                        startActivity(
-                            Intent(requireContext(), PopupActivity::class.java).apply {
-                                putExtra(
-                                    App.TYPE_OF_POPUP,
-                                    App.SEND_REQUEST_CONSULTATION
-                                )
-                            }
-                        )
-                    }
-                    errorCode != null -> {
-                        if (isConsultation) {
-                            phoneConsultationBorder.setBackgroundResource(R.drawable.circle_corners6_error)
-                        } else {
-                            phoneCollBackBorder.setBackgroundResource(R.drawable.circle_corners6_error)
-                        }
-                    }
-                }
+            ) { _, _ ->
             }
         }
     }
@@ -591,6 +591,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
     override fun onResume() {
         houseObjectBinding?.mapView2?.onResume()
+        App.setting.filterConfig = null
         super.onResume()
     }
 

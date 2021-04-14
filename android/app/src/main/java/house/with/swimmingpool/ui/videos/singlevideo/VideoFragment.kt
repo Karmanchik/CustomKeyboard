@@ -40,7 +40,17 @@ class VideoFragment : Fragment() {
             videoBackIcon.setOnClickListener { back() }
 
             sendRequestButton.setOnClickListener {
-                if (isPhoneConsultationFieldNotEmpty() && isMessageFieldNotEmpty()) {
+                val isPhoneNotEmpty = isPhoneConsultationFieldNotEmpty()
+                val isMessageNotEmpty = isMessageFieldNotEmpty()
+                if (isPhoneNotEmpty && isMessageNotEmpty) {
+                    startActivity(
+                        Intent(requireContext(), PopupActivity::class.java).apply {
+                            putExtra(
+                                App.TYPE_OF_POPUP,
+                                App.SEND_REQUEST_CONSULTATION
+                            )
+                        }
+                    )
                     sendRequest()
                 }
             }
@@ -184,23 +194,7 @@ class VideoFragment : Fragment() {
                 emailInput.text.toString(),
                 phoneInputConsultation.text.toString(),
                 editTextMessage.text.toString()
-            ) { errorCode, e ->
-                when {
-                    errorCode == null && e == null -> {
-                        startActivity(
-                            Intent(requireContext(), PopupActivity::class.java).apply {
-                                putExtra(
-                                    App.TYPE_OF_POPUP,
-                                    App.SEND_REQUEST_CONSULTATION
-                                )
-                            }
-                        )
-                    }
-                    errorCode != null -> {
-                        phoneConsultationBorder.setBackgroundResource(R.drawable.circle_corners6_error)
-                    }
-                }
-            }
+            ) { _, _ -> }
         }
     }
 

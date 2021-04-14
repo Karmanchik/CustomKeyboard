@@ -51,7 +51,7 @@
                     android:layout_height="460dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/gradient_placeholder_midle" />
+                    android:src="@drawable/gradient_placeholder_big" />
 
                 <TextView
                     android:id="@+id/title"

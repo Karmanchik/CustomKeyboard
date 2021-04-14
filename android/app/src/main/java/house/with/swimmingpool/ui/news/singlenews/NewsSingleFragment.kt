@@ -64,19 +64,19 @@ class NewsSingleFragment : Fragment() {
                         setTimeVisibility(View.GONE)
                     }
 
-                    if (data.date != null && data.date.isNotEmpty()) {
-                        dateTextView.text = data.date
-                        setDateVisibility(View.VISIBLE)
-                    } else {
-                        setDateVisibility(View.GONE)
-                    }
+//                    if (data.date != null && data.date.isNotEmpty()) {
+//                        dateTextView.text = data.date
+//                        setDateVisibility(View.VISIBLE)
+//                    } else {
+//                        setDateVisibility(View.GONE)
+//                    }
 
-                    if (data.reading_time != null && data.reading_time.isNotEmpty()) {
-                        timeTextView.text = data.reading_time
-                        setTimeVisibility(View.VISIBLE)
-                    } else {
-                        setTimeVisibility(View.GONE)
-                    }
+//                    if (data.reading_time != null && data.reading_time.isNotEmpty()) {
+//                        timeTextView.text = data.reading_time
+//                        setTimeVisibility(View.VISIBLE)
+//                    } else {
+//                        setTimeVisibility(View.GONE)
+//                    }
 
                     val vpAdapter = when {
                         data.photos != null && data.photos.isNotEmpty() -> {
@@ -114,6 +114,7 @@ class NewsSingleFragment : Fragment() {
                         introText.visibility = View.GONE
                     }
 
+                    Log.e("context", data.content.toString())
                     if (data.content != null && data.content.isNotEmpty()) {
                         contentTextView.text = Html.fromHtml(data.content)
                         setContentVisibility(View.VISIBLE)
@@ -136,9 +137,10 @@ class NewsSingleFragment : Fragment() {
                                     )
                                 }
                         }
-                    } else {
-                        setContentVisibility(View.GONE)
                     }
+//                    else {
+//                        setContentVisibility(View.GONE)
+//                    }
                 }
             }
         }

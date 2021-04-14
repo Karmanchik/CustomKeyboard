@@ -17,10 +17,10 @@ class FavoritesMainViewPagerAdapter(
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                SearchesFragment()
+                LikedFragment()
             }
             1 -> {
-                LikedFragment()
+                SearchesFragment()
             }
             else -> {
                 CollectionsListFragment()
