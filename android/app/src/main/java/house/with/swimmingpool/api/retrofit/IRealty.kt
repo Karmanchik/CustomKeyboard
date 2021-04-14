@@ -151,6 +151,14 @@ interface IRealty {
         @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<Stub>>
 
+    @FormUrlEncoded
+    @POST("mail")
+    fun consultationRequest(
+        @Field("email") email: String?,
+        @Field("phone") phone: String?,
+        @Field("message") message: String?,
+        @Header("api-key") key: String = APIKEY
+    ): Call<Answer<Any?>>
 
     companion object {
         val api = mainRetrofit.create<IRealty>()

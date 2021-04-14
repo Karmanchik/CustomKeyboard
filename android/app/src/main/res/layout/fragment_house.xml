@@ -557,6 +557,7 @@
                         android:textSize="18dp" />
 
                     <RelativeLayout
+                        android:id="@+id/emailBorder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -580,7 +581,7 @@
                             app:hintTextColor="#808080">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/emailInputLayout"
+                                android:id="@+id/emailInput"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:defaultFocusHighlightEnabled="false"
@@ -596,6 +597,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/phoneConsultationBorder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -626,12 +628,14 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/messageBorder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginEnd="12dp"
-                        android:background="@drawable/circle_corners6">
+                        android:background="@drawable/circle_corners6"
+                        >
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textFieldMessage"
@@ -648,6 +652,7 @@
                             app:hintTextColor="#808080">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextMessage"
                                 android:layout_width="match_parent"
                                 android:layout_height="160dp"
                                 android:defaultFocusHighlightEnabled="false"
@@ -755,6 +760,7 @@
                         android:textSize="20sp" />
 
                     <RelativeLayout
+                        android:id="@+id/phoneCollBackBorder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"

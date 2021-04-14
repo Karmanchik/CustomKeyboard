@@ -42,7 +42,7 @@ class RealtyServiceImpl : IRealtyService {
 
     override fun getHouseExample(
         id: Int,
-        onLoaded: (data: HouseExampleData?, e: Throwable?, error:Int?) -> Unit
+        onLoaded: (data: HouseExampleData?, e: Throwable?, error: Int?) -> Unit
     ) {
         getRetrofit().create(IRealty::class.java)
             .getHousesExample(id)
@@ -337,11 +337,37 @@ class RealtyServiceImpl : IRealtyService {
                 override fun onFailure(call: Call<HouseCatalog>, t: Throwable) {
                     try {
                         onLoaded.invoke(null, t)
-                    } catch (e: Exception) {
-
-                    }
+                    } catch (e: Exception) {}
                     Log.e("taskException", "error1", t)
                 }
+            })
+    }
+
+    fun consultationRequest(
+        mail: String?,
+        phone: String?,
+        message: String?,
+        onLoaded: (errorCode: Int?, e: Throwable?) -> Unit
+    ) {
+        getRetrofit().create(IRealty::class.java)
+            .consultationRequest(mail, phone, message)
+            .enqueue(object : Callback<Answer<Any?>> {
+                override fun onResponse(
+                    call: Call<Answer<Any?>>,
+                    response: Response<Answer<Any?>>
+                ) {
+                    try {
+                        onLoaded.invoke(response.body()?.error, null)
+                    } catch (e: java.lang.Exception) {}
+                }
+
+                override fun onFailure(call: Call<Answer<Any?>>, t: Throwable) {
+                    try {
+                        onLoaded.invoke(null, t)
+                    } catch (e: Exception) {}
+                    Log.e("taskException", "error1", t)
+                }
+
             })
     }
 }

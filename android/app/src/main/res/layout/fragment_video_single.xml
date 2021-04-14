@@ -44,7 +44,7 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -260,7 +260,7 @@
                             app:hintTextColor="#808080">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/textInputEmail"
+                                android:id="@+id/emailInput"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:defaultFocusHighlightEnabled="false"
@@ -276,6 +276,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/phoneConsultationBorder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -306,6 +307,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/messageBorder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -328,6 +330,7 @@
                             app:hintTextColor="#808080">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextMessage"
                                 android:layout_width="match_parent"
                                 android:layout_height="160dp"
                                 android:defaultFocusHighlightEnabled="false"
@@ -366,7 +369,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:visibility="visible" />
-
 
     </RelativeLayout>
 

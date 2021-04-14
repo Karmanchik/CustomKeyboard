@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -113,24 +114,20 @@ class HouseFragment : Fragment(), ISingleHouseView {
             houseObjectBinding?.apply {
 
                 sendRequestButton.setOnClickListener {
-                    startActivity(
-                        Intent(requireContext(), PopupActivity::class.java).apply {
-                            putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
-                        }
-                    )
+                    if (isPhoneConsultationFieldNotEmpty() && isMessageFieldNotEmpty()) {
+                       sendRequest(true)
+                    }
+                }
+
+                buttonCollMe.setOnClickListener {
+                    if (isPhoneCollBackFieldNotEmpty()) {
+                       sendRequest()
+                    }
                 }
 
                 shareLinkImageView.setOnClickListener { shareLink(singleHouseObject.id ?: 0) }
 
                 shareLinkTextView.setOnClickListener { shareLink(singleHouseObject.id ?: 0) }
-
-                buttonCollMe.setOnClickListener {
-                    startActivity(
-                        Intent(requireContext(), PopupActivity::class.java).apply {
-                            putExtra(App.TYPE_OF_POPUP, App.SEND_REQUEST_CONSULTATION)
-                        }
-                    )
-                }
 
                 singleHouseObject.apply {
                     if (isFavourite == true) {
@@ -153,7 +150,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 }
 
                 if (App.setting.user?.email != "") {
-                    emailInputLayout.setText(App.setting.user?.email)
+                    emailInput.setText(App.setting.user?.email)
                 }
 
                 houseExampleData = singleHouseObject
@@ -395,6 +392,76 @@ class HouseFragment : Fragment(), ISingleHouseView {
         } catch (e: Exception) {
             Log.e("test", "lol", e)
         }
+    }
+
+    private fun sendRequest(isConsultation: Boolean = false){
+        houseObjectBinding?.apply {
+            RealtyServiceImpl().consultationRequest(
+                if(isConsultation) emailInput.text.toString() else null,
+                phoneInputConsultation.text.toString(),
+                if(isConsultation) editTextMessage.text.toString() else null
+            ) { errorCode, e ->
+                when {
+                    errorCode == null && e == null -> {
+                        startActivity(
+                            Intent(requireContext(), PopupActivity::class.java).apply {
+                                putExtra(
+                                    App.TYPE_OF_POPUP,
+                                    App.SEND_REQUEST_CONSULTATION
+                                )
+                            }
+                        )
+                    }
+                    errorCode != null -> {
+                        if (isConsultation){
+                            phoneConsultationBorder.setBackgroundResource(R.drawable.circle_corners6_error)
+                        }else {
+                            phoneCollBackBorder.setBackgroundResource(R.drawable.circle_corners6_error)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun isMessageFieldNotEmpty(): Boolean {
+        houseObjectBinding?.apply {
+            return if (editTextMessage.text.isNullOrEmpty()) {
+                messageBorder.setBackgroundResource(R.drawable.circle_corners6_error)
+                false
+            } else {
+                messageBorder.setBackgroundResource(R.drawable.circle_corners6)
+                true
+            }
+        }
+        return false
+    }
+
+    private fun isPhoneConsultationFieldNotEmpty(): Boolean {
+        houseObjectBinding?.apply {
+            Log.e("test", phoneInputConsultation.rawText.length.toString())
+            return if (phoneInputConsultation.rawText.length != 10) {
+                phoneConsultationBorder.setBackgroundResource(R.drawable.circle_corners6_error)
+                false
+            } else {
+                phoneConsultationBorder.setBackgroundResource(R.drawable.circle_corners6)
+                true
+            }
+        }
+        return false
+    }
+
+    private fun isPhoneCollBackFieldNotEmpty(): Boolean {
+        houseObjectBinding?.apply {
+            return if (phoneInputCollBack.rawText.length != 10) {
+                phoneCollBackBorder.setBackgroundResource(R.drawable.circle_corners6_error)
+                false
+            } else {
+                phoneCollBackBorder.setBackgroundResource(R.drawable.circle_corners6)
+                true
+            }
+        }
+        return false
     }
 
     private fun shareLink(id: Int) {

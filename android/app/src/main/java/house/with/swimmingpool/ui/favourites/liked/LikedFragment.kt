@@ -35,7 +35,10 @@ class LikedFragment : Fragment() {
         binding?.showCatalogButton?.setOnClickListener {
             navigate(CatalogFragment())
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         RealtyServiceImpl().getMyFavourites { data, e ->
             showData(data?.list ?: listOf())
         }
