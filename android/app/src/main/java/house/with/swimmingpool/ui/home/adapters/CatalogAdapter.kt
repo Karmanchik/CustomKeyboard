@@ -149,6 +149,12 @@ class CatalogAdapter(
                     if (mainTags != null) {
                         hashTagRV.adapter = TagAdapter(ctx, mainTags)
                     }
+
+                    if (statuses.isNullOrEmpty()){
+                        statusesRV.visibility = View.GONE
+                    }else{
+                        statusesRV.adapter = StatusesAdapter(ctx, statuses)
+                    }
                 }
 
                 item.apply {
