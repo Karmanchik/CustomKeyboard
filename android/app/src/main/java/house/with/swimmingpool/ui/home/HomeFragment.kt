@@ -89,6 +89,8 @@ class HomeFragment : Fragment() {
 
         if (isFirstLoad) {
             homeBinding?.firstLoad?.visibility = View.VISIBLE
+            showModeFab(false)
+            showModeBottomMenu(false)
             isFirstLoad = false
         } else {
             homeBinding?.loader?.visibility = View.VISIBLE
@@ -109,8 +111,6 @@ class HomeFragment : Fragment() {
             App.setting.settingPhone = data
         }
 
-        showModeFab(false)
-        showModeBottomMenu(false)
         GlobalScope.launch(Dispatchers.IO) {
             val videosInfo = VideosServiceImpl().loadVideos()
             val newsInfo = NewsServiceImpl().loadNews()
