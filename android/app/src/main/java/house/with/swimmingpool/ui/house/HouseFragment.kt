@@ -21,7 +21,9 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapsInitializer
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
@@ -123,13 +125,13 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 sendRequestButton.setOnClickListener {
                     if (isPhoneConsultationFieldNotEmpty() && isMessageFieldNotEmpty()) {
-                       sendRequest(true)
+                        sendRequest(true)
                     }
                 }
 
                 buttonCollMe.setOnClickListener {
                     if (isPhoneCollBackFieldNotEmpty()) {
-                       sendRequest()
+                        sendRequest()
                     }
                 }
 
@@ -391,12 +393,12 @@ class HouseFragment : Fragment(), ISingleHouseView {
         }
     }
 
-    private fun sendRequest(isConsultation: Boolean = false){
+    private fun sendRequest(isConsultation: Boolean = false) {
         houseObjectBinding?.apply {
             RealtyServiceImpl().consultationRequest(
-                if(isConsultation) emailInput.text.toString() else null,
+                if (isConsultation) emailInput.text.toString() else null,
                 phoneInputConsultation.text.toString(),
-                if(isConsultation) editTextMessage.text.toString() else null
+                if (isConsultation) editTextMessage.text.toString() else null
             ) { errorCode, e ->
                 when {
                     errorCode == null && e == null -> {
@@ -410,9 +412,9 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         )
                     }
                     errorCode != null -> {
-                        if (isConsultation){
+                        if (isConsultation) {
                             phoneConsultationBorder.setBackgroundResource(R.drawable.circle_corners6_error)
-                        }else {
+                        } else {
                             phoneCollBackBorder.setBackgroundResource(R.drawable.circle_corners6_error)
                         }
                     }
