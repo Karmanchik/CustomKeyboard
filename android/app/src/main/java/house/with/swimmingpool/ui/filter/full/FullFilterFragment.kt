@@ -408,8 +408,9 @@ class FullFilterFragment : Fragment() {
                     binding.showCatalogButton.isEnabled = false
                 }
 
+                App.setting.houses = data
+
                 binding.showCatalogButton.setOnClickListener {
-                    App.setting.houses = data
                     navigate(CatalogFragment())
                 }
             } else {

@@ -98,7 +98,11 @@ class VideoFragment : Fragment() {
                         val descriptionText =
                             if (dataVideo.first?.content != null) Html.fromHtml(dataVideo.first?.content) else ""
 
+                        if(dataVideo.first?.title != null){
                         textViewTitle.text = dataVideo.first?.title
+                        }else{
+                            textViewTitle.visibility = View.GONE
+                        }
 
                         textViewIntroText.text = dataVideo.first?.introtext
 

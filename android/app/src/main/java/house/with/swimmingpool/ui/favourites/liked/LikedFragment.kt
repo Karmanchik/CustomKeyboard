@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
+import house.with.swimmingpool.App
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFavouritesContainerLikedBinding
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
 import house.with.swimmingpool.ui.house.HouseFragment
@@ -31,9 +33,10 @@ class LikedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding?.showCatalogButton?.setOnClickListener {
-            navigate(CatalogFragment())
+        if (App.setting.isAuth){
+            onIsAuthTrue()
+        }else{
+            onIsAuthFalse()
         }
     }
 
@@ -41,6 +44,34 @@ class LikedFragment : Fragment() {
         super.onResume()
         RealtyServiceImpl().getMyFavourites { data, e ->
             showData(data?.list ?: listOf())
+        }
+
+        if (App.setting.isAuth){
+            onIsAuthTrue()
+        }else{
+            onIsAuthFalse()
+        }
+    }
+
+    private fun onIsAuthFalse(){
+        binding?.apply {
+            plugTitle.text = "Здесь пока пусто"
+            plugDescription.text = "Отмечайте интересные объекты чтобы они всегда были под рукой."
+            showCatalogButton.text = "Авторизация"
+            showCatalogButton.setOnClickListener {
+                navigate(CabinetFragment())
+            }
+        }
+    }
+
+    private fun onIsAuthTrue(){
+        binding?.apply {
+            plugTitle.text = "Добавляйте объекты в избранное"
+            plugDescription.text = "Отмечайте интересные объекты и следите за именением цены"
+            showCatalogButton.text = "Каталог объектов"
+            showCatalogButton.setOnClickListener {
+                navigate(CatalogFragment())
+            }
         }
     }
 

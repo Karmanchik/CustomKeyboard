@@ -72,6 +72,7 @@ class RegisterLoginFragment(
                 }
             }
 
+            passwordInput.inputType = 0x00000081
             Log.e("testInputTipe", passwordInput.inputType.toString())
 
             iconEye.setOnClickListener {
@@ -79,12 +80,13 @@ class RegisterLoginFragment(
                     iconEye.setImageDrawable(requireActivity()
                             .getDrawable(R.drawable.ic_open_eye_for_password))
                     passwordInput.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    Log.e("testInputTipe", passwordInput.inputType.toString() + "-2")
                     true
                 }else {
                     iconEye.setImageDrawable(requireActivity()
                             .getDrawable(R.drawable.ic_close_eye_for_password))
-                    passwordInput.inputType = 129
-                    passwordInput.textSize = 23F
+                    passwordInput.inputType = 0x00000081
+                    Log.e("testInputTipe", passwordInput.inputType.toString()+ "-3")
                     false
                 }
             }

@@ -10,7 +10,7 @@
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone">
@@ -36,8 +36,8 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:text="Коттеджные поселки в Сочи: плюсы, минусы, особенности выбора"
-            android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textColor="#A0AABA"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="19dp"
                 android:layout_marginEnd="60dp"
                 android:fontFamily="@font/lato_bold"
                 android:lineSpacingMultiplier="1.6"

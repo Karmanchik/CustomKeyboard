@@ -45,8 +45,6 @@ class VideosListFragment : Fragment() {
                 launch(Dispatchers.Main) {
                     if (videosData.first != null && videosData.second == null) {
                         val data = videosData.first!!
-                        textViewCount.text = "${data.size} Видеообзоров"
-
                         videosRV.apply {
                             layoutManager = LinearLayoutManager(context)
                             adapter = VideosAdapter(true, requireContext(),

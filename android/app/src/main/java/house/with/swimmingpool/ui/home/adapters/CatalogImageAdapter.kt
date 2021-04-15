@@ -22,6 +22,7 @@ class CatalogImageAdapter(
     var items: List<String?>,
     var videos: List<String>?,
     val ctx: Context,
+    val phone: String?,
     var onItemSelected: (Int) -> Unit,
     var id: Int
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -104,7 +105,7 @@ class CatalogImageAdapter(
         fun bind(){
             view.collLayout.setOnClickListener {
                 val intent =
-                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + App.setting.settingPhone))
+                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
                 startActivity(ctx, intent, null)
             }
         }

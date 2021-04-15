@@ -75,7 +75,7 @@
         android:layout_height="32dp"
         android:hint="Введите пароль"
         android:inputType="textPassword"
-        android:cursorVisible="false"
+        android:cursorVisible="true"
         android:gravity="center_horizontal"
         android:layout_gravity="center"
         android:fontFamily="@font/lato"

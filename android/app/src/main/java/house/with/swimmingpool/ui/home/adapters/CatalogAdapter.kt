@@ -106,18 +106,24 @@ class CatalogAdapter(
                     vp.adapter = when {
                         photos != null && photos.isNotEmpty() -> {
                             Log.e("photos", photos.size.toString())
-                            CatalogImageAdapter(photos, video, ctx, onItemSelected,
+                            CatalogImageAdapter(photos, video, ctx,
+                                phone,
+                                onItemSelected,
                                     item.id
                             )
                         }
                         icon != null -> {
                             Log.e("photos", icon.toString())
-                            CatalogImageAdapter(listOf(icon), video, ctx, onItemSelected,
+                            CatalogImageAdapter(listOf(icon), video, ctx,
+                                phone,
+                                onItemSelected,
                                     item.id
                             )
                         }
                         else -> {
-                            CatalogImageAdapter(listOf(""), video, ctx, onItemSelected,
+                            CatalogImageAdapter(listOf(""), video, ctx,
+                                phone,
+                                onItemSelected,
                                     item.id
                             )
                         }

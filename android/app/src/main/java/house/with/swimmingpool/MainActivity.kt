@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         @AnimRes outAnim: Int? = null
     ) {
         try {
-            if (!(App.setting.isAuth) && (fragment is CabinetFragment || fragment is FavouritesFragment)) {
+            if (!(App.setting.isAuth) && (fragment is CabinetFragment)) {
                 startActivity<LoginActivity> { }
                 fragmentIntent = fragment
                 return

@@ -12,6 +12,7 @@ import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentFavouritesContainerSearchesBinding
 import house.with.swimmingpool.models.Search
 import house.with.swimmingpool.models.request.FilterObjectsRequest
+import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.catalog.Label
 import house.with.swimmingpool.ui.favourites.adapters.FavoritesContainerSearchesAdapter
@@ -76,16 +77,44 @@ class SearchesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (!App.setting.isAuth) {
-            startActivity<LoginActivity>()
+        if (App.setting.isAuth){
+            onIsAuthTrue()
+        }else{
+            onIsAuthFalse()
         }
+    }
 
-        searchesBinding?.showCatalogButton?.setOnClickListener {
-            navigate(CatalogFragment())
-        }
-
+    override fun onResume() {
+        super.onResume()
         update()
+
+        if (App.setting.isAuth){
+            onIsAuthTrue()
+        }else{
+            onIsAuthFalse()
+        }
+    }
+
+    private fun onIsAuthFalse(){
+        searchesBinding?.apply {
+            plugTitle.text = "Здесь пока пусто"
+            plugDescription.text = "Сохраняйте поисковую выдачу и следите за новыми объектами"
+            showCatalogButton.text = "Авторизация"
+            showCatalogButton.setOnClickListener {
+                navigate(CabinetFragment())
+            }
+        }
+    }
+
+    private fun onIsAuthTrue(){
+        searchesBinding?.apply {
+            plugTitle.text = "Добавляйте объекты в поиск"
+            plugDescription.text = "Отмечайте интересные объекты и следите за именением цены"
+            showCatalogButton.text = "Каталог объектов"
+            showCatalogButton.setOnClickListener {
+                navigate(CatalogFragment())
+            }
+        }
     }
 
     private fun update() {
