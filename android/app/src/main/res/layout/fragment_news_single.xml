@@ -13,7 +13,7 @@
         android:layout_marginTop="25dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/houseBackIcon"
@@ -44,7 +44,7 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -220,7 +220,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="19dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:background="?android:attr/listDivider"
                 android:visibility="gone" />
 
@@ -228,6 +228,7 @@
                 android:id="@+id/analogsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginBottom="17dp"
                 android:fontFamily="@font/lato_semibold"

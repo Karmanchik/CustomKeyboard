@@ -105,6 +105,10 @@ class FullFilterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if(App.setting.filterConfig != null) {
+            showFilter(App.setting.filterConfig!!)
+        }
+
         binding.apply {
 
             segmentedControl.setTypeFace(
