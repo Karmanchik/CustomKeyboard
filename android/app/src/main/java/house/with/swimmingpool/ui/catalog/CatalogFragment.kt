@@ -49,7 +49,7 @@ class CatalogFragment : Fragment() {
                 add(2, "big")
             } catch (e: Exception) {
             }
-        }.take(50), requireContext()) { homeId ->
+        }, requireContext()) { homeId ->
             val home = list.firstOrNull { it.id == homeId }
             val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
             navigate(HouseFragment(), bundle)
@@ -62,23 +62,6 @@ class CatalogFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
-
-//            scroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-//                Log.e("testTuch", "ok")
-//            }
-//            litRV.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-//                Log.e("testTuch", scrollY.toString())
-//            }
-//            litRV.setOnClickListener { Log.e("testTuch", "ok") }
-//
-//            litRV.setOnFocusChangeListener { v, hasFocus ->
-//                Log.e("testTuch", hasFocus.toString())
-//            }
-//
-//            litRV.setOnTouchListener { v, event ->
-//                Log.e("testTouch", "okk")
-//                true
-//            }
 
             refresh.isRefreshing = true
             refresh.setOnRefreshListener { binding?.refresh?.isRefreshing = false }
@@ -126,13 +109,20 @@ class CatalogFragment : Fragment() {
 //            }
 //        }
 
-        binding?.scroll?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+        binding?.litRV?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (oldScrollY > scrollY) {
                 binding?.toFilter?.visibility = View.VISIBLE
             } else {
                 binding?.toFilter?.visibility = View.GONE
             }
         }
+//        binding?.scroll?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+//            if (oldScrollY > scrollY) {
+//                binding?.toFilter?.visibility = View.VISIBLE
+//            } else {
+//                binding?.toFilter?.visibility = View.GONE
+//            }
+//        }
 
         binding?.toFilter?.setOnClickListener {
             navigate(FullFilterFragment())
