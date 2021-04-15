@@ -38,6 +38,10 @@ import house.with.swimmingpool.ui.house.adapters.*
 import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
 import house.with.swimmingpool.ui.popups.PopupActivity
 import house.with.swimmingpool.ui.search.SearchActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 
 class HouseFragment : Fragment(), ISingleHouseView {
@@ -67,7 +71,12 @@ class HouseFragment : Fragment(), ISingleHouseView {
         }
 
         houseObjectBinding?.houseBackIcon?.setOnClickListener {
-            back()
+            GlobalScope.async {
+                isNeedOpenSearchActivity()
+                launch(Dispatchers.Main) {
+                    back()
+                }
+            }
         }
 
         houseObjectBinding?.apply {
@@ -116,6 +125,13 @@ class HouseFragment : Fragment(), ISingleHouseView {
             }
         } catch (e: Exception) {
             Log.e("test", e.localizedMessage, e)
+        }
+    }
+
+    private suspend fun isNeedOpenSearchActivity(){
+        if (App.setting.isSearchActivityOpen) {
+            startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
+            App.setting.isSearchActivityOpen = false
         }
     }
 
@@ -533,11 +549,15 @@ class HouseFragment : Fragment(), ISingleHouseView {
     override fun onDestroy() {
         houseObjectBinding?.mapView2?.onDestroy()
         houseObjectBinding = null
-        if (App.setting.isSearchActivityOpen) {
-            startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
-            App.setting.isSearchActivityOpen = false
-        }
         super.onDestroy()
+    }
+
+    override fun onDestroyView() {
+//        if (App.setting.isSearchActivityOpen) {
+//            startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
+//            App.setting.isSearchActivityOpen = false
+//        }
+        super.onDestroyView()
     }
 
     override fun showHeaderGallery(list: ArrayList<String>) {

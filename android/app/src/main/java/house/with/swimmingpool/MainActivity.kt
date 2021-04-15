@@ -10,11 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
 import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.favourites.FavouritesFragment
 import house.with.swimmingpool.ui.home.HomeFragment
+import house.with.swimmingpool.ui.house.HouseFragment
 import house.with.swimmingpool.ui.login.LoginActivity
+import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.startActivity
 
 class MainActivity : AppCompatActivity() {
@@ -68,7 +71,28 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if (App.setting.isAuth && fragmentIntent != null) {
             showFragment(fragmentIntent!!)
+            fragmentIntent = null
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK) {
+            data?.getIntExtra("action", 0)?.let { code ->
+                if (code == HomeFragment.NAVIGATE_TO_CATALOG) {
+                    showFragment(CatalogFragment())
+                } else if (code == HomeFragment.NAVIGATE_TO_OBJECT) {
+                    val bundle =
+                        Bundle().apply { putString("home", Gson().toJson(App.setting.tmpObj)) }
+                    showFragment(HouseFragment(), bundle)
+                }
+            }
+        }
+
+//        if (requestCode == HomeFragment.POPUP_WIFI_ERROR_REFRASH) {
+//            updateData()
+//        }
     }
 
     fun back() {

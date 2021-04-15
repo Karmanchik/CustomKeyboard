@@ -68,17 +68,17 @@ class HomeFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == RESULT_OK) {
-            data?.getIntExtra("action", 0)?.let { code ->
-                if (code == NAVIGATE_TO_CATALOG) {
-                    navigate(CatalogFragment())
-                } else if (code == NAVIGATE_TO_OBJECT) {
-                    val bundle =
-                        Bundle().apply { putString("home", Gson().toJson(App.setting.tmpObj)) }
-                    navigate(HouseFragment(), bundle)
-                }
-            }
-        }
+//        if (resultCode == RESULT_OK) {
+//            data?.getIntExtra("action", 0)?.let { code ->
+//                if (code == NAVIGATE_TO_CATALOG) {
+//                    navigate(CatalogFragment())
+//                } else if (code == NAVIGATE_TO_OBJECT) {
+//                    val bundle =
+//                        Bundle().apply { putString("home", Gson().toJson(App.setting.tmpObj)) }
+//                    navigate(HouseFragment(), bundle)
+//                }
+//            }
+//        }
 
         if (requestCode == POPUP_WIFI_ERROR_REFRASH) {
             updateData()
@@ -338,6 +338,7 @@ class HomeFragment : Fragment() {
                     parentFragmentManager, "shortFilter"
                 )
             }
+
             fullFilterView.setOnClickListener {
                 navigate(FullFilterFragment())
             }
@@ -350,6 +351,7 @@ class HomeFragment : Fragment() {
             showVideosButton.setOnClickListener {
                 navigate(VideosListFragment())
             }
+
             showNewsButton.setOnClickListener {
                 navigate(NewsListFragment())
             }

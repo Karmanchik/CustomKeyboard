@@ -117,6 +117,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
             }
 
             buttonClose.setOnClickListener {
+                App.setting.isSearchActivityOpen = false
                 setResult(RESULT_CANCELED)
                 finish()
             }
