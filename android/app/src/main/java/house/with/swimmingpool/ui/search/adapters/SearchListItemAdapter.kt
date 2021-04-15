@@ -63,6 +63,8 @@ class SearchListItemAdapter(
                                 .into(view.photo)
                     }
                     textViewTitle.text = title
+                    textViewLocation.text = location
+                    textViewPrice.text = "$price руб."
                 }
             }
         }

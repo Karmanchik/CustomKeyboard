@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:windowSoftInputMode="adjustResize">
         <LinearLayout
@@ -16,7 +16,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="15dp"
-                android:layout_marginStart="10dp"
                 android:gravity="center"
                 android:background="@drawable/white_button_with_blue_border">
 
@@ -44,7 +43,9 @@
                 android:id="@+id/searchListItemRv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="15dp"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_of_searches_list"/>
 
         </LinearLayout>
 

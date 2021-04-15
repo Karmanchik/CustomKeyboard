@@ -97,7 +97,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                                 FilterObjectsRequest(search = text.toString())
                         )
                     }
-                }, 1000)
+                }, 300)
 
             }
 
@@ -135,6 +135,11 @@ class SearchActivity : AppCompatActivity(), ISearchView {
                 searchBinding.searchFrame.id, SearchTagButtonFragment(this, lisAdvantages)
             )
             .commit()
+
+        searchBinding.apply {
+            showCatalogButton.isEnabled = false
+            showCatalogButton.text = "Введите запрос для поиска"
+        }
     }
 
     override fun showByAdvantagesTag(text: String, tag: String) {
