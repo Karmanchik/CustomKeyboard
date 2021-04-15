@@ -50,25 +50,23 @@ class VideosServiceImpl : IVideosService {
         }
     }
 
-    fun getSingleVideo(id: Int, onLoaded: (data: SingleVideoData?, e: Throwable?) -> Unit) {
-        getRetrofit().create(IVideos::class.java)
-                .getSingleVideo(id)
-                .enqueue(object : Callback<SingleVideo> {
-                    override fun onResponse(call: Call<SingleVideo>, response: Response<SingleVideo>) {
-                        try {
-                            onLoaded.invoke(response.body()?.data, null)
-                        } catch (e: Exception) {
-                        }
-                    }
-
-                    override fun onFailure(call: Call<SingleVideo>, t: Throwable) {
-                        try {
-                            onLoaded.invoke(null, t)
-                        } catch (e: Exception) {
-                        }
-                    }
-                })
-    }
-
-
+//    fun getSingleVideo(id: Int, onLoaded: (data: SingleVideoData?, e: Throwable?) -> Unit) {
+//        getRetrofit().create(IVideos::class.java)
+//                .getSingleVideo(id)
+//                .enqueue(object : Callback<SingleVideo> {
+//                    override fun onResponse(call: Call<SingleVideo>, response: Response<SingleVideo>) {
+//                        try {
+//                            onLoaded.invoke(response.body()?.data, null)
+//                        } catch (e: Exception) {
+//                        }
+//                    }
+//
+//                    override fun onFailure(call: Call<SingleVideo>, t: Throwable) {
+//                        try {
+//                            onLoaded.invoke(null, t)
+//                        } catch (e: Exception) {
+//                        }
+//                    }
+//                })
+//    }
 }

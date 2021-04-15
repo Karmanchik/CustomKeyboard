@@ -57,13 +57,6 @@ class VideoFragment : Fragment() {
 
             GlobalScope.launch(Dispatchers.IO) {
                 var dataVideo = VideosServiceImpl().loadSingleVideos(arguments?.getInt("id") ?: 0)
-//                var exceptionVideo: Throwable? = null
-//                VideosServiceImpl().getSingleVideo(arguments?.getInt("id") ?: 0) { data, e ->
-//                    dataVideo = data
-//                    exceptionVideo = e
-//
-//                    Log.e("testingCorutins", "data = $data  e = $e")
-//                }
                 launch(Dispatchers.Main) {
                     if (dataVideo.first != null && dataVideo.second == null) {
                         moveToObject.setOnClickListener {

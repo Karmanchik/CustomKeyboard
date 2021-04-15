@@ -81,7 +81,7 @@
                 app:segments="@array/main_segment_control_variants"
                 app:selectedBackgroundColor="@color/main_blue"
                 app:selectedStrokeColor="@color/main_blue"
-                app:strokeWidth="1px"
+                app:strokeWidth="1dp"
                 app:textVerticalPadding="6dp"
                 app:unSelectedStrokeColor="#E6E6E6"
                 app:unSelectedTextColor="#808080" />

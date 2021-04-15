@@ -19,7 +19,7 @@ import house.with.swimmingpool.ui.startActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private var fragmentIntent: Fragment? = CabinetFragment()
+    private var fragmentIntent: Fragment? = null
 
     private val homeFragment by lazy { HomeFragment() }
     private val favouritesFragment by lazy { FavouritesFragment() }
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 transaction.replace(R.id.mainFrame, fragment.apply { arguments = bundle })
-//                transaction.addToBackStack(null)
+                transaction.addToBackStack(null)
                 transaction.commit()
             }else {
                 val transaction = supportFragmentManager.beginTransaction()
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 transaction.add(R.id.mainFrame, fragment.apply { arguments = bundle })
-//                transaction.addToBackStack(null)
+                transaction.addToBackStack(null)
                 transaction.commit()
             }
         } catch (e: Exception) {
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (App.setting.isAuth && fragmentIntent != null) {
-            showFragment(CabinetFragment())
+            showFragment(fragmentIntent!!)
         }
     }
 

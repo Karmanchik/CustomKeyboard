@@ -13,6 +13,9 @@ import house.with.swimmingpool.ui.back
 import house.with.swimmingpool.ui.home.adapters.NewsAdapter
 import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.news.singlenews.NewsSingleFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class NewsListFragment : Fragment() {
 
@@ -34,18 +37,19 @@ class NewsListFragment : Fragment() {
                 back()
             }
 
-            NewsServiceImpl().getNews { data, e ->
-                if (data != null) {
-                    showMewsList(data.toMutableList())
+            GlobalScope.launch(Dispatchers.IO) {
+                val newsData = NewsServiceImpl().loadNews()
+                launch(Dispatchers.Main){
+                    if (newsData.first != null) {
+                        showNewsList(newsData.first!!.toMutableList())
+                    }
                 }
             }
-
         }
         load() { Log.e("test", "") }
     }
 
-    private fun showMewsList(newsList: MutableList<NewsData>) {
-
+    private fun showNewsList(newsList: MutableList<NewsData>) {
         newsListBinding?.newsRV?.apply {
             adapter = NewsAdapter(newsList.map { it as Any }.toMutableList().apply {
                 try {
@@ -59,6 +63,11 @@ class NewsListFragment : Fragment() {
                 }
                 navigate(NewsSingleFragment(), bundle)
             }
+        }
+        newsListBinding?.apply {
+            header.visibility = View.VISIBLE
+            body.visibility = View.VISIBLE
+            loader.visibility = View.GONE
         }
     }
 

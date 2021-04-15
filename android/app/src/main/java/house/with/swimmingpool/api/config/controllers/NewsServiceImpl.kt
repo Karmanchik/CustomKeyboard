@@ -2,11 +2,9 @@ package house.with.swimmingpool.api.config.controllers
 
 import house.with.swimmingpool.api.config.interfaces.INewsService
 import house.with.swimmingpool.api.retrofit.INews
+import house.with.swimmingpool.api.retrofit.IVideos
 import house.with.swimmingpool.api.retrofit.getRetrofit
-import house.with.swimmingpool.models.NewsData
-import house.with.swimmingpool.models.NewsX
-import house.with.swimmingpool.models.SingleNews
-import house.with.swimmingpool.models.SingleNewsData
+import house.with.swimmingpool.models.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,24 +40,31 @@ class NewsServiceImpl : INewsService {
         }
     }
 
-    fun getSingleNews(id: Int, onLoaded: (data: SingleNewsData?, e: Throwable?) -> Unit) {
-        getRetrofit().create(INews::class.java)
-            .getSingleNews(id)
-            .enqueue(object : Callback<SingleNews> {
-                override fun onResponse(call: Call<SingleNews>, response: Response<SingleNews>) {
-                    try {
-                        onLoaded.invoke(response.body()?.data, null)
-                    } catch (e: Exception) {
-                    }
-                }
+//    fun getSingleNews(id: Int, onLoaded: (data: SingleNewsData?, e: Throwable?) -> Unit) {
+//        getRetrofit().create(INews::class.java)
+//            .getSingleNews(id)
+//            .enqueue(object : Callback<SingleNews> {
+//                override fun onResponse(call: Call<SingleNews>, response: Response<SingleNews>) {
+//                    try {
+//                        onLoaded.invoke(response.body()?.data, null)
+//                    } catch (e: Exception) {
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<SingleNews>, t: Throwable) {
+//                    try {
+//                        onLoaded.invoke(null, t)
+//                    } catch (e: Exception) {
+//                    }
+//                }
+//            })
+//    }
 
-                override fun onFailure(call: Call<SingleNews>, t: Throwable) {
-                    try {
-                        onLoaded.invoke(null, t)
-                    } catch (e: Exception) {
-                    }
-                }
-            })
+    suspend fun loadSingleNews(id: Int): Pair<SingleNewsData?, Throwable?> {
+        return try {
+            Pair(getRetrofit().create<INews>().getSingleNews(id).execute().body()?.data, null)
+        } catch (e: Exception) {
+            Pair(null, e)
+        }
     }
-
 }

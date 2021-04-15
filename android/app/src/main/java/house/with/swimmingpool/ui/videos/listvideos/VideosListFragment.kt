@@ -14,6 +14,9 @@ import house.with.swimmingpool.ui.back
 import house.with.swimmingpool.ui.home.adapters.VideosAdapter
 import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.videos.singlevideo.VideoFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class VideosListFragment : Fragment() {
 
@@ -36,27 +39,34 @@ class VideosListFragment : Fragment() {
                 back()
             }
 
-            VideosServiceImpl().getVideos { data, e ->
-                if (data != null && e == null) {
+            GlobalScope.launch(Dispatchers.IO) {
+                val videosData = VideosServiceImpl().loadVideos()
 
-                    textViewCount.text = "${data.size} Видеообзоров"
+                launch(Dispatchers.Main) {
+                    if (videosData.first != null && videosData.second == null) {
+                        val data = videosData.first!!
+                        textViewCount.text = "${data.size} Видеообзоров"
 
-                    videosRV.apply {
-                        layoutManager = LinearLayoutManager(context)
-                        adapter = VideosAdapter(true, requireContext(),
-                            data.map { it as Any }.toMutableList().apply {
-                                try {
-                                    add(4, "big")
-                                } catch (e: Exception) {
-                                    Log.e("testNewsBannerException", e.toString())
+                        videosRV.apply {
+                            layoutManager = LinearLayoutManager(context)
+                            adapter = VideosAdapter(true, requireContext(),
+                                data.map { it as Any }.toMutableList().apply {
+                                    try {
+                                        add(4, "big")
+                                    } catch (e: Exception) {
+                                        Log.e("testNewsBannerException", e.toString())
+                                    }
+                                }) {
+                                val bundle = Bundle().apply {
+                                    putInt("id", it)
                                 }
-                            }) {
-                            val bundle = Bundle().apply {
-                                putInt("id", it)
+                                navigate(VideoFragment(), bundle)
                             }
-                            navigate(VideoFragment(), bundle)
                         }
                     }
+                    header.visibility = View.VISIBLE
+                    videosRV.visibility = View.VISIBLE
+                    loader.visibility = View.GONE
                 }
             }
         }

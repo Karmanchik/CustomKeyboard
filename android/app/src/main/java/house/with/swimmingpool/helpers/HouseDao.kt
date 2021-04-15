@@ -11,7 +11,7 @@ interface HouseDao {
     @Query("SELECT * FROM house WHERE id = :id")
     fun getById(id: Int): HouseCatalogData?
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(house: HouseCatalogData)
 
     @Update
