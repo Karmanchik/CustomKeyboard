@@ -14,10 +14,7 @@ import house.with.swimmingpool.databinding.ActivityLoginBinding
 import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.favourites.FavouritesFragment
 import house.with.swimmingpool.ui.favourites.searches.SearchesFragment
-import house.with.swimmingpool.ui.register.registration.RegisterLoginSuccessFragment
-import house.with.swimmingpool.ui.register.registration.RegisterRegistrationFragment
-import house.with.swimmingpool.ui.register.registration.RegisterSetPasswordFragment
-import house.with.swimmingpool.ui.register.registration.RegisterSmsCodeFragment
+import house.with.swimmingpool.ui.register.registration.*
 
 class LoginActivity : AppCompatActivity(), ILoginView {
 
@@ -140,6 +137,10 @@ class LoginActivity : AppCompatActivity(), ILoginView {
 
     override fun onLoginSuccess(name: String?) {
         replaceFragmentWithoutTabs(RegisterLoginSuccessFragment(name))
+    }
+
+    override fun onAccessRecovery() {
+        replaceFragmentWithoutTabs(RegisterAccessRecoveryFragment(this))
     }
 
     override fun onDestroy() {

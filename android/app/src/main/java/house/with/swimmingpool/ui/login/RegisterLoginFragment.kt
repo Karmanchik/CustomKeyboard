@@ -23,6 +23,7 @@ class RegisterLoginFragment(
         override fun showSmsCodeFragment(phone: String) = Unit
         override fun onSmsCodeCorrect(smsCode: String) = Unit
         override fun onLoginSuccess(name: String?) = Unit
+        override fun onAccessRecovery() = Unit
     })
 
     private var isShowPassword = false
@@ -49,6 +50,10 @@ class RegisterLoginFragment(
 
             signInLater.setOnClickListener {
                 requireActivity().finish()
+            }
+
+            forgotPassword.setOnClickListener {
+                parentView.onAccessRecovery()
             }
 
             if (LoginActivity.cashedPhone != null) {

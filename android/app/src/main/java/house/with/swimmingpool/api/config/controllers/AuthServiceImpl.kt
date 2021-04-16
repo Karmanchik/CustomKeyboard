@@ -164,4 +164,23 @@ class AuthServiceImpl : IAuthService {
 
                 })
     }
+
+    fun resetPassword(phone: String, onLoaded: (data: AuthRegisterFirstData?, e: Int?) -> Unit){
+        getRetrofit().create(IAuthLogin :: class.java)
+            .resetPassword(phone)
+            .enqueue(object : Callback<Answer<AuthRegisterFirstData>>{
+                override fun onResponse(
+                    call: Call<Answer<AuthRegisterFirstData>>,
+                    response: Response<Answer<AuthRegisterFirstData>>
+                ) {
+                    onLoaded.invoke(response.body()?.data, response.body()?.error)
+                }
+
+                override fun onFailure(call: Call<Answer<AuthRegisterFirstData>>, t: Throwable) {
+                    try{
+                        onLoaded.invoke(null, 0)
+                    }catch (e: Exception){}
+                }
+            })
+    }
 }

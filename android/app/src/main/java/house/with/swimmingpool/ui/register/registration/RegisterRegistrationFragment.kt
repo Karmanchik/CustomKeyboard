@@ -70,6 +70,7 @@ class RegisterRegistrationFragment(private val parentView: ILoginView) : Fragmen
                         }
                     }
                 }
+
             } else {
                 setErrorText("Введите корректный номер телефона")
             }

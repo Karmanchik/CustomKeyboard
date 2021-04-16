@@ -67,4 +67,12 @@ interface IAuthLogin {
     fun getSettingsPhone(
         @Header("api-key") key: String = "postman0ebba-60b1-40b4-b189-f409d5d1ad7b"
     ): Call<Answer<String>>
+
+    @FormUrlEncoded
+    @POST("auth/reset")
+    fun resetPassword(
+        @Field("phone") phone: String,
+        @Header("api-key") apikey: String = APIKEY,
+        @Field("context") type: String = "client"
+    ): Call<Answer<AuthRegisterFirstData>>
 }

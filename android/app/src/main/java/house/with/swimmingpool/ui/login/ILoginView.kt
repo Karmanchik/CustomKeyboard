@@ -7,4 +7,6 @@ interface ILoginView {
     fun onSmsCodeCorrect(smsCode: String)
 
     fun onLoginSuccess(name: String?)
+
+    fun onAccessRecovery()
 }
