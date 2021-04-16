@@ -47,6 +47,20 @@
         <item name="fontFamily">@font/lato_semibold</item>
     </style>
 
+    <style name="banner">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="ic_back">
+        <item name="android:layout_height">38dp</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_marginStart">7dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="elevation">2dp</item>
+    </style>
+
     <style name="filter_full_edit_text_container">
         <item name="android:layout_marginEnd">12dp</item>
         <item name="android:layout_marginStart">12dp</item>

@@ -18,10 +18,7 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="38dp"
-            android:layout_marginStart="7dp"
-            android:padding="5dp"
+            style="@style/ic_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

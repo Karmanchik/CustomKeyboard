@@ -30,14 +30,10 @@
 
                 <ImageView
                     android:id="@+id/loginBackIcon"
-                    android:layout_width="25dp"
-                    android:layout_height="33dp"
-                    android:layout_marginStart="7dp"
-                    android:padding="5dp"
+                    style="@style/ic_back"
                     android:layout_marginTop="13dp"
-                    android:adjustViewBounds="true"
                     android:elevation="2dp"
-                    android:src="@drawable/ic_back_arrow_white" />
+                    android:src="@drawable/ic_back_white_arrow" />
 
                 <ImageView
                     android:id="@+id/registerMainImageView"

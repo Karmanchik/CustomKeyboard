@@ -19,6 +19,7 @@ import house.with.swimmingpool.databinding.ItemSmallBannerBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.cabinet.CabinetFragment
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
+import house.with.swimmingpool.ui.setBannerClick
 
 class CatalogAdapter(
         var items: List<Any>,
@@ -69,6 +70,7 @@ class CatalogAdapter(
                     .placeholder(R.drawable.placeholder)
                     .into(view.bigAdBanner)
             }
+            view.bigAdBanner.setBannerClick(view.bigAdBannerLayout, ctx){}
         }
     }
 
@@ -88,6 +90,8 @@ class CatalogAdapter(
                     .placeholder(R.drawable.placeholder)
                     .into(view.secondAdBanner)
             }
+            view.firstAdBanner.setBannerClick(view.firstAdBannerLayout, ctx){}
+            view.secondAdBanner.setBannerClick(view.secondAdBannerLayout, ctx){}
         }
     }
 

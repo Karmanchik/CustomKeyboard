@@ -11,6 +11,7 @@ import house.with.swimmingpool.api.config.controllers.BannersServiceImpl
 import house.with.swimmingpool.databinding.ItemBigBannerBinding
 import house.with.swimmingpool.databinding.ItemNewsBinding
 import house.with.swimmingpool.models.NewsData
+import house.with.swimmingpool.ui.setBannerClick
 
 class NewsAdapter(
         var items: List<Any?>,
@@ -80,6 +81,7 @@ class NewsAdapter(
                         .placeholder(R.drawable.placeholder)
                         .into(view.bigAdBanner)
             }
+            view.bigAdBanner.setBannerClick(view.bigAdBannerLayout, ctx){}
         }
     }
 }

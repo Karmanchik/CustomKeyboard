@@ -1,9 +1,7 @@
 package house.with.swimmingpool.ui.home
 
 import android.annotation.SuppressLint
-import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -20,19 +18,15 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.*
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.HouseCatalogData
+import house.with.swimmingpool.ui.*
 import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.filter.full.FullFilterFragment
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
 import house.with.swimmingpool.ui.house.HouseFragment
-import house.with.swimmingpool.ui.load
-import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.news.listnews.NewsListFragment
 import house.with.swimmingpool.ui.news.singlenews.NewsSingleFragment
 import house.with.swimmingpool.ui.popups.PopupActivity
-import house.with.swimmingpool.ui.search.SearchActivity
-import house.with.swimmingpool.ui.showModeBottomMenu
-import house.with.swimmingpool.ui.showModeFab
 import house.with.swimmingpool.ui.videos.listvideos.VideosListFragment
 import house.with.swimmingpool.ui.videos.singlevideo.VideoFragment
 import kotlinx.coroutines.Dispatchers
@@ -224,11 +218,11 @@ class HomeFragment : Fragment() {
                         firstAdBanner.load(ads.first?.get(1)?.smallBanner)
                         secondAdBanner.load(ads.first?.get(2)?.smallBanner)
 
-                        bigBanner.visibility = View.VISIBLE
+                        bigBannerLayout.visibility = View.VISIBLE
                         adsLinear.visibility = View.VISIBLE
                     }
                 } else {
-                    homeBinding?.bigBanner?.visibility = View.VISIBLE
+                    homeBinding?.bigBannerLayout?.visibility = View.VISIBLE
                     homeBinding?.adsLinear?.visibility = View.VISIBLE
                 }
 
@@ -292,7 +286,8 @@ class HomeFragment : Fragment() {
         homeBinding?.apply {
 
             imageViewSearch.setOnClickListener {
-                startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
+//                startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
+
             }
 
             updateData()
@@ -368,6 +363,10 @@ class HomeFragment : Fragment() {
                 }
             })
 
+//            bigAdBanner.setBannerClick(bigBannerLayout, requireContext()) {}
+//            firstAdBanner.setBannerClick(firstAdBannerLayout, requireContext()) {}
+//            secondAdBanner.setBannerClick(secondAdBannerLayout, requireContext()) {}
+//            bigAdCoinsBanner.setBannerClick(bigAdCoinsBannerLayout, requireContext()) {}
         }
     }
 

@@ -423,6 +423,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     similarObjects.visibility = View.GONE
                     textViewSimilarObject.visibility = View.GONE
                 }
+                paperwork.setBannerClick(paperworkLayout, requireContext()) {}
             }
         } catch (e: Exception) {
         }

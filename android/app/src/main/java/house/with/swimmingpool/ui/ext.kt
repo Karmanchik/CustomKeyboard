@@ -9,6 +9,7 @@ import android.text.InputFilter
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -33,6 +34,13 @@ fun EditText.onRightDrawableClicked(onClicked: (view: EditText) -> Unit) {
             }
         }
         hasConsumed
+    }
+}
+
+fun ImageView.setBannerClick(viewToAnim: View, ctx: Context, function: () -> Unit){
+    this.setOnClickListener {
+        viewToAnim.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.banner_anim))
+        function()
     }
 }
 

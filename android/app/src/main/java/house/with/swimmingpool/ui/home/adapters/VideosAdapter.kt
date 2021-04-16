@@ -10,6 +10,7 @@ import house.with.swimmingpool.api.config.controllers.BannersServiceImpl
 import house.with.swimmingpool.databinding.ItemBigBannerBinding
 import house.with.swimmingpool.databinding.ItemVideoBinding
 import house.with.swimmingpool.models.VideosData
+import house.with.swimmingpool.ui.setBannerClick
 
 class VideosAdapter(
         private val isFull: Boolean = false,
@@ -73,6 +74,7 @@ class VideosAdapter(
                         .dontAnimate()
                         .into(view.bigAdBanner)
             }
+            view.bigAdBanner.setBannerClick(view.bigAdBannerLayout, ctx){}
         }
     }
 }

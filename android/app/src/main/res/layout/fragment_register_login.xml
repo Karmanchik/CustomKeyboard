@@ -92,12 +92,16 @@
         
         <ImageView
             android:id="@+id/icon_eye"
-            android:layout_width="26dp"
-            android:layout_height="16dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:visibility="invisible"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:src="@drawable/ic_close_eye_for_password"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:layout_marginEnd="30dp"
             android:layout_weight="0"/>
 
@@ -139,26 +143,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
+        android:weightSum="4"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="29dp"
+            android:layout_marginStart="21dp"
             android:layout_weight="1"
+            android:padding="8dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:fontFamily="@font/lato"
             android:text="Забыли пароль?"
             android:textColor="#00A8FF"
             android:textSize="17sp" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+
         <TextView
             android:id="@+id/signInLater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="29dp"
+            android:layout_marginEnd="21dp"
             android:layout_weight="1"
             android:fontFamily="@font/lato"
-            android:gravity="end"
+            android:gravity="center"
+            android:padding="8dp"
             android:text="Войти позже"
             android:textColor="#00A8FF"
             android:textSize="17sp" />
