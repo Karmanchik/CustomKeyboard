@@ -73,7 +73,7 @@ class NewsAdapter(
 
     inner class BigAd(private val view: ItemBigBannerBinding) : RecyclerView.ViewHolder(view.root) {
         fun bind() {
-            BannersServiceImpl().getBanners { data, e ->
+            BannersServiceImpl().getBanners("news") { data, e ->
                 Glide.with(itemView.context)
                         .load(data?.get(0)?.bigBanner)
                         .error(R.drawable.placeholder)

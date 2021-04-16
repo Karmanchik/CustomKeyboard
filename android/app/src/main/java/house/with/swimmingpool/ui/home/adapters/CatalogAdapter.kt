@@ -63,7 +63,7 @@ class CatalogAdapter(
 
     inner class BigAd(private val view: ItemBigBannerBinding): RecyclerView.ViewHolder(view.root) {
         fun bind() {
-            BannersServiceImpl().getBanners { data, e ->
+            BannersServiceImpl().getBanners("catalog") { data, e ->
                 Glide.with(itemView.context)
                     .load(data?.get(0)?.bigBanner)
                     .error(R.drawable.placeholder)
@@ -77,7 +77,7 @@ class CatalogAdapter(
 
     inner class SmallAd(private val view: ItemSmallBannerBinding): RecyclerView.ViewHolder(view.root) {
         fun bind() {
-            BannersServiceImpl().getBanners { data, e ->
+            BannersServiceImpl().getBanners("catalog") { data, e ->
                 Glide.with(itemView.context)
                     .load(data?.get(1)?.smallBanner)
                     .error(R.drawable.placeholder)

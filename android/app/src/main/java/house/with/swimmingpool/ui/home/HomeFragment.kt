@@ -113,7 +113,7 @@ class HomeFragment : Fragment() {
             val newsInfo = NewsServiceImpl().loadNews()
             val storiesInfo = StoriesServiceImpl().loadStories()
             val headerInfo = BannersServiceImpl().loadHeader()
-            val ads = BannersServiceImpl().loadBanners()
+            val ads = BannersServiceImpl().loadBanners("home")
 
             launch(Dispatchers.Main) {
                 showModeFab(true)

@@ -34,9 +34,9 @@ class BannersServiceImpl : IBannersService {
             })
     }
 
-    override fun getBanners(onLoaded: (data: List<BannersData>?, e: Throwable?) -> Unit) {
+    override fun getBanners(type: String, onLoaded: (data: List<BannersData>?, e: Throwable?) -> Unit) {
         getRetrofit().create(IBanners::class.java)
-            .getBanners()
+            .getBanners(type)
             .enqueue(object : Callback<Banners> {
                 override fun onResponse(call: Call<Banners>, response: Response<Banners>) {
                     try {
@@ -62,9 +62,9 @@ class BannersServiceImpl : IBannersService {
         }
     }
 
-    override suspend fun loadBanners(): Pair<List<BannersData>?, Throwable?> {
+    override suspend fun loadBanners(type: String): Pair<List<BannersData>?, Throwable?> {
         return try {
-            Pair(getRetrofit().create<IBanners>().getBanners().execute().body()!!.data, null)
+            Pair(getRetrofit().create<IBanners>().getBanners(type).execute().body()!!.data, null)
         } catch (e: Exception) {
             Pair(null, e)
         }
