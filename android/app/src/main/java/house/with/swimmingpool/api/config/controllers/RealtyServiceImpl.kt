@@ -225,7 +225,7 @@ class RealtyServiceImpl : IRealtyService {
         onLoaded: (data: Stub?, e: Throwable?) -> Unit
     ) {
         IRealty.api
-            .updateSearch(id = id, name = name, filter = Gson().toJson(filter))
+            .updateSearch(id = id, name = name, filter = Gson().toJson(filter), push = push)
             .enqueue(object : Callback<Answer<Stub>> {
                 override fun onResponse(
                     call: Call<Answer<Stub>>,
