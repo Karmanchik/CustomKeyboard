@@ -572,6 +572,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                 mainHeaderPlaceholder.visibility = View.INVISIBLE
             }
             dotsIndicator.setViewPager2(mainHousesContainer)
+            dotsIndicator.refreshDots()
         }
     }
 
