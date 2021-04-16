@@ -27,6 +27,8 @@ class CatalogAdapter(
         var onItemSelected: (Int) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    var stopVideo: (() -> Unit)? = null
+
     companion object {
         const val obj = 1
         const val big = 2
@@ -36,8 +38,7 @@ class CatalogAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            obj ->
-                Holder(ItemHouseCatalogBinding.inflate(layoutInflater, parent, false))
+            obj -> Holder(ItemHouseCatalogBinding.inflate(layoutInflater, parent, false))
             big -> BigAd(ItemBigBannerBinding.inflate(layoutInflater, parent, false))
             else -> SmallAd(ItemSmallBannerBinding.inflate(layoutInflater, parent, false))
         }
@@ -106,10 +107,8 @@ class CatalogAdapter(
 
                 item.apply {
                     val vp = housesImageContainer
-                    Log.e("photos", photos?.size.toString())
                     vp.adapter = when {
                         photos != null && photos.isNotEmpty() -> {
-                            Log.e("photos", photos.size.toString())
                             CatalogImageAdapter(photos, video, ctx,
                                 phone,
                                 onItemSelected,
@@ -117,7 +116,6 @@ class CatalogAdapter(
                             )
                         }
                         icon != null -> {
-                            Log.e("photos", icon.toString())
                             CatalogImageAdapter(listOf(icon), video, ctx,
                                 phone,
                                 onItemSelected,
@@ -187,6 +185,10 @@ class CatalogAdapter(
                            (ctx as MainActivity).showFragment(CabinetFragment())
                         }
                     }
+                }
+
+                stopVideo = {
+                    (view.housesImageContainer.adapter as? CatalogImageAdapter)?.stopVideo?.invoke()
                 }
 
             }

@@ -18,15 +18,18 @@ import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.*
 import house.with.swimmingpool.databinding.FragmentHomeBinding
 import house.with.swimmingpool.models.HouseCatalogData
-import house.with.swimmingpool.ui.*
 import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.filter.full.FullFilterFragment
 import house.with.swimmingpool.ui.filter.short.ShortFilterFragment
 import house.with.swimmingpool.ui.home.adapters.*
 import house.with.swimmingpool.ui.house.HouseFragment
+import house.with.swimmingpool.ui.load
+import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.news.listnews.NewsListFragment
 import house.with.swimmingpool.ui.news.singlenews.NewsSingleFragment
 import house.with.swimmingpool.ui.popups.PopupActivity
+import house.with.swimmingpool.ui.showModeBottomMenu
+import house.with.swimmingpool.ui.showModeFab
 import house.with.swimmingpool.ui.videos.listvideos.VideosListFragment
 import house.with.swimmingpool.ui.videos.singlevideo.VideoFragment
 import kotlinx.coroutines.Dispatchers
@@ -292,13 +295,14 @@ class HomeFragment : Fragment() {
 
             updateData()
 
-            nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-                if (shortCatalogRV.bottom in (oldScrollY + 1) until scrollY) {
-                    setShortCatalog(houseCatalogData)
-                }
+            videosRV
 
-                if (textViewShortCatalog.top - coordinateLayout.height in (scrollY + 1) until oldScrollY) {
-                    setShortCatalog(houseCatalogData)
+
+            nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+                if ((shortCatalogRV.bottom in (oldScrollY + 1) until scrollY)
+                    || (textViewShortCatalog.top - coordinateLayout.height in (scrollY + 1) until oldScrollY)
+                ) {
+                    (shortCatalogRV.adapter as? CatalogAdapter)?.stopVideo?.invoke()
                 }
             }
 

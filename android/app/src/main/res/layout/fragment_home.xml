@@ -149,6 +149,7 @@
                 android:id="@+id/storiesRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
                 android:background="@drawable/main_gradient"
                 android:paddingStart="6dp"
                 android:paddingTop="6dp"
@@ -266,6 +267,7 @@
                 android:id="@+id/lastSeenRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
                 android:layout_marginStart="12dp"
                 android:visibility="gone" />
 
@@ -354,6 +356,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/shortCatalogRV"
+                android:nestedScrollingEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -461,10 +464,7 @@
                     android:layout_marginEnd="12dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="2"
-
-                    tools:listitem="@layout/item_news">
-
-                </androidx.recyclerview.widget.RecyclerView>
+                    tools:listitem="@layout/item_news" />
 
                 <TextView
                     android:id="@+id/showNewsButton"

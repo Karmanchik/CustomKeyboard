@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
-import house.with.swimmingpool.App
 import house.with.swimmingpool.R
 import house.with.swimmingpool.databinding.ItemHouseCatalogLastImageCallHolderBinding
 import house.with.swimmingpool.databinding.ItemHouseCatalogListVideoBinding
@@ -24,7 +23,8 @@ class CatalogImageAdapter(
     val ctx: Context,
     val phone: String?,
     var onItemSelected: (Int) -> Unit,
-    var id: Int
+    var id: Int,
+    var stopVideo: (() -> Unit)? = null
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val itemsCount = (videos?.size ?: 0) + items.size + 1
@@ -126,6 +126,11 @@ class CatalogImageAdapter(
                     val videoId = videos?.get(adapterPosition - items.size) ?: ""
                     youTubePlayer.loadVideo(videoId, 0f)
                     youTubePlayer.pause()
+
+                    stopVideo?.invoke()
+                    stopVideo = {
+                        youTubePlayer.pause()
+                    }
 
                     view.imageViewVideoPreloader.setOnClickListener {
                         it.visibility = View.GONE
