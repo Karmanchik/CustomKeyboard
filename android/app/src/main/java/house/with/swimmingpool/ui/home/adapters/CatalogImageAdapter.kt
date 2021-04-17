@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import house.with.swimmingpool.R
@@ -26,6 +27,15 @@ class CatalogImageAdapter(
     var id: Int,
     var stopVideo: (() -> Unit)? = null
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    init {
+        items.forEach {
+            Glide.with(ctx)
+                .load(it)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .submit()
+        }
+    }
 
     private val itemsCount = (videos?.size ?: 0) + items.size + 1
 
