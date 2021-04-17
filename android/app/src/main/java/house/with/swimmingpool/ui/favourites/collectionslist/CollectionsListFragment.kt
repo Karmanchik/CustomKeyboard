@@ -10,6 +10,7 @@ import house.with.swimmingpool.databinding.FragmentCollectionsListBinding
 import house.with.swimmingpool.models.ShortCollection
 import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.collection.CollectionFragment
+import house.with.swimmingpool.ui.createcollection.CreateCollectionFragment
 import house.with.swimmingpool.ui.navigate
 
 class CollectionsListFragment : Fragment() {
@@ -43,6 +44,14 @@ class CollectionsListFragment : Fragment() {
                 update()
             }
             update()
+
+
+            showCatalogButton
+            textView7.setOnClickListener {
+                CreateCollectionFragment.newInstance {
+                    update()
+                }.show(parentFragmentManager, CreateCollectionFragment::class.java.simpleName)
+            }
         }
 
 

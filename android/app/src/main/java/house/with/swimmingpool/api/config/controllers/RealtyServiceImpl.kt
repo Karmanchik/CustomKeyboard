@@ -320,6 +320,29 @@ class RealtyServiceImpl : IRealtyService {
             })
     }
 
+    override fun createCollection(
+        name: String,
+        note: String,
+        onLoaded: (data: Stub?, e: Throwable?) -> Unit
+    ) {
+        IRealty.api
+            .createCollection(name, note)
+            .enqueue(object : Callback<Answer<Stub>> {
+                override fun onResponse(
+                    call: Call<Answer<Stub>>,
+                    response: Response<Answer<Stub>>
+                ) {
+                    onLoaded.invoke(response.body()?.data, null)
+                }
+
+                override fun onFailure(call: Call<Answer<Stub>>, t: Throwable) {
+                    onLoaded.invoke(null, t)
+                    Log.e("taskException", "error", t)
+                }
+
+            })
+    }
+
     fun getParams(onLoaded: (data: List<HouseCatalogData>?, e: Throwable?) -> Unit) {
         getRetrofit().create(IRealty::class.java)
             .getHouses()
