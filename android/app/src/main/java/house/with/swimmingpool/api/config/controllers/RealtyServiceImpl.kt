@@ -86,6 +86,29 @@ class RealtyServiceImpl : IRealtyService {
             })
     }
 
+    override fun createNote(
+        id: String,
+        note: String,
+        onLoaded: (data: Stub?, e: Throwable?) -> Unit
+    ) {
+        IRealty.api
+            .createNote(note, id)
+            .enqueue(object : Callback<Answer<Stub>> {
+                override fun onResponse(
+                    call: Call<Answer<Stub>>,
+                    response: Response<Answer<Stub>>
+                ) {
+                    onLoaded.invoke(response.body()?.data, null)
+                }
+
+                override fun onFailure(call: Call<Answer<Stub>>, t: Throwable) {
+                    onLoaded.invoke(null, t)
+                    Log.e("taskException", "error", t)
+                }
+
+            })
+    }
+
     override fun getMyFavourites(onLoaded: (data: ListAnswerData<HouseCatalogData>?, e: Throwable?) -> Unit) {
         IRealty.api
             .getMyFavourites()

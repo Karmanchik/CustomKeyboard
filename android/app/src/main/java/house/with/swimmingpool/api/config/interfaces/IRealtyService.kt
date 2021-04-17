@@ -10,6 +10,7 @@ interface IRealtyService {
     fun getHouseExample(id: Int, onLoaded: (data: HouseExampleData?, e: Throwable?, error: Int?) -> Unit)
     fun getParamsForFilter(): Answer<JsonObject>?
     fun getObjectsByFilter(filter: FilterObjectsRequest, onLoaded: (data: List<HouseCatalogData>?, e: Throwable?) -> Unit)
+    fun createNote(id: String, note: String, onLoaded: (data: Stub?, e: Throwable?) -> Unit)
 
     // избранное
     fun getMyFavourites(onLoaded: (data: ListAnswerData<HouseCatalogData>?, e: Throwable?) -> Unit)

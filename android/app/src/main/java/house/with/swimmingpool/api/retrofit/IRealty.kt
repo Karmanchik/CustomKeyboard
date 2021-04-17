@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import house.with.swimmingpool.App
 import house.with.swimmingpool.models.*
 import house.with.swimmingpool.models.request.FilterObjectsRequest
+import org.w3c.dom.Comment
 import retrofit2.Call
 import retrofit2.create
 import retrofit2.http.*
@@ -169,6 +170,13 @@ interface IRealty {
         @Field("message") message: String?,
         @Header("api-key") key: String = APIKEY
     ): Call<Answer<Any?>>
+
+    @FormUrlEncoded
+    @POST("notes")
+    fun createNote(
+        @Field("comment") comment: String,
+        @Field("object_id") object_id: String
+    ): Call<Answer<Stub>>
 
     companion object {
         val api = mainRetrofit.create<IRealty>()

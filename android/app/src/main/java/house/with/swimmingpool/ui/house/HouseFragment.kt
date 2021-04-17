@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
@@ -34,6 +35,7 @@ import house.with.swimmingpool.databinding.FragmentHouseBinding
 import house.with.swimmingpool.models.HouseExampleData
 import house.with.swimmingpool.ui.*
 import house.with.swimmingpool.ui.favourites.adapters.TagAdapter
+import house.with.swimmingpool.ui.home.EditNoteFragment
 import house.with.swimmingpool.ui.house.adapters.*
 import house.with.swimmingpool.ui.house.interfaces.ISingleHouseView
 import house.with.swimmingpool.ui.popups.PopupActivity
@@ -139,6 +141,54 @@ class HouseFragment : Fragment(), ISingleHouseView {
     fun showHome(singleHouseObject: HouseExampleData) {
         try {
             houseObjectBinding?.apply {
+
+                menu.setOnClickListener {
+                    sortMenu.visibility = View.VISIBLE
+                }
+                closeSort.setOnClickListener {
+                    sortMenu.visibility = View.GONE
+                }
+                addToCollection.setOnClickListener {  }
+                share.setOnClickListener {
+                    val share = Intent(Intent.ACTION_SEND)
+                    share.type = "text/plain"
+                    share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+                    share.putExtra(Intent.EXTRA_SUBJECT, "Подборка ${singleHouseObject.title}")
+                    share.putExtra(Intent.EXTRA_TEXT, "https://domsbasseinom.ru/objects/${singleHouseObject.id}")
+                    startActivity(Intent.createChooser(share, "Поделиться!"))
+                }
+
+                titleOfNotes.text = singleHouseObject.note
+                noteLayout.visibility = View.GONE
+
+                noteMain.setOnClickListener {
+                    if (singleHouseObject.note != null) {
+                        noteLayout.visibility = View.VISIBLE
+                    } else {
+                        EditNoteFragment.newInstance(singleHouseObject.id.toString(), singleHouseObject.note ?: "") {
+                            titleOfNotes.text = it
+                            singleHouseObject.note = it
+                        }.show(parentFragmentManager, EditNoteFragment::class.java.simpleName)
+                    }
+                }
+
+                noteLayout.setOnClickListener {
+                    EditNoteFragment.newInstance(singleHouseObject.id.toString(), singleHouseObject.note ?: "") {
+                        titleOfNotes.text = it
+                    }.show(parentFragmentManager, EditNoteFragment::class.java.simpleName)
+                }
+
+                dateCreated.text = "Дата создания"
+
+
+                shareB.setOnClickListener {
+                    val share = Intent(Intent.ACTION_SEND)
+                    share.type = "text/plain"
+                    share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+                    share.putExtra(Intent.EXTRA_SUBJECT, "Подборка ${singleHouseObject.title}")
+                    share.putExtra(Intent.EXTRA_TEXT, "https://domsbasseinom.ru/objects/${singleHouseObject.id}")
+                    startActivity(Intent.createChooser(share, "Поделиться!"))
+                }
 
                 sendRequestButton.setOnClickListener {
                     val isPhoneNotEmpty = isPhoneConsultationFieldNotEmpty()
@@ -248,13 +298,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
 
                 if (singleHouseObject.mainTags != null) {
                     hashTagRV.adapter = TagAdapter(requireContext(), singleHouseObject.mainTags)
-                }
-
-                val note = null
-                if (note == null) {
-                    noteLayout.visibility = View.GONE
-                } else {
-                    noteLayout.visibility = View.VISIBLE
                 }
 
                 whiteButtonRV.adapter = WhiteButtonAdapter(
