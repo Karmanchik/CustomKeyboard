@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +49,7 @@ class CatalogFragment : Fragment() {
             } catch (e: Exception) {
             }
         }, requireContext()) { homeId ->
+            binding?.sortMenu?.visibility = View.GONE
             val home = list.firstOrNull { it.id == homeId }
             val bundle = Bundle().apply { putString("home", Gson().toJson(home)) }
             navigate(HouseFragment(), bundle)
@@ -64,7 +64,7 @@ class CatalogFragment : Fragment() {
         binding?.apply {
 
             refresh.isRefreshing = true
-            refresh.setOnRefreshListener { binding?.refresh?.isRefreshing = false }
+            refresh.setOnRefreshListener { showFilter() }
 
             back.setOnClickListener { back() }
 
@@ -76,53 +76,39 @@ class CatalogFragment : Fragment() {
             closeSort.setOnClickListener {
                 sortMenu.visibility = View.GONE
             }
+            toolbar.setOnClickListener {
+                sortMenu.visibility = View.GONE
+            }
 
             priceUp.setOnClickListener {
-                sortByPriseDir("asc")
+                sortByPriceDir("asc")
                 textViewPriceUp.setTextColor(Color.parseColor("#A0AABA"))
                 textViewPriceDown.setTextColor(Color.parseColor("#00A8FF"))
             }
 
             priceDown.setOnClickListener {
-                sortByPriseDir("desc")
+                sortByPriceDir("desc")
                 textViewPriceUp.setTextColor(Color.parseColor("#00A8FF"))
                 textViewPriceDown.setTextColor(Color.parseColor("#A0AABA"))
             }
 
             popular.setOnClickListener {
-                sortByPriseDir("hits")
+                sortByPriceDir("hits")
             }
 
             rating.setOnClickListener {
-                sortByPriseDir("rank")
+                sortByPriceDir("rank")
             }
         }
 
-//        GlobalScope.launch(Dispatchers.IO) {
-//            try {
-//                val list = App.setting.houses
-//                launch(Dispatchers.Main) {
-//                    showList(list.toMutableList())
-//                }
-//            } catch (e: Exception) {
-//                Log.e("test", "load catalog", e)
-//            }
-//        }
-
-        binding?.litRV?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+        binding?.litRV?.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (oldScrollY > scrollY) {
                 binding?.toFilter?.visibility = View.VISIBLE
             } else {
                 binding?.toFilter?.visibility = View.GONE
             }
+            binding?.sortMenu?.visibility = View.GONE
         }
-//        binding?.scroll?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-//            if (oldScrollY > scrollY) {
-//                binding?.toFilter?.visibility = View.VISIBLE
-//            } else {
-//                binding?.toFilter?.visibility = View.GONE
-//            }
-//        }
 
         binding?.toFilter?.setOnClickListener {
             navigate(FullFilterFragment())
@@ -143,7 +129,7 @@ class CatalogFragment : Fragment() {
         }
     }
 
-    private fun sortByPriseDir(dir: String) {
+    private fun sortByPriceDir(dir: String) {
         if(dir != lastDir) {
             binding?.apply {
 
@@ -171,6 +157,7 @@ class CatalogFragment : Fragment() {
     }
 
     private fun showFilter() {
+        binding?.refresh?.isRefreshing = true
         RealtyServiceImpl().getObjectsByFilter(
                 App.setting.filterConfig ?: FilterObjectsRequest()
         ) { data, e ->
@@ -182,6 +169,8 @@ class CatalogFragment : Fragment() {
             }
         }
     }
+
+
 
     override fun onDestroy() {
         binding = null
