@@ -1,12 +1,15 @@
 package house.with.swimmingpool.ui.collection
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
+import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentCollectionBinding
 import house.with.swimmingpool.models.HouseCatalogData
@@ -35,6 +38,7 @@ class CollectionFragment : Fragment() {
 
     val id: String get() = (arguments?.getInt("id") ?: 0).toString()
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,9 +48,17 @@ class CollectionFragment : Fragment() {
                 note.visibility = if (note.visibility == View.VISIBLE) View.GONE else View.VISIBLE
                 showNoteText.text =
                     if (note.visibility == View.VISIBLE) "Скрыть заметку" else "Посмотреть заметку"
+
+                if (note.visibility == View.VISIBLE) {
+                    val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.search_enter_animation)
+                    note.startAnimation(anim)
+                }
             }
 
+            refresh.isRefreshing = true
             RealtyServiceImpl().getCollection(id) { data, e ->
+                conter.text = "${data?.name ?: ""},\n${data?.total ?: ""}"
+                refresh.isRefreshing = false
                 showData(data?.objects ?: listOf())
                 note.setOnClickListener {
                     DialogEditNoteFragment.newInstance(
@@ -121,6 +133,7 @@ class CollectionFragment : Fragment() {
     }
 
     private fun showData(list: List<HouseCatalogData>) {
+
         binding?.mainRV?.adapter =
             CatalogAdapter(list.map { it as Any }, requireContext()) { homeId ->
                 val home = list.firstOrNull { it.id == homeId }
