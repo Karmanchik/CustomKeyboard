@@ -454,7 +454,6 @@ class FullFilterFragment : Fragment() {
     }
 
     private fun showFilter(filter: FilterObjectsRequest) {
-        Log.e("filter", filter.types?.joinToString(", ").toString())
         binding.segmentedControl.setSelectedSegment(
             when (filter.types?.firstOrNull()) {
                 "house" -> 0
