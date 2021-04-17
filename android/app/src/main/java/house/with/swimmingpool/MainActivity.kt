@@ -17,7 +17,6 @@ import house.with.swimmingpool.ui.favourites.FavouritesFragment
 import house.with.swimmingpool.ui.home.HomeFragment
 import house.with.swimmingpool.ui.house.HouseFragment
 import house.with.swimmingpool.ui.login.LoginActivity
-import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.startActivity
 
 class MainActivity : AppCompatActivity() {
@@ -149,6 +148,10 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
         navView.setOnNavigationItemSelectedListener {
+            if (it.itemId == R.id.catalogViewModel) {
+                App.setting.filterConfig = null
+            }
+
             val tmp = when (it.itemId) {
                 R.id.navigation_home -> homeFragment
                 R.id.favouritesFragment -> favouritesFragment
