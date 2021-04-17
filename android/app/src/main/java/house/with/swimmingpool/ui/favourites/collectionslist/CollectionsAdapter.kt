@@ -34,9 +34,9 @@ class CollectionsAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(item: ShortCollection) {
             itemView.setOnClickListener { onItemSearch.invoke(item) }
-            view.textView8.setOnClickListener { openCatalog.invoke() }
+            view.textView8.setOnClickListener { onItemSearch.invoke(item) }
             view.name.text = item.name
-            view.counter.text = "${item.photos?.size ?: 0} объектов"
+            view.counter.text = item.total
             view.mediaRV.layoutManager =
                 GridLayoutManager(itemView.context, 4)
             view.mediaRV.adapter = SmallPhotosAdapter(item.photos?.take(4) ?: listOf())
