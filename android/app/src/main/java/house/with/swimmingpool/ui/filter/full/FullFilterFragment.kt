@@ -170,6 +170,10 @@ class FullFilterFragment : Fragment() {
                 load()
             }
 
+            area.onClearButtonClicked = {
+                districtsFilter = null
+                load()
+            }
             area.setOnClickListener {
                 if (districtsFilter == null) {
                     districtsFilter = districtsVariants?.entries?.map { Pair(it.value, false) }
@@ -186,6 +190,10 @@ class FullFilterFragment : Fragment() {
                 }
             }
 
+            docType.onClearButtonClicked = {
+                districtsFilter = null
+                load()
+            }
             docType.setOnClickListener {
                 if (registrationTypeFilter == null) {
                     registrationTypeFilter =
@@ -203,6 +211,10 @@ class FullFilterFragment : Fragment() {
                 }
             }
 
+            moneyType.onClearButtonClicked = {
+                districtsFilter = null
+                load()
+            }
             moneyType.setOnClickListener {
                 if (paymentTypeFilter == null) {
                     paymentTypeFilter = paymentTypeVariants?.entries?.map { Pair(it.value, false) }
@@ -219,6 +231,10 @@ class FullFilterFragment : Fragment() {
                 }
             }
 
+            style.onClearButtonClicked = {
+                districtsFilter = null
+                load()
+            }
             style.setOnClickListener {
                 if (interiorFilter == null) {
                     interiorFilter = interiorVariants?.entries?.map { Pair(it.value, false) }
@@ -235,6 +251,10 @@ class FullFilterFragment : Fragment() {
                 }
             }
 
+            houseType.onClearButtonClicked = {
+                districtsFilter = null
+                load()
+            }
             houseType.setOnClickListener {
                 if (buildingClassFilter == null) {
                     buildingClassFilter =
@@ -254,6 +274,10 @@ class FullFilterFragment : Fragment() {
 
             sea.setOnClickListener {}
 
+            square.onClearButtonClicked = {
+                districtsFilter = null
+                load()
+            }
             square.setOnClickListener {
                 openRange(
                     getSquareRange,
@@ -267,6 +291,10 @@ class FullFilterFragment : Fragment() {
                 }
             }
 
+            price.onClearButtonClicked = {
+                districtsFilter = null
+                load()
+            }
             price.setOnClickListener {
                 openRange(
                     getPriceRange,

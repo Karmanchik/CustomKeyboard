@@ -76,6 +76,7 @@ class CustomFieldButton(context: Context, attrs: AttributeSet) : ConstraintLayou
 
         clearIcon?.setOnClickListener {
             fieldView?.text = ""
+            onClearButtonClicked?.invoke()
         }
 
         titleView?.text = typedArray.getString(R.styleable.CustomFieldButton_titl)
@@ -122,5 +123,7 @@ class CustomFieldButton(context: Context, attrs: AttributeSet) : ConstraintLayou
     private fun View.hide() {
         visibility = View.GONE
     }
+
+    var onClearButtonClicked: (() -> Unit)? = null
 
 }
