@@ -59,8 +59,9 @@ class CustomFieldButton(context: Context, attrs: AttributeSet) : ConstraintLayou
         fieldView?.doOnTextChanged { text, _, _, _ ->
             if (text.isNullOrEmpty()) {
                 clearIcon?.hide()
+                titleView?.visibility = View.VISIBLE
             } else {
-
+                titleView?.visibility = View.GONE
                 if (isNeedShowClearButton) {
                     clearIcon?.show()
                 }

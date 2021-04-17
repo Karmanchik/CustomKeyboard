@@ -28,6 +28,7 @@ import house.with.swimmingpool.ui.navigate
 import house.with.swimmingpool.ui.news.listnews.NewsListFragment
 import house.with.swimmingpool.ui.news.singlenews.NewsSingleFragment
 import house.with.swimmingpool.ui.popups.PopupActivity
+import house.with.swimmingpool.ui.search.SearchActivity
 import house.with.swimmingpool.ui.showModeBottomMenu
 import house.with.swimmingpool.ui.showModeFab
 import house.with.swimmingpool.ui.videos.listvideos.VideosListFragment
@@ -289,8 +290,7 @@ class HomeFragment : Fragment() {
         homeBinding?.apply {
 
             imageViewSearch.setOnClickListener {
-//                startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
-
+                startActivityForResult(Intent(requireContext(), SearchActivity::class.java), 0)
             }
 
             updateData()
