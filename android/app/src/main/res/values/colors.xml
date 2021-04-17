@@ -13,7 +13,7 @@
     <color name="description_text">#80000000</color>
     <color name="text_disabled_color">#788598</color>
     <color name="text_error_color">#DB5249</color>
-
+    <color name="blocked_sort_item">#A0AABA</color>
     <array name="test">
         <item>#FF3700B3</item>
         <item>#FF000000</item>

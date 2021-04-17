@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import house.with.swimmingpool.App
+import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentCatalogBinding
 import house.with.swimmingpool.models.HouseCatalogData
@@ -58,6 +59,59 @@ class CatalogFragment : Fragment() {
         binding?.conter?.text = "${list.size} предложений"
     }
 
+    private fun showSortMenu() = binding?.apply {
+        sortMenu.visibility = View.VISIBLE
+
+        textViewPriceUp.setTextColor(Color.parseColor("#00A8FF"))
+        textViewPriceDown.setTextColor(Color.parseColor("#00A8FF"))
+        textViewPopular.setTextColor(Color.parseColor("#00A8FF"))
+        textViewRating.setTextColor(Color.parseColor("#00A8FF"))
+        imageView16.setImageResource(R.drawable.ic_up_blue_arrow_mono)
+        priceDownIcon.setImageResource(R.drawable.ic_up_blue_arrow_mono)
+
+        when (lastDir) {
+            "asc" -> {
+                textViewPriceUp.setTextColor(Color.parseColor("#A0AABA"))
+                imageView16.setImageResource(R.drawable.ic_arrow_up_blocked)
+            }
+            "desc" -> {
+                textViewPriceDown.setTextColor(Color.parseColor("#A0AABA"))
+                priceDownIcon.setImageResource(R.drawable.ic_arrow_up_blocked)
+            }
+            "hits" -> {
+                textViewPopular.setTextColor(Color.parseColor("#A0AABA"))
+            }
+            "rank" -> {
+                textViewRating.setTextColor(Color.parseColor("#A0AABA"))
+            }
+        }
+
+        priceUp.setOnClickListener {
+            if (lastDir == "asc") return@setOnClickListener
+            sortByPriceDir("asc")
+            textViewPriceUp.setTextColor(Color.parseColor("#A0AABA"))
+            textViewPriceDown.setTextColor(Color.parseColor("#00A8FF"))
+        }
+
+        priceDown.setOnClickListener {
+            if (lastDir == "desc") return@setOnClickListener
+            sortByPriceDir("desc")
+            textViewPriceUp.setTextColor(Color.parseColor("#00A8FF"))
+            textViewPriceDown.setTextColor(Color.parseColor("#A0AABA"))
+        }
+
+        popular.setOnClickListener {
+            if (lastDir == "hits") return@setOnClickListener
+            sortByPriceDir("hits")
+        }
+
+        rating.setOnClickListener {
+            if (lastDir == "rank") return@setOnClickListener
+            sortByPriceDir("rank")
+        }
+
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,8 +123,7 @@ class CatalogFragment : Fragment() {
             back.setOnClickListener { back() }
 
             sort.setOnClickListener {
-                sortMenu.visibility =
-                        if (sortMenu.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                showSortMenu()
             }
 
             closeSort.setOnClickListener {
@@ -78,26 +131,6 @@ class CatalogFragment : Fragment() {
             }
             toolbar.setOnClickListener {
                 sortMenu.visibility = View.GONE
-            }
-
-            priceUp.setOnClickListener {
-                sortByPriceDir("asc")
-                textViewPriceUp.setTextColor(Color.parseColor("#A0AABA"))
-                textViewPriceDown.setTextColor(Color.parseColor("#00A8FF"))
-            }
-
-            priceDown.setOnClickListener {
-                sortByPriceDir("desc")
-                textViewPriceUp.setTextColor(Color.parseColor("#00A8FF"))
-                textViewPriceDown.setTextColor(Color.parseColor("#A0AABA"))
-            }
-
-            popular.setOnClickListener {
-                sortByPriceDir("hits")
-            }
-
-            rating.setOnClickListener {
-                sortByPriceDir("rank")
             }
         }
 
