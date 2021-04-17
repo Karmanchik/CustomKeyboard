@@ -77,10 +77,10 @@ class CollectionsListFragment : Fragment() {
                 val bundle = Bundle().apply { putInt("id", it.id ?: 0) }
                 navigate(CollectionFragment(), bundle)
             },
-            onOpenMenu = {},
-            openCatalog = {
-                navigate(CatalogFragment())
-            }
+            onDelete = {
+                RealtyServiceImpl().deleteCollection(it.id.toString()) { _, _ -> update() }
+            },
+            parentFragmentManager = parentFragmentManager
         )
     }
 
