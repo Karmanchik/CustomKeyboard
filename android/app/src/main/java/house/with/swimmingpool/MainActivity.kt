@@ -3,6 +3,7 @@ package house.with.swimmingpool
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -29,6 +30,7 @@ import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 import java.nio.ByteBuffer
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -249,6 +251,12 @@ class MainActivity : AppCompatActivity() {
             val mNotificationManager =
                 this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+            val intent = Intent(
+                "android.intent.action.VIEW",
+                Uri.parse(info.data.action)
+            )
+            val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+
             if (Build.VERSION.SDK_INT >= 26) {
                 val importance = NotificationManager.IMPORTANCE_HIGH
                 var mChannel = mNotificationManager.getNotificationChannel(ids)
@@ -261,21 +269,23 @@ class MainActivity : AppCompatActivity() {
                 }
                 mBuilder = NotificationCompat.Builder(this, ids)
                 mBuilder
-                    .setContentTitle(info.data?.title) // required
+                    .setContentTitle(info.data.title) // required
                     .setSmallIcon(R.drawable.ic_logo_blue) // required
-                    .setContentText(info.data?.description) // required
+                    .setContentText(info.data.description) // required
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setAutoCancel(true)
                     .setGroup(ids)
+                    .setContentIntent(pendingIntent)
                     .setGroupSummary(true)
                     .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
             } else {
                 mBuilder = NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.ic_logo_blue)
-                    .setContentTitle(info.data?.title)
+                    .setContentTitle(info.data.title)
                     .setAutoCancel(true)
-                    .setContentText(info.data?.description)
+                    .setContentText(info.data.description)
                     .setGroup(ids)
+                    .setContentIntent(pendingIntent)
                     .setGroupSummary(true)
                     .setChannelId(ids)
             }
