@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import house.with.swimmingpool.App
+import house.with.swimmingpool.MainActivity
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.UpdateUserServiceImpl
 import house.with.swimmingpool.databinding.FragmentProfileBinding
@@ -198,6 +199,11 @@ class ProfileFragment : Fragment() {
                 if (data?.getBooleanExtra(App.IS_SIGN_OUT, false) == true) {
                     App.setting.token = null
                     navigate(HomeFragment())
+
+                    try {
+                        (requireActivity() as MainActivity).client?.close()
+                    } catch (e: Exception) {
+                    }
                 }
             }
         }

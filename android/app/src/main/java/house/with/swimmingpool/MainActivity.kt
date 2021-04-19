@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private var client: EmptyClient? = null
-    private fun connect() {
+    var client: EmptyClient? = null
+    fun connect() {
         if (!App.setting.isAuth) return
         try {
             val url = "wss://domsbasseinom.ru/websocket?client=${App.setting.phone}"

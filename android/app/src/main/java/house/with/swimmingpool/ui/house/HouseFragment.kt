@@ -81,6 +81,13 @@ class HouseFragment : Fragment(), ISingleHouseView {
             favoriteTextView.textSize = size
         }
 
+        houseObjectBinding?.addToCollection?.visibility =
+            if (App.setting.user?.context == "agent") {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
         try {
             val singleHouseObject =
                 Gson().fromJson((arguments?.getString("home")), HouseExampleData::class.java)

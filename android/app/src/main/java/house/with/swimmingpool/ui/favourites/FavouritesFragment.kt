@@ -10,8 +10,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import house.with.swimmingpool.App
 import house.with.swimmingpool.databinding.FragmentFavouritesBinding
 import house.with.swimmingpool.ui.favourites.adapters.FavoritesMainViewPagerAdapter
-import house.with.swimmingpool.ui.home.HomeFragment
-import house.with.swimmingpool.ui.navigate
 
 class FavouritesFragment : Fragment() {
 
@@ -38,7 +36,7 @@ class FavouritesFragment : Fragment() {
             favoritesViewPager.adapter = FavoritesMainViewPagerAdapter(requireActivity())
 
             TabLayoutMediator(tabs, favoritesViewPager) { tab, position ->
-                tab.text = when(position){
+                tab.text = when (position) {
                     0 -> "ИЗБРАННОЕ"
                     1 -> "ПОИСКИ"
                     else -> "ПОДБОРКИ"
@@ -59,6 +57,7 @@ class FavouritesFragment : Fragment() {
     }
 
     override fun onResume() {
+        super.onResume()
         App.setting.filterConfig = null
 //        if (isPopBacLoginActivity && !(App.setting.isAuth)) {
 //            navigate(HomeFragment())
@@ -67,7 +66,7 @@ class FavouritesFragment : Fragment() {
 //        favoritesBinding?.apply {
 //            tabs.getTabAt(lastTabPosition)?.select()
 //        }
-        super.onResume()
+        favoritesBinding?.favoritesViewPager?.invalidate()//adapter as? FavoritesMainViewPagerAdapter
     }
 
     override fun onDestroy() {
