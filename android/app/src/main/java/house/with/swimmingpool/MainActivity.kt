@@ -107,7 +107,9 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         try {
-            if (App.setting.isAuth) client?.connect()
+            if (App.setting.isAuth) {
+                connect()
+            }
         } catch (e: Exception) {
         }
     }
