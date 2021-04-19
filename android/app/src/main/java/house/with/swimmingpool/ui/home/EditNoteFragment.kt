@@ -36,7 +36,7 @@ class EditNoteFragment(val id: String, val note: String, val onCreated: (String)
         super.onViewCreated(view, savedInstanceState)
 
         binding.name.requestFocus()
-        binding.title.text = "Редактирование заметки"
+        binding.title.text = if (note.isNotBlank()) "Редактирование заметки" else "Создание заметки"
 
         binding.apply {
 

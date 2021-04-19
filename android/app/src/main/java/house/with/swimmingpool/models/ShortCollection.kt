@@ -10,5 +10,6 @@ class ShortCollection(
     var note: String? = null,
     var total: String? = null,
     val photos: List<String>? = null,
-    @SerializedName("objects_list") val objects: List<HouseCatalogData>? = null
+    @SerializedName("objects_list") val objects: List<HouseCatalogData>? = null,
+    val date: String? = null
 )

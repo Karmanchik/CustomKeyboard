@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import house.with.swimmingpool.R
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
@@ -44,10 +45,14 @@ class CollectionFragment : Fragment() {
 
         binding?.apply {
 
+            main.setOnClickListener {
+                sortMenu.visibility = View.GONE
+            }
+
             openNote.setOnClickListener {
                 note.visibility = if (note.visibility == View.VISIBLE) View.GONE else View.VISIBLE
                 showNoteText.text =
-                    if (note.visibility == View.VISIBLE) "Скрыть заметку" else "Посмотреть заметку"
+                    if (note.visibility == View.VISIBLE) "Скрыть заметку" else if(noteValue.text.isEmpty()) "Добавить заметку" else "Посмотреть заметку"
 
                 if (note.visibility == View.VISIBLE) {
                     val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.search_enter_animation)
@@ -55,11 +60,19 @@ class CollectionFragment : Fragment() {
                 }
             }
 
+            toolbar.setOnClickListener {
+                sortMenu.visibility = View.GONE
+            }
+            mainRV.setOnScrollChangeListener { _, _, _, _, _ ->
+                sortMenu.visibility = View.GONE
+            }
+
             refresh.isRefreshing = true
             RealtyServiceImpl().getCollection(id) { data, e ->
-                conter.text = "${data?.name ?: ""},\n${data?.total ?: ""}"
+                conter.text = "${data?.name ?: ""},\n${data?.objects?.size ?: 0} объектов"
                 refresh.isRefreshing = false
                 showData(data?.objects ?: listOf())
+
                 note.setOnClickListener {
                     DialogEditNoteFragment.newInstance(
                         text = noteValue.text.toString(),
@@ -71,7 +84,12 @@ class CollectionFragment : Fragment() {
                 }
                 noteValue.text = data?.note
 
+                showNoteText.text =
+                    if (note.visibility == View.VISIBLE) "Скрыть заметку" else if(noteValue.text.isEmpty()) "Добавить заметку" else "Посмотреть заметку"
+
+
                 share.setOnClickListener {
+                    sortMenu.visibility = View.GONE
                     val share = Intent(Intent.ACTION_SEND)
                     share.type = "text/plain"
                     share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
@@ -108,7 +126,7 @@ class CollectionFragment : Fragment() {
                     ).show(parentFragmentManager, "DialogEditNoteFragment")
                 }
 
-//                dateCreated.text = "Дата создания ${data?.}"
+                dateCreated.text = "Дата создания ${data?.date ?: ""}"
             }
 
             closeNote.setOnClickListener {

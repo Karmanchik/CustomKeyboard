@@ -22,6 +22,8 @@ class CollectionsAdapter(
     val onDelete: (ShortCollection) -> Unit
 ) : RecyclerView.Adapter<CollectionsAdapter.ViewHolder>() {
 
+    private var lastClicked: Int? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return ViewHolder(ItemCollectionBinding.inflate(layoutInflater, parent, false))
@@ -42,7 +44,9 @@ class CollectionsAdapter(
             view.name.text = item.name
             view.counter.text = item.total
             view.menu.setOnClickListener {
+                lastClicked?.run { notifyItemChanged(this) }
                 view.sortMenu.visibility = View.VISIBLE
+                lastClicked = adapterPosition
             }
             view.closeSort.setOnClickListener {
                 view.sortMenu.visibility = View.GONE
