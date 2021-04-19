@@ -1,20 +1,14 @@
 package house.with.swimmingpool.ui.house
 
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -194,6 +188,7 @@ class HouseFragment : Fragment(), ISingleHouseView {
                     val isPhoneNotEmpty = isPhoneConsultationFieldNotEmpty()
                     val isMessageNotEmpty = isMessageFieldNotEmpty()
                     if (isPhoneNotEmpty && isMessageNotEmpty) {
+                        it.isEnabled = false
                         startActivity(
                             Intent(requireContext(), PopupActivity::class.java).apply {
                                 putExtra(
@@ -219,10 +214,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
                         sendRequest()
                     }
                 }
-
-                shareLinkImageView.setOnClickListener { shareLink(singleHouseObject.id ?: 0) }
-
-                shareLinkTextView.setOnClickListener { shareLink(singleHouseObject.id ?: 0) }
 
                 singleHouseObject.apply {
                     if (isFavourite == true) {
@@ -521,17 +512,6 @@ class HouseFragment : Fragment(), ISingleHouseView {
             }
         }
         return false
-    }
-
-    private fun shareLink(id: Int) {
-        toast("Copied profile link")
-        val clipboard =
-            requireActivity().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText(
-            "label",
-            "https://domsbasseinom.ru/app/testhouse/$id"
-        )
-        clipboard.setPrimaryClip(clip)
     }
 
     private fun onClickButtonFavorite(singleHouseObject: HouseExampleData) {
