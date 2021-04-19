@@ -6,6 +6,8 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,7 +17,13 @@ import androidx.annotation.AnimRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import house.with.swimmingpool.models.PushInfo
@@ -96,7 +104,9 @@ class MainActivity : AppCompatActivity() {
             client = EmptyClient(
                 URI.create(url),
                 onDisconnect = { connect() },
-                onMessageReceived = { message -> createNotification(message) }
+                onMessageReceived = { message ->
+                    createNotification(message)
+                }
             )
             client?.connect()
         } catch (e: Exception) {
@@ -242,11 +252,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun createNotification(message: String) {
+    private fun showNotify(info: PushInfo, bitmap: Bitmap) {
         try {
-            Log.e("socket", message)
-            val info = Gson().fromJson(message, PushInfo::class.java)
-            info?.title ?: return
             val ids = "12345678"
 
             val mBuilder: NotificationCompat.Builder?
@@ -271,6 +278,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 mBuilder = NotificationCompat.Builder(this, ids)
                 mBuilder
+                    .setLargeIcon(bitmap)
                     .setContentTitle(info.title) // required
                     .setSmallIcon(R.drawable.ic_logo_blue) // required
                     .setContentText(info.description) // required
@@ -282,7 +290,7 @@ class MainActivity : AppCompatActivity() {
                     .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
             } else {
                 mBuilder = NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.ic_logo_blue)
+                    .setLargeIcon(bitmap)
                     .setContentTitle(info.title)
                     .setAutoCancel(true)
                     .setContentText(info.description)
@@ -295,6 +303,36 @@ class MainActivity : AppCompatActivity() {
             mNotificationManager.notify(12345678, mBuilder!!.build())
         } catch (e: Exception) {
         }
+    }
 
+    private fun createNotification(message: String) {
+        Log.e("socket", message)
+        val info = Gson().fromJson(message, PushInfo::class.java)
+        info?.title?.let {
+            Glide.with(this)
+                .load(info.photo)
+                .addListener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ) = false
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        resource ?: return false
+                        info.title?.let { showNotify(info, resource.toBitmap(80, 80)) }
+                        return onResourceReady(resource, model, target, dataSource, isFirstResource)
+                    }
+
+                })
+                .submit()
+        }
     }
 }
