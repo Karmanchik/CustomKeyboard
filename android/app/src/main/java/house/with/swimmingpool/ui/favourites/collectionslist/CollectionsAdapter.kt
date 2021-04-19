@@ -73,7 +73,7 @@ class CollectionsAdapter(
                     }
                 ).show(parentFragmentManager, "DialogEditNoteFragment")
             }
-            view.dateCreated.text = "Дата создания"
+            view.dateCreated.text = "Дата создания ${item.date ?: ""}"
             view.mediaRV.layoutManager =
                 GridLayoutManager(itemView.context, 4)
             view.mediaRV.adapter = SmallPhotosAdapter(item.photos?.take(4) ?: listOf())

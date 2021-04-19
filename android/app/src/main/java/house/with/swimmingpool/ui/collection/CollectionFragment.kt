@@ -15,6 +15,7 @@ import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.FragmentCollectionBinding
 import house.with.swimmingpool.models.HouseCatalogData
 import house.with.swimmingpool.ui.back
+import house.with.swimmingpool.ui.catalog.CatalogFragment
 import house.with.swimmingpool.ui.home.adapters.CatalogAdapter
 import house.with.swimmingpool.ui.house.HouseFragment
 import house.with.swimmingpool.ui.navigate
@@ -151,6 +152,11 @@ class CollectionFragment : Fragment() {
     }
 
     private fun showData(list: List<HouseCatalogData>) {
+        binding?.toCatalog?.setOnClickListener {
+            navigate(CatalogFragment())
+        }
+
+        binding?.stub?.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
 
         binding?.mainRV?.adapter =
             CatalogAdapter(list.map { it as Any }, requireContext()) { homeId ->
