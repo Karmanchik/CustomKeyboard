@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import house.with.swimmingpool.api.config.controllers.RealtyServiceImpl
 import house.with.swimmingpool.databinding.ItemCollectionBinding
@@ -22,7 +21,7 @@ class CollectionsAdapter(
     val onDelete: (ShortCollection) -> Unit
 ) : RecyclerView.Adapter<CollectionsAdapter.ViewHolder>() {
 
-    private var lastClicked: Int? = null
+    private var closeMenu: (() -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -44,9 +43,11 @@ class CollectionsAdapter(
             view.name.text = item.name
             view.counter.text = item.total
             view.menu.setOnClickListener {
-                lastClicked?.run { notifyItemChanged(this) }
+                closeMenu?.invoke()
+                closeMenu = {
+                    view.sortMenu.visibility = View.GONE
+                }
                 view.sortMenu.visibility = View.VISIBLE
-                lastClicked = adapterPosition
             }
             view.closeSort.setOnClickListener {
                 view.sortMenu.visibility = View.GONE
