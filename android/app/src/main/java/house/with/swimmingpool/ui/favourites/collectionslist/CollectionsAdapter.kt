@@ -38,8 +38,14 @@ class CollectionsAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bind(item: ShortCollection) {
-            itemView.setOnClickListener { onItemSearch.invoke(item) }
-            view.textView8.setOnClickListener { onItemSearch.invoke(item) }
+            itemView.setOnClickListener {
+                closeMenu?.invoke()
+                onItemSearch.invoke(item)
+            }
+            view.textView8.setOnClickListener {
+                closeMenu?.invoke()
+                onItemSearch.invoke(item)
+            }
             view.name.text = item.name
             view.counter.text = item.total
             view.menu.setOnClickListener {
@@ -53,6 +59,7 @@ class CollectionsAdapter(
                 view.sortMenu.visibility = View.GONE
             }
             view.shareB.setOnClickListener {
+                closeMenu?.invoke()
                 view.sortMenu.visibility = View.GONE
                 val share = Intent(Intent.ACTION_SEND)
                 share.type = "text/plain"
@@ -62,9 +69,11 @@ class CollectionsAdapter(
                 itemView.context.startActivity(Intent.createChooser(share, "Поделиться!"))
             }
             view.deleteB.setOnClickListener {
+                closeMenu?.invoke()
                 onDelete.invoke(item)
             }
             view.noteAdd.setOnClickListener {
+                closeMenu?.invoke()
                 view.sortMenu.visibility = View.GONE
                 DialogEditNoteFragment.newInstance(
                     text = item.description,
