@@ -1,5 +1,6 @@
 package house.with.swimmingpool.ui.favourites.collectionslist
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +40,7 @@ class CollectionsListFragment : Fragment() {
         }
 
         binding?.apply {
+            refresh.setColorSchemeColors(Color.parseColor("#00A8FF"))
             refresh.setOnRefreshListener {
                 refresh.isRefreshing = true
                 update()
@@ -67,6 +69,7 @@ class CollectionsListFragment : Fragment() {
     private fun showData(list: List<ShortCollection>) {
 
         binding?.apply {
+            refresh.isRefreshing = false
             emptyStub.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
             content.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
         }
