@@ -102,7 +102,7 @@ class CollectionFragment : Fragment() {
                 deleteB.setOnClickListener {
                     RealtyServiceImpl().deleteCollection(data?.id.toString()) { data, e ->
                         sortMenu.visibility = View.GONE
-                        data?.let { back() }
+                        back()
                     }
                 }
 
