@@ -132,7 +132,9 @@ class CollectionFragment : Fragment() {
 
             closeNote.setOnClickListener {
                 noteValue.text = ""
-                RealtyServiceImpl().changeNoteInCollection(id, "") { _, _ -> }
+                RealtyServiceImpl().changeNoteInCollection(id, "") { _, _ ->
+                    openNote.performClick()
+                }
             }
 
             back.setOnClickListener {
