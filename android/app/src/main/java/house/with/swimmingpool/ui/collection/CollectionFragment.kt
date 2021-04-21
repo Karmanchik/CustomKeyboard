@@ -122,7 +122,9 @@ class CollectionFragment : Fragment() {
                         text = noteValue.text.toString(),
                         onEnterText = {
                             noteValue.text = it
-                            RealtyServiceImpl().changeNoteInCollection(id, it) { _, _ -> }
+                            RealtyServiceImpl().changeNoteInCollection(id, it) { _, _ ->
+                                showNoteText.text = "Скрыть заметку"
+                            }
                         }
                     ).show(parentFragmentManager, "DialogEditNoteFragment")
                 }
